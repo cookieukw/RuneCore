@@ -30,5 +30,5 @@ java {
 }
 
 tasks.jar {
-    destinationDirectory = file("$projectDir/dist")
+    destinationDirectory = file("/home/cookie/.var/app/com.hypixel.HytaleLauncher/data/Hytale/UserData/Mods/")
 }
