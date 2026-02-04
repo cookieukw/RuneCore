@@ -1,0 +1,16 @@
+{
+  "SchemaVersion": 1,
+  "Name": "RuneCore",
+  "Version": "1.0.0",
+  "Group": "com.cookie.runecore",
+  "Authors": [
+    {
+      "Name": "Cookieukw",
+      "Url": ""
+    }
+  ],
+  "Main": "com.cookie.runecore.ExamplePlugin",
+  "Url": "",
+  "Website": "",
+  "Permissions": []
+}

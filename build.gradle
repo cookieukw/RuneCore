@@ -1,0 +1,34 @@
+plugins {
+    id 'java'
+}
+
+import groovy.json.JsonSlurper
+
+group = 'com.cookie.runecore'
+def manifestFile = file("src/main/resources/manifest.json")
+if (manifestFile.exists()) {
+    def manifest = new JsonSlurper().parse(manifestFile)
+    version = manifest.Version
+} else {
+    version = '1.0.0-SNAPSHOT'
+}
+
+repositories {
+    mavenCentral()
+    maven { url 'https://maven.hytale.com/release' }
+    maven { url 'https://maven.hytale.com/pre-release' }
+}
+
+dependencies {
+    compileOnly fileTree(dir: 'libs', include: ['*.jar'])
+}
+
+java {
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(21)
+    }
+}
+
+tasks.jar {
+    destinationDirectory = file("$projectDir/dist")
+}
