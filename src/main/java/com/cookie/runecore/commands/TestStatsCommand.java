@@ -21,8 +21,8 @@ public class TestStatsCommand extends AbstractCommand {
 
     public TestStatsCommand() {
         super("runestat", "Modify player stats for testing purposes.");
-        this.statArg = this.withRequiredArg("stat", "health|mana|stamina", ArgTypes.STRING);
-        this.actionArg = this.withRequiredArg("action", "add|set", ArgTypes.STRING);
+        this.statArg = this.withRequiredArg("stat", "health|mana|stamina|speed", ArgTypes.STRING);
+        this.actionArg = this.withRequiredArg("action", "add|set|remove", ArgTypes.STRING);
         this.valueArg = this.withRequiredArg("value", "Value", ArgTypes.FLOAT);
     }
 
@@ -55,6 +55,9 @@ public class TestStatsCommand extends AbstractCommand {
                 } else if (action.equalsIgnoreCase("set")) {
                     stats.setHealth(value);
                     ctx.sendMessage(Message.raw("Set health to " + value + "."));
+                } else if (action.equalsIgnoreCase("remove")) {
+                    stats.subtractHealth(value);
+                    ctx.sendMessage(Message.raw("Removed " + value + " from health."));
                 }
                 break;
             case "mana":
@@ -64,6 +67,9 @@ public class TestStatsCommand extends AbstractCommand {
                 } else if (action.equalsIgnoreCase("set")) {
                     stats.setMana(value);
                     ctx.sendMessage(Message.raw("Set mana to " + value + "."));
+                } else if (action.equalsIgnoreCase("remove")) {
+                    stats.subtractMana(value);
+                    ctx.sendMessage(Message.raw("Removed " + value + " from mana."));
                 }
                 break;
             case "stamina":
@@ -73,6 +79,21 @@ public class TestStatsCommand extends AbstractCommand {
                 } else if (action.equalsIgnoreCase("set")) {
                     stats.setStamina(value);
                     ctx.sendMessage(Message.raw("Set stamina to " + value + "."));
+                } else if (action.equalsIgnoreCase("remove")) {
+                    stats.subtractStamina(value);
+                    ctx.sendMessage(Message.raw("Removed " + value + " from stamina."));
+                }
+                break;
+            case "speed":
+                 if (action.equalsIgnoreCase("add")) {
+                    stats.addSpeed(value);
+                    ctx.sendMessage(Message.raw("Added " + value + " to speed."));
+                } else if (action.equalsIgnoreCase("set")) {
+                    stats.setSpeed(value);
+                    ctx.sendMessage(Message.raw("Set speed to " + value + "."));
+                } else if (action.equalsIgnoreCase("remove")) {
+                    stats.subtractSpeed(value);
+                    ctx.sendMessage(Message.raw("Removed " + value + " from speed."));
                 }
                 break;
             default:
