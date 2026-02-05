@@ -23,7 +23,7 @@ public class PlayerStats {
 
     private static final float MIN_SPEED = 0.0f;
     private static final float MAX_SPEED = 100.0f;
-    private static final float DEFAULT_SPEED = 0.1f;
+    private static final float DEFAULT_SPEED = 5.5f;
     private static final float MAX_STAT = 1000.0f;
 
     public PlayerStats(@Nonnull Ref<EntityStore> playerRef) {
