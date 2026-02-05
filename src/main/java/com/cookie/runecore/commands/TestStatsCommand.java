@@ -17,13 +17,13 @@ public class TestStatsCommand extends AbstractCommand {
 
     private final RequiredArg<String> statArg;
     private final RequiredArg<String> actionArg;
-    private final RequiredArg<Float> valueArg;
+    private final RequiredArg<String> valueArg;
 
     public TestStatsCommand() {
         super("runestat", "Modify player stats for testing purposes.");
         this.statArg = this.withRequiredArg("stat", "health|mana|stamina|speed", ArgTypes.STRING);
         this.actionArg = this.withRequiredArg("action", "add|set|remove", ArgTypes.STRING);
-        this.valueArg = this.withRequiredArg("value", "Value", ArgTypes.FLOAT);
+        this.valueArg = this.withRequiredArg("value", "Value", ArgTypes.STRING);
     }
 
     @Nullable
@@ -43,7 +43,23 @@ public class TestStatsCommand extends AbstractCommand {
 
         String stat = ctx.get(this.statArg);
         String action = ctx.get(this.actionArg);
-        Float value = ctx.get(this.valueArg);
+        String valueStr = ctx.get(this.valueArg);
+        
+        Float value = 0f;
+        boolean isReset = false;
+        
+        if (valueStr != null) {
+            if (valueStr.equalsIgnoreCase("normal") || valueStr.equalsIgnoreCase("default") || valueStr.equalsIgnoreCase("reset")) {
+                isReset = true;
+            } else {
+                try {
+                    value = Float.parseFloat(valueStr);
+                } catch (NumberFormatException e) {
+                    ctx.sendMessage(Message.raw("Invalid number value: " + valueStr));
+                    return CompletableFuture.completedFuture(null);
+                }
+            }
+        }
 
         PlayerStats stats = new PlayerStats(playerRef);
 
@@ -85,7 +101,10 @@ public class TestStatsCommand extends AbstractCommand {
                 }
                 break;
             case "speed":
-                 if (action.equalsIgnoreCase("add")) {
+                 if (isReset) {
+                     stats.resetSpeed();
+                     ctx.sendMessage(Message.raw("Reset speed to normal."));
+                 } else if (action.equalsIgnoreCase("add")) {
                     stats.addSpeed(value);
                     ctx.sendMessage(Message.raw("Added " + value + " to speed."));
                 } else if (action.equalsIgnoreCase("set")) {

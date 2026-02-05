@@ -6,6 +6,8 @@ import com.cookie.runecore.commands.ExampleCommand;
 import com.cookie.runecore.commands.TestStatsCommand;
 import com.cookie.runecore.commands.CustomTimeCommand;
 
+import java.util.logging.Level;
+
 import javax.annotation.Nonnull;
 
 public class ExamplePlugin extends JavaPlugin {
@@ -19,6 +21,7 @@ public class ExamplePlugin extends JavaPlugin {
         this.getCommandRegistry().registerCommand(new ExampleCommand("example", "An example command"));
         this.getCommandRegistry().registerCommand(new TestStatsCommand());
         this.getCommandRegistry().registerCommand(new CustomTimeCommand());
+        getLogger().at(Level.INFO).log("log test");
         System.out.println("ExamplePlugin enabled and scheduler started.");
     }
 }

@@ -20,13 +20,14 @@ public class PlayerStats {
     private final Ref<EntityStore> playerRef;
 
     private static final float MIN_SPEED = 0.0f;
-    private static final float MAX_SPEED = 2.0f;
+    private static final float MAX_SPEED = 100.0f;
+    private static final float DEFAULT_SPEED = 0.2f;
     private static final float MAX_STAT = 1000.0f;
 
     public PlayerStats(@Nonnull Ref<EntityStore> playerRef) {
         this.playerRef = playerRef;
     }
-
+    
     private void modifyStat(int statId, float amount) {
         if (playerRef == null || !playerRef.isValid()) return;
 
@@ -126,7 +127,9 @@ public class PlayerStats {
                 MovementSettings settings = moveManager.getSettings();
                 if (settings != null) {
                     float newSpeed = settings.baseSpeed + amount;
-                    settings.baseSpeed = Math.max(MIN_SPEED, Math.min(MAX_SPEED, newSpeed));
+                     float clampedSpeed = Math.max(MIN_SPEED, Math.min(MAX_SPEED, newSpeed));
+                    
+                    settings.baseSpeed = clampedSpeed;
                     
                     PlayerRef playerRefComp = 
                         (PlayerRef) store.getComponent(playerRef, PlayerRef.getComponentType());
@@ -135,6 +138,14 @@ public class PlayerStats {
                         PacketHandler packetHandler = playerRefComp.getPacketHandler();
                         if (packetHandler != null) {
                             packetHandler.write(new UpdateMovementSettings(settings));
+                        }
+                        // Feedback
+                        if (newSpeed != clampedSpeed) {
+                             if (newSpeed > MAX_SPEED) {
+                                  playerRefComp.sendMessage(com.hypixel.hytale.server.core.Message.raw("Speed capped at " + MAX_SPEED));
+                             } else if (newSpeed < MIN_SPEED) {
+                                  playerRefComp.sendMessage(com.hypixel.hytale.server.core.Message.raw("Speed clamped to " + MIN_SPEED));
+                             }
                         }
                     }
                 }
@@ -158,7 +169,8 @@ public class PlayerStats {
             if (moveManager != null) {
                 MovementSettings settings = moveManager.getSettings();
                 if (settings != null) {
-                    settings.baseSpeed = Math.max(MIN_SPEED, Math.min(MAX_SPEED, amount));
+                    float clampedSpeed = Math.max(MIN_SPEED, Math.min(MAX_SPEED, amount));
+                    settings.baseSpeed = clampedSpeed;
 
                     PlayerRef playerRefComp = 
                         (PlayerRef) store.getComponent(playerRef, PlayerRef.getComponentType());
@@ -167,6 +179,14 @@ public class PlayerStats {
                         PacketHandler packetHandler = playerRefComp.getPacketHandler();
                         if (packetHandler != null) {
                             packetHandler.write(new UpdateMovementSettings(settings));
+                        }
+                         // Feedback
+                        if (amount != clampedSpeed) {
+                             if (amount > MAX_SPEED) {
+                                  playerRefComp.sendMessage(com.hypixel.hytale.server.core.Message.raw("Speed capped at " + MAX_SPEED));
+                             } else if (amount < MIN_SPEED) {
+                                  playerRefComp.sendMessage(com.hypixel.hytale.server.core.Message.raw("Speed clamped to " + MIN_SPEED));
+                             }
                         }
                     }
                 }
@@ -185,4 +205,10 @@ public class PlayerStats {
     public void subtractSpeed(float amount) {
         modifySpeed(-amount);
     }
+    
+    public void resetSpeed() {
+        setSpeedValue(DEFAULT_SPEED);
+    }
+
+
 }
