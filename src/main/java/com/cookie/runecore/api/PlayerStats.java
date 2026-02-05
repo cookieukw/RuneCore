@@ -5,13 +5,23 @@ import javax.annotation.Nonnull;
 
 import com.hypixel.hytale.component.Ref;
 import com.hypixel.hytale.component.Store;
+import com.hypixel.hytale.protocol.MovementSettings;
+import com.hypixel.hytale.protocol.packets.player.UpdateMovementSettings;
+import com.hypixel.hytale.server.core.entity.entities.player.movement.MovementManager;
+import com.hypixel.hytale.server.core.io.PacketHandler;
 import com.hypixel.hytale.server.core.modules.entitystats.EntityStatMap;
+import com.hypixel.hytale.server.core.modules.entitystats.EntityStatValue;
 import com.hypixel.hytale.server.core.modules.entitystats.asset.DefaultEntityStatTypes;
+import com.hypixel.hytale.server.core.universe.PlayerRef;
 import com.hypixel.hytale.server.core.universe.world.World;
 import com.hypixel.hytale.server.core.universe.world.storage.EntityStore;
 
 public class PlayerStats {
     private final Ref<EntityStore> playerRef;
+
+    private static final float MIN_SPEED = 0.0f;
+    private static final float MAX_SPEED = 2.0f;
+    private static final float MAX_STAT = 1000.0f;
 
     public PlayerStats(@Nonnull Ref<EntityStore> playerRef) {
         this.playerRef = playerRef;
@@ -32,7 +42,12 @@ public class PlayerStats {
         world.execute(() -> {
             EntityStatMap statMap = (EntityStatMap) store.getComponent(playerRef, EntityStatMap.getComponentType());
             if (statMap != null) {
-                statMap.addStatValue(statId, amount);
+                EntityStatValue statValue = statMap.get(statId);
+                if (statValue != null) {
+                    float current = statValue.get();
+                    float newValue = Math.max(0, Math.min(MAX_STAT, current + amount));
+                    statMap.setStatValue(statId, newValue);
+                }
             }
         });
     }
@@ -52,7 +67,8 @@ public class PlayerStats {
         world.execute(() -> {
             EntityStatMap statMap = (EntityStatMap) store.getComponent(playerRef, EntityStatMap.getComponentType());
             if (statMap != null) {
-                statMap.setStatValue(statId, value);
+                float clampedValue = Math.max(0, Math.min(MAX_STAT, value));
+                statMap.setStatValue(statId, clampedValue);
             }
         });
     }
@@ -103,14 +119,24 @@ public class PlayerStats {
         if (world == null) return;
 
         world.execute(() -> {
-            com.hypixel.hytale.server.core.entity.entities.player.movement.MovementManager moveManager = 
-                (com.hypixel.hytale.server.core.entity.entities.player.movement.MovementManager) store.getComponent(playerRef, com.hypixel.hytale.server.core.entity.entities.player.movement.MovementManager.getComponentType());
+            MovementManager moveManager = 
+                (MovementManager) store.getComponent(playerRef, MovementManager.getComponentType());
             
             if (moveManager != null) {
-                com.hypixel.hytale.protocol.MovementSettings settings = moveManager.getSettings();
+                MovementSettings settings = moveManager.getSettings();
                 if (settings != null) {
-                    settings.baseSpeed += amount;
-                    // Force update might be needed, but let's try just modifying first as per plan
+                    float newSpeed = settings.baseSpeed + amount;
+                    settings.baseSpeed = Math.max(MIN_SPEED, Math.min(MAX_SPEED, newSpeed));
+                    
+                    PlayerRef playerRefComp = 
+                        (PlayerRef) store.getComponent(playerRef, PlayerRef.getComponentType());
+                    
+                    if (playerRefComp != null) {
+                        PacketHandler packetHandler = playerRefComp.getPacketHandler();
+                        if (packetHandler != null) {
+                            packetHandler.write(new UpdateMovementSettings(settings));
+                        }
+                    }
                 }
             }
         });
@@ -126,13 +152,23 @@ public class PlayerStats {
         if (world == null) return;
 
         world.execute(() -> {
-             com.hypixel.hytale.server.core.entity.entities.player.movement.MovementManager moveManager = 
-                (com.hypixel.hytale.server.core.entity.entities.player.movement.MovementManager) store.getComponent(playerRef, com.hypixel.hytale.server.core.entity.entities.player.movement.MovementManager.getComponentType());
+             MovementManager moveManager = 
+                (MovementManager) store.getComponent(playerRef, MovementManager.getComponentType());
             
             if (moveManager != null) {
-                com.hypixel.hytale.protocol.MovementSettings settings = moveManager.getSettings();
+                MovementSettings settings = moveManager.getSettings();
                 if (settings != null) {
-                    settings.baseSpeed = amount;
+                    settings.baseSpeed = Math.max(MIN_SPEED, Math.min(MAX_SPEED, amount));
+
+                    PlayerRef playerRefComp = 
+                        (PlayerRef) store.getComponent(playerRef, PlayerRef.getComponentType());
+                    
+                    if (playerRefComp != null) {
+                        PacketHandler packetHandler = playerRefComp.getPacketHandler();
+                        if (packetHandler != null) {
+                            packetHandler.write(new UpdateMovementSettings(settings));
+                        }
+                    }
                 }
             }
         });
