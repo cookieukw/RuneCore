@@ -1,6 +1,10 @@
 package com.cookie.runecore.system;
 
 import com.cookie.runecore.api.*;
+import com.cookie.runecore.content.CoreEffects;
+import com.cookie.runecore.content.CoreEssences;
+import com.cookie.runecore.content.CoreSpells;
+
 import java.util.*;
 import java.util.function.Consumer;
 
@@ -45,6 +49,17 @@ public class RuneCore {
                 listener.accept(ctx);
             }
         }
+    }
+
+    public void initDefaults() {
+        // 1. Register Resource
+        GameResource mana = new GameResource("arcane_mana", 100.0, 5.0, "burnout");
+        registerResource(mana);
+
+        // Initialize Core Content
+        CoreEssences.init();
+        CoreEffects.init();
+        CoreSpells.init();
     }
 
     public boolean castSpell(String spellId, CastContext ctx) {
