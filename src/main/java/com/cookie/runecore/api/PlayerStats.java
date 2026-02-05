@@ -1,12 +1,14 @@
 package com.cookie.runecore.api;
 
 
+import java.util.concurrent.CompletableFuture;
 import javax.annotation.Nonnull;
 
 import com.hypixel.hytale.component.Ref;
 import com.hypixel.hytale.component.Store;
 import com.hypixel.hytale.protocol.MovementSettings;
 import com.hypixel.hytale.protocol.packets.player.UpdateMovementSettings;
+import com.hypixel.hytale.server.core.Message;
 import com.hypixel.hytale.server.core.entity.entities.player.movement.MovementManager;
 import com.hypixel.hytale.server.core.io.PacketHandler;
 import com.hypixel.hytale.server.core.modules.entitystats.EntityStatMap;
@@ -21,7 +23,7 @@ public class PlayerStats {
 
     private static final float MIN_SPEED = 0.0f;
     private static final float MAX_SPEED = 100.0f;
-    private static final float DEFAULT_SPEED = 0.2f;
+    private static final float DEFAULT_SPEED = 0.1f;
     private static final float MAX_STAT = 1000.0f;
 
     public PlayerStats(@Nonnull Ref<EntityStore> playerRef) {
@@ -179,13 +181,14 @@ public class PlayerStats {
                         PacketHandler packetHandler = playerRefComp.getPacketHandler();
                         if (packetHandler != null) {
                             packetHandler.write(new UpdateMovementSettings(settings));
+                            playerRefComp.sendMessage(Message.raw("Debug: Speed set to " + clampedSpeed));
                         }
                          // Feedback
                         if (amount != clampedSpeed) {
                              if (amount > MAX_SPEED) {
-                                  playerRefComp.sendMessage(com.hypixel.hytale.server.core.Message.raw("Speed capped at " + MAX_SPEED));
+                                  playerRefComp.sendMessage(Message.raw("Speed capped at " + MAX_SPEED));
                              } else if (amount < MIN_SPEED) {
-                                  playerRefComp.sendMessage(com.hypixel.hytale.server.core.Message.raw("Speed clamped to " + MIN_SPEED));
+                                  playerRefComp.sendMessage(Message.raw("Speed clamped to " + MIN_SPEED));
                              }
                         }
                     }
@@ -209,6 +212,47 @@ public class PlayerStats {
     public void resetSpeed() {
         setSpeedValue(DEFAULT_SPEED);
     }
+    
 
-
+    public CompletableFuture<Float> getSpeed() {
+        CompletableFuture<Float> future = new CompletableFuture<>();
+        if (playerRef == null || !playerRef.isValid()) {
+            future.complete(-1f);
+            return future;
+        }
+        
+        Store<EntityStore> store = playerRef.getStore();
+        if (store == null) {
+            future.complete(-1f);
+            return future;
+        }
+        EntityStore entityStore = store.getExternalData();
+        if (entityStore == null) {
+            future.complete(-1f);
+            return future;
+        }
+        World world = entityStore.getWorld();
+        if (world == null) {
+            future.complete(-1f);
+            return future;
+        }
+        
+        world.execute(() -> {
+            try {
+                MovementManager moveManager = (MovementManager) store.getComponent(playerRef, MovementManager.getComponentType());
+                if (moveManager != null) {
+                    MovementSettings settings = moveManager.getSettings();
+                    if (settings != null) {
+                        future.complete(settings.baseSpeed);
+                        return;
+                    }
+                }
+                future.complete(-1f);
+            } catch (Exception e) {
+                future.completeExceptionally(e);
+            }
+        });
+        
+        return future;
+    }
 }
