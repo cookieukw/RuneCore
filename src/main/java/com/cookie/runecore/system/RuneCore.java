@@ -1,0 +1,78 @@
+package com.cookie.runecore.system;
+
+import com.cookie.runecore.api.*;
+import java.util.*;
+import java.util.function.Consumer;
+
+public class RuneCore {
+    private static final RuneCore INSTANCE = new RuneCore();
+    
+    private final Map<String, Essence> essenceRegistry = new HashMap<>();
+    private final Map<String, GameResource> resourceRegistry = new HashMap<>();
+    private final Map<String, RuneEffect> effectRegistry = new HashMap<>();
+    private final Map<String, Spell> spellRegistry = new HashMap<>();
+    
+    private final Map<String, List<Consumer<CastContext>>> eventListeners = new HashMap<>();
+
+    private RuneCore() {}
+
+    public static RuneCore get() { return INSTANCE; }
+
+    public void registerEssence(Essence essence) {
+        essenceRegistry.put(essence.id(), essence);
+        System.out.println("[RuneCore] Registered Essence: " + essence.id());
+    }
+
+    public void registerResource(GameResource res) {
+        resourceRegistry.put(res.id(), res);
+    }
+
+    public void registerEffect(RuneEffect effect) {
+        effectRegistry.put(effect.getId(), effect);
+    }
+
+    public void registerSpell(Spell spell) {
+        spellRegistry.put(spell.getId(), spell);
+    }
+
+    public void on(String eventType, Consumer<CastContext> listener) {
+        eventListeners.computeIfAbsent(eventType, k -> new ArrayList<>()).add(listener);
+    }
+
+    private void emit(String eventType, CastContext ctx) {
+        if (eventListeners.containsKey(eventType)) {
+            for (Consumer<CastContext> listener : eventListeners.get(eventType)) {
+                listener.accept(ctx);
+            }
+        }
+    }
+
+    public boolean castSpell(String spellId, CastContext ctx) {
+        Spell spell = spellRegistry.get(spellId);
+        if (spell == null) {
+            System.err.println("Spell not found: " + spellId);
+            return false;
+        }
+
+        if (!spell.checkConditions(ctx)) {
+            System.out.println("Spell condition failed.");
+            return false;
+        }
+        
+        emit("spell:pre_cast", ctx);
+
+        System.out.println("Consuming resources: " + spell.getResourceCost());
+        emit("resource:consume", ctx);
+
+        for (String effectId : spell.getEffectIds()) {
+            RuneEffect effect = effectRegistry.get(effectId);
+            if (effect != null) {
+                effect.execute(ctx);
+                emit("effect:applied", ctx);
+            }
+        }
+
+        emit("spell:post_cast", ctx);
+        return true;
+    }
+}
