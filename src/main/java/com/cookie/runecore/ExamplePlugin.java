@@ -5,6 +5,7 @@ import com.hypixel.hytale.server.core.plugin.JavaPluginInit;
 import com.cookie.runecore.commands.ExampleCommand;
 import com.cookie.runecore.commands.TestStatsCommand;
 import com.cookie.runecore.commands.CustomTimeCommand;
+import com.cookie.runecore.systems.MobDropSystem;
 
 import javax.annotation.Nonnull;
 
@@ -19,6 +20,14 @@ public class ExamplePlugin extends JavaPlugin {
         this.getCommandRegistry().registerCommand(new ExampleCommand("example", "An example command"));
         this.getCommandRegistry().registerCommand(new TestStatsCommand());
         this.getCommandRegistry().registerCommand(new CustomTimeCommand());
-       // getLogger().at(Level.INFO).log("log test");
+         this.getEntityStoreRegistry().registerSystem(new MobDropSystem());
+        
+        // Debug API availability
+        System.out.println("Debugging JavaPlugin API:");
+        for (java.lang.reflect.Method m : this.getClass().getSuperclass().getMethods()) {
+             if (m.getName().contains("get") || m.getName().contains("register")) {
+                 System.out.println("Method: " + m.getName());
+             }
+        }
     }
 }
