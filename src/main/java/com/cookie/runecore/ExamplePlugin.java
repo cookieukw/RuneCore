@@ -2,10 +2,11 @@ package com.cookie.runecore;
 
 import com.hypixel.hytale.server.core.plugin.JavaPlugin;
 import com.hypixel.hytale.server.core.plugin.JavaPluginInit;
-import com.cookie.runecore.commands.ExampleCommand;
 import com.cookie.runecore.commands.TestStatsCommand;
+import com.cookie.runecore.commands.TestUICommand;
 import com.cookie.runecore.commands.CustomTimeCommand;
 import com.cookie.runecore.systems.MobDropSystem;
+import com.cookie.runecore.systems.ui.ManaHudManager;
 
 import javax.annotation.Nonnull;
 
@@ -17,17 +18,12 @@ public class ExamplePlugin extends JavaPlugin {
 
     @Override
     protected void setup() {
-        this.getCommandRegistry().registerCommand(new ExampleCommand("example", "An example command"));
         this.getCommandRegistry().registerCommand(new TestStatsCommand());
         this.getCommandRegistry().registerCommand(new CustomTimeCommand());
-         this.getEntityStoreRegistry().registerSystem(new MobDropSystem());
+        this.getEntityStoreRegistry().registerSystem(new MobDropSystem());
+        this.getCommandRegistry().registerCommand(new TestUICommand());
+        new ManaHudManager(this.getEventRegistry());
         
-        // Debug API availability
-        System.out.println("Debugging JavaPlugin API:");
-        for (java.lang.reflect.Method m : this.getClass().getSuperclass().getMethods()) {
-             if (m.getName().contains("get") || m.getName().contains("register")) {
-                 System.out.println("Method: " + m.getName());
-             }
-        }
+        
     }
 }

@@ -7,7 +7,6 @@ import com.hypixel.hytale.server.core.universe.world.storage.EntityStore;
 import com.hypixel.hytale.component.Ref;
 import com.hypixel.hytale.server.core.Message;
 import com.hypixel.hytale.server.core.command.system.arguments.system.RequiredArg;
-import com.hypixel.hytale.server.core.command.system.arguments.system.OptionalArg;
 import com.hypixel.hytale.server.core.command.system.arguments.types.ArgTypes;
 
 import javax.annotation.Nonnull;
@@ -18,13 +17,13 @@ public class TestStatsCommand extends AbstractCommand {
 
     private final RequiredArg<String> statArg;
     private final RequiredArg<String> actionArg;
-    private final OptionalArg<String> valueArg;
+    private final RequiredArg<String> valueArg;
 
     public TestStatsCommand() {
         super("runestat", "Modify player stats for testing purposes.");
         this.statArg = this.withRequiredArg("stat", "health|mana|stamina|speed", ArgTypes.STRING);
         this.actionArg = this.withRequiredArg("action", "add|set|remove|get", ArgTypes.STRING);
-        this.valueArg = this.withOptionalArg("value", "Value", ArgTypes.STRING);
+        this.valueArg = this.withRequiredArg("value", "Value", ArgTypes.STRING);
     }
 
     @Nullable
@@ -56,47 +55,38 @@ public class TestStatsCommand extends AbstractCommand {
                 try {
                     value = Float.parseFloat(valueStr);
                 } catch (NumberFormatException e) {
-                   // Only warn if action is NOT get
-                   if (!action.equalsIgnoreCase("get")) {
-                       ctx.sendMessage(Message.raw("Invalid number value: " + valueStr));
-                       return CompletableFuture.completedFuture(null);
-                   }
+                    if (!action.equalsIgnoreCase("get")) {
+                        ctx.sendMessage(Message.raw("Invalid number value: " + valueStr));
+                        return CompletableFuture.completedFuture(null);
+                    }
                 }
             }
-        } else {
-            // No value provided.
-            // If action is set/add/remove, we might need a value.
-            if (!action.equalsIgnoreCase("get") && !isReset && !stat.equalsIgnoreCase("speed")) { 
-                // For speed we might handle 'reset' without valueStr if logic permits, but currently reset is flagged by valueStr.
-            }
-            if (action.equalsIgnoreCase("set") || action.equalsIgnoreCase("add") || action.equalsIgnoreCase("remove")) {
-                 ctx.sendMessage(Message.raw("You must provide a value for action: " + action));
-                 return CompletableFuture.completedFuture(null);
-            }
+        } else if (!action.equalsIgnoreCase("get")) {
+            ctx.sendMessage(Message.raw("You must provide a value for action: " + action));
+            return CompletableFuture.completedFuture(null);
         }
         
-        ctx.sendMessage(Message.raw("Debug: Stat=" + stat + " Action=" + action + " Value=" + value + " Reset=" + isReset));
-
         PlayerStats stats = new PlayerStats(playerRef);
 
         switch (stat.toLowerCase()) {
             case "health":
-            case "mana":
-            case "stamina":
-                // Keeping minimal changes for other stats to avoid errors, assuming user only tests speed.
-                // In a full refactor I would add 'get' to all.
-                ctx.sendMessage(Message.raw("Stat " + stat + " does not support get yet."));
+                handleStatAction(ctx, action, value, stats::addHealth, stats::setHealth, stats::subtractHealth, null);
                 break;
-                
+            case "mana":
+                handleStatAction(ctx, action, value, stats::addMana, stats::setMana, stats::subtractMana, null);
+                break;
+            case "stamina":
+                handleStatAction(ctx, action, value, stats::addStamina, stats::setStamina, stats::subtractStamina, null);
+                break;
             case "speed":
-                 if (action.equalsIgnoreCase("get")) {
-                     stats.getSpeed().thenAccept(current -> {
-                         ctx.sendMessage(Message.raw("Current Speed: " + current));
-                     });
-                 } else if (isReset) {
-                     stats.resetSpeed();
-                     ctx.sendMessage(Message.raw("Resetting speed to normal..."));
-                 } else if (action.equalsIgnoreCase("add")) {
+                if (action.equalsIgnoreCase("get")) {
+                    stats.getSpeed().thenAccept(current -> {
+                        ctx.sendMessage(Message.raw("Current Speed: " + current));
+                    });
+                } else if (isReset) {
+                    stats.resetSpeed();
+                    ctx.sendMessage(Message.raw("Resetting speed to normal..."));
+                } else if (action.equalsIgnoreCase("add")) {
                     stats.addSpeed(value);
                     ctx.sendMessage(Message.raw("Added " + value + " to speed."));
                 } else if (action.equalsIgnoreCase("set")) {
@@ -113,5 +103,29 @@ public class TestStatsCommand extends AbstractCommand {
         }
         
         return CompletableFuture.completedFuture(null);
+    }
+
+    private void handleStatAction(CommandContext ctx, String action, float value, 
+                                  java.util.function.Consumer<Float> add, 
+                                  java.util.function.Consumer<Float> set, 
+                                  java.util.function.Consumer<Float> sub,
+                                  @Nullable Runnable reset) {
+        if (action.equalsIgnoreCase("add")) {
+            add.accept(value);
+            ctx.sendMessage(Message.raw("Added " + value + " to stat."));
+        } else if (action.equalsIgnoreCase("set")) {
+            set.accept(value);
+            ctx.sendMessage(Message.raw("Set stat to " + value + "."));
+        } else if (action.equalsIgnoreCase("remove")) {
+            sub.accept(value);
+            ctx.sendMessage(Message.raw("Removed " + value + " from stat."));
+        } else if (action.equalsIgnoreCase("get")) {
+            ctx.sendMessage(Message.raw("Get action not fully supported for this stat yet through this command."));
+        } else if (reset != null && (action.equalsIgnoreCase("reset") || action.equalsIgnoreCase("normal"))) {
+            reset.run();
+            ctx.sendMessage(Message.raw("Reset stat to default."));
+        } else {
+            ctx.sendMessage(Message.raw("Unknown or unsupported action: " + action));
+        }
     }
 }
