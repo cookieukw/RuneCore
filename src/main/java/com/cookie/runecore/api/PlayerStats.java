@@ -29,7 +29,12 @@ public class PlayerStats {
     public PlayerStats(@Nonnull Ref<EntityStore> playerRef) {
         this.playerRef = playerRef;
     }
-    
+
+    public PlayerStats(@Nonnull PlayerRef playerRef) {
+        this.playerRef = (Ref<EntityStore>) (Object) playerRef;
+    }
+
+   
     private void modifyStat(int statId, float amount) {
         if (playerRef == null || !playerRef.isValid()) return;
 
@@ -50,7 +55,12 @@ public class PlayerStats {
                     float current = statValue.get();
                     float newValue = Math.max(0, Math.min(MAX_STAT, current + amount));
                     statMap.setStatValue(statId, newValue);
+                    System.out.println("[PlayerStats] Modified stat " + statId + ": " + current + " -> " + newValue);
+                } else {
+                    System.err.println("[PlayerStats] Stat " + statId + " not found on player!");
                 }
+            } else {
+                 System.err.println("[PlayerStats] EntityStatMap not found on player!");
             }
         });
     }
@@ -72,8 +82,67 @@ public class PlayerStats {
             if (statMap != null) {
                 float clampedValue = Math.max(0, Math.min(MAX_STAT, value));
                 statMap.setStatValue(statId, clampedValue);
+                System.out.println("[PlayerStats] Set stat " + statId + " to " + clampedValue);
+            } else {
+                 System.err.println("[PlayerStats] EntityStatMap not found on player!");
             }
         });
+    }
+
+    private CompletableFuture<Float> getStat(int statId) {
+        CompletableFuture<Float> future = new CompletableFuture<>();
+        if (playerRef == null || !playerRef.isValid()) {
+            future.complete(-1f);
+            return future;
+        }
+
+        Store<EntityStore> store = playerRef.getStore();
+        if (store == null) {
+            future.complete(-1f);
+            return future;
+        }
+
+        EntityStore entityStore = store.getExternalData();
+        if (entityStore == null) {
+            future.complete(-1f);
+            return future;
+        }
+
+        World world = entityStore.getWorld();
+        if (world == null) {
+            future.complete(-1f);
+            return future;
+        }
+
+        world.execute(() -> {
+            try {
+                EntityStatMap statMap = (EntityStatMap) store.getComponent(playerRef, EntityStatMap.getComponentType());
+                if (statMap != null) {
+                    EntityStatValue statValue = statMap.get(statId);
+                    if (statValue != null) {
+                        future.complete(statValue.get());
+                        return;
+                    }
+                }
+                future.complete(-1f);
+            } catch (Exception e) {
+                future.completeExceptionally(e);
+            }
+        });
+
+        return future;
+    }
+
+    public CompletableFuture<Float> getHealth() {
+        return getStat(DefaultEntityStatTypes.getHealth());
+    }
+
+    public CompletableFuture<Float> getMana() {
+        return getStat(DefaultEntityStatTypes.getMana());
+    }
+
+    public CompletableFuture<Float> getStamina() {
+        return getStat(DefaultEntityStatTypes.getStamina());
     }
 
     public void addHealth(float amount) {

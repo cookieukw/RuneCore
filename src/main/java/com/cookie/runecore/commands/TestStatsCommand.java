@@ -70,13 +70,13 @@ public class TestStatsCommand extends AbstractCommand {
 
         switch (stat.toLowerCase()) {
             case "health":
-                handleStatAction(ctx, action, value, stats::addHealth, stats::setHealth, stats::subtractHealth, null);
+                handleStatAction(ctx, action, value, stats::addHealth, stats::setHealth, stats::subtractHealth, stats.getHealth());
                 break;
             case "mana":
-                handleStatAction(ctx, action, value, stats::addMana, stats::setMana, stats::subtractMana, null);
+                handleStatAction(ctx, action, value, stats::addMana, stats::setMana, stats::subtractMana, stats.getMana());
                 break;
             case "stamina":
-                handleStatAction(ctx, action, value, stats::addStamina, stats::setStamina, stats::subtractStamina, null);
+                handleStatAction(ctx, action, value, stats::addStamina, stats::setStamina, stats::subtractStamina, stats.getStamina());
                 break;
             case "speed":
                 if (action.equalsIgnoreCase("get")) {
@@ -109,7 +109,7 @@ public class TestStatsCommand extends AbstractCommand {
                                   java.util.function.Consumer<Float> add, 
                                   java.util.function.Consumer<Float> set, 
                                   java.util.function.Consumer<Float> sub,
-                                  @Nullable Runnable reset) {
+                                  CompletableFuture<Float> getter) {
         if (action.equalsIgnoreCase("add")) {
             add.accept(value);
             ctx.sendMessage(Message.raw("Added " + value + " to stat."));
@@ -120,10 +120,9 @@ public class TestStatsCommand extends AbstractCommand {
             sub.accept(value);
             ctx.sendMessage(Message.raw("Removed " + value + " from stat."));
         } else if (action.equalsIgnoreCase("get")) {
-            ctx.sendMessage(Message.raw("Get action not fully supported for this stat yet through this command."));
-        } else if (reset != null && (action.equalsIgnoreCase("reset") || action.equalsIgnoreCase("normal"))) {
-            reset.run();
-            ctx.sendMessage(Message.raw("Reset stat to default."));
+            getter.thenAccept(current -> {
+                 ctx.sendMessage(Message.raw("Current value: " + current));
+            });
         } else {
             ctx.sendMessage(Message.raw("Unknown or unsupported action: " + action));
         }

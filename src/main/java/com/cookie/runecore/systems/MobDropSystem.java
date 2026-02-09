@@ -46,7 +46,7 @@ public class MobDropSystem extends DeathSystems.OnDeathSystem {
              // Feedback to attacker (optional, for debug)
              PlayerRef attackerPlayerRef = (PlayerRef) store.getComponent(attackerRef, PlayerRef.getComponentType());
              if (attackerPlayerRef != null) {
-                 attackerPlayerRef.sendMessage(Message.raw("\u00A7a[RuneCore] \u00A7rYou received an Essence (Apple)!"));
+                 attackerPlayerRef.sendMessage(Message.raw("[RuneCore] You received an Essence (Apple)!"));
              }
 
         } catch (Exception e) {

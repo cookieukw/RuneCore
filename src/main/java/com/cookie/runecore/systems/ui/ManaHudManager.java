@@ -1,10 +1,6 @@
 package com.cookie.runecore.systems.ui;
 
-import com.hypixel.hytale.server.core.entity.entities.player.hud.CustomUIHud;
-import com.hypixel.hytale.component.ComponentType;
-import com.hypixel.hytale.component.Ref;
-import com.hypixel.hytale.component.Store;
-import com.hypixel.hytale.component.system.ISystem;
+import com.cookie.runecore.api.PlayerStats;
 import com.hypixel.hytale.server.core.event.events.player.PlayerConnectEvent;
 import com.hypixel.hytale.server.core.event.events.player.PlayerDisconnectEvent;
 import com.hypixel.hytale.server.core.universe.PlayerRef;
@@ -12,29 +8,57 @@ import com.hypixel.hytale.event.EventRegistry;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Timer;
+import java.util.TimerTask;
 import java.util.UUID;
-
-import javax.annotation.Nonnull;
 
 public class ManaHudManager {
 
     private final Map<UUID, ManaHud> activeHuds = new HashMap<>();
+    private final Timer updateTimer = new Timer(true);
 
     public ManaHudManager(EventRegistry eventRegistry) {
         eventRegistry.register(PlayerConnectEvent.class, this::onPlayerConnect);
         eventRegistry.register(PlayerDisconnectEvent.class, this::onPlayerDisconnect);
+        
+        // Start periodic update to sync mana values to client HUDs
+        updateTimer.scheduleAtFixedRate(new TimerTask() {
+            @Override
+            public void run() {
+                updateAllHuds();
+            }
+        }, 1000, 500); // Initial delay 1s, repeat every 500ms
     }
 
     private void onPlayerConnect(PlayerConnectEvent event) {
         PlayerRef playerRef = event.getPlayerRef();
         ManaHud hud = new ManaHud(playerRef);
-        activeHuds.put(playerRef.getUuid(), hud);
+        synchronized (activeHuds) {
+            activeHuds.put(playerRef.getUuid(), hud);
+        }
         
-        // Show the HUD
+        // Initial show
         hud.show();
     }
 
     private void onPlayerDisconnect(PlayerDisconnectEvent event) {
-        activeHuds.remove(event.getPlayerRef().getUuid());
+        synchronized (activeHuds) {
+            activeHuds.remove(event.getPlayerRef().getUuid());
+        }
+    }
+
+    private void updateAllHuds() {
+        synchronized (activeHuds) {
+            for (ManaHud hud : activeHuds.values()) {
+                PlayerStats stats = new PlayerStats(hud.getPlayerRef());
+                stats.getMana().thenAccept(current -> {
+                    // Assuming max mana is 100 for now. Base Hytale mana is usually 100.
+                    hud.updateMana(current, 100.0f);
+                }).exceptionally(e -> {
+                    System.err.println("Error updating HUD for player: " + e.getMessage());
+                    return null;
+                });
+            }
+        }
     }
 }

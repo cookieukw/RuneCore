@@ -8,6 +8,8 @@ import javax.annotation.Nonnull;
 
 public class ManaHud extends CustomUIHud {
 
+    private float manaValue = 1.0f;
+
     public ManaHud(@Nonnull PlayerRef playerRef) {
         super(playerRef);
     }
@@ -15,19 +17,19 @@ public class ManaHud extends CustomUIHud {
     @Override
     protected void build(@Nonnull UICommandBuilder builder) {
         try {
-        // Load the UI layout using namespaced path
-        builder.append("MANA/Mana.ui");
-        
-        // Initialize values
-        //builder.set("#ManaText.Text", "Mana: 100/100");
-     builder.set("#ManaBar.Value", 1.0f); // 0.0 to 1.0
-    } catch (Exception e) {
-        e.printStackTrace();
-    }
+            // Load the UI layout using namespaced path
+            builder.append("MANA/Mana.ui");
+            
+            // Set the mana bar value based on the current state
+            builder.set("#ManaBar.Value", this.manaValue);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
     
-    public void updateMana(int current, int max) {
-         // This method would be called by the manager to send updates
-         // dependent on how update() is exposed or if we re-send via builder in a refresh loop.
+    public void updateMana(float current, float max) {
+        this.manaValue = current / max;
+        // The HUD system will call build() again when we trigger an update
+        this.update(true, (UICommandBuilder) null); 
     }
 }
