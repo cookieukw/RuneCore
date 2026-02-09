@@ -8,7 +8,8 @@ import javax.annotation.Nonnull;
 
 public class ManaHud extends CustomUIHud {
 
-    private float manaValue = 1.0f;
+    private float manaValue = 1.0f; // This is the displayed value
+    private float targetManaValue = 1.0f; // This is the actual value we want to reach
 
     public ManaHud(@Nonnull PlayerRef playerRef) {
         super(playerRef);
@@ -29,12 +30,21 @@ public class ManaHud extends CustomUIHud {
     }
     
     public void updateMana(float current, float max) {
-        float newValue = Math.max(0, Math.min(1.0f, current / max));
+        this.targetManaValue = Math.max(0, Math.min(1.0f, current / max));
         
-        // Only update if it actually changed significantly to avoid spam
-        if (Math.abs(this.manaValue - newValue) > 0.0001f) {
-            this.manaValue = newValue;
-            System.out.println("[RuneCore-HUD] Mana update triggered: " + current + "/" + max + " (" + this.manaValue + ")");
+        // If the displayed value is different from the target, move it closer
+        if (Math.abs(this.manaValue - this.targetManaValue) > 0.001f) {
+            
+            // "Perco 1 por 1" - Let's use a step of 0.05 (5% of bar) per tick for speed and smoothness
+            float step = 0.05f; 
+            
+            if (this.manaValue < this.targetManaValue) {
+                this.manaValue = Math.min(this.targetManaValue, this.manaValue + step);
+            } else {
+                this.manaValue = Math.max(this.targetManaValue, this.manaValue - step);
+            }
+
+            // System.out.println("[RuneCore-HUD] Animating mana: " + this.manaValue + " -> " + this.targetManaValue);
             
             UICommandBuilder builder = new UICommandBuilder();
             builder.set("#ManaBar.Value", this.manaValue);
