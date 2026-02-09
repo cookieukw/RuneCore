@@ -8,8 +8,9 @@ import javax.annotation.Nonnull;
 
 public class ManaHud extends CustomUIHud {
 
-    private float manaValue = 1.0f; // This is the displayed value
-    private float targetManaValue = 1.0f; // This is the actual value we want to reach
+    private float manaValue = 1.0f; // This is the displayed ratio (0-1)
+    private float targetManaValue = 1.0f; 
+    private float maxManaValue = 100.0f; 
 
     public ManaHud(@Nonnull PlayerRef playerRef) {
         super(playerRef);
@@ -21,8 +22,9 @@ public class ManaHud extends CustomUIHud {
             // Load the UI layout using namespaced path
             builder.append("MANA/Mana.ui");
             
-            // Set the mana bar value based on the current state
+            // Set the mana bar value and label text based on current state
             builder.set("#ManaBar.Value", this.manaValue);
+            builder.set("#ManaText.Text", getFormattedManaText());
             System.out.println("[RuneCore-HUD] Building mana hud with value: " + this.manaValue);
         } catch (Exception e) {
             e.printStackTrace();
@@ -31,11 +33,11 @@ public class ManaHud extends CustomUIHud {
     
     public void updateMana(float current, float max) {
         this.targetManaValue = Math.max(0, Math.min(1.0f, current / max));
+        this.maxManaValue = max;
         
         // If the displayed value is different from the target, move it closer
         if (Math.abs(this.manaValue - this.targetManaValue) > 0.001f) {
             
-            // "Perco 1 por 1" - Let's use a step of 0.05 (5% of bar) per tick for speed and smoothness
             float step = 0.05f; 
             
             if (this.manaValue < this.targetManaValue) {
@@ -44,12 +46,18 @@ public class ManaHud extends CustomUIHud {
                 this.manaValue = Math.max(this.targetManaValue, this.manaValue - step);
             }
 
-            // System.out.println("[RuneCore-HUD] Animating mana: " + this.manaValue + " -> " + this.targetManaValue);
-            
             UICommandBuilder builder = new UICommandBuilder();
             builder.set("#ManaBar.Value", this.manaValue);
+            builder.set("#ManaText.Text", getFormattedManaText());
+            
             // Use false for reset to update the existing UI without rebuilding the whole layout
             this.update(false, builder); 
         }
+    }
+
+    private String getFormattedManaText() {
+        int current = (int) (this.manaValue * this.maxManaValue);
+        int max = (int) this.maxManaValue;
+        return current + "/" + max;
     }
 }
