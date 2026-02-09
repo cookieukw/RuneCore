@@ -1,7 +1,7 @@
 
 Group {
   LayoutMode: Bottom;
-  Anchor: (Left: 48, Top: 148, Width: 358, Height: 64);
+  Anchor: (Left: 48, Top: 30, Width: 358, Height: 64);
 
   Group {
     Group {

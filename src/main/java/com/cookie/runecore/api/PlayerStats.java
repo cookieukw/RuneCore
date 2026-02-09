@@ -10,6 +10,7 @@ import com.hypixel.hytale.protocol.MovementSettings;
 import com.hypixel.hytale.protocol.packets.player.UpdateMovementSettings;
 import com.hypixel.hytale.server.core.Message;
 import com.hypixel.hytale.server.core.entity.entities.player.movement.MovementManager;
+import com.cookie.runecore.ExamplePlugin;
 import com.hypixel.hytale.server.core.io.PacketHandler;
 import com.hypixel.hytale.server.core.modules.entitystats.EntityStatMap;
 import com.hypixel.hytale.server.core.modules.entitystats.EntityStatValue;
@@ -26,12 +27,14 @@ public class PlayerStats {
     private static final float DEFAULT_SPEED = 5.5f;
     private static final float MAX_STAT = 1000.0f;
 
-    public PlayerStats(@Nonnull Ref<EntityStore> playerRef) {
+
+   public PlayerStats(@Nonnull Ref<EntityStore> playerRef) {
         this.playerRef = playerRef;
+        // Manual validation should be done by the caller using playerRef.isValid()
     }
 
     public PlayerStats(@Nonnull PlayerRef playerRef) {
-        this.playerRef = (Ref<EntityStore>) (Object) playerRef;
+        this(playerRef.getReference());
     }
 
    
@@ -55,12 +58,12 @@ public class PlayerStats {
                     float current = statValue.get();
                     float newValue = Math.max(0, Math.min(MAX_STAT, current + amount));
                     statMap.setStatValue(statId, newValue);
-                    System.out.println("[PlayerStats] Modified stat " + statId + ": " + current + " -> " + newValue);
+                    System.out.println("[RuneCore-Stats] Modified stat " + statId + ": " + current + " -> " + newValue);
                 } else {
-                    System.err.println("[PlayerStats] Stat " + statId + " not found on player!");
+                    System.err.println("[RuneCore-Stats] Stat " + statId + " not found on player!");
                 }
             } else {
-                 System.err.println("[PlayerStats] EntityStatMap not found on player!");
+                 System.err.println("[RuneCore-Stats] EntityStatMap not found on player!");
             }
         });
     }
@@ -138,13 +141,86 @@ public class PlayerStats {
     }
 
     public CompletableFuture<Float> getMana() {
-        return getStat(DefaultEntityStatTypes.getMana());
+        CompletableFuture<Float> future = new CompletableFuture<>();
+        if (playerRef == null || !playerRef.isValid()) {
+            future.complete(-1f);
+            return future;
+        }
+
+        Store<EntityStore> store = playerRef.getStore();
+        if (store == null) {
+            future.complete(-1f);
+            return future;
+        }
+
+        EntityStore entityStore = store.getExternalData();
+        if (entityStore == null) {
+            future.complete(-1f);
+            return future;
+        }
+
+        World world = entityStore.getWorld();
+        if (world == null) {
+            future.complete(-1f);
+            return future;
+        }
+
+        world.execute(() -> {
+            try {
+                PlayerDataComponent data = store.ensureAndGetComponent(playerRef, ExamplePlugin.PLAYER_DATA_TYPE);
+                future.complete(data.getMana());
+            } catch (Exception e) {
+                future.completeExceptionally(e);
+            }
+        });
+
+        return future;
+    }
+
+    public CompletableFuture<Float> getMaxMana() {
+        CompletableFuture<Float> future = new CompletableFuture<>();
+        if (playerRef == null || !playerRef.isValid()) {
+            future.complete(100f);
+            return future;
+        }
+
+        Store<EntityStore> store = playerRef.getStore();
+        if (store == null) {
+             future.complete(100f);
+             return future;
+        }
+
+        EntityStore entityStore = store.getExternalData();
+        if (entityStore == null) {
+             future.complete(100f);
+             return future;
+        }
+
+        World world = entityStore.getWorld();
+        if (world == null) {
+             future.complete(100f);
+             return future;
+        }
+
+        world.execute(() -> {
+            try {
+                PlayerDataComponent data = store.ensureAndGetComponent(playerRef, ExamplePlugin.PLAYER_DATA_TYPE);
+                future.complete(data.getMaxMana());
+            } catch (Exception e) {
+                future.completeExceptionally(e);
+            }
+        });
+
+        return future;
     }
 
     public CompletableFuture<Float> getStamina() {
         return getStat(DefaultEntityStatTypes.getStamina());
     }
 
+    // Note: DefaultEntityStatTypes doesn't seem to have getMaxMana/Health/Stamina 
+    // We will use 100 as default or implement a way to find them later.
+    
     public void addHealth(float amount) {
         modifyStat(DefaultEntityStatTypes.getHealth(), amount);
     }
@@ -154,15 +230,39 @@ public class PlayerStats {
     }
 
     public void addMana(float amount) {
-        modifyStat(DefaultEntityStatTypes.getMana(), amount);
+        if (playerRef == null || !playerRef.isValid()) return;
+        Store<EntityStore> store = playerRef.getStore();
+        if (store == null) return;
+        EntityStore entityStore = store.getExternalData();
+        if (entityStore == null) return;
+        World world = entityStore.getWorld();
+        if (world == null) return;
+
+        world.execute(() -> {
+            PlayerDataComponent data = store.ensureAndGetComponent(playerRef, ExamplePlugin.PLAYER_DATA_TYPE);
+            data.setMana(data.getMana() + amount);
+            System.out.println("[RuneCore-Stats] Modified custom mana: " + data.getMana());
+        });
     }
 
      public void setMana(float amount) {
-        setStat(DefaultEntityStatTypes.getMana(), amount);
+        if (playerRef == null || !playerRef.isValid()) return;
+        Store<EntityStore> store = playerRef.getStore();
+        if (store == null) return;
+        EntityStore entityStore = store.getExternalData();
+        if (entityStore == null) return;
+        World world = entityStore.getWorld();
+        if (world == null) return;
+
+        world.execute(() -> {
+            PlayerDataComponent data = store.ensureAndGetComponent(playerRef, ExamplePlugin.PLAYER_DATA_TYPE);
+            data.setMana(amount);
+            System.out.println("[RuneCore-Stats] Set custom mana to " + data.getMana());
+        });
     }
     
     public void subtractMana(float amount) {
-        modifyStat(DefaultEntityStatTypes.getMana(), -amount);
+        addMana(-amount);
     }
 
     public void addStamina(float amount) {
@@ -265,6 +365,7 @@ public class PlayerStats {
             }
         });
     }
+
 
     public void addSpeed(float amount) {
         modifySpeed(amount);

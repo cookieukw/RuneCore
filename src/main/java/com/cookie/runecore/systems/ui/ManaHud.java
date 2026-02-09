@@ -22,14 +22,24 @@ public class ManaHud extends CustomUIHud {
             
             // Set the mana bar value based on the current state
             builder.set("#ManaBar.Value", this.manaValue);
+            System.out.println("[RuneCore-HUD] Building mana hud with value: " + this.manaValue);
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
     
     public void updateMana(float current, float max) {
-        this.manaValue = current / max;
-        // The HUD system will call build() again when we trigger an update
-        this.update(true, (UICommandBuilder) null); 
+        float newValue = Math.max(0, Math.min(1.0f, current / max));
+        
+        // Only update if it actually changed significantly to avoid spam
+        if (Math.abs(this.manaValue - newValue) > 0.0001f) {
+            this.manaValue = newValue;
+            System.out.println("[RuneCore-HUD] Mana update triggered: " + current + "/" + max + " (" + this.manaValue + ")");
+            
+            UICommandBuilder builder = new UICommandBuilder();
+            builder.set("#ManaBar.Value", this.manaValue);
+            // Use false for reset to update the existing UI without rebuilding the whole layout
+            this.update(false, builder); 
+        }
     }
 }
