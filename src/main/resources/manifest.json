@@ -1,7 +1,7 @@
 {
   "SchemaVersion": 1,
   "Name": "RuneCore",
-  "Version": "1.0.6",
+  "Version": "1.0.11",
   "Group": "com.cookie.runecore",
   "Authors": [
     {
@@ -12,5 +12,6 @@
   "Main": "com.cookie.runecore.ExamplePlugin",
   "Url": "",
   "Website": "",
-  "Permissions": []
+  "Permissions": [],
+  "IncludesAssetPack": true
 }

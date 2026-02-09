@@ -1,0 +1,11 @@
+ Group {
+        Anchor: (Height: 12, Bottom: 16, Horizontal: 16);
+        Background: "../Common/ProgressBar.png";
+        ProgressBar #ProgressBar {
+            BarTexturePath: "../Common/ProgressBarFill.png";
+            EffectTexturePath: "../Common/ProgressBarEffect.png";
+            EffectWidth: 102;
+            EffectHeight: 58;
+            EffectOffset: 74;
+        }
+    }
