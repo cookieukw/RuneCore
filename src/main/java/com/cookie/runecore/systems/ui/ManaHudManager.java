@@ -4,6 +4,7 @@ import com.cookie.runecore.api.PlayerStats;
 import com.hypixel.hytale.server.core.event.events.player.PlayerDisconnectEvent;
 import com.hypixel.hytale.server.core.event.events.player.PlayerReadyEvent;
 import com.hypixel.hytale.server.core.universe.PlayerRef;
+import com.hypixel.hytale.protocol.packets.interface_.HudComponent;
 import com.hypixel.hytale.event.EventRegistry;
 import com.hypixel.hytale.server.core.entity.entities.Player;
 import com.hypixel.hytale.component.Ref;
@@ -44,6 +45,9 @@ public class ManaHudManager {
         if (playerRef == null) return;
 
         System.out.println("[RuneCore-Manager] Player Ready: " + playerRef.getUsername() + ", showing mana HUD");
+        
+        // Hide original Hytale Mana HUD
+        player.getHudManager().hideHudComponents(playerRef, HudComponent.Mana);
         
         ManaHud hud = new ManaHud(playerRef);
         synchronized (activeHuds) {

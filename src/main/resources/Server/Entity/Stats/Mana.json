@@ -1,0 +1,27 @@
+{
+  "InitialValue": 100,
+  "Min": 0,
+  "Max": 100,
+  "Shared": true,
+  "ResetType": "MaxValue",
+  "Regenerating": [
+    {
+      "Interval": 0.25,
+      "Amount": 0.05,
+      "RegenType": "Percentage",
+      "Conditions": [
+        {
+          "Id": "Alive"
+        },
+        {
+          "Id": "NoDamageTaken",
+          "Delay": 2.5
+        },
+        {
+          "Id": "Charging",
+          "Inverse": true
+        }
+      ]
+    }
+  ]
+}
