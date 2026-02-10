@@ -12,6 +12,7 @@ import com.hypixel.hytale.server.core.command.system.arguments.types.ArgTypes;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.concurrent.CompletableFuture;
+import java.util.function.Consumer;
 
 public class TestStatsCommand extends AbstractCommand {
 
@@ -106,9 +107,9 @@ public class TestStatsCommand extends AbstractCommand {
     }
 
     private void handleStatAction(CommandContext ctx, String action, float value, 
-                                  java.util.function.Consumer<Float> add, 
-                                  java.util.function.Consumer<Float> set, 
-                                  java.util.function.Consumer<Float> sub,
+                                  Consumer<Float> add, 
+                                  Consumer<Float> set, 
+                                  Consumer<Float> sub,
                                   CompletableFuture<Float> getter) {
         if (action.equalsIgnoreCase("add")) {
             add.accept(value);
