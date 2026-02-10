@@ -25,7 +25,6 @@ public class ManaHud extends CustomUIHud {
             // Set the mana bar value and label text based on current state
             builder.set("#ManaBar.Value", this.manaValue);
             builder.set("#ManaText.Text", getFormattedManaText());
-            System.out.println("[RuneCore-HUD] Building mana hud with value: " + this.manaValue);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -35,16 +34,10 @@ public class ManaHud extends CustomUIHud {
         this.targetManaValue = Math.max(0, Math.min(1.0f, current / max));
         this.maxManaValue = max;
         
-        // If the displayed value is different from the target, move it closer
-        if (Math.abs(this.manaValue - this.targetManaValue) > 0.001f) {
-            
-            float step = 0.05f; 
-            
-            if (this.manaValue < this.targetManaValue) {
-                this.manaValue = Math.min(this.targetManaValue, this.manaValue + step);
-            } else {
-                this.manaValue = Math.max(this.targetManaValue, this.manaValue - step);
-            }
+        // Use Lerp for smooth animation
+        if (Math.abs(this.manaValue - this.targetManaValue) > 0.0001f) {
+            float lerpFactor = 0.15f; 
+            this.manaValue = this.manaValue + (this.targetManaValue - this.manaValue) * lerpFactor;
 
             UICommandBuilder builder = new UICommandBuilder();
             builder.set("#ManaBar.Value", this.manaValue);

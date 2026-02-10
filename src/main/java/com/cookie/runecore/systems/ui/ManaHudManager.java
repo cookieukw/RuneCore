@@ -31,7 +31,7 @@ public class ManaHudManager {
             public void run() {
                 updateAllHuds();
             }
-        }, 1000, 100); // Initial delay 1s, repeat every 100ms (10fps for animations)
+        }, 1000, 33); // Initial delay 1s, repeat every 33ms (~30fps for animations)
     }
 
     private void onPlayerReady(PlayerReadyEvent event) {
