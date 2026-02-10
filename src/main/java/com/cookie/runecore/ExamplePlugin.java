@@ -32,8 +32,8 @@ public class ExamplePlugin extends JavaPlugin {
 
         this.getCommandRegistry().registerCommand(new TestStatsCommand());
         this.getCommandRegistry().registerCommand(new CustomTimeCommand());
-        this.getEntityStoreRegistry().registerSystem(new MobDropSystem());
         this.getCommandRegistry().registerCommand(new TestUICommand());
+        this.getEntityStoreRegistry().registerSystem(new MobDropSystem());
         new ManaHudManager(this.getEventRegistry());
     }
 }
