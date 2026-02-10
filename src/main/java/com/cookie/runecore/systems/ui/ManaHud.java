@@ -11,7 +11,7 @@ public class ManaHud extends CustomUIHud {
     private float manaValue = 1.0f; // This is the displayed ratio (0-1)
     private float targetManaValue = 1.0f; 
     private float maxManaValue = 100.0f; 
-
+UICommandBuilder builder = new UICommandBuilder();
     public ManaHud(@Nonnull PlayerRef playerRef) {
         super(playerRef);
     }
@@ -36,21 +36,24 @@ public class ManaHud extends CustomUIHud {
         
         // Use Lerp for smooth animation
         if (Math.abs(this.manaValue - this.targetManaValue) > 0.0001f) {
-            float lerpFactor = 0.15f; 
+            float lerpFactor = 0.5f; 
             this.manaValue = this.manaValue + (this.targetManaValue - this.manaValue) * lerpFactor;
-
-            UICommandBuilder builder = new UICommandBuilder();
-            builder.set("#ManaBar.Value", this.manaValue);
-            builder.set("#ManaText.Text", getFormattedManaText());
-            
-            // Use false for reset to update the existing UI without rebuilding the whole layout
-            this.update(false, builder); 
+        } else {
+            // Snap to target to avoid floating point inaccuracies (e.g. showing 99/100)
+            this.manaValue = this.targetManaValue;
         }
+
+        
+        builder.set("#ManaBar.Value", this.manaValue);
+        builder.set("#ManaText.Text", getFormattedManaText());
+        
+        // Use false for reset to update the existing UI without rebuilding the whole layout
+        this.update(false, builder); 
     }
 
     private String getFormattedManaText() {
-        int current = (int) (this.manaValue * this.maxManaValue);
-        int max = (int) this.maxManaValue;
+        int current = Math.round(this.manaValue * this.maxManaValue);
+        int max = Math.round(this.maxManaValue);
         return current + "/" + max;
     }
 }
