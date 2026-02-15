@@ -1,0 +1,13 @@
+{
+  "TranslationProperties": {
+    "Name": "server.items.essence_death.name"
+  },
+  "Quality": "Common",
+  "Icon": "Icons/death_essence.png",
+  "MaxStack": 64,
+  "Tags": {
+    "Type": [
+      "Essence"
+    ]
+  }
+}

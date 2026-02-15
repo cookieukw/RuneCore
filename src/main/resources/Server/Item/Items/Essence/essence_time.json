@@ -1,0 +1,13 @@
+{
+  "TranslationProperties": {
+    "Name": "server.items.essence_time.name"
+  },
+  "Quality": "Common",
+  "Icon": "Icons/time_essence.png",
+  "MaxStack": 64,
+  "Tags": {
+    "Type": [
+      "Essence"
+    ]
+  }
+}

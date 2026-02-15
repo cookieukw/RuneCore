@@ -1,0 +1,13 @@
+{
+  "TranslationProperties": {
+    "Name": "server.items.essence_earth.name"
+  },
+  "Quality": "Common",
+  "Icon": "Icons/earth_essence.png",
+  "MaxStack": 64,
+  "Tags": {
+    "Type": [
+      "Essence"
+    ]
+  }
+}

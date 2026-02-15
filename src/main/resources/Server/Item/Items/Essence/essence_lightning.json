@@ -1,0 +1,13 @@
+{
+  "TranslationProperties": {
+    "Name": "server.items.essence_lightning.name"
+  },
+  "Quality": "Common",
+  "Icon": "Icons/lighthning_essence.png",
+  "MaxStack": 64,
+  "Tags": {
+    "Type": [
+      "Essence"
+    ]
+  }
+}
