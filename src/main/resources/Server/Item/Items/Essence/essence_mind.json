@@ -3,7 +3,7 @@
     "Name": "server.items.essence_mind.name"
   },
   "Quality": "Common",
-  "Icon": "Icons/mind_essence.png",
+  "Icon": "Icons/Items/mind_essence.png",
   "MaxStack": 64,
   "Tags": {
     "Type": [

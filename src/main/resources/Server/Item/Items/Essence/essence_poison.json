@@ -3,7 +3,7 @@
     "Name": "server.items.essence_poison.name"
   },
   "Quality": "Common",
-  "Icon": "Icons/poison_essence.png",
+  "Icon": "Icons/Items/poison_essence.png",
   "MaxStack": 64,
   "Tags": {
     "Type": [

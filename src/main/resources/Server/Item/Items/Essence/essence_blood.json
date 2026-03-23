@@ -3,7 +3,7 @@
     "Name": "server.items.essence_blood.name"
   },
   "Quality": "Common",
-  "Icon": "Icons/blood_essence.png",
+  "Icon": "Icons/Items/blood_essence.png",
   "MaxStack": 64,
   "Tags": {
     "Type": [

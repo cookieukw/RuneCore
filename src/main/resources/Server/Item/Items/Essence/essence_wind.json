@@ -3,7 +3,7 @@
     "Name": "server.items.essence_wind.name"
   },
   "Quality": "Common",
-  "Icon": "Icons/wind_essence.png",
+  "Icon": "Icons/Items/wind_essence.png",
   "MaxStack": 64,
   "Tags": {
     "Type": [

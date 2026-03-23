@@ -3,7 +3,7 @@
     "Name": "server.items.essence_fire.name"
   },
   "Quality": "Common",
-  "Icon": "Icons/fire_essence.png",
+  "Icon": "Icons/Items/fire_essence.png",
   "MaxStack": 64,
   "Tags": {
     "Type": [

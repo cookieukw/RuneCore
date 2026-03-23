@@ -3,7 +3,7 @@
     "Name": "server.items.essence_ice.name"
   },
   "Quality": "Common",
-  "Icon": "Icons/ice_essence.png",
+  "Icon": "Icons/Items/ice_essence.png",
   "MaxStack": 64,
   "Tags": {
     "Type": [

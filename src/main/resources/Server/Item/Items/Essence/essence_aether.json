@@ -3,7 +3,7 @@
     "Name": "server.items.essence_aether.name"
   },
   "Quality": "Common",
-  "Icon": "Icons/aether_essence.png",
+  "Icon": "Icons/Items/aether_essence.png",
   "MaxStack": 64,
   "Tags": {
     "Type": [

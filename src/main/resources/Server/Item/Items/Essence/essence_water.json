@@ -3,7 +3,7 @@
     "Name": "server.items.essence_water.name"
   },
   "Quality": "Common",
-  "Icon": "Icons/whater_essence.png",
+  "Icon": "Icons/Items/water_essence.png",
   "MaxStack": 64,
   "Tags": {
     "Type": [

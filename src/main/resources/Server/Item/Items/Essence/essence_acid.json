@@ -3,7 +3,7 @@
     "Name": "server.items.essence_acid.name"
   },
   "Quality": "Common",
-  "Icon": "Icons/acid_essence.png",
+  "Icon": "Icons/Items/acid_essence.png",
   "MaxStack": 64,
   "Tags": {
     "Type": [

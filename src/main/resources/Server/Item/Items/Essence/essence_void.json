@@ -3,7 +3,7 @@
     "Name": "server.items.essence_void.name"
   },
   "Quality": "Common",
-  "Icon": "Icons/void_essence.png",
+  "Icon": "Icons/Items/void_essence.png",
   "MaxStack": 64,
   "Tags": {
     "Type": [
