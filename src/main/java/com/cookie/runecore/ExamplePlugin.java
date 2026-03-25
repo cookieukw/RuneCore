@@ -18,11 +18,11 @@ public class ExamplePlugin extends JavaPlugin {
 
     @Override
     protected void setup() {
-        this.getCommandRegistry().registerCommand(new TestStatsCommand());
-        this.getCommandRegistry().registerCommand(new CustomTimeCommand());
-        this.getCommandRegistry().registerCommand(new TestUICommand());
+       // this.getCommandRegistry().registerCommand(new TestStatsCommand());
+        //this.getCommandRegistry().registerCommand(new CustomTimeCommand());
+       // this.getCommandRegistry().registerCommand(new TestUICommand());
          this.getEntityStoreRegistry().registerSystem(new MobDropSystem());
        // new MagicItemConsumptionSystem(this.getEventRegistry());
-        new ManaHudManager(this.getEventRegistry()); 
+        //new ManaHudManager(this.getEventRegistry()); 
     }
 }
