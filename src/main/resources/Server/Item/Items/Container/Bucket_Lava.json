@@ -1,0 +1,51 @@
+{
+  "TranslationProperties": {
+    "Name": "server.items.Bucket_Lava.name",
+    "Description": "server.items.Bucket_Lava.description"
+  },
+  "ItemLevel": 15,
+  "MaxStack": 1,
+  "Categories": ["Furniture.Containers"],
+  "Interactions": {
+    "Secondary": {
+      "Interactions": [
+        {
+          "Type": "PlaceFluid",
+          "RemoveItemInHand": false,
+          "FluidToPlace": "Lava_Source",
+          "Effects": {
+            "ClearSoundEventOnFinish": true,
+            "LocalSoundEventId": "SFX_WATER_MoveOut"
+          }
+        }
+      ]
+    }
+  },
+  "BlockType": {
+    "Material": "Empty",
+    "DrawType": "Model",
+    "Opacity": "Transparent",
+    "CustomModel": "Items/Bucket_Full.blockymodel",
+    "CustomModelTexture": [
+      {
+        "Weight": 1,
+        "Texture": "Blocks/Miscellaneous/Bucket_Texture_Lava.png"
+      }
+    ],
+    "CustomModelScale": 2.5,
+    "Light": {
+      "Radius": 8,
+      "Color": "#ff6301"
+    },
+    "RandomRotation": "YawStep1",
+    "HitboxType": "Plant_Full",
+    "BlockParticleSetId": "Metal",
+    "BlockSoundSetId": "Metal"
+  },
+  "PlayerAnimationsId": "Item",
+  "Tags": {
+    "Type": ["Container"]
+  },
+  "ItemSoundSetId": "ISS_Items_Metal",
+  "DropOnDeath": true
+}

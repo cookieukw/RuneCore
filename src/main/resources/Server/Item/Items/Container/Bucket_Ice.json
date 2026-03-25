@@ -1,0 +1,51 @@
+{
+  "TranslationProperties": {
+    "Name": "server.items.Bucket_Ice.name",
+    "Description": "server.items.Bucket_Ice.description"
+  },
+  "ItemLevel": 15,
+  "MaxStack": 1,
+  "Categories": ["Furniture.Containers"],
+  "Interactions": {
+    "Secondary": {
+      "Interactions": [
+        {
+          "Type": "PlaceFluid",
+          "RemoveItemInHand": false,
+          "FluidToPlace": "Water_Source",
+          "Effects": {
+            "ClearSoundEventOnFinish": true,
+            "LocalSoundEventId": "SFX_WATER_MoveOut"
+          }
+        }
+      ]
+    }
+  },
+  "BlockType": {
+    "Material": "Empty",
+    "DrawType": "Model",
+    "Opacity": "Transparent",
+    "CustomModel": "Items/Bucket_Full.blockymodel",
+    "CustomModelTexture": [
+      {
+        "Weight": 1,
+        "Texture": "Blocks/Miscellaneous/Bucket_Texture_Snow.png"
+      }
+    ],
+    "CustomModelScale": 2.5,
+    "Light": {
+      "Radius": 4,
+      "Color": "#A0A0FF"
+    },
+    "RandomRotation": "YawStep1",
+    "HitboxType": "Plant_Full",
+    "BlockParticleSetId": "Metal",
+    "BlockSoundSetId": "Metal"
+  },
+  "PlayerAnimationsId": "Item",
+  "Tags": {
+    "Type": ["Container"]
+  },
+  "ItemSoundSetId": "ISS_Items_Metal",
+  "DropOnDeath": true
+}
