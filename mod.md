@@ -64,12 +64,12 @@ As almas são baseadas em elementos. Normalmente, os mods ou jogos do gênero se
 
 | Nível Básico | Nível Avançado | Elementos Instáveis | Elementos Químicos |
 | :----------: | :------------: | :-----------------: | :----------------: |
-|   🔥 Fogo    |     ☀️ Luz     |       🌀 Caos       |      ⚙️ Metal      |
-|   🪨 Terra   |   🌑 Sombra    |       ✨ Éter       |     💎 Cristal     |
-|   💨 Vento   |    🌿 Vida     |      🕳️ Vazio       |     🧪 Veneno      |
-|   💧 Água    |    ☠️ Morte    |      ⏳ Tempo       |      🧴 Ácido      |
-|   ❄️ Gelo    |    🧠 Mente    |                     |                    |
-|   ⚡ Raio    |   🩸 Sangue    |                     |                    |
+|🔥 Fogo|☀️ Luz|🌀 Caos|⚙️ Metal|
+|🪨 Terra|🌑 Sombra|✨ Éter|💎 Cristal|
+|💨 Vento|🌿 Vida|🕳️ Vazio|🧪 Veneno|
+|💧 Água|☠️ Morte|⏳ Tempo|🧴 Ácido|
+|❄️ Gelo|🧠 Mente|||
+|⚡ Raio|🩸 Sangue|||
 
 ---
 
