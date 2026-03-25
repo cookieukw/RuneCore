@@ -1,6 +1,6 @@
 # 🔮 RuneCore: Design Document
 
-[Leia em português](README-PTBR.md)
+[Leia em português](README-PTBR.md) | [Manual](RuneCore_Manual.md) | [API](API_USAGE.md)
 
 ## 1. Where did it come from? 🤔
 
