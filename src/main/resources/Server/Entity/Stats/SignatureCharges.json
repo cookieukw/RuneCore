@@ -4,5 +4,6 @@
   "Max": 100,
   "Shared": true,
   "MaxValueEffects": {
-  }
+  },
+  "HideFromTooltip": true
 }
