@@ -10,9 +10,9 @@ import com.cookie.runecore.commands.CustomTimeCommand;
 
 import javax.annotation.Nonnull;
 
-public class ExamplePlugin extends JavaPlugin {
+public class RuneCore extends JavaPlugin {
 
-    public ExamplePlugin(@Nonnull JavaPluginInit init) {
+    public RuneCore(@Nonnull JavaPluginInit init) {
         super(init);
     }
 

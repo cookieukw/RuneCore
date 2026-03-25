@@ -9,7 +9,7 @@
       "Url": ""
     }
   ],
-  "Main": "com.cookie.runecore.ExamplePlugin",
+  "Main": "com.cookie.runecore.RuneCore",
   "Url": "",
   "Website": "",
   "Permissions": [],
