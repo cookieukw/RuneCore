@@ -4,23 +4,28 @@ import com.cookie.runecore.api.*;
 import com.cookie.runecore.content.CoreEffects;
 import com.cookie.runecore.content.CoreEssences;
 import com.cookie.runecore.content.CoreSpells;
+import com.hypixel.hytale.server.core.entity.entities.Player;
+import com.hypixel.hytale.server.core.universe.PlayerRef;
 
 import java.util.*;
 import java.util.function.Consumer;
 
 public class RuneCore {
     private static final RuneCore INSTANCE = new RuneCore();
-    
+
     private final Map<String, Essence> essenceRegistry = new HashMap<>();
     private final Map<String, GameResource> resourceRegistry = new HashMap<>();
     private final Map<String, RuneEffect> effectRegistry = new HashMap<>();
     private final Map<String, Spell> spellRegistry = new HashMap<>();
-    
+
     private final Map<String, List<Consumer<CastContext>>> eventListeners = new HashMap<>();
 
-    private RuneCore() {}
+    private RuneCore() {
+    }
 
-    public static RuneCore get() { return INSTANCE; }
+    public static RuneCore get() {
+        return INSTANCE;
+    }
 
     public void registerEssence(Essence essence) {
         essenceRegistry.put(essence.id(), essence);
@@ -73,10 +78,28 @@ public class RuneCore {
             System.out.println("Spell condition failed.");
             return false;
         }
-        
+
         emit("spell:pre_cast", ctx);
 
-        System.out.println("Consuming resources: " + spell.getResourceCost());
+        // Deduct mana if source is a player
+        if (ctx.source != null) {
+            PlayerStats stats = null;
+            if (ctx.source instanceof PlayerRef) {
+                stats = new PlayerStats((PlayerRef) ctx.source);
+            } else if (ctx.source instanceof Player) {
+                stats = new PlayerStats(((Player) ctx.source).getPlayerRef());
+            }
+
+            if (stats != null) {
+                for (Map.Entry<String, Integer> entry : spell.getResourceCost().entrySet()) {
+                    if (entry.getKey().equalsIgnoreCase("arcane_mana") || entry.getKey().equalsIgnoreCase("mana")) {
+                        stats.subtractMana(entry.getValue());
+                        System.out.println("[RuneCore] Deducted " + entry.getValue() + " mana from player.");
+                    }
+                }
+            }
+        }
+
         emit("resource:consume", ctx);
 
         for (String effectId : spell.getEffectIds()) {
