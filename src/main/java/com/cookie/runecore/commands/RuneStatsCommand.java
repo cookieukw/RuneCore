@@ -14,14 +14,14 @@ import javax.annotation.Nullable;
 import java.util.concurrent.CompletableFuture;
 import java.util.function.Consumer;
 
-public class TestStatsCommand extends AbstractCommand {
+public class RuneStatsCommand extends AbstractCommand {
 
     private final RequiredArg<String> statArg;
     private final RequiredArg<String> actionArg;
     private final RequiredArg<String> valueArg;
 
-    public TestStatsCommand() {
-        super("runestat", "Modify player stats for testing purposes.");
+    public RuneStatsCommand() {
+        super("runestats", "View or modify RuneCore player stats.");
         this.statArg = this.withRequiredArg("stat", "health|mana|stamina|speed", ArgTypes.STRING);
         this.actionArg = this.withRequiredArg("action", "add|set|remove|get", ArgTypes.STRING);
         this.valueArg = this.withRequiredArg("value", "Value", ArgTypes.STRING);
@@ -32,9 +32,9 @@ public class TestStatsCommand extends AbstractCommand {
     protected CompletableFuture<Void> execute(@Nonnull CommandContext ctx) {
         Ref<EntityStore> playerRef = null;
         try {
-             playerRef = ctx.senderAsPlayerRef();
+            playerRef = ctx.senderAsPlayerRef();
         } catch (Error | Exception e) {
-             // Fallback
+            // Fallback
         }
 
         if (playerRef == null) {
@@ -45,12 +45,13 @@ public class TestStatsCommand extends AbstractCommand {
         String stat = ctx.get(this.statArg);
         String action = ctx.get(this.actionArg);
         String valueStr = ctx.get(this.valueArg);
-        
+
         Float value = 0f;
         boolean isReset = false;
-        
+
         if (valueStr != null) {
-            if (valueStr.equalsIgnoreCase("normal") || valueStr.equalsIgnoreCase("default") || valueStr.equalsIgnoreCase("reset")) {
+            if (valueStr.equalsIgnoreCase("normal") || valueStr.equalsIgnoreCase("default")
+                    || valueStr.equalsIgnoreCase("reset")) {
                 isReset = true;
             } else {
                 try {
@@ -66,18 +67,21 @@ public class TestStatsCommand extends AbstractCommand {
             ctx.sendMessage(Message.raw("You must provide a value for action: " + action));
             return CompletableFuture.completedFuture(null);
         }
-        
+
         PlayerStats stats = new PlayerStats(playerRef);
 
         switch (stat.toLowerCase()) {
             case "health":
-                handleStatAction(ctx, action, value, stats::addHealth, stats::setHealth, stats::subtractHealth, stats.getHealth());
+                handleStatAction(ctx, action, value, stats::addHealth, stats::setHealth, stats::subtractHealth,
+                        stats.getHealth());
                 break;
             case "mana":
-                handleStatAction(ctx, action, value, stats::addMana, stats::setMana, stats::subtractMana, stats.getMana());
+                handleStatAction(ctx, action, value, stats::addMana, stats::setMana, stats::subtractMana,
+                        stats.getMana());
                 break;
             case "stamina":
-                handleStatAction(ctx, action, value, stats::addStamina, stats::setStamina, stats::subtractStamina, stats.getStamina());
+                handleStatAction(ctx, action, value, stats::addStamina, stats::setStamina, stats::subtractStamina,
+                        stats.getStamina());
                 break;
             case "speed":
                 if (action.equalsIgnoreCase("get")) {
@@ -102,15 +106,15 @@ public class TestStatsCommand extends AbstractCommand {
                 ctx.sendMessage(Message.raw("Unknown stat: " + stat));
                 break;
         }
-        
+
         return CompletableFuture.completedFuture(null);
     }
 
-    private void handleStatAction(CommandContext ctx, String action, float value, 
-                                  Consumer<Float> add, 
-                                  Consumer<Float> set, 
-                                  Consumer<Float> sub,
-                                  CompletableFuture<Float> getter) {
+    private void handleStatAction(CommandContext ctx, String action, float value,
+            Consumer<Float> add,
+            Consumer<Float> set,
+            Consumer<Float> sub,
+            CompletableFuture<Float> getter) {
         if (action.equalsIgnoreCase("add")) {
             add.accept(value);
             ctx.sendMessage(Message.raw("Added " + value + " to stat."));
@@ -122,7 +126,7 @@ public class TestStatsCommand extends AbstractCommand {
             ctx.sendMessage(Message.raw("Removed " + value + " from stat."));
         } else if (action.equalsIgnoreCase("get")) {
             getter.thenAccept(current -> {
-                 ctx.sendMessage(Message.raw("Current value: " + current));
+                ctx.sendMessage(Message.raw("Current value: " + current));
             });
         } else {
             ctx.sendMessage(Message.raw("Unknown or unsupported action: " + action));
