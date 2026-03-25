@@ -2,6 +2,17 @@
 
 [Leia em português](README-PTBR.md) | [Manual](RuneCore_Manual.md) | [API](API_USAGE.md)
 
+> [!IMPORTANT]
+> **Project Status: Under Development**
+>
+> - 🛠️ **In Progress:** Drop system and essence drop mechanics are currently being developed.
+> - ✅ **Functional:** Core commands and player status management system are fully operational.
+> - 🧪 **API:** The API is currently in the testing phase.
+> - 🎨 **Visuals:** The project does not have a custom icon yet. Essences currently use temporary pixel art icons.
+> - 🚀 **Next Steps:** Implementing 3D models for essences by recycling existing in-game assets.
+>
+> **Note for testing:** If you wish to fully test the mod, please uncomment the system registrations in the main plugin file (`ExamplePlugin.java`).
+
 ## 1. Where did it come from? 🤔
 
 When Hytale announced that the game would have a magic system, I immediately became interested, as I've never seen a game of this genre implement it well. However, we learned that Hytale's magic was extremely basic and wouldn't be explored that much.
@@ -64,14 +75,14 @@ Souls are based on elements. Usually, mods or games in this genre always rely on
 
 ### Element Classification
 
-| Basic Level | Advanced Level | Unstable Elements | Chemical Elements |
-| :----------: | :------------: | :-----------------: | :----------------: |
-|🔥 Fire|☀️ Light|🌀 Chaos|⚙️ Metal|
-|🪨 Earth|🌑 Shadow|✨ Ether|💎 Crystal|
-|💨 Wind|🌿 Life|🕳️ Void|🧪 Poison|
-|💧 Water|☠️ Death|⏳ Time|🧴 Acid|
-|❄️ Ice|🧠 Mind|||
-|⚡ Lightning|🩸 Blood|||
+| Basic Level  | Advanced Level | Unstable Elements | Chemical Elements |
+| :----------: | :------------: | :---------------: | :---------------: |
+|   🔥 Fire    |    ☀️ Light    |     🌀 Chaos      |     ⚙️ Metal      |
+|   🪨 Earth   |   🌑 Shadow    |     ✨ Ether      |    💎 Crystal     |
+|   💨 Wind    |    🌿 Life     |      🕳️ Void      |     🧪 Poison     |
+|   💧 Water   |    ☠️ Death    |      ⏳ Time      |      🧴 Acid      |
+|    ❄️ Ice    |    🧠 Mind     |                   |                   |
+| ⚡ Lightning |    🩸 Blood    |                   |                   |
 
 ---
 
@@ -81,7 +92,7 @@ Souls are based on elements. Usually, mods or games in this genre always rely on
 
 **Concept:** Continuous damage and spatial control (environmental alteration) element.
 
-> **Functional Definition:** It acts by altering environmental and target conditions, reducing direct aggressiveness and preparing reactions with other elements. (Note: The original functional definition text seemed to be for Water; adjusted for Fire based on context or kept as original if consistent - *Original Fire did not have an explicit functional definition like others, assuming concept description*)
+> **Functional Definition:** It acts by altering environmental and target conditions, reducing direct aggressiveness and preparing reactions with other elements. (Note: The original functional definition text seemed to be for Water; adjusted for Fire based on context or kept as original if consistent - _Original Fire did not have an explicit functional definition like others, assuming concept description_)
 
 **Damage Type:**
 

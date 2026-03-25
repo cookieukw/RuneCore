@@ -2,6 +2,17 @@
 
 [Read in English](README.md) | [Manual](RuneCore_Manual-PTBR.md) | [API](API_USAGE.md)
 
+> [!IMPORTANT]
+> **Status do Projeto: Em Desenvolvimento**
+>
+> - 🛠️ **Em Progresso:** O sistema de drops e a mecânica de drop de essências estão sendo desenvolvidos no momento.
+> - ✅ **Funcional:** Comandos principais e o sistema de gerenciamento de status do jogador estão totalmente operacionais.
+> - 🧪 **API:** A API ainda está em fase de testes.
+> - 🎨 **Visuais:** O projeto ainda não possui um ícone próprio. As essências utilizam ícones temporários em pixel art.
+> - 🚀 **Próximos Passos:** Adicionar modelos 3D para as essências, reciclando modelos já existentes dentro do jogo.
+>
+> **Nota para testes:** Caso deseje testar o mod totalmente, lembre-se de descomentar o registro dos sistemas no arquivo principal do plugin (`ExamplePlugin.java`).
+
 ## 1. De onde surgiu? 🤔
 
 Quando o Hytale disse que o jogo teria um sistema de magia, eu logo me interessei pelo sistema, pois nunca vi um jogo do gênero usar isso bem. Contudo, ficamos sabendo que a magia do Hytale estava extremamente básica e que não seria tão explorada assim.
