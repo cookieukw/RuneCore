@@ -1,5 +1,7 @@
 # 🔮 RuneCore: Documento de Design
 
+[Read in English](README.md)
+
 ## 1. De onde surgiu? 🤔
 
 Quando o Hytale disse que o jogo teria um sistema de magia, eu logo me interessei pelo sistema, pois nunca vi um jogo do gênero usar isso bem. Contudo, ficamos sabendo que a magia do Hytale estava extremamente básica e que não seria tão explorada assim.
@@ -64,12 +66,12 @@ As almas são baseadas em elementos. Normalmente, os mods ou jogos do gênero se
 
 | Nível Básico | Nível Avançado | Elementos Instáveis | Elementos Químicos |
 | :----------: | :------------: | :-----------------: | :----------------: |
-|🔥 Fogo|☀️ Luz|🌀 Caos|⚙️ Metal|
-|🪨 Terra|🌑 Sombra|✨ Éter|💎 Cristal|
-|💨 Vento|🌿 Vida|🕳️ Vazio|🧪 Veneno|
-|💧 Água|☠️ Morte|⏳ Tempo|🧴 Ácido|
-|❄️ Gelo|🧠 Mente|||
-|⚡ Raio|🩸 Sangue|||
+|   🔥 Fogo    |     ☀️ Luz     |       🌀 Caos       |      ⚙️ Metal      |
+|   🪨 Terra   |   🌑 Sombra    |       ✨ Éter       |     💎 Cristal     |
+|   💨 Vento   |    🌿 Vida     |      🕳️ Vazio       |     🧪 Veneno      |
+|   💧 Água    |    ☠️ Morte    |      ⏳ Tempo       |      🧴 Ácido      |
+|   ❄️ Gelo    |    🧠 Mente    |                     |                    |
+|   ⚡ Raio    |   🩸 Sangue    |                     |                    |
 
 ---
 
