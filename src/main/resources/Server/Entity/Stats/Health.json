@@ -15,7 +15,7 @@
           "Id": "Alive"
         },
         {
-          "Id": "Player",
+          "Id": "IsPlayer",
           "Inverse": true
         },
         {
@@ -37,7 +37,7 @@
           "Id": "Alive"
         },
         {
-          "Id": "Player",
+          "Id": "CheckPlayerGameMode",
           "GameMode": "Creative"
         }
       ]
