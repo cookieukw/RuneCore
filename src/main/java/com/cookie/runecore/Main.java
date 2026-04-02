@@ -7,7 +7,10 @@ import com.cookie.runecore.commands.TestUICommand;
 import com.cookie.runecore.systems.CastListener;
 import com.cookie.runecore.systems.MobDropSystem;
 import com.cookie.runecore.systems.ui.ManaHudManager;
+import com.cookie.runemagic.MagicListener;
+import com.cookie.runemagic.SwitchSpellCommand;
 import com.cookie.runecore.commands.CustomTimeCommand;
+import com.cookie.runecore.api.PlayerDataComponent;
 import com.cookie.runecore.system.RuneCore;
 
 import javax.annotation.Nonnull;
@@ -26,8 +29,17 @@ public class Main extends JavaPlugin {
         this.getCommandRegistry().registerCommand(new RuneStatsCommand());
         this.getCommandRegistry().registerCommand(new CustomTimeCommand());
         this.getCommandRegistry().registerCommand(new TestUICommand());
+        this.getCommandRegistry().registerCommand(new SwitchSpellCommand());
+
+        // Register custom player data component
+        PlayerDataComponent.TYPE = this.getEntityStoreRegistry().registerComponent(
+                PlayerDataComponent.class,
+                PlayerDataComponent.COMPONENT_ID,
+                PlayerDataComponent.CODEC);
+
         this.getEntityStoreRegistry().registerSystem(new MobDropSystem());
         new ManaHudManager(this.getEventRegistry());
         new CastListener(this.getEventRegistry());
+        new MagicListener(this.getEventRegistry());
     }
 }
