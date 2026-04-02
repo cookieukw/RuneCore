@@ -4,8 +4,6 @@ import com.cookie.runecore.api.*;
 import com.cookie.runecore.content.CoreEffects;
 import com.cookie.runecore.content.CoreEssences;
 import com.cookie.runecore.content.CoreSpells;
-import com.hypixel.hytale.server.core.entity.entities.Player;
-import com.hypixel.hytale.server.core.universe.PlayerRef;
 
 import java.util.*;
 import java.util.function.Consumer;
@@ -83,12 +81,7 @@ public class RuneCore {
 
         // Deduct mana if source is a player
         if (ctx.source != null) {
-            PlayerStats stats = null;
-            if (ctx.source instanceof PlayerRef) {
-                stats = new PlayerStats((PlayerRef) ctx.source);
-            } else if (ctx.source instanceof Player) {
-                stats = new PlayerStats(((Player) ctx.source).getPlayerRef());
-            }
+            PlayerStats stats = new PlayerStats(ctx.source.getReference());
 
             if (stats != null) {
                 for (Map.Entry<String, Integer> entry : spell.getResourceCost().entrySet()) {
