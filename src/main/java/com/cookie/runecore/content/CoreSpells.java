@@ -16,7 +16,7 @@ public class CoreSpells {
         Spell toxicBolt = new Spell("toxic_bolt", (ctx) -> true)
                 .addCost("arcane_mana", 15)
                 .addEssenceRequirement(RuneElement.POISON, 1)
-                .addEffect("status_poison");
+                .addEffect("poison");
 
         core.registerSpell(fireball);
         core.registerSpell(toxicBolt);

@@ -10,6 +10,7 @@ import com.cookie.runecore.systems.ui.ManaHudManager;
 import com.cookie.runemagic.MagicListener;
 import com.cookie.runemagic.SwitchSpellCommand;
 import com.cookie.runecore.commands.CustomTimeCommand;
+import com.cookie.runecore.commands.RuneEffectCommand;
 import com.cookie.runecore.api.PlayerDataComponent;
 import com.cookie.runecore.system.RuneCore;
 
@@ -30,6 +31,7 @@ public class Main extends JavaPlugin {
         this.getCommandRegistry().registerCommand(new CustomTimeCommand());
         this.getCommandRegistry().registerCommand(new TestUICommand());
         this.getCommandRegistry().registerCommand(new SwitchSpellCommand());
+        this.getCommandRegistry().registerCommand(new RuneEffectCommand());
 
         // Register custom player data component
         PlayerDataComponent.TYPE = this.getEntityStoreRegistry().registerComponent(

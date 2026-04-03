@@ -7,24 +7,33 @@ public class CoreEffects {
     public static void init() {
         RuneCore core = RuneCore.get();
 
-        // Instant Fire Damage
+        core.registerEffect(new RuneEffect("haste", "Haste", 1200));
+        core.registerEffect(new RuneEffect("strength", "Strength", 1200));
+        core.registerEffect(new RuneEffect("jump_boost", "JumpBoost", 1200));
+        core.registerEffect(new RuneEffect("regeneration", "Regeneration", 400));
+        core.registerEffect(new RuneEffect("resistance", "Resistance", 1200));
+        core.registerEffect(new RuneEffect("fire_resistance", "FireResistance", 1200));
+        core.registerEffect(new RuneEffect("water_breathing", "WaterBreathing", 1200));
+        core.registerEffect(new RuneEffect("night_vision", "NightVision", 1200));
+        core.registerEffect(new RuneEffect("speed", "Speed", 1200));
+        core.registerEffect(new RuneEffect("slow_falling", "SlowFalling", 1200));
+
+        core.registerEffect(new RuneEffect("blindness", "Blindness", 200));
+        core.registerEffect(new RuneEffect("nausea", "Nausea", 200));
+        core.registerEffect(new RuneEffect("poison", "Poison", 400));
+        core.registerEffect(new RuneEffect("wither", "Wither", 400));
+        core.registerEffect(new RuneEffect("weakness", "Weakness", 600));
+        core.registerEffect(new RuneEffect("slowness", "Freeze", 600));
+        core.registerEffect(new RuneEffect("mining_fatigue", "MiningFatigue", 1200));
+        core.registerEffect(new RuneEffect("darkness", "Darkness", 200));
+
+        core.registerEffect(new RuneEffect("invisibility", "Invisibility", 1200));
+        core.registerEffect(new RuneEffect("glowing", "Glowing", 1200));
+        core.registerEffect(new RuneEffect("levitation", "Levitation", 200));
+
         RuneEffect fireDamage = new RuneEffect("damage_fire_instant", true, 0, (ctx) -> {
-            // Real game logic: ctx.target.damage(10 * ctx.power)
             System.out.println(">>> APPLYING DAMAGE: Target burned for " + (10 * ctx.power) + " damage!");
         });
-        
-        // Burning Status (DoT)
-        RuneEffect applyBurning = new RuneEffect("status_burning", false, 100, (ctx) -> {
-            System.out.println(">>> STATUS: Target is burning for 5 seconds.");
-        });
-
-        // Poison Status (DoT)
-        RuneEffect applyPoison = new RuneEffect("status_poison", false, 200, (ctx) -> {
-           System.out.println(">>> STATUS: Target is poisoned for 10 seconds. Taking periodic damage.");
-        });
-
         core.registerEffect(fireDamage);
-        core.registerEffect(applyBurning);
-        core.registerEffect(applyPoison);
     }
 }

@@ -4,6 +4,7 @@ import com.cookie.runecore.api.*;
 import com.cookie.runecore.content.CoreEffects;
 import com.cookie.runecore.content.CoreEssences;
 import com.cookie.runecore.content.CoreSpells;
+import com.cookie.runecore.content.EquipmentRegistry;
 
 import java.util.*;
 import java.util.function.Consumer;
@@ -42,6 +43,10 @@ public class RuneCore {
         spellRegistry.put(spell.getId(), spell);
     }
 
+    public RuneEffect getEffect(String id) {
+        return effectRegistry.get(id);
+    }
+
     public void on(String eventType, Consumer<CastContext> listener) {
         eventListeners.computeIfAbsent(eventType, k -> new ArrayList<>()).add(listener);
     }
@@ -63,6 +68,7 @@ public class RuneCore {
         CoreEssences.init();
         CoreEffects.init();
         CoreSpells.init();
+        EquipmentRegistry.init();
     }
 
     public boolean castSpell(String spellId, CastContext ctx) {
