@@ -10,32 +10,19 @@ import com.hypixel.hytale.server.core.universe.world.storage.EntityStore;
 
 import java.util.function.Function;
 
-/**
- * Represents a status effect in RuneCore.
- *
- * An effect can be:
- *   1. A custom buff (via buffFactory) — functional effects that tick over time.
- *   2. A native Hytale entity effect (via nativeEffectId) — visual/cosmetic effects.
- *   3. An instant action (via action).
- *   4. Any combination of the above.
- */
 public class RuneEffect {
     private final String id;
     private final int defaultDurationTicks;
     private final boolean isInstant;
 
-    // Functional buff factory: creates an ActiveBuff when the effect is applied
     private Function<CastContext, ActiveBuff> buffFactory = null;
 
-    // Optional instant callback (instant effects like direct damage)
     private IEffectAction action = null;
 
-    // Optional native Hytale effect (cosmetic/visual)
     private String nativeEffectId = null;
     private String assetPath = null;
     private int amplifier = 0;
 
-    // ─── Constructors ──────────────────────────────────────────────────────────
 
     public RuneEffect(String id, int defaultDurationTicks) {
         this.id = id;
@@ -43,7 +30,6 @@ public class RuneEffect {
         this.isInstant = false;
     }
 
-    /** Instant effect with a custom action */
     public RuneEffect(String id, boolean isInstant, int durationTicks, IEffectAction action) {
         this.id = id;
         this.isInstant = isInstant;
@@ -51,7 +37,6 @@ public class RuneEffect {
         this.action = action;
     }
 
-    /** Native Hytale effect (cosmetic only) */
     public RuneEffect(String id, String nativeEffectId, int durationTicks) {
         this.id = id;
         this.isInstant = false;
@@ -59,7 +44,6 @@ public class RuneEffect {
         this.nativeEffectId = nativeEffectId;
     }
 
-    // ─── Builder Methods ───────────────────────────────────────────────────────
 
     public RuneEffect withBuff(Function<CastContext, ActiveBuff> factory) {
         this.buffFactory = factory;
@@ -76,10 +60,6 @@ public class RuneEffect {
         return this;
     }
 
-    /**
-     * Links a Hytale JSON asset to this effect.
-     * Developers can use this to provide icons, tints, and particles.
-     */
     public RuneEffect withAsset(String assetPath) {
         this.assetPath = assetPath;
         if (this.nativeEffectId == null) {
@@ -93,25 +73,21 @@ public class RuneEffect {
         return this;
     }
 
-    // ─── Execution ─────────────────────────────────────────────────────────────
 
     public void execute(CastContext ctx) {
-        // 1. Run instant actions
         if (this.action != null) {
             this.action.apply(ctx);
         }
 
-        // 2. Register a functional buff if factory is set
-        if (this.buffFactory != null && ctx.target instanceof Ref<?> ref) {
+        if (this.buffFactory != null) {
             @SuppressWarnings("unchecked")
-            Ref<EntityStore> entityRef = (Ref<EntityStore>) ref;
-            if (entityRef.isValid()) {
-                ActiveBuff buff = this.buffFactory.apply(ctx);
+            Ref<EntityStore> entityRef = (ctx.target instanceof Ref) ? (Ref<EntityStore>) ctx.target : null;
+            ActiveBuff buff = this.buffFactory.apply(ctx);
+            if (buff != null) {
                 EffectTickSystem.getInstance().applyBuff(buff, entityRef);
             }
         }
 
-        // 3. Apply native Hytale effect if defined
         if (nativeEffectId != null && ctx.target instanceof Ref<?> ref) {
             @SuppressWarnings("unchecked")
             Ref<EntityStore> entityRef = (Ref<EntityStore>) ref;
@@ -143,7 +119,6 @@ public class RuneEffect {
         }
     }
 
-    // ─── Getters ───────────────────────────────────────────────────────────────
 
     public String getId() { return id; }
     public int getDurationTicks() { return defaultDurationTicks; }

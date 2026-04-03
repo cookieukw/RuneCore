@@ -13,13 +13,8 @@ import com.hypixel.hytale.server.core.universe.PlayerRef;
 import com.hypixel.hytale.server.core.universe.world.World;
 import com.hypixel.hytale.server.core.universe.world.storage.EntityStore;
 
-/**
- * Static utility methods for applying and reverting movement/stat effects.
- * All methods queue their work onto the world thread via world.execute().
- */
 public final class EffectHelper {
 
-    // Default movement values (Hytale defaults)
     public static final float DEFAULT_SPEED = 5.5f;
     public static final float DEFAULT_JUMP_FORCE = 8.0f;
     public static final float DEFAULT_MASS = 1.0f;
@@ -28,9 +23,9 @@ public final class EffectHelper {
 
     private EffectHelper() {}
 
-    // ─── Movement Settings Helpers ──────────────────────────────────────────────
 
     public static void modifyMovement(Ref<EntityStore> ref, MovementModifier modifier) {
+        if (ref == null) return;
         Store<EntityStore> store = ref.getStore();
         if (store == null) return;
         World world = store.getExternalData().getWorld();
@@ -59,9 +54,7 @@ public final class EffectHelper {
         }
     }
 
-    // ─── Speed Effects ──────────────────────────────────────────────────────────
 
-    /** Speed I: +2.75 base speed */
     public static void applySpeed(Ref<EntityStore> ref) {
         modifyMovement(ref, s -> s.baseSpeed += 2.75f);
     }
@@ -70,7 +63,6 @@ public final class EffectHelper {
         modifyMovement(ref, s -> s.baseSpeed = Math.max(DEFAULT_SPEED, s.baseSpeed - 2.75f));
     }
 
-    /** Slowness: -2.0 base speed */
     public static void applySlowness(Ref<EntityStore> ref) {
         modifyMovement(ref, s -> s.baseSpeed = Math.max(1.0f, s.baseSpeed - 2.0f));
     }
@@ -79,9 +71,7 @@ public final class EffectHelper {
         modifyMovement(ref, s -> s.baseSpeed += 2.0f);
     }
 
-    // ─── Jump Effects ────────────────────────────────────────────────────────────
 
-    /** Jump Boost: +5.0 jump force */
     public static void applyJumpBoost(Ref<EntityStore> ref) {
         modifyMovement(ref, s -> s.jumpForce += 5.0f);
     }
@@ -90,7 +80,6 @@ public final class EffectHelper {
         modifyMovement(ref, s -> s.jumpForce = Math.max(DEFAULT_JUMP_FORCE, s.jumpForce - 5.0f));
     }
 
-    /** High Jump: +10.0 jump force */
     public static void applyHighJump(Ref<EntityStore> ref) {
         modifyMovement(ref, s -> s.jumpForce += 10.0f);
     }
@@ -99,12 +88,7 @@ public final class EffectHelper {
         modifyMovement(ref, s -> s.jumpForce = Math.max(DEFAULT_JUMP_FORCE, s.jumpForce - 10.0f));
     }
 
-    // ─── Slow Falling / Feather Fall ────────────────────────────────────────────
 
-    /**
-     * Slow Falling: greatly reduces mass and increases air drag so the player
-     * floats down gently — same feel as Minecraft's Slow Falling potion.
-     */
     public static void applySlowFalling(Ref<EntityStore> ref) {
         modifyMovement(ref, s -> {
             s.mass = 0.15f;
@@ -121,12 +105,7 @@ public final class EffectHelper {
         });
     }
 
-    // ─── Levitation ─────────────────────────────────────────────────────────────
 
-    /**
-     * Levitation: applies upward gravity bias so the player floats upward.
-     * Uses wishDirectionGravityY (positive = push up against gravity).
-     */
     public static void applyLevitation(Ref<EntityStore> ref) {
         modifyMovement(ref, s -> {
             s.wishDirectionGravityY = 6.0f;
@@ -141,7 +120,6 @@ public final class EffectHelper {
         });
     }
 
-    // ─── Frozen / Movement Lock ──────────────────────────────────────────────────
 
     public static void applyFrozen(Ref<EntityStore> ref) {
         modifyMovement(ref, s -> {
@@ -157,9 +135,7 @@ public final class EffectHelper {
         });
     }
 
-    // ─── Haste (Mining Speed Approximation via Speed) ────────────────────────────
 
-    /** Haste: slight speed boost + sprint speed increase to simulate faster actions */
     public static void applyHaste(Ref<EntityStore> ref) {
         modifyMovement(ref, s -> {
             s.baseSpeed += 1.0f;
@@ -174,7 +150,6 @@ public final class EffectHelper {
         });
     }
 
-    /** Mining Fatigue: reduce movement and action speed */
     public static void applyMiningFatigue(Ref<EntityStore> ref) {
         modifyMovement(ref, s -> {
             s.baseSpeed = Math.max(2.0f, s.baseSpeed - 1.5f);
@@ -189,9 +164,9 @@ public final class EffectHelper {
         });
     }
 
-    // ─── Stat-based Effects ──────────────────────────────────────────────────────
 
     public static void subtractHealth(Ref<EntityStore> ref, float amount) {
+        if (ref == null) return;
         Store<EntityStore> store = ref.getStore();
         if (store == null) return;
         World world = store.getExternalData().getWorld();
@@ -209,6 +184,7 @@ public final class EffectHelper {
     }
 
     public static void addHealth(Ref<EntityStore> ref, float amount) {
+        if (ref == null) return;
         Store<EntityStore> store = ref.getStore();
         if (store == null) return;
         World world = store.getExternalData().getWorld();
@@ -225,7 +201,6 @@ public final class EffectHelper {
         });
     }
 
-    // ─── Functional Interface ───────────────────────────────────────────────────
 
     @FunctionalInterface
     public interface MovementModifier {

@@ -7,21 +7,11 @@ import com.cookie.runecore.system.RuneCore;
 import com.hypixel.hytale.component.Ref;
 import com.hypixel.hytale.server.core.universe.world.storage.EntityStore;
 
-/**
- * All Minecraft-inspired + Hytale-exclusive status effects.
- *
- * Effects are FULLY FUNCTIONAL via:
- *   - MovementSettings (speed, jump, fall, levitation, freeze)
- *   - EntityStatMap     (health regen, poison, wither, instant effects)
- *   - ActiveBuff        (timed ticking buffs via EffectTickSystem)
- */
 public class CoreEffects {
 
     public static void init() {
         RuneCore core = RuneCore.get();
 
-        // ─── SPEED ──────────────────────────────────────────────────────────
-        // +2.75 base speed while active; reverts on expire
         core.registerEffect(new RuneEffect("speed", 1200)
             .withAsset("runecore:Speed")
             .withAction(ctx -> {
@@ -38,8 +28,6 @@ public class CoreEffects {
             })
         );
 
-        // ─── SLOWNESS ────────────────────────────────────────────────────────
-        // -2.0 base speed; reverts on expire
         core.registerEffect(new RuneEffect("slowness", 600)
             .withAsset("runecore:Slowness")
             .withAction(ctx -> {
@@ -56,8 +44,6 @@ public class CoreEffects {
             })
         );
 
-        // ─── HASTE ───────────────────────────────────────────────────────────
-        // Faster movement + sprint speed (simulates mining speed boost)
         core.registerEffect(new RuneEffect("haste", 1200)
             .withAsset("runecore:Haste")
             .withAction(ctx -> {
@@ -74,8 +60,6 @@ public class CoreEffects {
             })
         );
 
-        // ─── MINING FATIGUE ──────────────────────────────────────────────────
-        // Slower movement and sprint (simulates slow mining)
         core.registerEffect(new RuneEffect("mining_fatigue", 1200)
             .withAsset("runecore:Mining_Fatigue")
             .withAction(ctx -> {
@@ -92,8 +76,6 @@ public class CoreEffects {
             })
         );
 
-        // ─── JUMP BOOST ──────────────────────────────────────────────────────
-        // +5.0 jumpForce while active
         core.registerEffect(new RuneEffect("jump_boost", 1200)
             .withAsset("runecore:Jump_Boost")
             .withAction(ctx -> {
@@ -110,8 +92,6 @@ public class CoreEffects {
             })
         );
 
-        // ─── HIGH JUMP (Rune Exclusive) ───────────────────────────────────────
-        // +10.0 jumpForce — double the Jump Boost
         core.registerEffect(new RuneEffect("high_jump", 600)
             .withAsset("runecore:High_Jump")
             .withAction(ctx -> {
@@ -128,8 +108,6 @@ public class CoreEffects {
             })
         );
 
-        // ─── SLOW FALLING ────────────────────────────────────────────────────
-        // Reduces mass + increases air drag so player floats down gently
         core.registerEffect(new RuneEffect("slow_falling", 1200)
             .withAsset("runecore:Slow_Falling")
             .withAction(ctx -> {
@@ -146,8 +124,6 @@ public class CoreEffects {
             })
         );
 
-        // ─── LEVITATION ──────────────────────────────────────────────────────
-        // Applies upward gravity bias (wishDirectionGravityY) so player floats up
         core.registerEffect(new RuneEffect("levitation", 200)
             .withAsset("runecore:Levitation")
             .withAction(ctx -> {
@@ -164,8 +140,6 @@ public class CoreEffects {
             })
         );
 
-        // ─── REGENERATION ────────────────────────────────────────────────────
-        // Heals 1 HP every 50 ticks (2.5s) — exact Minecraft Regen I behavior
         core.registerEffect(new RuneEffect("regeneration", 400)
             .withAsset("runecore:Regeneration")
             .withBuff(ctx -> {
@@ -177,8 +151,6 @@ public class CoreEffects {
             })
         );
 
-        // ─── POISON ──────────────────────────────────────────────────────────
-        // Deals 1 damage every 25 ticks (1.25s) — does NOT kill below 1 HP
         core.registerEffect(new RuneEffect("poison", 400)
             .withAsset("runecore:Poison")
             .withBuff(ctx -> {
@@ -190,8 +162,6 @@ public class CoreEffects {
             })
         );
 
-        // ─── WITHER ──────────────────────────────────────────────────────────
-        // Deals 1 damage every 40 ticks (2s) — can kill unlike poison
         core.registerEffect(new RuneEffect("wither", 400)
             .withAsset("runecore:Wither")
             .withBuff(ctx -> {
@@ -203,8 +173,6 @@ public class CoreEffects {
             })
         );
 
-        // ─── BURN (Hytale Exclusive) ─────────────────────────────────────────
-        // Deals 1 damage every 20 ticks (1s) — faster than poison
         core.registerEffect(new RuneEffect("burn", 200)
             .withAsset("runecore:Burn")
             .withBuff(ctx -> {
@@ -216,8 +184,6 @@ public class CoreEffects {
             })
         );
 
-        // ─── BLEEDING (Hytale Exclusive) ─────────────────────────────────────
-        // Deals 1 damage every 30 ticks (1.5s)
         core.registerEffect(new RuneEffect("bleeding", 300)
             .withAsset("runecore:Bleeding")
             .withBuff(ctx -> {
@@ -229,8 +195,6 @@ public class CoreEffects {
             })
         );
 
-        // ─── FROZEN (Hytale Exclusive) ────────────────────────────────────────
-        // Stops all movement (baseSpeed = 0, jumpForce = 0) for duration
         core.registerEffect(new RuneEffect("frozen", 600)
             .withAsset("runecore:Frozen")
             .withAction(ctx -> {
@@ -247,8 +211,6 @@ public class CoreEffects {
             })
         );
 
-        // ─── INSTANT HEALTH ──────────────────────────────────────────────────
-        // Immediately adds HP (scaled by power)
         core.registerEffect(new RuneEffect("instant_health", true, 0, ctx -> {
             if (ctx.target instanceof Ref<?> raw) {
                 @SuppressWarnings("unchecked") Ref<EntityStore> ref = (Ref<EntityStore>) raw;
@@ -258,8 +220,6 @@ public class CoreEffects {
             }
         }));
 
-        // ─── INSTANT DAMAGE ──────────────────────────────────────────────────
-        // Immediately subtracts HP (scaled by power)
         core.registerEffect(new RuneEffect("instant_damage", true, 0, ctx -> {
             if (ctx.target instanceof Ref<?> raw) {
                 @SuppressWarnings("unchecked") Ref<EntityStore> ref = (Ref<EntityStore>) raw;
@@ -269,7 +229,6 @@ public class CoreEffects {
             }
         }));
 
-        // ─── FIRE DAMAGE (legacy/spell compat) ───────────────────────────────
         core.registerEffect(new RuneEffect("damage_fire_instant", true, 0, ctx -> {
             if (ctx.target instanceof Ref<?> raw) {
                 @SuppressWarnings("unchecked") Ref<EntityStore> ref = (Ref<EntityStore>) raw;
@@ -279,7 +238,6 @@ public class CoreEffects {
             }
         }));
 
-        // ─── NATIVE VISUAL EFFECTS (Hytale EffectController) ─────────────────
         core.registerEffect(new RuneEffect("invisibility", "hytale:invisibility", 1200));
         core.registerEffect(new RuneEffect("glowing", "hytale:glowing", 1200));
         core.registerEffect(new RuneEffect("blindness", "hytale:blindness", 200));

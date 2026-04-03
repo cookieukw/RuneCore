@@ -5,15 +5,11 @@ import com.hypixel.hytale.server.core.universe.world.storage.EntityStore;
 
 import java.util.function.Consumer;
 
-/**
- * Represents an active status buff on an entity.
- * Tracks timing, intervals, and expiry callbacks.
- */
 public class ActiveBuff {
     public final String effectId;
-    public final String playerId;   // EntityStore UUID string for lookup
+    public final String playerId;
     public int remainingTicks;
-    public final int intervalTicks; // how often onTick is called (0 = only onExpire matters)
+    public final int intervalTicks;
     public int ticksSinceLastApply;
 
     private final Consumer<Ref<EntityStore>> onTick;
@@ -30,26 +26,22 @@ public class ActiveBuff {
         this.onExpire = onExpire;
     }
 
-    /**
-     * Tick this buff by 1 game tick.
-     * Returns true while still active, false when expired.
-     */
     public boolean tick(Ref<EntityStore> ref) {
         remainingTicks--;
         ticksSinceLastApply++;
 
         if (intervalTicks > 0 && ticksSinceLastApply >= intervalTicks) {
             ticksSinceLastApply = 0;
-            if (onTick != null && ref.isValid()) {
+            if (onTick != null && (ref == null || ref.isValid())) {
                 onTick.accept(ref);
             }
         }
 
         if (remainingTicks <= 0) {
-            if (onExpire != null && ref.isValid()) {
+            if (onExpire != null && (ref == null || ref.isValid())) {
                 onExpire.accept(ref);
             }
-            return false; // expired
+            return false;
         }
         return true;
     }
