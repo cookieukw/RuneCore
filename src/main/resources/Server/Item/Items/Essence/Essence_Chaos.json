@@ -1,6 +1,6 @@
 {
   "TranslationProperties": {
-    "Name": "server.items.essence_chaos.name"
+    "Name": "server.Essence_Chaos.name"
   },
   "Icon": "Icons/Items/chaos_essence.png",
   "Quality": "Common",

@@ -1,6 +1,6 @@
 {
   "TranslationProperties": {
-    "Name": "server.items.essence_crystal.name"
+    "Name": "server.Essence_Crystal.name"
   },
   "Icon": "Icons/Items/crystal_essence.png",
   "Quality": "Common",

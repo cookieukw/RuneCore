@@ -1,6 +1,6 @@
 {
   "TranslationProperties": {
-    "Name": "server.items.essence_lightning.name"
+    "Name": "server.Essence_Lightning.name"
   },
   "Icon": "Icons/Items/lightning_essence.png",
   "Quality": "Common",

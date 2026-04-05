@@ -1,6 +1,6 @@
 {
   "TranslationProperties": {
-    "Name": "server.items.essence_wind.name"
+    "Name": "server.Essence_Wind.name"
   },
   "Icon": "Icons/Items/wind_essence.png",
   "Quality": "Common",

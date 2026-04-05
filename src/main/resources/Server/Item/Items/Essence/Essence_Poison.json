@@ -1,6 +1,6 @@
 {
   "TranslationProperties": {
-    "Name": "server.items.essence_poison.name"
+    "Name": "server.Essence_Poison.name"
   },
   "Icon": "Icons/Items/poison_essence.png",
   "Quality": "Common",

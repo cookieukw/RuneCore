@@ -1,6 +1,6 @@
 {
   "TranslationProperties": {
-    "Name": "server.items.essence_acid.name"
+    "Name": "server.Essence_Acid.name"
   },
   "Icon": "Icons/Items/acid_essence.png",
   "Quality": "Common",

@@ -1,6 +1,6 @@
 {
   "TranslationProperties": {
-    "Name": "server.items.essence_time.name"
+    "Name": "server.Essence_Time.name"
   },
   "Icon": "Icons/Items/time_essence.png",
   "Quality": "Common",

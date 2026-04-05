@@ -1,6 +1,6 @@
 {
   "TranslationProperties": {
-    "Name": "server.items.essence_earth.name"
+    "Name": "server.Essence_Earth.name"
   },
   "Icon": "Icons/Items/earth_essence.png",
   "Quality": "Common",

@@ -1,6 +1,6 @@
 {
   "TranslationProperties": {
-    "Name": "server.items.essence_shadow.name"
+    "Name": "server.Essence_Shadow.name"
   },
   "Icon": "Icons/Items/shadow_essence.png",
   "Quality": "Common",

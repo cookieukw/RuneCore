@@ -1,6 +1,6 @@
 {
   "TranslationProperties": {
-    "Name": "server.items.essence_metal.name"
+    "Name": "server.Essence_Metal.name"
   },
   "Icon": "Icons/Items/metal_essence.png",
   "Quality": "Common",

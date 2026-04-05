@@ -1,6 +1,6 @@
 {
   "TranslationProperties": {
-    "Name": "server.items.essence_aether.name"
+    "Name": "server.Essence_Aether.name"
   },
   "Icon": "Icons/Items/aether_essence.png",
   "Quality": "Common",

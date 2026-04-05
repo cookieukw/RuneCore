@@ -1,6 +1,6 @@
 {
   "TranslationProperties": {
-    "Name": "server.items.essence_void.name"
+    "Name": "server.Essence_Void.name"
   },
   "Icon": "Icons/Items/void_essence.png",
   "Quality": "Common",

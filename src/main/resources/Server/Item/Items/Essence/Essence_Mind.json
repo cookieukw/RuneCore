@@ -1,6 +1,6 @@
 {
   "TranslationProperties": {
-    "Name": "server.items.essence_mind.name"
+    "Name": "server.Essence_Mind.name"
   },
   "Icon": "Icons/Items/mind_essence.png",
   "Quality": "Common",

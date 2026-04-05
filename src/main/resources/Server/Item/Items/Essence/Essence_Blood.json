@@ -1,6 +1,6 @@
 {
   "TranslationProperties": {
-    "Name": "server.items.essence_blood.name"
+    "Name": "server.Essence_Blood.name"
   },
   "Icon": "Icons/Items/blood_essence.png",
   "Quality": "Common",

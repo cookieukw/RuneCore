@@ -1,6 +1,6 @@
 {
   "TranslationProperties": {
-    "Name": "server.items.essence_death.name"
+    "Name": "server.Essence_Death.name"
   },
   "Icon": "Icons/Items/death_essence.png",
   "Quality": "Common",

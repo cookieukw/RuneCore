@@ -1,6 +1,6 @@
 {
   "TranslationProperties": {
-    "Name": "server.items.essence_ice.name"
+    "Name": "server.Essence_Ice.name"
   },
   "Icon": "Icons/Items/ice_essence.png",
   "Quality": "Common",

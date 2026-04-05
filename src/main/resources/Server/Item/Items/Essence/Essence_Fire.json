@@ -1,6 +1,6 @@
 {
   "TranslationProperties": {
-    "Name": "server.items.essence_fire.name"
+    "Name": "server.Essence_Fire.name"
   },
   "Icon": "Icons/Items/fire_essence.png",
   "Quality": "Common",
