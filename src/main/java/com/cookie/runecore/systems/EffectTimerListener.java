@@ -45,7 +45,6 @@ public class EffectTimerListener {
         if (uid == null) return;
 
         playerWorlds.put(uid, world);
-        System.out.println("[RuneCore-Effects] Tracking player world entry: " + playerRef.getUsername() + " (" + uid + ")");
     }
 
     private void onPlayerDisconnect(PlayerDisconnectEvent event) {
@@ -56,6 +55,5 @@ public class EffectTimerListener {
 
         EffectTickSystem.getInstance().cancelAllBuffs(uid.toString());
         playerWorlds.remove(uid);
-        System.out.println("[RuneCore-Effects] Cleared buffs on disconnect: " + uid);
     }
 }

@@ -216,7 +216,6 @@ public class CoreEffects {
                 @SuppressWarnings("unchecked") Ref<EntityStore> ref = (Ref<EntityStore>) raw;
                 float amount = (float)(4.0 * ctx.power);
                 EffectHelper.addHealth(ref, amount);
-                System.out.println("[RuneCore-Effects] Instant Health: +" + amount + " HP");
             }
         }));
 
@@ -225,7 +224,6 @@ public class CoreEffects {
                 @SuppressWarnings("unchecked") Ref<EntityStore> ref = (Ref<EntityStore>) raw;
                 float amount = (float)(6.0 * ctx.power);
                 EffectHelper.subtractHealth(ref, amount);
-                System.out.println("[RuneCore-Effects] Instant Damage: -" + amount + " HP");
             }
         }));
 
@@ -234,7 +232,6 @@ public class CoreEffects {
                 @SuppressWarnings("unchecked") Ref<EntityStore> ref = (Ref<EntityStore>) raw;
                 float amount = (float)(10.0 * ctx.power);
                 EffectHelper.subtractHealth(ref, amount);
-                System.out.println("[RuneCore-Effects] Fire Damage: -" + amount + " HP");
             }
         }));
 

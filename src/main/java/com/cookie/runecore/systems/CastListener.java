@@ -33,7 +33,6 @@ public class CastListener {
         String itemId = item.getItem().getId().toString();
 
         if (itemId.contains("stick")) {
-            System.out.println("[RuneCore-Mvp] Magic detectable in item: " + itemId);
 
             PlayerRef playerRef = player.getPlayerRef();
             if (playerRef == null)

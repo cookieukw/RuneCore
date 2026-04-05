@@ -27,8 +27,6 @@ public class EffectTickSystem {
         if (ref != null) {
             entityRefs.put(key, ref);
         }
-        System.out.println("[RuneCore-Effects] Buff applied: " + buff.effectId +
-                " on " + buff.playerId + " for " + buff.remainingTicks + " ticks");
     }
 
     public void cancelBuff(String playerId, String effectId) {
@@ -81,7 +79,6 @@ public class EffectTickSystem {
             if (!alive) {
                 it.remove();
                 entityRefs.remove(key);
-                System.out.println("[RuneCore-Effects] Buff expired: " + buff.effectId + " on " + buff.playerId);
             }
         }
     }
