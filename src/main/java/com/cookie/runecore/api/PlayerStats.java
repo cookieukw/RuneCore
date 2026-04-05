@@ -203,9 +203,7 @@ public class PlayerStats {
                     float clampedSpeed = Math.max(MIN_SPEED, Math.min(MAX_SPEED, newSpeed));
                     settings.baseSpeed = clampedSpeed;
                     
-                    PlayerRef playerRefComp = 
-                        (PlayerRef) store.getComponent(playerRef, PlayerRef.getComponentType());
-                    
+                    PlayerRef playerRefComp = (PlayerRef) store.getComponent(playerRef, PlayerRef.getComponentType());
                     if (playerRefComp != null) {
                         PacketHandler packetHandler = playerRefComp.getPacketHandler();
                         if (packetHandler != null) {
