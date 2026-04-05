@@ -14,6 +14,9 @@ import com.hypixel.hytale.server.core.universe.PlayerRef;
 import com.hypixel.hytale.server.core.universe.world.World;
 import com.hypixel.hytale.server.core.universe.world.storage.EntityStore;
 import com.hypixel.hytale.server.core.Message;
+import com.hypixel.hytale.server.core.asset.type.entityeffect.config.EntityEffect;
+
+import java.util.Map;
 
 import javax.annotation.Nonnull;
 
@@ -41,8 +44,15 @@ public class RuneCommand extends AbstractPlayerCommand {
         
         if ("effect".equalsIgnoreCase(subCommand)) {
             handleEffect(ctx, ref, playerRef, world);
+        } else if ("dump".equalsIgnoreCase(subCommand)) {
+            ctx.sendMessage(Message.raw("Dumped keys to console!"));
+            System.out.println("=== ENTITY EFFECT ASSETS ===");
+            Map map = EntityEffect.getAssetMap().getAssetMap();
+            for (Object key : map.keySet()) {
+                System.out.println(key.toString());
+            }
         } else {
-            ctx.sendMessage(Message.raw("Unknown subcommand: " + subCommand + ". Use 'effect'."));
+            ctx.sendMessage(Message.raw("Unknown subcommand: " + subCommand + ". Use 'effect' or 'dump'."));
         }
     }
 

@@ -162,11 +162,11 @@ public class CoreEffects {
             })
         );
 
-        core.registerEffect(new RuneEffect("wither", 400)
-            .withAsset("runecore:Wither")
+        core.registerEffect(new RuneEffect("decay", 400)
+            .withAsset("runecore:Decay")
             .withBuff(ctx -> {
                 String uid = ctx.source != null ? ctx.source.getUuid().toString() : ctx.target.toString();
-                return ActiveBuff.builder(uid, "wither", 400)
+                return ActiveBuff.builder(uid, "decay", 400)
                     .interval(40)
                     .onTick(ref -> EffectHelper.subtractHealth(ref, 1.0f))
                     .build();
