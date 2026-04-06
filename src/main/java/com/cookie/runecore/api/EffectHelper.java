@@ -14,6 +14,19 @@ import com.hypixel.hytale.server.core.modules.entitystats.asset.DefaultEntitySta
 import com.hypixel.hytale.server.core.universe.PlayerRef;
 import com.hypixel.hytale.server.core.universe.world.World;
 import com.hypixel.hytale.server.core.universe.world.storage.EntityStore;
+import com.hypixel.hytale.math.vector.Vector3d;
+import com.hypixel.hytale.server.core.universe.world.ParticleUtil;
+import com.cookie.runecore.systems.ui.RuneCoreHudManager;
+import com.cookie.runecore.systems.ui.RuneCoreHud;
+import com.hypixel.hytale.server.core.modules.entity.component.TransformComponent;
+import com.hypixel.hytale.protocol.packets.camera.SetServerCamera;
+import com.hypixel.hytale.protocol.ClientCameraView;
+import com.hypixel.hytale.protocol.ServerCameraSettings;
+import com.hypixel.hytale.protocol.Vector2f;
+import com.cookie.runecore.api.PlayerDataComponent;
+import com.hypixel.hytale.server.core.entity.movement.MovementStatesComponent;
+import com.hypixel.hytale.protocol.MovementStates;
+import com.hypixel.hytale.math.vector.Vector3f;
 
 public final class EffectHelper {
 
@@ -132,14 +145,131 @@ public final class EffectHelper {
         modifyMovement(ref, s -> {
             s.baseSpeed = 0.0f;
             s.jumpForce = 0.0f;
+            s.swimJumpForce = 0.0f;
+            s.fallJumpForce = 0.0f;
+            s.autoJumpDisableJumping = true;
+            s.jumpBufferDuration = 0.0f;
+            s.jumpBufferMaxYVelocity = 0.0f;
         });
+
+        Store<EntityStore> store = ref.getStore();
+        if (store != null) {
+            PlayerDataComponent data = store.getComponent(ref, PlayerDataComponent.TYPE);
+            if (data != null) {
+                data.setFrozen(true);
+                
+                // Save current rotation to lock it every tick
+                TransformComponent transform = store.getComponent(ref, TransformComponent.getComponentType());
+                if (transform != null) {
+                    Vector3f rot = transform.getRotation();
+                    data.setFrozenRotX(rot.x);
+                    data.setFrozenRotY(rot.y);
+                    data.setFrozenRotZ(rot.z);
+                }
+            }
+
+            // Force Movement State to Idle
+            MovementStatesComponent msc = store.getComponent(ref, MovementStatesComponent.getComponentType());
+            if (msc != null) {
+                MovementStates states = msc.getMovementStates();
+                states.idle = true;
+                states.walking = false;
+                states.running = false;
+                states.sprinting = false;
+                states.jumping = false;
+            }
+
+            PlayerRef playerRef = (PlayerRef) store.getComponent(ref, PlayerRef.getComponentType());
+            if (playerRef != null) {
+                RuneCoreHud hud = RuneCoreHudManager.get().getHud(playerRef.getUuid());
+                if (hud != null) hud.setFrozen(true);
+                
+                // Lock Camera (with zero look sensitivity as backup)
+                sendCameraLock(playerRef, true);
+            }
+        }
     }
 
     public static void revertFrozen(Ref<EntityStore> ref) {
         modifyMovement(ref, s -> {
             s.baseSpeed = DEFAULT_SPEED;
             s.jumpForce = DEFAULT_JUMP_FORCE;
+            s.swimJumpForce = DEFAULT_JUMP_FORCE;
+            s.fallJumpForce = DEFAULT_JUMP_FORCE;
+            s.autoJumpDisableJumping = false;
+            s.jumpBufferDuration = 0.5f; 
         });
+
+        Store<EntityStore> store = ref.getStore();
+        if (store != null) {
+            PlayerDataComponent data = store.getComponent(ref, PlayerDataComponent.TYPE);
+            if (data != null) data.setFrozen(false);
+
+            // Restore Movement State
+            MovementStatesComponent msc = store.getComponent(ref, MovementStatesComponent.getComponentType());
+            if (msc != null) {
+                MovementStates states = msc.getMovementStates();
+                states.idle = false; // Let the server/client recalculate
+            }
+
+            PlayerRef playerRef = (PlayerRef) store.getComponent(ref, PlayerRef.getComponentType());
+            if (playerRef != null) {
+                RuneCoreHud hud = RuneCoreHudManager.get().getHud(playerRef.getUuid());
+                if (hud != null) hud.setFrozen(false);
+                
+                // Unlock Camera
+                sendCameraLock(playerRef, false);
+            }
+        }
+    }
+
+    private static void sendCameraLock(PlayerRef playerRef, boolean locked) {
+        if (playerRef == null || playerRef.getPacketHandler() == null) return;
+        
+        ServerCameraSettings settings = new ServerCameraSettings();
+        if (locked) {
+            // Effectively disable mouse look by zeroing the sensitivity/multiplier
+            settings.lookMultiplier = new Vector2f(0.0f, 0.0f);
+        }
+        
+        SetServerCamera packet = new SetServerCamera(
+            ClientCameraView.FirstPerson, 
+            locked, 
+            settings
+        );
+        playerRef.getPacketHandler().write(packet);
+    }
+
+    public static void onFrozenTick(Ref<EntityStore> ref) {
+        Store<EntityStore> store = ref.getStore();
+        if (store == null) return;
+
+        // 1. Force Rotation every tick (Server-side look lock)
+        PlayerDataComponent data = store.getComponent(ref, PlayerDataComponent.TYPE);
+        if (data != null && data.isFrozen()) {
+            TransformComponent transform = store.getComponent(ref, TransformComponent.getComponentType());
+            if (transform != null) {
+                transform.setRotation(new Vector3f(data.getFrozenRotX(), data.getFrozenRotY(), data.getFrozenRotZ()));
+            }
+        }
+
+        // 2. Particles
+        spawnParticleEffect(ref);
+    }
+
+    private static void spawnParticleEffect(Ref<EntityStore> ref) {
+        if (ref == null || !ref.isValid()) return;
+        Store<EntityStore> store = ref.getStore();
+        if (store == null) return;
+
+        TransformComponent trans = store.getComponent(ref, TransformComponent.getComponentType());
+        if (trans == null) return;
+
+        Vector3d pos = trans.getPosition();
+        if (pos == null) return;
+
+        // Spawn ice shards at the entity's position
+        ParticleUtil.spawnParticleEffect("hytale:ice_shards", pos, store);
     }
 
 

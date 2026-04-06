@@ -206,6 +206,8 @@ public class CoreEffects {
             .withBuff(ctx -> {
                 String uid = ctx.source != null ? ctx.source.getUuid().toString() : ctx.target.toString();
                 return ActiveBuff.builder(uid, "frozen", 600)
+                    .interval(10)
+                    .onTick(ref -> EffectHelper.onFrozenTick(ref))
                     .onExpire(ref -> EffectHelper.revertFrozen(ref))
                     .build();
             })

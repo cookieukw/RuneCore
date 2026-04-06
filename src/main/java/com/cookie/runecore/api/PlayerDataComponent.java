@@ -19,6 +19,10 @@ public class PlayerDataComponent implements Component<EntityStore> {
     private float maxMana = 100.0f;
     private String activeGrimoireId = null;
     private int activeSpellIndex = 0;
+    private boolean frozen = false;
+    private float frozenRotX = 0.0f;
+    private float frozenRotY = 0.0f;
+    private float frozenRotZ = 0.0f;
 
     public PlayerDataComponent() {
     }
@@ -34,6 +38,14 @@ public class PlayerDataComponent implements Component<EntityStore> {
             .add()
             .append(new KeyedCodec<Integer>("ActiveSpellIndex", Codec.INTEGER), (c, v) -> c.activeSpellIndex = v,
                     c -> c.activeSpellIndex)
+            .add()
+            .append(new KeyedCodec<Boolean>("Frozen", Codec.BOOLEAN), (c, v) -> c.frozen = v, c -> c.frozen)
+            .add()
+            .append(new KeyedCodec<Float>("FrozenRotX", Codec.FLOAT), (c, v) -> c.frozenRotX = v, c -> c.frozenRotX)
+            .add()
+            .append(new KeyedCodec<Float>("FrozenRotY", Codec.FLOAT), (c, v) -> c.frozenRotY = v, c -> c.frozenRotY)
+            .add()
+            .append(new KeyedCodec<Float>("FrozenRotZ", Codec.FLOAT), (c, v) -> c.frozenRotZ = v, c -> c.frozenRotZ)
             .add()
             .build();
 
@@ -69,12 +81,33 @@ public class PlayerDataComponent implements Component<EntityStore> {
         this.activeSpellIndex = index;
     }
 
+    public boolean isFrozen() {
+        return frozen;
+    }
+
+    public void setFrozen(boolean frozen) {
+        this.frozen = frozen;
+    }
+
+    public float getFrozenRotX() { return frozenRotX; }
+    public void setFrozenRotX(float frozenRotX) { this.frozenRotX = frozenRotX; }
+
+    public float getFrozenRotY() { return frozenRotY; }
+    public void setFrozenRotY(float frozenRotY) { this.frozenRotY = frozenRotY; }
+
+    public float getFrozenRotZ() { return frozenRotZ; }
+    public void setFrozenRotZ(float frozenRotZ) { this.frozenRotZ = frozenRotZ; }
+
     @Nonnull
     @Override
     public Component<EntityStore> clone() {
         PlayerDataComponent clone = new PlayerDataComponent();
         clone.mana = this.mana;
         clone.maxMana = this.maxMana;
+        clone.frozen = this.frozen;
+        clone.frozenRotX = this.frozenRotX;
+        clone.frozenRotY = this.frozenRotY;
+        clone.frozenRotZ = this.frozenRotZ;
         return clone;
     }
 }
