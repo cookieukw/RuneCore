@@ -235,17 +235,17 @@ public class CoreEffects {
             }
         }));
 
-        core.registerEffect(new RuneEffect("invisibility", "hytale:invisibility", 1200));
-        core.registerEffect(new RuneEffect("glowing", "hytale:glowing", 1200));
-        core.registerEffect(new RuneEffect("blindness", "hytale:blindness", 200));
-        core.registerEffect(new RuneEffect("nausea", "hytale:nausea", 200));
-        core.registerEffect(new RuneEffect("darkness", "hytale:darkness", 400));
-        core.registerEffect(new RuneEffect("night_vision", "hytale:night_vision", 1200));
-        core.registerEffect(new RuneEffect("water_breathing", "hytale:water_breathing", 1200));
-        core.registerEffect(new RuneEffect("fire_resistance", "hytale:fire_resistance", 1200));
-        core.registerEffect(new RuneEffect("resistance", "hytale:resistance", 1200));
-        core.registerEffect(new RuneEffect("strength", "hytale:strength", 1200));
-        core.registerEffect(new RuneEffect("weakness", "hytale:weakness", 600));
-        core.registerEffect(new RuneEffect("electrified", "hytale:electrified", 200));
+        core.registerEffect(new RuneEffect("invisibility", "Invisibility", 1200));
+        core.registerEffect(new RuneEffect("glowing", "Glowing", 1200));
+        core.registerEffect(new RuneEffect("blindness", "Blindness", 200));
+        core.registerEffect(new RuneEffect("nausea", "Nausea", 200));
+        core.registerEffect(new RuneEffect("darkness", "Darkness", 400));
+        core.registerEffect(new RuneEffect("night_vision", "Night_Vision", 1200));
+        core.registerEffect(new RuneEffect("water_breathing", "Water_Breathing", 1200));
+        core.registerEffect(new RuneEffect("fire_resistance", "Immunity_Fire", 1200));
+        core.registerEffect(new RuneEffect("resistance", "Immune", 1200));
+        core.registerEffect(new RuneEffect("strength", "Strength", 1200));
+        core.registerEffect(new RuneEffect("weakness", "Weakness", 600));
+        core.registerEffect(new RuneEffect("electrified", "Electrified", 200));
     }
 }
