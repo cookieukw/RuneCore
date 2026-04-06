@@ -110,15 +110,20 @@ public final class EffectHelper {
 
     public static void applyLevitation(Ref<EntityStore> ref) {
         modifyMovement(ref, s -> {
-            s.wishDirectionGravityY = 6.0f;
-            s.mass = 0.01f;
+            s.invertedGravity = true;
+            s.mass = 0.05f;
+            s.airDragMax = 3.5f;
+            s.airDragMaxSpeed = 0.1f;
         });
     }
 
     public static void revertLevitation(Ref<EntityStore> ref) {
         modifyMovement(ref, s -> {
+            s.invertedGravity = false;
             s.wishDirectionGravityY = 0.0f;
             s.mass = DEFAULT_MASS;
+            s.airDragMax = DEFAULT_AIR_DRAG_MAX;
+            s.airDragMaxSpeed = 6.0f;
         });
     }
 

@@ -124,7 +124,7 @@ public class CoreEffects {
             })
         );
 
-        core.registerEffect(new RuneEffect("levitation", 200)
+        core.registerEffect(new RuneEffect("levitation", 60)
             .withAsset("Levitation")
             .withAction(ctx -> {
                 if (ctx.target instanceof Ref<?> raw) {
@@ -134,7 +134,7 @@ public class CoreEffects {
             })
             .withBuff(ctx -> {
                 String uid = ctx.source != null ? ctx.source.getUuid().toString() : ctx.target.toString();
-                return ActiveBuff.builder(uid, "levitation", 200)
+                return ActiveBuff.builder(uid, "levitation", 60)
                     .onExpire(ref -> EffectHelper.revertLevitation(ref))
                     .build();
             })
