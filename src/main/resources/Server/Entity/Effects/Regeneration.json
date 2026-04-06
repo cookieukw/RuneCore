@@ -1,4 +1,4 @@
 {
-  "StatusEffectIcon": "Icons/Regeneration",
+  "StatusEffectIcon": "UI/StatusEffects/Regeneration.png",
   "Duration": 60.0
 }

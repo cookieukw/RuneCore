@@ -1,4 +1,4 @@
 {
-  "StatusEffectIcon": "Icons/Slow_Falling",
+  "StatusEffectIcon": "UI/StatusEffects/Slow_Falling.png",
   "Duration": 60.0
 }

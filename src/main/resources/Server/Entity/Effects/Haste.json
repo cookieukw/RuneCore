@@ -1,4 +1,4 @@
 {
-  "StatusEffectIcon": "Icons/Haste",
+  "StatusEffectIcon": "UI/StatusEffects/Haste.png",
   "Duration": 60.0
 }

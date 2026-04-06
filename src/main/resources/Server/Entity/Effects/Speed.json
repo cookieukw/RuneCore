@@ -1,4 +1,4 @@
 {
-  "StatusEffectIcon": "Icons/Speed",
+  "StatusEffectIcon": "UI/StatusEffects/Speed.png",
   "Duration": 60.0
 }

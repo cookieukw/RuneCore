@@ -4,15 +4,15 @@ Group {
   Anchor: (Left: 60, Top: 30, Width: 358, Height: 64);
   Group {
  
+   Group {
+      Anchor: (Left: 0, Width: 302, Height: 60);
+      Background: "ManaBackground.png";
+    }
     ProgressBar #ManaBar {
         Anchor: (Width: 302, Height: 60);
         BarTexturePath: "ManaBarFill.png";
       }
       
-   Group {
-      Anchor: (Left: 0, Width: 302, Height: 60);
-      Background: "ManaBackground.png";
-    }
     Label #ManaText {
         Text: "100/100";
         Anchor: (Width: 302, Height: 60);

@@ -1,4 +1,4 @@
 {
-  "StatusEffectIcon": "Icons/Burn",
+  "StatusEffectIcon": "UI/StatusEffects/Burn.png",
   "Duration": 60.0
 }

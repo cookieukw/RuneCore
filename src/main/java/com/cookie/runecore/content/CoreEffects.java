@@ -13,7 +13,7 @@ public class CoreEffects {
         RuneCore core = RuneCore.get();
 
         core.registerEffect(new RuneEffect("speed", 1200)
-            .withAsset("runecore:Speed")
+            .withAsset("Speed")
             .withAction(ctx -> {
                 if (ctx.target instanceof Ref<?> raw) {
                     @SuppressWarnings("unchecked") Ref<EntityStore> ref = (Ref<EntityStore>) raw;
@@ -29,7 +29,7 @@ public class CoreEffects {
         );
 
         core.registerEffect(new RuneEffect("slowness", 600)
-            .withAsset("runecore:Slowness")
+            .withAsset("Slowness")
             .withAction(ctx -> {
                 if (ctx.target instanceof Ref<?> raw) {
                     @SuppressWarnings("unchecked") Ref<EntityStore> ref = (Ref<EntityStore>) raw;
@@ -45,7 +45,7 @@ public class CoreEffects {
         );
 
         core.registerEffect(new RuneEffect("haste", 1200)
-            .withAsset("runecore:Haste")
+            .withAsset("Haste")
             .withAction(ctx -> {
                 if (ctx.target instanceof Ref<?> raw) {
                     @SuppressWarnings("unchecked") Ref<EntityStore> ref = (Ref<EntityStore>) raw;
@@ -61,7 +61,7 @@ public class CoreEffects {
         );
 
         core.registerEffect(new RuneEffect("mining_fatigue", 1200)
-            .withAsset("runecore:Mining_Fatigue")
+            .withAsset("Mining_Fatigue")
             .withAction(ctx -> {
                 if (ctx.target instanceof Ref<?> raw) {
                     @SuppressWarnings("unchecked") Ref<EntityStore> ref = (Ref<EntityStore>) raw;
@@ -77,7 +77,7 @@ public class CoreEffects {
         );
 
         core.registerEffect(new RuneEffect("jump_boost", 1200)
-            .withAsset("runecore:Jump_Boost")
+            .withAsset("Jump_Boost")
             .withAction(ctx -> {
                 if (ctx.target instanceof Ref<?> raw) {
                     @SuppressWarnings("unchecked") Ref<EntityStore> ref = (Ref<EntityStore>) raw;
@@ -93,7 +93,7 @@ public class CoreEffects {
         );
 
         core.registerEffect(new RuneEffect("high_jump", 600)
-            .withAsset("runecore:High_Jump")
+            .withAsset("High_Jump")
             .withAction(ctx -> {
                 if (ctx.target instanceof Ref<?> raw) {
                     @SuppressWarnings("unchecked") Ref<EntityStore> ref = (Ref<EntityStore>) raw;
@@ -109,7 +109,7 @@ public class CoreEffects {
         );
 
         core.registerEffect(new RuneEffect("slow_falling", 1200)
-            .withAsset("runecore:Slow_Falling")
+            .withAsset("Slow_Falling")
             .withAction(ctx -> {
                 if (ctx.target instanceof Ref<?> raw) {
                     @SuppressWarnings("unchecked") Ref<EntityStore> ref = (Ref<EntityStore>) raw;
@@ -125,7 +125,7 @@ public class CoreEffects {
         );
 
         core.registerEffect(new RuneEffect("levitation", 200)
-            .withAsset("runecore:Levitation")
+            .withAsset("Levitation")
             .withAction(ctx -> {
                 if (ctx.target instanceof Ref<?> raw) {
                     @SuppressWarnings("unchecked") Ref<EntityStore> ref = (Ref<EntityStore>) raw;
@@ -141,7 +141,7 @@ public class CoreEffects {
         );
 
         core.registerEffect(new RuneEffect("regeneration", 400)
-            .withAsset("runecore:Regeneration")
+            .withAsset("Regeneration")
             .withBuff(ctx -> {
                 String uid = ctx.source != null ? ctx.source.getUuid().toString() : ctx.target.toString();
                 return ActiveBuff.builder(uid, "regeneration", 400)
@@ -152,7 +152,7 @@ public class CoreEffects {
         );
 
         core.registerEffect(new RuneEffect("poison", 400)
-            .withAsset("runecore:Poison")
+            .withAsset("Poison")
             .withBuff(ctx -> {
                 String uid = ctx.source != null ? ctx.source.getUuid().toString() : ctx.target.toString();
                 return ActiveBuff.builder(uid, "poison", 400)
@@ -163,7 +163,7 @@ public class CoreEffects {
         );
 
         core.registerEffect(new RuneEffect("decay", 400)
-            .withAsset("runecore:Decay")
+            .withAsset("Decay")
             .withBuff(ctx -> {
                 String uid = ctx.source != null ? ctx.source.getUuid().toString() : ctx.target.toString();
                 return ActiveBuff.builder(uid, "decay", 400)
@@ -174,7 +174,7 @@ public class CoreEffects {
         );
 
         core.registerEffect(new RuneEffect("burn", 200)
-            .withAsset("runecore:Burn")
+            .withAsset("Burn")
             .withBuff(ctx -> {
                 String uid = ctx.source != null ? ctx.source.getUuid().toString() : ctx.target.toString();
                 return ActiveBuff.builder(uid, "burn", 200)
@@ -185,7 +185,7 @@ public class CoreEffects {
         );
 
         core.registerEffect(new RuneEffect("bleeding", 300)
-            .withAsset("runecore:Bleeding")
+            .withAsset("Bleeding")
             .withBuff(ctx -> {
                 String uid = ctx.source != null ? ctx.source.getUuid().toString() : ctx.target.toString();
                 return ActiveBuff.builder(uid, "bleeding", 300)
@@ -196,7 +196,7 @@ public class CoreEffects {
         );
 
         core.registerEffect(new RuneEffect("frozen", 600)
-            .withAsset("runecore:Frozen")
+            .withAsset("Frozen")
             .withAction(ctx -> {
                 if (ctx.target instanceof Ref<?> raw) {
                     @SuppressWarnings("unchecked") Ref<EntityStore> ref = (Ref<EntityStore>) raw;

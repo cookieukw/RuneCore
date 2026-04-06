@@ -1,4 +1,4 @@
 {
-  "StatusEffectIcon": "Icons/High_Jump",
+  "StatusEffectIcon": "UI/StatusEffects/High_Jump.png",
   "Duration": 60.0
 }

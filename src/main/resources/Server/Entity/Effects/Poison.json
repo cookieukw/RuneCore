@@ -1,4 +1,4 @@
 {
-  "StatusEffectIcon": "Icons/Poison",
+  "StatusEffectIcon": "UI/StatusEffects/Poison.png",
   "Duration": 60.0
 }

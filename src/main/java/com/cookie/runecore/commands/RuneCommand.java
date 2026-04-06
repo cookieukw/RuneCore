@@ -27,7 +27,7 @@ public class RuneCommand extends AbstractPlayerCommand {
 
     public RuneCommand() {
         super("rune", "RuneCore administrative commands");
-        this.subCommandArg = this.withRequiredArg("subcommand", "Subcommand (effect|stats)", ArgTypes.STRING);
+        this.subCommandArg = this.withRequiredArg("subcommand", "Subcommand (effect|dump|stats)", ArgTypes.STRING);
         this.effectIdArg = this.withRequiredArg("id", "Effect identifier or Stat", ArgTypes.STRING);
         this.durationArg = this.withOptionalArg("duration", "Duration in ticks (for effects)", ArgTypes.INTEGER);
     }
