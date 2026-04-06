@@ -1,5 +1,7 @@
 package com.cookie.runecore.api;
 
+import java.util.UUID;
+
 import com.hypixel.hytale.component.Ref;
 import com.hypixel.hytale.component.Store;
 import com.hypixel.hytale.protocol.MovementSettings;
@@ -205,5 +207,41 @@ public final class EffectHelper {
     @FunctionalInterface
     public interface MovementModifier {
         void apply(MovementSettings settings);
+    }
+
+    public static void applyInvisibility(Ref<EntityStore> ref) {
+        if (ref == null || !ref.isValid()) return;
+        Store<EntityStore> store = ref.getStore();
+        if (store == null) return;
+        World world = store.getExternalData().getWorld();
+        if (world == null) return;
+
+        PlayerRef playerRefComp = (PlayerRef) store.getComponent(ref, PlayerRef.getComponentType());
+        if (playerRefComp == null) return;
+        UUID targetUuid = playerRefComp.getUuid();
+
+        world.execute(() -> {
+            for (PlayerRef observer : world.getPlayerRefs()) {
+                observer.getHiddenPlayersManager().hidePlayer(targetUuid);
+            }
+        });
+    }
+
+    public static void revertInvisibility(Ref<EntityStore> ref) {
+        if (ref == null || !ref.isValid()) return;
+        Store<EntityStore> store = ref.getStore();
+        if (store == null) return;
+        World world = store.getExternalData().getWorld();
+        if (world == null) return;
+
+        PlayerRef playerRefComp = (PlayerRef) store.getComponent(ref, PlayerRef.getComponentType());
+        if (playerRefComp == null) return;
+        UUID targetUuid = playerRefComp.getUuid();
+
+        world.execute(() -> {
+            for (PlayerRef observer : world.getPlayerRefs()) {
+                observer.getHiddenPlayersManager().showPlayer(targetUuid);
+            }
+        });
     }
 }

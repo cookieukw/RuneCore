@@ -235,7 +235,20 @@ public class CoreEffects {
             }
         }));
 
-        core.registerEffect(new RuneEffect("invisibility", "Invisibility", 1200));
+        core.registerEffect(new RuneEffect("invisibility", "Invisibility", 1200)
+            .withAction(ctx -> {
+                if (ctx.target instanceof Ref<?> raw) {
+                    @SuppressWarnings("unchecked") Ref<EntityStore> ref = (Ref<EntityStore>) raw;
+                    EffectHelper.applyInvisibility(ref);
+                }
+            })
+            .withBuff(ctx -> {
+                String uid = ctx.source != null ? ctx.source.getUuid().toString() : ctx.target.toString();
+                return ActiveBuff.builder(uid, "invisibility", 1200)
+                    .onExpire(ref -> EffectHelper.revertInvisibility(ref))
+                    .build();
+            })
+        );
         core.registerEffect(new RuneEffect("glowing", "Glowing", 1200));
         core.registerEffect(new RuneEffect("blindness", "Blindness", 200));
         core.registerEffect(new RuneEffect("nausea", "Nausea", 200));
