@@ -175,22 +175,42 @@ public class CoreEffects {
 
         core.registerEffect(new RuneEffect("burn", 200)
             .withAsset("Burn")
+            .withAction(ctx -> {
+                if (ctx.target instanceof Ref<?> raw) {
+                    @SuppressWarnings("unchecked") Ref<EntityStore> ref = (Ref<EntityStore>) raw;
+                    EffectHelper.applyBurn(ref);
+                }
+            })
             .withBuff(ctx -> {
                 String uid = ctx.source != null ? ctx.source.getUuid().toString() : ctx.target.toString();
                 return ActiveBuff.builder(uid, "burn", 200)
                     .interval(20)
-                    .onTick(ref -> EffectHelper.subtractHealth(ref, 1.0f))
+                    .onTick(ref -> {
+                        EffectHelper.subtractHealth(ref, 1.0f);
+                        EffectHelper.onBurnTick(ref);
+                    })
+                    .onExpire(ref -> EffectHelper.revertBurn(ref))
                     .build();
             })
         );
 
         core.registerEffect(new RuneEffect("bleeding", 300)
             .withAsset("Bleeding")
+            .withAction(ctx -> {
+                if (ctx.target instanceof Ref<?> raw) {
+                    @SuppressWarnings("unchecked") Ref<EntityStore> ref = (Ref<EntityStore>) raw;
+                    EffectHelper.applyBleeding(ref);
+                }
+            })
             .withBuff(ctx -> {
                 String uid = ctx.source != null ? ctx.source.getUuid().toString() : ctx.target.toString();
                 return ActiveBuff.builder(uid, "bleeding", 300)
                     .interval(30)
-                    .onTick(ref -> EffectHelper.subtractHealth(ref, 1.0f))
+                    .onTick(ref -> {
+                        EffectHelper.subtractHealth(ref, 1.0f);
+                        EffectHelper.onBleedingTick(ref);
+                    })
+                    .onExpire(ref -> EffectHelper.revertBleeding(ref))
                     .build();
             })
         );

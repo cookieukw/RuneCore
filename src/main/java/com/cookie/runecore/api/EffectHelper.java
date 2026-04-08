@@ -254,22 +254,75 @@ public final class EffectHelper {
         }
 
         // 2. Particles
-        spawnParticleEffect(ref);
+        spawnParticleEffect(ref, "hytale:ice_shards");
     }
 
-    private static void spawnParticleEffect(Ref<EntityStore> ref) {
+    public static void applyBleeding(Ref<EntityStore> ref) {
+        Store<EntityStore> store = ref.getStore();
+        if (store != null) {
+            PlayerRef playerRef = (PlayerRef) store.getComponent(ref, PlayerRef.getComponentType());
+            if (playerRef != null) {
+                RuneCoreHud hud = RuneCoreHudManager.get().getHud(playerRef.getUuid());
+                if (hud != null) hud.setBleeding(true);
+            }
+        }
+    }
+
+    public static void revertBleeding(Ref<EntityStore> ref) {
+        Store<EntityStore> store = ref.getStore();
+        if (store != null) {
+            PlayerRef playerRef = (PlayerRef) store.getComponent(ref, PlayerRef.getComponentType());
+            if (playerRef != null) {
+                RuneCoreHud hud = RuneCoreHudManager.get().getHud(playerRef.getUuid());
+                if (hud != null) hud.setBleeding(false);
+            }
+        }
+    }
+
+    public static void onBleedingTick(Ref<EntityStore> ref) {
+        // Particles
+        spawnParticleEffect(ref, "hytale:blood_impact");
+        // Mechanical effect (damage) is handled by the buff onTick in CoreEffects, 
+        // but we can add secondary effects here if needed.
+    }
+
+    public static void applyBurn(Ref<EntityStore> ref) {
+        Store<EntityStore> store = ref.getStore();
+        if (store != null) {
+            PlayerRef playerRef = (PlayerRef) store.getComponent(ref, PlayerRef.getComponentType());
+            if (playerRef != null) {
+                RuneCoreHud hud = RuneCoreHudManager.get().getHud(playerRef.getUuid());
+                if (hud != null) hud.setBurning(true);
+            }
+        }
+    }
+
+    public static void revertBurn(Ref<EntityStore> ref) {
+        Store<EntityStore> store = ref.getStore();
+        if (store != null) {
+            PlayerRef playerRef = (PlayerRef) store.getComponent(ref, PlayerRef.getComponentType());
+            if (playerRef != null) {
+                RuneCoreHud hud = RuneCoreHudManager.get().getHud(playerRef.getUuid());
+                if (hud != null) hud.setBurning(false);
+            }
+        }
+    }
+
+    public static void onBurnTick(Ref<EntityStore> ref) {
+        // Particles
+        spawnParticleEffect(ref, "hytale:fire");
+    }
+
+    private static void spawnParticleEffect(Ref<EntityStore> ref, String particleId) {
         if (ref == null || !ref.isValid()) return;
         Store<EntityStore> store = ref.getStore();
         if (store == null) return;
 
-        TransformComponent trans = store.getComponent(ref, TransformComponent.getComponentType());
-        if (trans == null) return;
+        TransformComponent transform = store.getComponent(ref, TransformComponent.getComponentType());
+        if (transform == null) return;
 
-        Vector3d pos = trans.getPosition();
-        if (pos == null) return;
-
-        // Spawn ice shards at the entity's position
-        ParticleUtil.spawnParticleEffect("hytale:ice_shards", pos, store);
+        Vector3d pos = transform.getPosition();
+        ParticleUtil.spawnParticleEffect(particleId, pos, store);
     }
 
 

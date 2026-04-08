@@ -10,6 +10,8 @@ public class RuneCoreHud extends CustomUIHud {
     private float targetManaValue = 1.0f;
     private float maxManaValue = 100.0f;
     private boolean isFrozen = false;
+    private boolean isBleeding = false;
+    private boolean isBurning = false;
 
     public RuneCoreHud(@Nonnull PlayerRef playerRef) {
         super(playerRef);
@@ -23,6 +25,12 @@ public class RuneCoreHud extends CustomUIHud {
 
         if (isFrozen) {
             builder.append("Effects/FrozenOverlay.ui");
+        }
+        if (isBleeding) {
+            builder.append("Effects/BleedingOverlay.ui");
+        }
+        if (isBurning) {
+            builder.append("Effects/BurnOverlay.ui");
         }
     }
 
@@ -42,7 +50,22 @@ public class RuneCoreHud extends CustomUIHud {
     public void setFrozen(boolean frozen) {
         if (this.isFrozen == frozen) return;
         this.isFrozen = frozen;
-        
+        refreshHud();
+    }
+
+    public void setBleeding(boolean bleeding) {
+        if (this.isBleeding == bleeding) return;
+        this.isBleeding = bleeding;
+        refreshHud();
+    }
+
+    public void setBurning(boolean burning) {
+        if (this.isBurning == burning) return;
+        this.isBurning = burning;
+        refreshHud();
+    }
+
+    private void refreshHud() {
         UICommandBuilder b = new UICommandBuilder();
         this.build(b);
         this.update(true, b);
