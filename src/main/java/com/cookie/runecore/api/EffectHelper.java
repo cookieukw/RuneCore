@@ -1,6 +1,7 @@
 package com.cookie.runecore.api;
 
 import java.util.UUID;
+import java.util.function.Consumer;
 
 import com.hypixel.hytale.component.Ref;
 import com.hypixel.hytale.component.Store;
@@ -10,7 +11,11 @@ import com.hypixel.hytale.server.core.entity.entities.player.movement.MovementMa
 import com.hypixel.hytale.server.core.io.PacketHandler;
 import com.hypixel.hytale.server.core.modules.entitystats.EntityStatMap;
 import com.hypixel.hytale.server.core.modules.entitystats.EntityStatValue;
+import com.hypixel.hytale.server.core.modules.entitystats.EntityStatsModule;
+import com.hypixel.hytale.server.core.modules.entitystats.modifier.Modifier;
+import com.hypixel.hytale.server.core.modules.entitystats.modifier.StaticModifier;
 import com.hypixel.hytale.server.core.modules.entitystats.asset.DefaultEntityStatTypes;
+import com.hypixel.hytale.server.core.modules.entitystats.asset.EntityStatType;
 import com.hypixel.hytale.server.core.universe.PlayerRef;
 import com.hypixel.hytale.server.core.universe.world.World;
 import com.hypixel.hytale.server.core.universe.world.storage.EntityStore;
@@ -23,7 +28,6 @@ import com.hypixel.hytale.protocol.packets.camera.SetServerCamera;
 import com.hypixel.hytale.protocol.ClientCameraView;
 import com.hypixel.hytale.protocol.ServerCameraSettings;
 import com.hypixel.hytale.protocol.Vector2f;
-import com.cookie.runecore.api.PlayerDataComponent;
 import com.hypixel.hytale.server.core.entity.movement.MovementStatesComponent;
 import com.hypixel.hytale.protocol.MovementStates;
 import com.hypixel.hytale.math.vector.Vector3f;
@@ -38,6 +42,15 @@ public final class EffectHelper {
 
     private EffectHelper() {}
 
+    private static void updateHud(Ref<EntityStore> ref, Consumer<RuneCoreHud> action) {
+        Store<EntityStore> store = ref.getStore();
+        if (store == null) return;
+        PlayerRef playerRef = (PlayerRef) store.getComponent(ref, PlayerRef.getComponentType());
+        if (playerRef != null) {
+            RuneCoreHud hud = RuneCoreHudManager.get().getHud(playerRef.getUuid());
+            if (hud != null) action.accept(hud);
+        }
+    }
 
     public static void modifyMovement(Ref<EntityStore> ref, MovementModifier modifier) {
         if (ref == null) return;
@@ -69,7 +82,6 @@ public final class EffectHelper {
         }
     }
 
-
     public static void applySpeed(Ref<EntityStore> ref) {
         modifyMovement(ref, s -> s.baseSpeed += 2.75f);
     }
@@ -85,7 +97,6 @@ public final class EffectHelper {
     public static void revertSlowness(Ref<EntityStore> ref) {
         modifyMovement(ref, s -> s.baseSpeed += 2.0f);
     }
-
 
     public static void applyJumpBoost(Ref<EntityStore> ref) {
         modifyMovement(ref, s -> s.jumpForce += 5.0f);
@@ -103,7 +114,6 @@ public final class EffectHelper {
         modifyMovement(ref, s -> s.jumpForce = Math.max(DEFAULT_JUMP_FORCE, s.jumpForce - 10.0f));
     }
 
-
     public static void applySlowFalling(Ref<EntityStore> ref) {
         modifyMovement(ref, s -> {
             s.mass = 0.15f;
@@ -119,7 +129,6 @@ public final class EffectHelper {
             s.airDragMaxSpeed = 6.0f;
         });
     }
-
 
     public static void applyLevitation(Ref<EntityStore> ref) {
         modifyMovement(ref, s -> {
@@ -140,7 +149,6 @@ public final class EffectHelper {
         });
     }
 
-
     public static void applyFrozen(Ref<EntityStore> ref) {
         modifyMovement(ref, s -> {
             s.baseSpeed = 0.0f;
@@ -157,8 +165,6 @@ public final class EffectHelper {
             PlayerDataComponent data = store.getComponent(ref, PlayerDataComponent.TYPE);
             if (data != null) {
                 data.setFrozen(true);
-                
-                // Save current rotation to lock it every tick
                 TransformComponent transform = store.getComponent(ref, TransformComponent.getComponentType());
                 if (transform != null) {
                     Vector3f rot = transform.getRotation();
@@ -168,7 +174,6 @@ public final class EffectHelper {
                 }
             }
 
-            // Force Movement State to Idle
             MovementStatesComponent msc = store.getComponent(ref, MovementStatesComponent.getComponentType());
             if (msc != null) {
                 MovementStates states = msc.getMovementStates();
@@ -179,12 +184,10 @@ public final class EffectHelper {
                 states.jumping = false;
             }
 
+            updateHud(ref, hud -> hud.setFrozen(true));
+            
             PlayerRef playerRef = (PlayerRef) store.getComponent(ref, PlayerRef.getComponentType());
             if (playerRef != null) {
-                RuneCoreHud hud = RuneCoreHudManager.get().getHud(playerRef.getUuid());
-                if (hud != null) hud.setFrozen(true);
-                
-                // Lock Camera (with zero look sensitivity as backup)
                 sendCameraLock(playerRef, true);
             }
         }
@@ -205,19 +208,16 @@ public final class EffectHelper {
             PlayerDataComponent data = store.getComponent(ref, PlayerDataComponent.TYPE);
             if (data != null) data.setFrozen(false);
 
-            // Restore Movement State
             MovementStatesComponent msc = store.getComponent(ref, MovementStatesComponent.getComponentType());
             if (msc != null) {
                 MovementStates states = msc.getMovementStates();
-                states.idle = false; // Let the server/client recalculate
+                states.idle = false;
             }
 
+            updateHud(ref, hud -> hud.setFrozen(false));
+            
             PlayerRef playerRef = (PlayerRef) store.getComponent(ref, PlayerRef.getComponentType());
             if (playerRef != null) {
-                RuneCoreHud hud = RuneCoreHudManager.get().getHud(playerRef.getUuid());
-                if (hud != null) hud.setFrozen(false);
-                
-                // Unlock Camera
                 sendCameraLock(playerRef, false);
             }
         }
@@ -228,7 +228,6 @@ public final class EffectHelper {
         
         ServerCameraSettings settings = new ServerCameraSettings();
         if (locked) {
-            // Effectively disable mouse look by zeroing the sensitivity/multiplier
             settings.lookMultiplier = new Vector2f(0.0f, 0.0f);
         }
         
@@ -244,7 +243,6 @@ public final class EffectHelper {
         Store<EntityStore> store = ref.getStore();
         if (store == null) return;
 
-        // 1. Force Rotation every tick (Server-side look lock)
         PlayerDataComponent data = store.getComponent(ref, PlayerDataComponent.TYPE);
         if (data != null && data.isFrozen()) {
             TransformComponent transform = store.getComponent(ref, TransformComponent.getComponentType());
@@ -253,65 +251,77 @@ public final class EffectHelper {
             }
         }
 
-        // 2. Particles
         spawnParticleEffect(ref, "hytale:ice_shards");
     }
 
     public static void applyBleeding(Ref<EntityStore> ref) {
-        Store<EntityStore> store = ref.getStore();
-        if (store != null) {
-            PlayerRef playerRef = (PlayerRef) store.getComponent(ref, PlayerRef.getComponentType());
-            if (playerRef != null) {
-                RuneCoreHud hud = RuneCoreHudManager.get().getHud(playerRef.getUuid());
-                if (hud != null) hud.setBleeding(true);
-            }
-        }
+        updateHud(ref, hud -> hud.setBleeding(true));
     }
 
     public static void revertBleeding(Ref<EntityStore> ref) {
-        Store<EntityStore> store = ref.getStore();
-        if (store != null) {
-            PlayerRef playerRef = (PlayerRef) store.getComponent(ref, PlayerRef.getComponentType());
-            if (playerRef != null) {
-                RuneCoreHud hud = RuneCoreHudManager.get().getHud(playerRef.getUuid());
-                if (hud != null) hud.setBleeding(false);
-            }
-        }
+        updateHud(ref, hud -> hud.setBleeding(false));
     }
 
     public static void onBleedingTick(Ref<EntityStore> ref) {
-        // Particles
         spawnParticleEffect(ref, "hytale:blood_impact");
-        // Mechanical effect (damage) is handled by the buff onTick in CoreEffects, 
-        // but we can add secondary effects here if needed.
     }
 
     public static void applyBurn(Ref<EntityStore> ref) {
-        Store<EntityStore> store = ref.getStore();
-        if (store != null) {
-            PlayerRef playerRef = (PlayerRef) store.getComponent(ref, PlayerRef.getComponentType());
-            if (playerRef != null) {
-                RuneCoreHud hud = RuneCoreHudManager.get().getHud(playerRef.getUuid());
-                if (hud != null) hud.setBurning(true);
-            }
-        }
+        updateHud(ref, hud -> hud.setBurning(true));
     }
 
     public static void revertBurn(Ref<EntityStore> ref) {
-        Store<EntityStore> store = ref.getStore();
-        if (store != null) {
-            PlayerRef playerRef = (PlayerRef) store.getComponent(ref, PlayerRef.getComponentType());
-            if (playerRef != null) {
-                RuneCoreHud hud = RuneCoreHudManager.get().getHud(playerRef.getUuid());
-                if (hud != null) hud.setBurning(false);
-            }
-        }
+        updateHud(ref, hud -> hud.setBurning(false));
     }
 
     public static void onBurnTick(Ref<EntityStore> ref) {
-        // Particles
         spawnParticleEffect(ref, "hytale:fire");
     }
+
+    public static void applyMiningFatigue(Ref<EntityStore> ref) {
+        updateHud(ref, hud -> hud.setMiningFatigue(true));
+        applyStatModifier(ref, "hytale:attack_speed", "Mining_Fatigue", 0.3f, StaticModifier.CalculationType.MULTIPLICATIVE);
+        applyStatModifier(ref, "hytale:mining_speed", "Mining_Fatigue", 0.3f, StaticModifier.CalculationType.MULTIPLICATIVE);
+    }
+
+    public static void revertMiningFatigue(Ref<EntityStore> ref) {
+        updateHud(ref, hud -> hud.setMiningFatigue(false));
+        removeStatModifier(ref, "hytale:attack_speed", "Mining_Fatigue");
+        removeStatModifier(ref, "hytale:mining_speed", "Mining_Fatigue");
+    }
+
+    public static void applyHaste(Ref<EntityStore> ref) {
+        updateHud(ref, hud -> hud.setHaste(true));
+        applyStatModifier(ref, "hytale:attack_speed", "Haste", 1.5f, StaticModifier.CalculationType.MULTIPLICATIVE);
+        applyStatModifier(ref, "hytale:mining_speed", "Haste", 1.5f, StaticModifier.CalculationType.MULTIPLICATIVE);
+    }
+
+    public static void revertHaste(Ref<EntityStore> ref) {
+        updateHud(ref, hud -> hud.setHaste(false));
+        removeStatModifier(ref, "hytale:attack_speed", "Haste");
+        removeStatModifier(ref, "hytale:mining_speed", "Haste");
+    }
+
+    private static void applyStatModifier(Ref<EntityStore> ref, String statId, String modifierId, float value, StaticModifier.CalculationType type) {
+        EntityStatMap statMap = (EntityStatMap) ref.getStore().getComponent(ref, EntityStatsModule.get().getEntityStatMapComponentType());
+        if (statMap == null) return;
+
+        int index = EntityStatType.getAssetMap().getIndex(statId);
+        if (index >= 0) {
+            statMap.putModifier(index, modifierId, new StaticModifier(Modifier.ModifierTarget.MAX, type, value));
+        }
+    }
+
+    private static void removeStatModifier(Ref<EntityStore> ref, String statId, String modifierId) {
+        EntityStatMap statMap = (EntityStatMap) ref.getStore().getComponent(ref, EntityStatsModule.get().getEntityStatMapComponentType());
+        if (statMap == null) return;
+
+        int index = EntityStatType.getAssetMap().getIndex(statId);
+        if (index >= 0) {
+            statMap.removeModifier(index, modifierId);
+        }
+    }
+
 
     private static void spawnParticleEffect(Ref<EntityStore> ref, String particleId) {
         if (ref == null || !ref.isValid()) return;
@@ -323,54 +333,6 @@ public final class EffectHelper {
 
         Vector3d pos = transform.getPosition();
         ParticleUtil.spawnParticleEffect(particleId, pos, store);
-    }
-
-
-    public static void applyHaste(Ref<EntityStore> ref) {
-        modifyMovement(ref, s -> {
-            s.baseSpeed += 1.0f;
-            s.forwardRunSpeedMultiplier += 0.2f;
-        });
-    }
-
-    public static void revertHaste(Ref<EntityStore> ref) {
-        modifyMovement(ref, s -> {
-            s.baseSpeed = Math.max(DEFAULT_SPEED, s.baseSpeed - 1.0f);
-            s.forwardRunSpeedMultiplier = Math.max(1.0f, s.forwardRunSpeedMultiplier - 0.2f);
-        });
-    }
-
-    public static void applyMiningFatigue(Ref<EntityStore> ref) {
-        modifyMovement(ref, s -> {
-            s.baseSpeed = Math.max(2.0f, s.baseSpeed - 1.5f);
-            s.forwardRunSpeedMultiplier = Math.max(0.5f, s.forwardRunSpeedMultiplier - 0.3f);
-        });
-    }
-
-    public static void revertMiningFatigue(Ref<EntityStore> ref) {
-        modifyMovement(ref, s -> {
-            s.baseSpeed += 1.5f;
-            s.forwardRunSpeedMultiplier += 0.3f;
-        });
-    }
-
-
-    public static void subtractHealth(Ref<EntityStore> ref, float amount) {
-        if (ref == null) return;
-        Store<EntityStore> store = ref.getStore();
-        if (store == null) return;
-        World world = store.getExternalData().getWorld();
-        if (world == null) return;
-
-        world.execute(() -> {
-            if (!ref.isValid()) return;
-            EntityStatMap statMap = (EntityStatMap) store.getComponent(ref, EntityStatMap.getComponentType());
-            if (statMap == null) return;
-            EntityStatValue hp = statMap.get(DefaultEntityStatTypes.getHealth());
-            if (hp == null) return;
-            float newHp = Math.max(0f, hp.get() - amount);
-            statMap.setStatValue(DefaultEntityStatTypes.getHealth(), newHp);
-        });
     }
 
     public static void addHealth(Ref<EntityStore> ref, float amount) {
@@ -391,6 +353,23 @@ public final class EffectHelper {
         });
     }
 
+    public static void subtractHealth(Ref<EntityStore> ref, float amount) {
+        if (ref == null) return;
+        Store<EntityStore> store = ref.getStore();
+        if (store == null) return;
+        World world = store.getExternalData().getWorld();
+        if (world == null) return;
+
+        world.execute(() -> {
+            if (!ref.isValid()) return;
+            EntityStatMap statMap = (EntityStatMap) store.getComponent(ref, EntityStatMap.getComponentType());
+            if (statMap == null) return;
+            EntityStatValue hp = statMap.get(DefaultEntityStatTypes.getHealth());
+            if (hp == null) return;
+            float newHp = Math.max(0f, hp.get() - amount);
+            statMap.setStatValue(DefaultEntityStatTypes.getHealth(), newHp);
+        });
+    }
 
     @FunctionalInterface
     public interface MovementModifier {

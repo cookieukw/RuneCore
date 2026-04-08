@@ -1,6 +1,6 @@
 Group {
     Panel #Tint {
         Anchor: (Full: 0);
-        Background: (Color: #ff9933(0.15));
+        Background: (Color: #664422(0.15));
     }
 }

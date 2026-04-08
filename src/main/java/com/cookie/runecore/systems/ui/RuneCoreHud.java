@@ -12,6 +12,8 @@ public class RuneCoreHud extends CustomUIHud {
     private boolean isFrozen = false;
     private boolean isBleeding = false;
     private boolean isBurning = false;
+    private boolean isMiningFatigue = false;
+    private boolean isHaste = false;
 
     public RuneCoreHud(@Nonnull PlayerRef playerRef) {
         super(playerRef);
@@ -24,13 +26,19 @@ public class RuneCoreHud extends CustomUIHud {
         builder.set("#ManaText.Text", getFormattedManaText());
 
         if (isFrozen) {
-            builder.append("Effects/FrozenOverlay.ui");
+            builder.append("Custom/Effects/FrozenOverlay.ui");
         }
         if (isBleeding) {
-            builder.append("Effects/BleedingOverlay.ui");
+            builder.append("Custom/Effects/BleedingOverlay.ui");
         }
         if (isBurning) {
-            builder.append("Effects/BurnOverlay.ui");
+            builder.append("Custom/Effects/BurnOverlay.ui");
+        }
+        if (isMiningFatigue) {
+            builder.append("Custom/Effects/MiningFatigueOverlay.ui");
+        }
+        if (isHaste) {
+            builder.append("Custom/Effects/HasteOverlay.ui");
         }
     }
 
@@ -38,7 +46,7 @@ public class RuneCoreHud extends CustomUIHud {
         this.targetManaValue = Math.max(0, Math.min(1.0f, current / max));
         this.maxManaValue = max;
         
-        // Simple Lerp - could be improved with timing but fine for 500ms updates
+        // Simple Lerp
         this.manaValue = this.manaValue + (this.targetManaValue - this.manaValue) * 0.5f;
         
         UICommandBuilder b = new UICommandBuilder();
@@ -53,15 +61,27 @@ public class RuneCoreHud extends CustomUIHud {
         refreshHud();
     }
 
-    public void setBleeding(boolean bleeding) {
-        if (this.isBleeding == bleeding) return;
-        this.isBleeding = bleeding;
+    public void setBleeding(boolean value) {
+        if (this.isBleeding == value) return;
+        this.isBleeding = value;
         refreshHud();
     }
 
-    public void setBurning(boolean burning) {
-        if (this.isBurning == burning) return;
-        this.isBurning = burning;
+    public void setBurning(boolean value) {
+        if (this.isBurning == value) return;
+        this.isBurning = value;
+        refreshHud();
+    }
+
+    public void setMiningFatigue(boolean value) {
+        if (this.isMiningFatigue == value) return;
+        this.isMiningFatigue = value;
+        refreshHud();
+    }
+
+    public void setHaste(boolean value) {
+        if (this.isHaste == value) return;
+        this.isHaste = value;
         refreshHud();
     }
 
