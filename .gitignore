@@ -45,3 +45,4 @@ build
 hytale_api
 bin
 libs
+libs/HytaleServer.jar
