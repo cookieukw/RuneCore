@@ -194,6 +194,24 @@ public class CoreEffects {
             })
         );
 
+        core.registerEffect(new RuneEffect("nausea", 200)
+            .withAsset("Nausea")
+            .withAction(ctx -> {
+                if (ctx.target instanceof Ref<?> raw) {
+                    @SuppressWarnings("unchecked") Ref<EntityStore> ref = (Ref<EntityStore>) raw;
+                    EffectHelper.applyNausea(ref);
+                }
+            })
+            .withBuff(ctx -> {
+                String uid = ctx.source != null ? ctx.source.getUuid().toString() : ctx.target.toString();
+                return ActiveBuff.builder(uid, "nausea", 200)
+                    .interval(1)
+                    .onTick(ref -> EffectHelper.onNauseaTick(ref))
+                    .onExpire(ref -> EffectHelper.revertNausea(ref))
+                    .build();
+            })
+        );
+
         core.registerEffect(new RuneEffect("bleeding", 300)
             .withAsset("Bleeding")
             .withAction(ctx -> {
@@ -273,7 +291,6 @@ public class CoreEffects {
         );
         core.registerEffect(new RuneEffect("glowing", "Glowing", 1200));
         core.registerEffect(new RuneEffect("blindness", "Blindness", 200));
-        core.registerEffect(new RuneEffect("nausea", "Nausea", 200));
         core.registerEffect(new RuneEffect("darkness", "Darkness", 400));
         core.registerEffect(new RuneEffect("night_vision", "Night_Vision", 1200));
         core.registerEffect(new RuneEffect("water_breathing", "Water_Breathing", 1200));

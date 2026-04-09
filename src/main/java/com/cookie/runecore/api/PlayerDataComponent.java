@@ -23,6 +23,8 @@ public class PlayerDataComponent implements Component<EntityStore> {
     private float frozenRotX = 0.0f;
     private float frozenRotY = 0.0f;
     private float frozenRotZ = 0.0f;
+    private boolean nausea = false;
+    private float nauseaTime = 0.0f;
 
     public PlayerDataComponent() {
     }
@@ -46,6 +48,10 @@ public class PlayerDataComponent implements Component<EntityStore> {
             .append(new KeyedCodec<Float>("FrozenRotY", Codec.FLOAT), (c, v) -> c.frozenRotY = v, c -> c.frozenRotY)
             .add()
             .append(new KeyedCodec<Float>("FrozenRotZ", Codec.FLOAT), (c, v) -> c.frozenRotZ = v, c -> c.frozenRotZ)
+            .add()
+            .append(new KeyedCodec<Boolean>("Nausea", Codec.BOOLEAN), (c, v) -> c.nausea = v, c -> c.nausea)
+            .add()
+            .append(new KeyedCodec<Float>("NauseaTime", Codec.FLOAT), (c, v) -> c.nauseaTime = v, c -> c.nauseaTime)
             .add()
             .build();
 
@@ -98,6 +104,12 @@ public class PlayerDataComponent implements Component<EntityStore> {
     public float getFrozenRotZ() { return frozenRotZ; }
     public void setFrozenRotZ(float frozenRotZ) { this.frozenRotZ = frozenRotZ; }
 
+    public boolean isNausea() { return nausea; }
+    public void setNausea(boolean nausea) { this.nausea = nausea; }
+
+    public float getNauseaTime() { return nauseaTime; }
+    public void setNauseaTime(float nauseaTime) { this.nauseaTime = nauseaTime; }
+
     @Nonnull
     @Override
     public Component<EntityStore> clone() {
@@ -108,6 +120,8 @@ public class PlayerDataComponent implements Component<EntityStore> {
         clone.frozenRotX = this.frozenRotX;
         clone.frozenRotY = this.frozenRotY;
         clone.frozenRotZ = this.frozenRotZ;
+        clone.nausea = this.nausea;
+        clone.nauseaTime = this.nauseaTime;
         return clone;
     }
 }

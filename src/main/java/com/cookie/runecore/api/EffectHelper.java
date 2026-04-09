@@ -28,6 +28,12 @@ import com.hypixel.hytale.protocol.packets.camera.SetServerCamera;
 import com.hypixel.hytale.protocol.ClientCameraView;
 import com.hypixel.hytale.protocol.ServerCameraSettings;
 import com.hypixel.hytale.protocol.Vector2f;
+import com.hypixel.hytale.protocol.Direction;
+import com.hypixel.hytale.protocol.RotationType;
+import com.hypixel.hytale.protocol.ApplyLookType;
+import com.hypixel.hytale.protocol.AttachedToType;
+import com.hypixel.hytale.server.core.entity.effect.EffectControllerComponent;
+import com.hypixel.hytale.server.core.asset.type.entityeffect.config.EntityEffect;
 import com.hypixel.hytale.server.core.entity.movement.MovementStatesComponent;
 import com.hypixel.hytale.protocol.MovementStates;
 import com.hypixel.hytale.math.vector.Vector3f;
@@ -300,6 +306,78 @@ public final class EffectHelper {
         updateHud(ref, hud -> hud.setHaste(false));
         removeStatModifier(ref, "hytale:attack_speed", "Haste");
         removeStatModifier(ref, "hytale:mining_speed", "Haste");
+    }
+
+    public static void applyNausea(Ref<EntityStore> ref) {
+        updateHud(ref, hud -> hud.setNausea(true));
+        Store<EntityStore> store = ref.getStore();
+        if (store != null) {
+            PlayerDataComponent data = (PlayerDataComponent) store.ensureAndGetComponent(ref, PlayerDataComponent.TYPE);
+            if (data != null) {
+                data.setNausea(true);
+                data.setNauseaTime(0.0f);
+            }
+        }
+    }
+
+    public static void revertNausea(Ref<EntityStore> ref) {
+        updateHud(ref, hud -> hud.setNausea(false));
+        Store<EntityStore> store = ref.getStore();
+        if (store != null) {
+            PlayerDataComponent data = (PlayerDataComponent) store.ensureAndGetComponent(ref, PlayerDataComponent.TYPE);
+            if (data != null) data.setNausea(false);
+            
+            PlayerRef playerRef = (PlayerRef) store.getComponent(ref, PlayerRef.getComponentType());
+            if (playerRef != null && playerRef.getPacketHandler() != null) {
+                ServerCameraSettings resetSettings = new ServerCameraSettings();
+                resetSettings.attachedToType = AttachedToType.LocalPlayer;
+                resetSettings.eyeOffset = true;
+                resetSettings.isFirstPerson = true;
+                
+                SetServerCamera packet = new SetServerCamera(ClientCameraView.FirstPerson, false, resetSettings);
+                playerRef.getPacketHandler().write(packet);
+            }
+
+            EffectControllerComponent controller = store.getComponent(ref, EffectControllerComponent.getComponentType());
+            if (controller != null) {
+                int index = EntityEffect.getAssetMap().getIndex("Nausea");
+                if (index >= 0) controller.removeEffect(ref, index, store);
+            }
+        }
+    }
+
+    public static void onNauseaTick(Ref<EntityStore> ref) {
+        Store<EntityStore> store = ref.getStore();
+        if (store == null) return;
+        PlayerDataComponent data = (PlayerDataComponent) store.ensureAndGetComponent(ref, PlayerDataComponent.TYPE);
+        if (data == null || !data.isNausea()) return;
+
+        float time = data.getNauseaTime() + 1.0f; 
+        data.setNauseaTime(time);
+
+        PlayerRef playerRef = (PlayerRef) store.getComponent(ref, PlayerRef.getComponentType());
+        if (playerRef != null && playerRef.getPacketHandler() != null) {
+            
+            float yawSpin = (time * 4.0f) % 360.0f;
+            float pitchWobble = (float)Math.sin(time * 0.15f) * 20.0f;
+            
+            ServerCameraSettings settings = new ServerCameraSettings();
+            settings.rotation = new Direction(yawSpin, pitchWobble, 0.0f);
+            settings.rotationType = RotationType.Custom;
+            settings.applyLookType = ApplyLookType.LocalPlayerLookOrientation;
+            settings.rotationLerpSpeed = 0.8f;
+            
+            settings.attachedToType = AttachedToType.LocalPlayer;
+            settings.eyeOffset = true;
+            settings.isFirstPerson = true;
+            
+            SetServerCamera packet = new SetServerCamera(
+                ClientCameraView.Custom, 
+                true,
+                settings
+            );
+            playerRef.getPacketHandler().write(packet);
+        }
     }
 
     private static void applyStatModifier(Ref<EntityStore> ref, String statId, String modifierId, float value, StaticModifier.CalculationType type) {

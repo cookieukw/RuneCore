@@ -112,7 +112,7 @@ public class RuneEffect {
 
         if (nativeEffect != null) {
             float durationSecs = defaultDurationTicks / 20.0f;
-            controller.addEffect(entityRef, index, nativeEffect, durationSecs, OverlapBehavior.EXTEND, store);
+            controller.addEffect(entityRef, index, nativeEffect, durationSecs, OverlapBehavior.OVERWRITE, store);
             System.out.println("[RuneCore] Applied native effect " + nativeEffectId + " (Amp: " + amplifier + ")");
         } else {
             System.err.println("[RuneCore] Native effect not found: " + nativeEffectId);

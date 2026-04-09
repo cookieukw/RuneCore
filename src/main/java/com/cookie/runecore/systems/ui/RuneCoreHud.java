@@ -14,6 +14,7 @@ public class RuneCoreHud extends CustomUIHud {
     private boolean isBurning = false;
     private boolean isMiningFatigue = false;
     private boolean isHaste = false;
+    private boolean isNausea = false;
 
     public RuneCoreHud(@Nonnull PlayerRef playerRef) {
         super(playerRef);
@@ -26,19 +27,22 @@ public class RuneCoreHud extends CustomUIHud {
         builder.set("#ManaText.Text", getFormattedManaText());
 
         if (isFrozen) {
-            builder.append("Custom/Effects/FrozenOverlay.ui");
+            builder.append("Effects/FrozenOverlay.ui");
         }
         if (isBleeding) {
-            builder.append("Custom/Effects/BleedingOverlay.ui");
+            builder.append("Effects/BleedingOverlay.ui");
         }
         if (isBurning) {
-            builder.append("Custom/Effects/BurnOverlay.ui");
+            builder.append("Effects/BurnOverlay.ui");
         }
         if (isMiningFatigue) {
-            builder.append("Custom/Effects/MiningFatigueOverlay.ui");
+            builder.append("Effects/MiningFatigueOverlay.ui");
         }
         if (isHaste) {
-            builder.append("Custom/Effects/HasteOverlay.ui");
+            builder.append("Effects/HasteOverlay.ui");
+        }
+        if (isNausea) {
+            builder.append("Effects/NauseaOverlay.ui");
         }
     }
 
@@ -82,6 +86,12 @@ public class RuneCoreHud extends CustomUIHud {
     public void setHaste(boolean value) {
         if (this.isHaste == value) return;
         this.isHaste = value;
+        refreshHud();
+    }
+
+    public void setNausea(boolean value) {
+        if (this.isNausea == value) return;
+        this.isNausea = value;
         refreshHud();
     }
 
