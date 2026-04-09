@@ -62,6 +62,21 @@ public final class EffectHelper {
         });
     }
 
+    /**
+     * Helper to execute logic on the world thread safely.
+     */
+    public static void worldExecute(Ref<EntityStore> ref, Runnable action) {
+        if (ref == null) return;
+        Store<EntityStore> store = ref.getStore();
+        if (store == null) return;
+        World world = store.getExternalData().getWorld();
+        if (world != null) {
+            world.execute(() -> {
+                if (ref.isValid()) action.run();
+            });
+        }
+    }
+
     @FunctionalInterface
     public interface MovementModifier {
         void apply(MovementSettings settings);
