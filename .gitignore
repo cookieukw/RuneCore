@@ -44,5 +44,5 @@ build
 
 hytale_api
 bin
+!libs/HytaleServer.jar
 libs
-libs/HytaleServer.jar
