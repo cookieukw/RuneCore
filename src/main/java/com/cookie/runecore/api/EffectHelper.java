@@ -40,6 +40,7 @@ import com.hypixel.hytale.math.vector.Vector3f;
 import com.hypixel.hytale.server.core.modules.entity.component.DynamicLight;
 import com.hypixel.hytale.protocol.ColorLight;
 import com.hypixel.hytale.server.core.asset.type.entityeffect.config.OverlapBehavior;
+import com.hypixel.hytale.server.core.modules.physics.component.Velocity;
 
 public final class EffectHelper {
 
@@ -158,13 +159,53 @@ public final class EffectHelper {
     }
 
     public static void revertLevitation(Ref<EntityStore> ref) {
-        modifyMovement(ref, s -> {
-            s.invertedGravity = false;
-            s.wishDirectionGravityY = 0.0f;
-            s.mass = DEFAULT_MASS;
-            s.airDragMax = DEFAULT_AIR_DRAG_MAX;
-            s.airDragMaxSpeed = 6.0f;
-        });
+        Store<EntityStore> store = ref.getStore();
+        if (store == null) return;
+
+        // Step 1 — Reset physics settings to engine defaults
+        MovementManager moveManager = (MovementManager) store.getComponent(ref, MovementManager.getComponentType());
+        if (moveManager != null) {
+            moveManager.applyDefaultSettings();
+            
+            // Explicitly kill baseSpeed for one tick to ensure a clean state
+            MovementSettings settings = moveManager.getSettings();
+            if (settings != null) {
+                settings.baseSpeed = 0.0f;
+                settings.invertedGravity = false;
+                syncSettings(store, ref, settings);
+            }
+        }
+
+        // Step 2 — Reset input states to prevent "ghost movement"
+        MovementStatesComponent msc = store.getComponent(ref, MovementStatesComponent.getComponentType());
+        if (msc != null) {
+            MovementStates states = msc.getMovementStates();
+            if (states != null) {
+                states.walking = false;
+                states.running = false;
+                states.sprinting = false;
+                states.jumping = false;
+                states.idle = true;
+                states.horizontalIdle = true;
+            }
+        }
+
+        // Step 3 — Kill physical inertia and restore speed in next tick
+        World world = store.getExternalData() != null ? store.getExternalData().getWorld() : null;
+        if (world != null) {
+            world.execute(() -> {
+                if (!ref.isValid()) return;
+
+                // Stop all physical momentum
+                Velocity vc = store.getComponent(ref, Velocity.getComponentType());
+                if (vc != null) {
+                    vc.setZero();
+                }
+
+                // Restore default movement speed
+                modifyMovement(ref, m -> m.baseSpeed = DEFAULT_SPEED);
+            });
+        }
     }
 
     public static void applyFrozen(Ref<EntityStore> ref) {
