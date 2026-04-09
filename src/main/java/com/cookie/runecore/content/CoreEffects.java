@@ -322,10 +322,9 @@ public class CoreEffects {
             })
         );
 
-        core.registerEffect(new RuneEffect("darkness", "Darkness", 400));
-
+        
         core.registerEffect(new RuneEffect("night_vision", 1200)
-            .withAsset("NightVision")
+        .withAsset("NightVision")
             .withAction(ctx -> {
                 if (ctx.target instanceof Ref<?> raw) {
                     @SuppressWarnings("unchecked") Ref<EntityStore> ref = (Ref<EntityStore>) raw;
@@ -341,6 +340,7 @@ public class CoreEffects {
         );
 
         core.registerEffect(new RuneEffect("water_breathing", "Water_Breathing", 1200));
+        core.registerEffect(new RuneEffect("darkness", "Darkness", 400));
         core.registerEffect(new RuneEffect("fire_resistance", "Fire_Resistance", 1200));
         core.registerEffect(new RuneEffect("resistance", "Resistance", 1200));
         core.registerEffect(new RuneEffect("strength", "Strength", 1200));
