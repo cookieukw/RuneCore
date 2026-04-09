@@ -290,7 +290,21 @@ public class CoreEffects {
             })
         );
         core.registerEffect(new RuneEffect("glowing", "Glowing", 1200));
-        core.registerEffect(new RuneEffect("blindness", "Blindness", 200));
+        core.registerEffect(new RuneEffect("blindness", 200)
+            .withAsset("Blindness")
+            .withAction(ctx -> {
+                if (ctx.target instanceof Ref<?> raw) {
+                    @SuppressWarnings("unchecked") Ref<EntityStore> ref = (Ref<EntityStore>) raw;
+                    EffectHelper.applyBlindness(ref);
+                }
+            })
+            .withBuff(ctx -> {
+                String uid = ctx.source != null ? ctx.source.getUuid().toString() : ctx.target.toString();
+                return ActiveBuff.builder(uid, "blindness", 200)
+                    .onExpire(ref -> EffectHelper.revertBlindness(ref))
+                    .build();
+            })
+        );
         core.registerEffect(new RuneEffect("darkness", "Darkness", 400));
         core.registerEffect(new RuneEffect("night_vision", "Night_Vision", 1200));
         core.registerEffect(new RuneEffect("water_breathing", "Water_Breathing", 1200));

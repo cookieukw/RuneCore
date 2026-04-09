@@ -379,7 +379,34 @@ public final class EffectHelper {
             playerRef.getPacketHandler().write(packet);
         }
     }
+    public static void applyBlindness(Ref<EntityStore> ref) {
+        updateHud(ref, hud -> hud.setBlinded(true));
+        Store<EntityStore> store = ref.getStore();
+        if (store != null) {
+            PlayerDataComponent data = (PlayerDataComponent) store.ensureAndGetComponent(ref, PlayerDataComponent.TYPE);
+            if (data != null) {
+                data.setBlinded(true);
+            }
+        }
+    }
 
+    public static void revertBlindness(Ref<EntityStore> ref) {
+        updateHud(ref, hud -> hud.setBlinded(false));
+        Store<EntityStore> store = ref.getStore();
+        if (store != null) {
+            PlayerDataComponent data = (PlayerDataComponent) store.ensureAndGetComponent(ref, PlayerDataComponent.TYPE);
+            if (data != null) {
+                data.setBlinded(false);
+            }
+            
+            // Forced sync: remove the native icon now
+            EffectControllerComponent controller = store.getComponent(ref, EffectControllerComponent.getComponentType());
+            if (controller != null) {
+                int index = EntityEffect.getAssetMap().getIndex("Blindness");
+                if (index >= 0) controller.removeEffect(ref, index, store);
+            }
+        }
+    }
     private static void applyStatModifier(Ref<EntityStore> ref, String statId, String modifierId, float value, StaticModifier.CalculationType type) {
         EntityStatMap statMap = (EntityStatMap) ref.getStore().getComponent(ref, EntityStatsModule.get().getEntityStatMapComponentType());
         if (statMap == null) return;

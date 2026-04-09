@@ -15,6 +15,7 @@ public class RuneCoreHud extends CustomUIHud {
     private boolean isMiningFatigue = false;
     private boolean isHaste = false;
     private boolean isNausea = false;
+    private boolean isBlinded = false;
 
     public RuneCoreHud(@Nonnull PlayerRef playerRef) {
         super(playerRef);
@@ -43,6 +44,9 @@ public class RuneCoreHud extends CustomUIHud {
         }
         if (isNausea) {
             builder.append("Effects/NauseaOverlay.ui");
+        }
+        if (isBlinded) {
+            builder.append("Effects/BlindnessOverlay.ui");
         }
     }
 
@@ -92,6 +96,12 @@ public class RuneCoreHud extends CustomUIHud {
     public void setNausea(boolean value) {
         if (this.isNausea == value) return;
         this.isNausea = value;
+        refreshHud();
+    }
+
+    public void setBlinded(boolean value) {
+        if (this.isBlinded == value) return;
+        this.isBlinded = value;
         refreshHud();
     }
 

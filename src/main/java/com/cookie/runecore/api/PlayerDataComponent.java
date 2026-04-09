@@ -25,6 +25,7 @@ public class PlayerDataComponent implements Component<EntityStore> {
     private float frozenRotZ = 0.0f;
     private boolean nausea = false;
     private float nauseaTime = 0.0f;
+    private boolean blinded = false;
 
     public PlayerDataComponent() {
     }
@@ -52,6 +53,8 @@ public class PlayerDataComponent implements Component<EntityStore> {
             .append(new KeyedCodec<Boolean>("Nausea", Codec.BOOLEAN), (c, v) -> c.nausea = v, c -> c.nausea)
             .add()
             .append(new KeyedCodec<Float>("NauseaTime", Codec.FLOAT), (c, v) -> c.nauseaTime = v, c -> c.nauseaTime)
+            .add()
+            .append(new KeyedCodec<Boolean>("Blinded", Codec.BOOLEAN), (c, v) -> c.blinded = v, c -> c.blinded)
             .add()
             .build();
 
@@ -110,6 +113,9 @@ public class PlayerDataComponent implements Component<EntityStore> {
     public float getNauseaTime() { return nauseaTime; }
     public void setNauseaTime(float nauseaTime) { this.nauseaTime = nauseaTime; }
 
+    public boolean isBlinded() { return blinded; }
+    public void setBlinded(boolean blinded) { this.blinded = blinded; }
+
     @Nonnull
     @Override
     public Component<EntityStore> clone() {
@@ -122,6 +128,7 @@ public class PlayerDataComponent implements Component<EntityStore> {
         clone.frozenRotZ = this.frozenRotZ;
         clone.nausea = this.nausea;
         clone.nauseaTime = this.nauseaTime;
+        clone.blinded = this.blinded;
         return clone;
     }
 }
