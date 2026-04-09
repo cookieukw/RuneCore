@@ -1,8 +1,11 @@
 package com.cookie.runecore.content;
 
 import com.cookie.runecore.api.ActiveBuff;
-import com.cookie.runecore.api.EffectHelper;
+import com.cookie.runecore.api.MovementHelper;
 import com.cookie.runecore.api.RuneEffect;
+import com.cookie.runecore.api.StatHelper;
+import com.cookie.runecore.api.StatusEffectHelper;
+import com.cookie.runecore.api.VisualEffectHelper;
 import com.cookie.runecore.system.RuneCore;
 import com.hypixel.hytale.component.Ref;
 import com.hypixel.hytale.server.core.universe.world.storage.EntityStore;
@@ -17,13 +20,13 @@ public class CoreEffects {
             .withAction(ctx -> {
                 if (ctx.target instanceof Ref<?> raw) {
                     @SuppressWarnings("unchecked") Ref<EntityStore> ref = (Ref<EntityStore>) raw;
-                    EffectHelper.applySpeed(ref);
+                    MovementHelper.applySpeed(ref);
                 }
             })
             .withBuff(ctx -> {
                 String uid = ctx.source != null ? ctx.source.getUuid().toString() : ctx.target.toString();
                 return ActiveBuff.builder(uid, "speed", 1200)
-                    .onExpire(ref -> EffectHelper.revertSpeed(ref))
+                    .onExpire(ref -> MovementHelper.revertSpeed(ref))
                     .build();
             })
         );
@@ -33,13 +36,13 @@ public class CoreEffects {
             .withAction(ctx -> {
                 if (ctx.target instanceof Ref<?> raw) {
                     @SuppressWarnings("unchecked") Ref<EntityStore> ref = (Ref<EntityStore>) raw;
-                    EffectHelper.applySlowness(ref);
+                    MovementHelper.applySlowness(ref);
                 }
             })
             .withBuff(ctx -> {
                 String uid = ctx.source != null ? ctx.source.getUuid().toString() : ctx.target.toString();
                 return ActiveBuff.builder(uid, "slowness", 600)
-                    .onExpire(ref -> EffectHelper.revertSlowness(ref))
+                    .onExpire(ref -> MovementHelper.revertSlowness(ref))
                     .build();
             })
         );
@@ -49,13 +52,13 @@ public class CoreEffects {
             .withAction(ctx -> {
                 if (ctx.target instanceof Ref<?> raw) {
                     @SuppressWarnings("unchecked") Ref<EntityStore> ref = (Ref<EntityStore>) raw;
-                    EffectHelper.applyHaste(ref);
+                    StatusEffectHelper.applyHaste(ref);
                 }
             })
             .withBuff(ctx -> {
                 String uid = ctx.source != null ? ctx.source.getUuid().toString() : ctx.target.toString();
                 return ActiveBuff.builder(uid, "haste", 1200)
-                    .onExpire(ref -> EffectHelper.revertHaste(ref))
+                    .onExpire(ref -> StatusEffectHelper.revertHaste(ref))
                     .build();
             })
         );
@@ -65,13 +68,13 @@ public class CoreEffects {
             .withAction(ctx -> {
                 if (ctx.target instanceof Ref<?> raw) {
                     @SuppressWarnings("unchecked") Ref<EntityStore> ref = (Ref<EntityStore>) raw;
-                    EffectHelper.applyMiningFatigue(ref);
+                    StatusEffectHelper.applyMiningFatigue(ref);
                 }
             })
             .withBuff(ctx -> {
                 String uid = ctx.source != null ? ctx.source.getUuid().toString() : ctx.target.toString();
                 return ActiveBuff.builder(uid, "mining_fatigue", 1200)
-                    .onExpire(ref -> EffectHelper.revertMiningFatigue(ref))
+                    .onExpire(ref -> StatusEffectHelper.revertMiningFatigue(ref))
                     .build();
             })
         );
@@ -81,13 +84,13 @@ public class CoreEffects {
             .withAction(ctx -> {
                 if (ctx.target instanceof Ref<?> raw) {
                     @SuppressWarnings("unchecked") Ref<EntityStore> ref = (Ref<EntityStore>) raw;
-                    EffectHelper.applyJumpBoost(ref);
+                    MovementHelper.applyJumpBoost(ref);
                 }
             })
             .withBuff(ctx -> {
                 String uid = ctx.source != null ? ctx.source.getUuid().toString() : ctx.target.toString();
                 return ActiveBuff.builder(uid, "jump_boost", 1200)
-                    .onExpire(ref -> EffectHelper.revertJumpBoost(ref))
+                    .onExpire(ref -> MovementHelper.revertJumpBoost(ref))
                     .build();
             })
         );
@@ -97,13 +100,13 @@ public class CoreEffects {
             .withAction(ctx -> {
                 if (ctx.target instanceof Ref<?> raw) {
                     @SuppressWarnings("unchecked") Ref<EntityStore> ref = (Ref<EntityStore>) raw;
-                    EffectHelper.applyHighJump(ref);
+                    MovementHelper.applyHighJump(ref);
                 }
             })
             .withBuff(ctx -> {
                 String uid = ctx.source != null ? ctx.source.getUuid().toString() : ctx.target.toString();
                 return ActiveBuff.builder(uid, "high_jump", 600)
-                    .onExpire(ref -> EffectHelper.revertHighJump(ref))
+                    .onExpire(ref -> MovementHelper.revertHighJump(ref))
                     .build();
             })
         );
@@ -113,13 +116,13 @@ public class CoreEffects {
             .withAction(ctx -> {
                 if (ctx.target instanceof Ref<?> raw) {
                     @SuppressWarnings("unchecked") Ref<EntityStore> ref = (Ref<EntityStore>) raw;
-                    EffectHelper.applySlowFalling(ref);
+                    MovementHelper.applySlowFalling(ref);
                 }
             })
             .withBuff(ctx -> {
                 String uid = ctx.source != null ? ctx.source.getUuid().toString() : ctx.target.toString();
                 return ActiveBuff.builder(uid, "slow_falling", 1200)
-                    .onExpire(ref -> EffectHelper.revertSlowFalling(ref))
+                    .onExpire(ref -> MovementHelper.revertSlowFalling(ref))
                     .build();
             })
         );
@@ -129,13 +132,13 @@ public class CoreEffects {
             .withAction(ctx -> {
                 if (ctx.target instanceof Ref<?> raw) {
                     @SuppressWarnings("unchecked") Ref<EntityStore> ref = (Ref<EntityStore>) raw;
-                    EffectHelper.applyLevitation(ref);
+                    MovementHelper.applyLevitation(ref);
                 }
             })
             .withBuff(ctx -> {
                 String uid = ctx.source != null ? ctx.source.getUuid().toString() : ctx.target.toString();
                 return ActiveBuff.builder(uid, "levitation", 60)
-                    .onExpire(ref -> EffectHelper.revertLevitation(ref))
+                    .onExpire(ref -> MovementHelper.revertLevitation(ref))
                     .build();
             })
         );
@@ -146,7 +149,7 @@ public class CoreEffects {
                 String uid = ctx.source != null ? ctx.source.getUuid().toString() : ctx.target.toString();
                 return ActiveBuff.builder(uid, "regeneration", 400)
                     .interval(50)
-                    .onTick(ref -> EffectHelper.addHealth(ref, 1.0f))
+                    .onTick(ref -> StatHelper.addHealth(ref, 1.0f))
                     .build();
             })
         );
@@ -157,7 +160,7 @@ public class CoreEffects {
                 String uid = ctx.source != null ? ctx.source.getUuid().toString() : ctx.target.toString();
                 return ActiveBuff.builder(uid, "poison", 400)
                     .interval(25)
-                    .onTick(ref -> EffectHelper.subtractHealth(ref, 1.0f))
+                    .onTick(ref -> StatHelper.subtractHealth(ref, 1.0f))
                     .build();
             })
         );
@@ -168,7 +171,7 @@ public class CoreEffects {
                 String uid = ctx.source != null ? ctx.source.getUuid().toString() : ctx.target.toString();
                 return ActiveBuff.builder(uid, "decay", 400)
                     .interval(40)
-                    .onTick(ref -> EffectHelper.subtractHealth(ref, 1.0f))
+                    .onTick(ref -> StatHelper.subtractHealth(ref, 1.0f))
                     .build();
             })
         );
@@ -178,7 +181,7 @@ public class CoreEffects {
             .withAction(ctx -> {
                 if (ctx.target instanceof Ref<?> raw) {
                     @SuppressWarnings("unchecked") Ref<EntityStore> ref = (Ref<EntityStore>) raw;
-                    EffectHelper.applyBurn(ref);
+                    StatusEffectHelper.applyBurn(ref);
                 }
             })
             .withBuff(ctx -> {
@@ -186,10 +189,10 @@ public class CoreEffects {
                 return ActiveBuff.builder(uid, "burn", 200)
                     .interval(20)
                     .onTick(ref -> {
-                        EffectHelper.subtractHealth(ref, 1.0f);
-                        EffectHelper.onBurnTick(ref);
+                        StatHelper.subtractHealth(ref, 1.0f);
+                        StatusEffectHelper.onBurnTick(ref);
                     })
-                    .onExpire(ref -> EffectHelper.revertBurn(ref))
+                    .onExpire(ref -> StatusEffectHelper.revertBurn(ref))
                     .build();
             })
         );
@@ -199,15 +202,15 @@ public class CoreEffects {
             .withAction(ctx -> {
                 if (ctx.target instanceof Ref<?> raw) {
                     @SuppressWarnings("unchecked") Ref<EntityStore> ref = (Ref<EntityStore>) raw;
-                    EffectHelper.applyNausea(ref);
+                    StatusEffectHelper.applyNausea(ref);
                 }
             })
             .withBuff(ctx -> {
                 String uid = ctx.source != null ? ctx.source.getUuid().toString() : ctx.target.toString();
                 return ActiveBuff.builder(uid, "nausea", 200)
                     .interval(1)
-                    .onTick(ref -> EffectHelper.onNauseaTick(ref))
-                    .onExpire(ref -> EffectHelper.revertNausea(ref))
+                    .onTick(ref -> StatusEffectHelper.onNauseaTick(ref))
+                    .onExpire(ref -> StatusEffectHelper.revertNausea(ref))
                     .build();
             })
         );
@@ -217,7 +220,7 @@ public class CoreEffects {
             .withAction(ctx -> {
                 if (ctx.target instanceof Ref<?> raw) {
                     @SuppressWarnings("unchecked") Ref<EntityStore> ref = (Ref<EntityStore>) raw;
-                    EffectHelper.applyBleeding(ref);
+                    StatusEffectHelper.applyBleeding(ref);
                 }
             })
             .withBuff(ctx -> {
@@ -225,10 +228,10 @@ public class CoreEffects {
                 return ActiveBuff.builder(uid, "bleeding", 300)
                     .interval(30)
                     .onTick(ref -> {
-                        EffectHelper.subtractHealth(ref, 1.0f);
-                        EffectHelper.onBleedingTick(ref);
+                        StatHelper.subtractHealth(ref, 1.0f);
+                        StatusEffectHelper.onBleedingTick(ref);
                     })
-                    .onExpire(ref -> EffectHelper.revertBleeding(ref))
+                    .onExpire(ref -> StatusEffectHelper.revertBleeding(ref))
                     .build();
             })
         );
@@ -238,15 +241,15 @@ public class CoreEffects {
             .withAction(ctx -> {
                 if (ctx.target instanceof Ref<?> raw) {
                     @SuppressWarnings("unchecked") Ref<EntityStore> ref = (Ref<EntityStore>) raw;
-                    EffectHelper.applyFrozen(ref);
+                    MovementHelper.applyFrozen(ref);
                 }
             })
             .withBuff(ctx -> {
                 String uid = ctx.source != null ? ctx.source.getUuid().toString() : ctx.target.toString();
                 return ActiveBuff.builder(uid, "frozen", 600)
                     .interval(10)
-                    .onTick(ref -> EffectHelper.onFrozenTick(ref))
-                    .onExpire(ref -> EffectHelper.revertFrozen(ref))
+                    .onTick(ref -> MovementHelper.onFrozenTick(ref))
+                    .onExpire(ref -> MovementHelper.revertFrozen(ref))
                     .build();
             })
         );
@@ -254,24 +257,21 @@ public class CoreEffects {
         core.registerEffect(new RuneEffect("instant_health", true, 0, ctx -> {
             if (ctx.target instanceof Ref<?> raw) {
                 @SuppressWarnings("unchecked") Ref<EntityStore> ref = (Ref<EntityStore>) raw;
-                float amount = (float)(4.0 * ctx.power);
-                EffectHelper.addHealth(ref, amount);
+                StatHelper.addHealth(ref, (float) (4.0 * ctx.power));
             }
         }));
 
         core.registerEffect(new RuneEffect("instant_damage", true, 0, ctx -> {
             if (ctx.target instanceof Ref<?> raw) {
                 @SuppressWarnings("unchecked") Ref<EntityStore> ref = (Ref<EntityStore>) raw;
-                float amount = (float)(6.0 * ctx.power);
-                EffectHelper.subtractHealth(ref, amount);
+                StatHelper.subtractHealth(ref, (float) (6.0 * ctx.power));
             }
         }));
 
         core.registerEffect(new RuneEffect("damage_fire_instant", true, 0, ctx -> {
             if (ctx.target instanceof Ref<?> raw) {
                 @SuppressWarnings("unchecked") Ref<EntityStore> ref = (Ref<EntityStore>) raw;
-                float amount = (float)(10.0 * ctx.power);
-                EffectHelper.subtractHealth(ref, amount);
+                StatHelper.subtractHealth(ref, (float) (10.0 * ctx.power));
             }
         }));
 
@@ -279,62 +279,67 @@ public class CoreEffects {
             .withAction(ctx -> {
                 if (ctx.target instanceof Ref<?> raw) {
                     @SuppressWarnings("unchecked") Ref<EntityStore> ref = (Ref<EntityStore>) raw;
-                    EffectHelper.applyInvisibility(ref);
+                    StatusEffectHelper.applyInvisibility(ref);
                 }
             })
             .withBuff(ctx -> {
                 String uid = ctx.source != null ? ctx.source.getUuid().toString() : ctx.target.toString();
                 return ActiveBuff.builder(uid, "invisibility", 1200)
-                    .onExpire(ref -> EffectHelper.revertInvisibility(ref))
+                    .onExpire(ref -> StatusEffectHelper.revertInvisibility(ref))
                     .build();
             })
         );
+
         core.registerEffect(new RuneEffect("glowing", 1200)
             .withAsset("Glowing")
             .withAction(ctx -> {
                 if (ctx.target instanceof Ref<?> raw) {
                     @SuppressWarnings("unchecked") Ref<EntityStore> ref = (Ref<EntityStore>) raw;
-                    EffectHelper.applyGlowing(ref);
+                    VisualEffectHelper.applyGlowing(ref);
                 }
             })
             .withBuff(ctx -> {
                 String uid = ctx.source != null ? ctx.source.getUuid().toString() : ctx.target.toString();
                 return ActiveBuff.builder(uid, "glowing", 1200)
-                    .onExpire(ref -> EffectHelper.revertGlowing(ref))
+                    .onExpire(ref -> VisualEffectHelper.revertGlowing(ref))
                     .build();
             })
         );
+
         core.registerEffect(new RuneEffect("blindness", 200)
             .withAsset("Blindness")
             .withAction(ctx -> {
                 if (ctx.target instanceof Ref<?> raw) {
                     @SuppressWarnings("unchecked") Ref<EntityStore> ref = (Ref<EntityStore>) raw;
-                    EffectHelper.applyBlindness(ref);
+                    VisualEffectHelper.applyBlindness(ref);
                 }
             })
             .withBuff(ctx -> {
                 String uid = ctx.source != null ? ctx.source.getUuid().toString() : ctx.target.toString();
                 return ActiveBuff.builder(uid, "blindness", 200)
-                    .onExpire(ref -> EffectHelper.revertBlindness(ref))
+                    .onExpire(ref -> VisualEffectHelper.revertBlindness(ref))
                     .build();
             })
         );
+
         core.registerEffect(new RuneEffect("darkness", "Darkness", 400));
+
         core.registerEffect(new RuneEffect("night_vision", 1200)
             .withAsset("NightVision")
             .withAction(ctx -> {
                 if (ctx.target instanceof Ref<?> raw) {
                     @SuppressWarnings("unchecked") Ref<EntityStore> ref = (Ref<EntityStore>) raw;
-                    EffectHelper.applyNightVision(ref);
+                    VisualEffectHelper.applyNightVision(ref);
                 }
             })
             .withBuff(ctx -> {
                 String uid = ctx.source != null ? ctx.source.getUuid().toString() : ctx.target.toString();
                 return ActiveBuff.builder(uid, "night_vision", 1200)
-                    .onExpire(ref -> EffectHelper.revertNightVision(ref))
+                    .onExpire(ref -> VisualEffectHelper.revertNightVision(ref))
                     .build();
             })
         );
+
         core.registerEffect(new RuneEffect("water_breathing", "Water_Breathing", 1200));
         core.registerEffect(new RuneEffect("fire_resistance", "Fire_Resistance", 1200));
         core.registerEffect(new RuneEffect("resistance", "Resistance", 1200));
