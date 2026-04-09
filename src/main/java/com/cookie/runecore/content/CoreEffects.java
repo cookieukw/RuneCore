@@ -289,7 +289,21 @@ public class CoreEffects {
                     .build();
             })
         );
-        core.registerEffect(new RuneEffect("glowing", "Glowing", 1200));
+        core.registerEffect(new RuneEffect("glowing", 1200)
+            .withAsset("Glowing")
+            .withAction(ctx -> {
+                if (ctx.target instanceof Ref<?> raw) {
+                    @SuppressWarnings("unchecked") Ref<EntityStore> ref = (Ref<EntityStore>) raw;
+                    EffectHelper.applyGlowing(ref);
+                }
+            })
+            .withBuff(ctx -> {
+                String uid = ctx.source != null ? ctx.source.getUuid().toString() : ctx.target.toString();
+                return ActiveBuff.builder(uid, "glowing", 1200)
+                    .onExpire(ref -> EffectHelper.revertGlowing(ref))
+                    .build();
+            })
+        );
         core.registerEffect(new RuneEffect("blindness", 200)
             .withAsset("Blindness")
             .withAction(ctx -> {
@@ -306,7 +320,21 @@ public class CoreEffects {
             })
         );
         core.registerEffect(new RuneEffect("darkness", "Darkness", 400));
-        core.registerEffect(new RuneEffect("night_vision", "Night_Vision", 1200));
+        core.registerEffect(new RuneEffect("night_vision", 1200)
+            .withAsset("Night_Vision")
+            .withAction(ctx -> {
+                if (ctx.target instanceof Ref<?> raw) {
+                    @SuppressWarnings("unchecked") Ref<EntityStore> ref = (Ref<EntityStore>) raw;
+                    EffectHelper.applyNightVision(ref);
+                }
+            })
+            .withBuff(ctx -> {
+                String uid = ctx.source != null ? ctx.source.getUuid().toString() : ctx.target.toString();
+                return ActiveBuff.builder(uid, "night_vision", 1200)
+                    .onExpire(ref -> EffectHelper.revertNightVision(ref))
+                    .build();
+            })
+        );
         core.registerEffect(new RuneEffect("water_breathing", "Water_Breathing", 1200));
         core.registerEffect(new RuneEffect("fire_resistance", "Fire_Resistance", 1200));
         core.registerEffect(new RuneEffect("resistance", "Resistance", 1200));

@@ -26,6 +26,8 @@ public class PlayerDataComponent implements Component<EntityStore> {
     private boolean nausea = false;
     private float nauseaTime = 0.0f;
     private boolean blinded = false;
+    private boolean glowing = false;
+    private boolean nightVision = false;
 
     public PlayerDataComponent() {
     }
@@ -55,6 +57,10 @@ public class PlayerDataComponent implements Component<EntityStore> {
             .append(new KeyedCodec<Float>("NauseaTime", Codec.FLOAT), (c, v) -> c.nauseaTime = v, c -> c.nauseaTime)
             .add()
             .append(new KeyedCodec<Boolean>("Blinded", Codec.BOOLEAN), (c, v) -> c.blinded = v, c -> c.blinded)
+            .add()
+            .append(new KeyedCodec<Boolean>("Glowing", Codec.BOOLEAN), (c, v) -> c.glowing = v, c -> c.glowing)
+            .add()
+            .append(new KeyedCodec<Boolean>("NightVision", Codec.BOOLEAN), (c, v) -> c.nightVision = v, c -> c.nightVision)
             .add()
             .build();
 
@@ -116,6 +122,12 @@ public class PlayerDataComponent implements Component<EntityStore> {
     public boolean isBlinded() { return blinded; }
     public void setBlinded(boolean blinded) { this.blinded = blinded; }
 
+    public boolean isGlowing() { return glowing; }
+    public void setGlowing(boolean glowing) { this.glowing = glowing; }
+
+    public boolean isNightVision() { return nightVision; }
+    public void setNightVision(boolean nightVision) { this.nightVision = nightVision; }
+
     @Nonnull
     @Override
     public Component<EntityStore> clone() {
@@ -129,6 +141,8 @@ public class PlayerDataComponent implements Component<EntityStore> {
         clone.nausea = this.nausea;
         clone.nauseaTime = this.nauseaTime;
         clone.blinded = this.blinded;
+        clone.glowing = this.glowing;
+        clone.nightVision = this.nightVision;
         return clone;
     }
 }

@@ -37,6 +37,8 @@ import com.hypixel.hytale.server.core.asset.type.entityeffect.config.EntityEffec
 import com.hypixel.hytale.server.core.entity.movement.MovementStatesComponent;
 import com.hypixel.hytale.protocol.MovementStates;
 import com.hypixel.hytale.math.vector.Vector3f;
+import com.hypixel.hytale.server.core.modules.entity.component.DynamicLight;
+import com.hypixel.hytale.protocol.ColorLight;
 
 public final class EffectHelper {
 
@@ -405,6 +407,70 @@ public final class EffectHelper {
                 int index = EntityEffect.getAssetMap().getIndex("Blindness");
                 if (index >= 0) controller.removeEffect(ref, index, store);
             }
+        }
+    }
+
+    public static void applyGlowing(Ref<EntityStore> ref) {
+        updateHud(ref, hud -> hud.setGlowing(true));
+        Store<EntityStore> store = ref.getStore();
+        if (store != null) {
+            PlayerDataComponent data = (PlayerDataComponent) store.ensureAndGetComponent(ref, PlayerDataComponent.TYPE);
+            if (data != null) data.setGlowing(true);
+
+            // Sutil local lighting (Radius 1, Low Intensity Yellow)
+            ColorLight light = new ColorLight((byte) 1, (byte) 32, (byte) 32, (byte) 0);
+            store.putComponent(ref, DynamicLight.getComponentType(), new DynamicLight(light));
+
+            // Apply the icon/HUD effect without extra components
+            EffectControllerComponent controller = (EffectControllerComponent) store.ensureAndGetComponent(ref, EffectControllerComponent.getComponentType());
+            if (controller != null) {
+                int effectIndex = EntityEffect.getAssetMap().getIndex("Glowing");
+                if (effectIndex >= 0) {
+                    controller.addEffect(ref, effectIndex, (EntityEffect) EntityEffect.getAssetMap().getAsset(effectIndex), store);
+                }
+            }
+        }
+    }
+
+    public static void revertGlowing(Ref<EntityStore> ref) {
+        updateHud(ref, hud -> hud.setGlowing(false));
+        Store<EntityStore> store = ref.getStore();
+        if (store != null) {
+            PlayerDataComponent data = (PlayerDataComponent) store.getComponent(ref, PlayerDataComponent.TYPE);
+            if (data != null) data.setGlowing(false);
+            
+            store.removeComponent(ref, DynamicLight.getComponentType());
+            
+            EffectControllerComponent controller = (EffectControllerComponent) store.getComponent(ref, EffectControllerComponent.getComponentType());
+            if (controller != null) {
+                int effectIndex = EntityEffect.getAssetMap().getIndex("Glowing");
+                if (effectIndex >= 0) {
+                    controller.removeEffect(ref, effectIndex, store);
+                }
+            }
+        }
+    }
+
+    public static void applyNightVision(Ref<EntityStore> ref) {
+        updateHud(ref, hud -> hud.setNightVision(true));
+        Store<EntityStore> store = ref.getStore();
+        if (store != null) {
+            PlayerDataComponent data = (PlayerDataComponent) store.ensureAndGetComponent(ref, PlayerDataComponent.TYPE);
+            if (data != null) data.setNightVision(true);
+
+            // Radius -1 (Global/FullBright), White (R: 255, G: 255, B: 255)
+            ColorLight light = new ColorLight((byte) -1, (byte) -1, (byte) -1, (byte) -1);
+            store.putComponent(ref, DynamicLight.getComponentType(), new DynamicLight(light));
+        }
+    }
+
+    public static void revertNightVision(Ref<EntityStore> ref) {
+        updateHud(ref, hud -> hud.setNightVision(false));
+        Store<EntityStore> store = ref.getStore();
+        if (store != null) {
+            PlayerDataComponent data = (PlayerDataComponent) store.getComponent(ref, PlayerDataComponent.TYPE);
+            if (data != null) data.setNightVision(false);
+            store.removeComponent(ref, DynamicLight.getComponentType());
         }
     }
     private static void applyStatModifier(Ref<EntityStore> ref, String statId, String modifierId, float value, StaticModifier.CalculationType type) {
