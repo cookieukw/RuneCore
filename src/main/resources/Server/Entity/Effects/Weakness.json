@@ -1,5 +1,5 @@
 {
   "StatusEffectIcon": "UI/StatusEffects/Weakness.png",
-  "Duration": 60.0,
+  "Duration": 30.0,
   "OverlapBehavior": "Extend"
 }
