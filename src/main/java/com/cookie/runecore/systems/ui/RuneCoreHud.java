@@ -50,9 +50,6 @@ public class RuneCoreHud extends CustomUIHud {
         if (isBlinded) {
             builder.append("Effects/BlindnessOverlay.ui");
         }
-        if (isNightVision) {
-            builder.append("Effects/NightVisionOverlay.ui");
-        }
     }
 
     public void setMana(float current, float max) {
