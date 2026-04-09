@@ -107,15 +107,22 @@ public class RuneEffect {
             store.putComponent(entityRef, EffectControllerComponent.getComponentType(), controller);
         }
 
+        // Try bare name first, then fall back to runecore: namespace prefix
         EntityEffect nativeEffect = EntityEffect.getAssetMap().getAsset(nativeEffectId);
         int index = EntityEffect.getAssetMap().getIndex(nativeEffectId);
 
-        if (nativeEffect != null) {
+        if (nativeEffect == null || index < 0) {
+            String namespacedId = "runecore:" + nativeEffectId;
+            nativeEffect = EntityEffect.getAssetMap().getAsset(namespacedId);
+            index = EntityEffect.getAssetMap().getIndex(namespacedId);
+        }
+
+        if (nativeEffect != null && index >= 0) {
             float durationSecs = defaultDurationTicks / 20.0f;
+            System.out.println("[RuneCore] Applying native effect: " + nativeEffectId + " (Index: " + index + ", Duration: " + durationSecs + "s)");
             controller.addEffect(entityRef, index, nativeEffect, durationSecs, OverlapBehavior.OVERWRITE, store);
-            System.out.println("[RuneCore] Applied native effect " + nativeEffectId + " (Amp: " + amplifier + ")");
         } else {
-            System.err.println("[RuneCore] Native effect not found: " + nativeEffectId);
+            System.err.println("[RuneCore] Native effect not found (tried bare + runecore: prefix): " + nativeEffectId);
         }
     }
 

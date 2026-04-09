@@ -39,6 +39,7 @@ import com.hypixel.hytale.protocol.MovementStates;
 import com.hypixel.hytale.math.vector.Vector3f;
 import com.hypixel.hytale.server.core.modules.entity.component.DynamicLight;
 import com.hypixel.hytale.protocol.ColorLight;
+import com.hypixel.hytale.server.core.asset.type.entityeffect.config.OverlapBehavior;
 
 public final class EffectHelper {
 
@@ -48,32 +49,41 @@ public final class EffectHelper {
     public static final float DEFAULT_DRAG = 0.05f;
     public static final float DEFAULT_AIR_DRAG_MAX = 0.08f;
 
-    private EffectHelper() {}
+    private EffectHelper() {
+    }
 
     private static void updateHud(Ref<EntityStore> ref, Consumer<RuneCoreHud> action) {
         Store<EntityStore> store = ref.getStore();
-        if (store == null) return;
+        if (store == null)
+            return;
         PlayerRef playerRef = (PlayerRef) store.getComponent(ref, PlayerRef.getComponentType());
         if (playerRef != null) {
             RuneCoreHud hud = RuneCoreHudManager.get().getHud(playerRef.getUuid());
-            if (hud != null) action.accept(hud);
+            if (hud != null)
+                action.accept(hud);
         }
     }
 
     public static void modifyMovement(Ref<EntityStore> ref, MovementModifier modifier) {
-        if (ref == null) return;
+        if (ref == null)
+            return;
         Store<EntityStore> store = ref.getStore();
-        if (store == null) return;
+        if (store == null)
+            return;
         World world = store.getExternalData().getWorld();
-        if (world == null) return;
+        if (world == null)
+            return;
 
         world.execute(() -> {
-            if (!ref.isValid()) return;
+            if (!ref.isValid())
+                return;
             MovementManager moveManager = (MovementManager) store.getComponent(ref, MovementManager.getComponentType());
-            if (moveManager == null) return;
+            if (moveManager == null)
+                return;
 
             MovementSettings settings = moveManager.getSettings();
-            if (settings == null) return;
+            if (settings == null)
+                return;
 
             modifier.apply(settings);
             syncSettings(store, ref, settings);
@@ -193,7 +203,7 @@ public final class EffectHelper {
             }
 
             updateHud(ref, hud -> hud.setFrozen(true));
-            
+
             PlayerRef playerRef = (PlayerRef) store.getComponent(ref, PlayerRef.getComponentType());
             if (playerRef != null) {
                 sendCameraLock(playerRef, true);
@@ -208,13 +218,14 @@ public final class EffectHelper {
             s.swimJumpForce = DEFAULT_JUMP_FORCE;
             s.fallJumpForce = DEFAULT_JUMP_FORCE;
             s.autoJumpDisableJumping = false;
-            s.jumpBufferDuration = 0.5f; 
+            s.jumpBufferDuration = 0.5f;
         });
 
         Store<EntityStore> store = ref.getStore();
         if (store != null) {
             PlayerDataComponent data = store.getComponent(ref, PlayerDataComponent.TYPE);
-            if (data != null) data.setFrozen(false);
+            if (data != null)
+                data.setFrozen(false);
 
             MovementStatesComponent msc = store.getComponent(ref, MovementStatesComponent.getComponentType());
             if (msc != null) {
@@ -223,7 +234,7 @@ public final class EffectHelper {
             }
 
             updateHud(ref, hud -> hud.setFrozen(false));
-            
+
             PlayerRef playerRef = (PlayerRef) store.getComponent(ref, PlayerRef.getComponentType());
             if (playerRef != null) {
                 sendCameraLock(playerRef, false);
@@ -232,24 +243,25 @@ public final class EffectHelper {
     }
 
     private static void sendCameraLock(PlayerRef playerRef, boolean locked) {
-        if (playerRef == null || playerRef.getPacketHandler() == null) return;
-        
+        if (playerRef == null || playerRef.getPacketHandler() == null)
+            return;
+
         ServerCameraSettings settings = new ServerCameraSettings();
         if (locked) {
             settings.lookMultiplier = new Vector2f(0.0f, 0.0f);
         }
-        
+
         SetServerCamera packet = new SetServerCamera(
-            ClientCameraView.FirstPerson, 
-            locked, 
-            settings
-        );
+                ClientCameraView.FirstPerson,
+                locked,
+                settings);
         playerRef.getPacketHandler().write(packet);
     }
 
     public static void onFrozenTick(Ref<EntityStore> ref) {
         Store<EntityStore> store = ref.getStore();
-        if (store == null) return;
+        if (store == null)
+            return;
 
         PlayerDataComponent data = store.getComponent(ref, PlayerDataComponent.TYPE);
         if (data != null && data.isFrozen()) {
@@ -288,8 +300,10 @@ public final class EffectHelper {
 
     public static void applyMiningFatigue(Ref<EntityStore> ref) {
         updateHud(ref, hud -> hud.setMiningFatigue(true));
-        applyStatModifier(ref, "hytale:attack_speed", "Mining_Fatigue", 0.3f, StaticModifier.CalculationType.MULTIPLICATIVE);
-        applyStatModifier(ref, "hytale:mining_speed", "Mining_Fatigue", 0.3f, StaticModifier.CalculationType.MULTIPLICATIVE);
+        applyStatModifier(ref, "hytale:attack_speed", "Mining_Fatigue", 0.3f,
+                StaticModifier.CalculationType.MULTIPLICATIVE);
+        applyStatModifier(ref, "hytale:mining_speed", "Mining_Fatigue", 0.3f,
+                StaticModifier.CalculationType.MULTIPLICATIVE);
     }
 
     public static void revertMiningFatigue(Ref<EntityStore> ref) {
@@ -327,61 +341,75 @@ public final class EffectHelper {
         Store<EntityStore> store = ref.getStore();
         if (store != null) {
             PlayerDataComponent data = (PlayerDataComponent) store.ensureAndGetComponent(ref, PlayerDataComponent.TYPE);
-            if (data != null) data.setNausea(false);
-            
+            if (data != null)
+                data.setNausea(false);
+
             PlayerRef playerRef = (PlayerRef) store.getComponent(ref, PlayerRef.getComponentType());
             if (playerRef != null && playerRef.getPacketHandler() != null) {
                 ServerCameraSettings resetSettings = new ServerCameraSettings();
                 resetSettings.attachedToType = AttachedToType.LocalPlayer;
                 resetSettings.eyeOffset = true;
                 resetSettings.isFirstPerson = true;
-                
+
                 SetServerCamera packet = new SetServerCamera(ClientCameraView.FirstPerson, false, resetSettings);
                 playerRef.getPacketHandler().write(packet);
             }
 
-            EffectControllerComponent controller = store.getComponent(ref, EffectControllerComponent.getComponentType());
+            EffectControllerComponent controller = store.getComponent(ref,
+                    EffectControllerComponent.getComponentType());
             if (controller != null) {
-                int index = EntityEffect.getAssetMap().getIndex("Nausea");
-                if (index >= 0) controller.removeEffect(ref, index, store);
+                int index = getEffectIndex("Nausea");
+                if (index >= 0)
+                    controller.removeEffect(ref, index, store);
             }
         }
     }
 
     public static void onNauseaTick(Ref<EntityStore> ref) {
         Store<EntityStore> store = ref.getStore();
-        if (store == null) return;
+        if (store == null)
+            return;
         PlayerDataComponent data = (PlayerDataComponent) store.ensureAndGetComponent(ref, PlayerDataComponent.TYPE);
-        if (data == null || !data.isNausea()) return;
+        if (data == null || !data.isNausea())
+            return;
 
-        float time = data.getNauseaTime() + 1.0f; 
+        float time = data.getNauseaTime() + 1.0f;
         data.setNauseaTime(time);
 
         PlayerRef playerRef = (PlayerRef) store.getComponent(ref, PlayerRef.getComponentType());
         if (playerRef != null && playerRef.getPacketHandler() != null) {
-            
+
             float yawSpin = (time * 4.0f) % 360.0f;
-            float pitchWobble = (float)Math.sin(time * 0.15f) * 20.0f;
-            
+            float pitchWobble = (float) Math.sin(time * 0.15f) * 20.0f;
+
             ServerCameraSettings settings = new ServerCameraSettings();
             settings.rotation = new Direction(yawSpin, pitchWobble, 0.0f);
             settings.rotationType = RotationType.Custom;
             settings.applyLookType = ApplyLookType.LocalPlayerLookOrientation;
             settings.rotationLerpSpeed = 0.8f;
-            
+
             settings.attachedToType = AttachedToType.LocalPlayer;
             settings.eyeOffset = true;
             settings.isFirstPerson = true;
-            
+
             SetServerCamera packet = new SetServerCamera(
-                ClientCameraView.Custom, 
-                true,
-                settings
-            );
+                    ClientCameraView.Custom,
+                    true,
+                    settings);
             playerRef.getPacketHandler().write(packet);
         }
     }
+
+    private static int getEffectIndex(String id) {
+        int index = EntityEffect.getAssetMap().getIndex(id);
+        if (index < 0) {
+            index = EntityEffect.getAssetMap().getIndex("runecore:" + id);
+        }
+        return index;
+    }
+
     public static void applyBlindness(Ref<EntityStore> ref) {
+
         updateHud(ref, hud -> hud.setBlinded(true));
         Store<EntityStore> store = ref.getStore();
         if (store != null) {
@@ -400,12 +428,14 @@ public final class EffectHelper {
             if (data != null) {
                 data.setBlinded(false);
             }
-            
+
             // Forced sync: remove the native icon now
-            EffectControllerComponent controller = store.getComponent(ref, EffectControllerComponent.getComponentType());
+            EffectControllerComponent controller = store.getComponent(ref,
+                    EffectControllerComponent.getComponentType());
             if (controller != null) {
-                int index = EntityEffect.getAssetMap().getIndex("Blindness");
-                if (index >= 0) controller.removeEffect(ref, index, store);
+                int index = getEffectIndex("Blindness");
+                if (index >= 0)
+                    controller.removeEffect(ref, index, store);
             }
         }
     }
@@ -415,20 +445,13 @@ public final class EffectHelper {
         Store<EntityStore> store = ref.getStore();
         if (store != null) {
             PlayerDataComponent data = (PlayerDataComponent) store.ensureAndGetComponent(ref, PlayerDataComponent.TYPE);
-            if (data != null) data.setGlowing(true);
+            if (data != null)
+                data.setGlowing(true);
 
-            // Sutil local lighting (Radius 1, Low Intensity Yellow)
+            // Subtle local lighting (Radius 1, Low Intensity Yellow)
             ColorLight light = new ColorLight((byte) 1, (byte) 32, (byte) 32, (byte) 0);
             store.putComponent(ref, DynamicLight.getComponentType(), new DynamicLight(light));
-
-            // Apply the icon/HUD effect without extra components
-            EffectControllerComponent controller = (EffectControllerComponent) store.ensureAndGetComponent(ref, EffectControllerComponent.getComponentType());
-            if (controller != null) {
-                int effectIndex = EntityEffect.getAssetMap().getIndex("Glowing");
-                if (effectIndex >= 0) {
-                    controller.addEffect(ref, effectIndex, (EntityEffect) EntityEffect.getAssetMap().getAsset(effectIndex), store);
-                }
-            }
+            // Status icon is applied by RuneEffect.applyNative() with correct duration + namespace fallback
         }
     }
 
@@ -437,13 +460,15 @@ public final class EffectHelper {
         Store<EntityStore> store = ref.getStore();
         if (store != null) {
             PlayerDataComponent data = (PlayerDataComponent) store.getComponent(ref, PlayerDataComponent.TYPE);
-            if (data != null) data.setGlowing(false);
-            
+            if (data != null)
+                data.setGlowing(false);
+
             store.removeComponent(ref, DynamicLight.getComponentType());
-            
-            EffectControllerComponent controller = (EffectControllerComponent) store.getComponent(ref, EffectControllerComponent.getComponentType());
+
+            EffectControllerComponent controller = (EffectControllerComponent) store.getComponent(ref,
+                    EffectControllerComponent.getComponentType());
             if (controller != null) {
-                int effectIndex = EntityEffect.getAssetMap().getIndex("Glowing");
+                int effectIndex = getEffectIndex("Glowing");
                 if (effectIndex >= 0) {
                     controller.removeEffect(ref, effectIndex, store);
                 }
@@ -456,11 +481,13 @@ public final class EffectHelper {
         Store<EntityStore> store = ref.getStore();
         if (store != null) {
             PlayerDataComponent data = (PlayerDataComponent) store.ensureAndGetComponent(ref, PlayerDataComponent.TYPE);
-            if (data != null) data.setNightVision(true);
+            if (data != null)
+                data.setNightVision(true);
 
             // Radius -1 (Global/FullBright), White (R: 255, G: 255, B: 255)
             ColorLight light = new ColorLight((byte) -1, (byte) -1, (byte) -1, (byte) -1);
             store.putComponent(ref, DynamicLight.getComponentType(), new DynamicLight(light));
+            // Status icon is applied by RuneEffect.applyNative() with correct duration + namespace fallback
         }
     }
 
@@ -469,13 +496,27 @@ public final class EffectHelper {
         Store<EntityStore> store = ref.getStore();
         if (store != null) {
             PlayerDataComponent data = (PlayerDataComponent) store.getComponent(ref, PlayerDataComponent.TYPE);
-            if (data != null) data.setNightVision(false);
+            if (data != null)
+                data.setNightVision(false);
             store.removeComponent(ref, DynamicLight.getComponentType());
+
+            EffectControllerComponent controller = (EffectControllerComponent) store.getComponent(ref,
+                    EffectControllerComponent.getComponentType());
+            if (controller != null) {
+                int index = getEffectIndex("NightVision");
+                if (index >= 0) {
+                    controller.removeEffect(ref, index, store);
+                }
+            }
         }
     }
-    private static void applyStatModifier(Ref<EntityStore> ref, String statId, String modifierId, float value, StaticModifier.CalculationType type) {
-        EntityStatMap statMap = (EntityStatMap) ref.getStore().getComponent(ref, EntityStatsModule.get().getEntityStatMapComponentType());
-        if (statMap == null) return;
+
+    private static void applyStatModifier(Ref<EntityStore> ref, String statId, String modifierId, float value,
+            StaticModifier.CalculationType type) {
+        EntityStatMap statMap = (EntityStatMap) ref.getStore().getComponent(ref,
+                EntityStatsModule.get().getEntityStatMapComponentType());
+        if (statMap == null)
+            return;
 
         int index = EntityStatType.getAssetMap().getIndex(statId);
         if (index >= 0) {
@@ -484,8 +525,10 @@ public final class EffectHelper {
     }
 
     private static void removeStatModifier(Ref<EntityStore> ref, String statId, String modifierId) {
-        EntityStatMap statMap = (EntityStatMap) ref.getStore().getComponent(ref, EntityStatsModule.get().getEntityStatMapComponentType());
-        if (statMap == null) return;
+        EntityStatMap statMap = (EntityStatMap) ref.getStore().getComponent(ref,
+                EntityStatsModule.get().getEntityStatMapComponentType());
+        if (statMap == null)
+            return;
 
         int index = EntityStatType.getAssetMap().getIndex(statId);
         if (index >= 0) {
@@ -493,50 +536,64 @@ public final class EffectHelper {
         }
     }
 
-
     private static void spawnParticleEffect(Ref<EntityStore> ref, String particleId) {
-        if (ref == null || !ref.isValid()) return;
+        if (ref == null || !ref.isValid())
+            return;
         Store<EntityStore> store = ref.getStore();
-        if (store == null) return;
+        if (store == null)
+            return;
 
         TransformComponent transform = store.getComponent(ref, TransformComponent.getComponentType());
-        if (transform == null) return;
+        if (transform == null)
+            return;
 
         Vector3d pos = transform.getPosition();
         ParticleUtil.spawnParticleEffect(particleId, pos, store);
     }
 
     public static void addHealth(Ref<EntityStore> ref, float amount) {
-        if (ref == null) return;
+        if (ref == null)
+            return;
         Store<EntityStore> store = ref.getStore();
-        if (store == null) return;
+        if (store == null)
+            return;
         World world = store.getExternalData().getWorld();
-        if (world == null) return;
+        if (world == null)
+            return;
 
         world.execute(() -> {
-            if (!ref.isValid()) return;
+            if (!ref.isValid())
+                return;
             EntityStatMap statMap = (EntityStatMap) store.getComponent(ref, EntityStatMap.getComponentType());
-            if (statMap == null) return;
+            if (statMap == null)
+                return;
             EntityStatValue hp = statMap.get(DefaultEntityStatTypes.getHealth());
-            if (hp == null) return;
+            if (hp == null)
+                return;
             float newHp = Math.min(100f, hp.get() + amount);
             statMap.setStatValue(DefaultEntityStatTypes.getHealth(), newHp);
         });
     }
 
     public static void subtractHealth(Ref<EntityStore> ref, float amount) {
-        if (ref == null) return;
+        if (ref == null)
+            return;
         Store<EntityStore> store = ref.getStore();
-        if (store == null) return;
+        if (store == null)
+            return;
         World world = store.getExternalData().getWorld();
-        if (world == null) return;
+        if (world == null)
+            return;
 
         world.execute(() -> {
-            if (!ref.isValid()) return;
+            if (!ref.isValid())
+                return;
             EntityStatMap statMap = (EntityStatMap) store.getComponent(ref, EntityStatMap.getComponentType());
-            if (statMap == null) return;
+            if (statMap == null)
+                return;
             EntityStatValue hp = statMap.get(DefaultEntityStatTypes.getHealth());
-            if (hp == null) return;
+            if (hp == null)
+                return;
             float newHp = Math.max(0f, hp.get() - amount);
             statMap.setStatValue(DefaultEntityStatTypes.getHealth(), newHp);
         });
@@ -548,14 +605,18 @@ public final class EffectHelper {
     }
 
     public static void applyInvisibility(Ref<EntityStore> ref) {
-        if (ref == null || !ref.isValid()) return;
+        if (ref == null || !ref.isValid())
+            return;
         Store<EntityStore> store = ref.getStore();
-        if (store == null) return;
+        if (store == null)
+            return;
         World world = store.getExternalData().getWorld();
-        if (world == null) return;
+        if (world == null)
+            return;
 
         PlayerRef playerRefComp = (PlayerRef) store.getComponent(ref, PlayerRef.getComponentType());
-        if (playerRefComp == null) return;
+        if (playerRefComp == null)
+            return;
         UUID targetUuid = playerRefComp.getUuid();
 
         world.execute(() -> {
@@ -566,14 +627,18 @@ public final class EffectHelper {
     }
 
     public static void revertInvisibility(Ref<EntityStore> ref) {
-        if (ref == null || !ref.isValid()) return;
+        if (ref == null || !ref.isValid())
+            return;
         Store<EntityStore> store = ref.getStore();
-        if (store == null) return;
+        if (store == null)
+            return;
         World world = store.getExternalData().getWorld();
-        if (world == null) return;
+        if (world == null)
+            return;
 
         PlayerRef playerRefComp = (PlayerRef) store.getComponent(ref, PlayerRef.getComponentType());
-        if (playerRefComp == null) return;
+        if (playerRefComp == null)
+            return;
         UUID targetUuid = playerRefComp.getUuid();
 
         world.execute(() -> {

@@ -1,0 +1,5 @@
+{
+  "StatusEffectIcon": "UI/StatusEffects/NightVision.png",
+  "Duration": 60.0,
+  "OverlapBehavior": "Extend"
+}

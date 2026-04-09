@@ -6,7 +6,9 @@ import com.hypixel.hytale.event.EventRegistry;
 import com.hypixel.hytale.server.core.event.events.player.PlayerMouseButtonEvent;
 import com.hypixel.hytale.server.core.universe.PlayerRef;
 import com.hypixel.hytale.server.core.asset.type.item.config.Item;
+import com.hypixel.hytale.server.core.universe.world.World;
 import com.hypixel.hytale.server.core.universe.world.storage.EntityStore;
+import com.hypixel.hytale.component.Ref;
 import com.cookie.runecore.api.PlayerDataComponent;
 
 public class MagicListener {
@@ -46,7 +48,9 @@ public class MagicListener {
             // Simplified grimoire management using PlayerData
             String activeSpellId = data.getActiveSpellIndex() == 0 ? "fireball" : "toxic_bolt";
 
-            CastContext ctx = new CastContext(playerRef, null, null, 1.0);
+            Ref<EntityStore> entityRef = playerRef.getReference();
+            World world = store.getExternalData() != null ? store.getExternalData().getWorld() : null;
+            CastContext ctx = new CastContext(playerRef, entityRef, world, 1.0);
             RuneCore.get().castSpell(activeSpellId, ctx);
 
             playerRef.sendMessage(

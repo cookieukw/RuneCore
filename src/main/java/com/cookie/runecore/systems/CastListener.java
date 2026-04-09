@@ -51,7 +51,8 @@ public class CastListener {
             if (world == null)
                 return;
 
-            CastContext ctx = new CastContext(playerRef, null, world, 1.0);
+            Ref<EntityStore> entityRef = playerRef.getReference();
+            CastContext ctx = new CastContext(playerRef, entityRef, world, 1.0);
 
             RuneCore.get().castSpell("fireball", ctx);
         }

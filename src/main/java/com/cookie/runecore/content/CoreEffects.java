@@ -321,7 +321,7 @@ public class CoreEffects {
         );
         core.registerEffect(new RuneEffect("darkness", "Darkness", 400));
         core.registerEffect(new RuneEffect("night_vision", 1200)
-            .withAsset("Night_Vision")
+            .withAsset("NightVision")
             .withAction(ctx -> {
                 if (ctx.target instanceof Ref<?> raw) {
                     @SuppressWarnings("unchecked") Ref<EntityStore> ref = (Ref<EntityStore>) raw;
