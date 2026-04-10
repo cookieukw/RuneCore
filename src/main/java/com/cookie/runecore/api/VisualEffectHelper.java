@@ -6,7 +6,6 @@ import com.hypixel.hytale.protocol.ColorLight;
 import com.hypixel.hytale.server.core.entity.effect.EffectControllerComponent;
 import com.hypixel.hytale.server.core.modules.entity.component.DynamicLight;
 import com.hypixel.hytale.server.core.universe.world.storage.EntityStore;
-import com.cookie.runecore.systems.ui.RuneCoreHud;
 
 /**
  * Helpers for visual status effects that affect entity appearance and native effect icons.

@@ -14,7 +14,6 @@ import com.hypixel.hytale.server.core.modules.entitystats.EntityStatMap;
 import com.hypixel.hytale.server.core.modules.entitystats.EntityStatValue;
 import com.hypixel.hytale.server.core.modules.entitystats.asset.DefaultEntityStatTypes;
 
-import java.util.HashMap;
 import java.util.Map;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -49,15 +48,21 @@ public class RuneCoreHudManager {
     }
 
     private void onPlayerReady(PlayerReadyEvent event) {
+        Ref<EntityStore> entityRef = event.getPlayerRef();
+        if (entityRef == null || !entityRef.isValid()) return;
+
+        Store<EntityStore> store = entityRef.getStore();
+        if (store == null) return;
+
+        PlayerRef playerRef = (PlayerRef) store.getComponent(entityRef, PlayerRef.getComponentType());
+        if (playerRef == null) return;
+
         Player player = event.getPlayer();
         if (player == null) return;
 
-        PlayerRef playerRef = player.getPlayerRef();
-        if (playerRef == null) return;
-        
         // Hide original Hytale HUDs
         player.getHudManager().hideHudComponents(playerRef, HudComponent.Mana, HudComponent.Health);
-        
+
         RuneCoreHud hud = new RuneCoreHud(playerRef);
         activeHuds.put(playerRef.getUuid(), hud);
         hud.show();

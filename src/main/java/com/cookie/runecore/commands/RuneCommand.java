@@ -47,7 +47,7 @@ public class RuneCommand extends AbstractPlayerCommand {
         } else if ("dump".equalsIgnoreCase(subCommand)) {
             ctx.sendMessage(Message.raw("Dumped keys to console!"));
             System.out.println("=== ENTITY EFFECT ASSETS ===");
-            Map map = EntityEffect.getAssetMap().getAssetMap();
+            Map<String, EntityEffect> map = EntityEffect.getAssetMap().getAssetMap();
             for (Object key : map.keySet()) {
                 System.out.println(key.toString());
             }

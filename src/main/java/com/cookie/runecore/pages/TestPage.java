@@ -58,6 +58,6 @@ public class TestPage extends BasicCustomUIPage {
         // Step 2: Override the message text dynamically
         // Selector format: #ElementId.Property
         // This finds the element with id="Message" and sets its Text property
-      //  commandBuilder.set("#Message.Text", message);
+        commandBuilder.set("#Message.Text", message);
     }
 }
