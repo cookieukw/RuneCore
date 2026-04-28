@@ -1,0 +1,6 @@
+{
+  "Particles": [
+    "Combat/Blood_Drop",
+    "Combat/Blood_Drop_Emitter"
+  ]
+}

@@ -56,26 +56,21 @@ public class EffectTickSystem {
             ActiveBuff buff = entry.getValue();
             Ref<EntityStore> ref = entityRefs.get(key);
 
-            if (ref == null) {
-                if (world != null) {
-                    it.remove();
-                    entityRefs.remove(key);
-                    continue;
-                }
-            } else if (!ref.isValid()) {
+            if (ref == null || !ref.isValid()) {
                 it.remove();
                 entityRefs.remove(key);
                 continue;
             }
 
-            if (world != null && ref != null) {
-                com.hypixel.hytale.server.core.universe.world.World refWorld = ref.getStore().getExternalData().getWorld();
-                if (refWorld == null || !refWorld.equals(world)) {
-                    continue;
-                }
+            boolean alive;
+            try {
+                alive = buff.tick(ref);
+            } catch (IllegalStateException ex) {
+                // Entity invalidated mid-tick (shutdown race condition) — discard buff cleanly
+                it.remove();
+                entityRefs.remove(key);
+                continue;
             }
-
-            boolean alive = buff.tick(ref);
             if (!alive) {
                 it.remove();
                 entityRefs.remove(key);

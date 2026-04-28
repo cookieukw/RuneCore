@@ -39,7 +39,13 @@ public final class StatusEffectHelper {
     }
 
     public static void onBleedingTick(Ref<EntityStore> ref) {
-        EffectHelper.spawnParticleEffect(ref, "hytale:blood_impact");
+        System.out.println("[RuneCore-Bleed] Ticking bleeding for " + ref);
+        // Spawn 2-3 drops of blood at different heights (chest/limbs)
+        for (int i = 0; i < 2; i++) {
+            double height = 0.8 + (Math.random() * 0.7); // Height between 0.8m and 1.5m (chest area)
+            double spread = (Math.random() - 0.5) * 0.3; // Small horizontal spread
+            EffectHelper.spawnParticleEffect(ref, "runecore:Blood_Drop", spread, height, spread);
+        }
     }
 
     // ── Burn ──────────────────────────────────────────────────────────────────

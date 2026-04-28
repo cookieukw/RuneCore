@@ -1,0 +1,56 @@
+{
+  "RenderMode": "BlendLinear",
+  "EmitOffset": {
+    "X": { "Min": -0.1, "Max": 0.1 },
+    "Y": { "Min": -0.1, "Max": 0.1 },
+    "Z": { "Min": -0.1, "Max": 0.1 }
+  },
+  "ParticleRotationInfluence": "Billboard",
+  "LinearFiltering": true,
+  "LightInfluence": 0.8,
+  "MaxConcurrentParticles": 0,
+  "ParticleLifeSpan": {
+    "Min": 0.8,
+    "Max": 1.5
+  },
+  "ParticleRotateWithSpawner": false,
+  "SpawnRate": {
+    "Min": 15,
+    "Max": 25
+  },
+  "InitialVelocity": {
+    "Yaw": { "Min": 0, "Max": 360 },
+    "Pitch": { "Min": -20, "Max": 20 },
+    "Speed": { "Min": 0.2, "Max": 0.5 }
+  },
+  "GravityInfluence": 1.2,
+  "AirDrag": 0.1,
+  "Particle": {
+    "Texture": "Particles/Textures/Weather/Dust.png",
+    "FrameSize": { "Width": 32, "Height": 32 },
+    "ScaleRatioConstraint": "OneToOne",
+    "Animation": {
+      "0": {
+        "Opacity": 1.0,
+        "Color": "#990000",
+        "Scale": { "X": { "Min": 1.0, "Max": 1.0 } }
+      },
+      "70": {
+        "Opacity": 0.8,
+        "Color": "#770000",
+        "Scale": { "X": { "Min": 0.8, "Max": 0.8 } }
+      },
+      "100": {
+        "Opacity": 0.0,
+        "Color": "#440000",
+        "Scale": { "X": { "Min": 0.1, "Max": 0.1 } }
+      }
+    },
+    "InitialAnimationFrame": {
+      "Rotation": { "X": { "Min": 0, "Max": 360 }, "Y": { "Min": 0, "Max": 0 }, "Z": { "Min": 0, "Max": 360 } },
+      "Scale": { "X": { "Min": 0.03, "Max": 0.06 } },
+      "Opacity": 1,
+      "FrameIndex": { "Min": 0, "Max": 0 }
+    }
+  }
+}

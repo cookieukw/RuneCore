@@ -84,7 +84,15 @@ public class RuneEffect {
             Ref<EntityStore> entityRef = (ctx.target instanceof Ref) ? (Ref<EntityStore>) ctx.target : null;
             ActiveBuff buff = this.buffFactory.apply(ctx);
             if (buff != null) {
+                boolean refValid = (entityRef != null && entityRef.isValid());
+                System.out.println("[RuneCore] Registering buff: " + buff.effectId
+                        + " | player=" + buff.playerId
+                        + " | duration=" + buff.remainingTicks
+                        + " | interval=" + buff.intervalTicks
+                        + " | refValid=" + refValid);
                 EffectTickSystem.getInstance().applyBuff(buff, entityRef);
+            } else {
+                System.err.println("[RuneCore] buffFactory returned null for effect: " + id);
             }
         }
 

@@ -25,6 +25,7 @@ public class EffectTimerListener {
             public void run() {
                 playerWorlds.values().stream()
                     .distinct()
+                    .filter(w -> w != null && w.isAlive())
                     .forEach(world -> world.execute(() -> EffectTickSystem.getInstance().tick(world)));
             }
         }, 50L, 50L);
@@ -45,6 +46,7 @@ public class EffectTimerListener {
         if (uid == null) return;
 
         playerWorlds.put(uid, world);
+        System.out.println("[RuneCore-Effects] Player " + uid + " registered for effect ticking (worlds tracked: " + playerWorlds.size() + ")");
     }
 
     private void onPlayerDisconnect(PlayerDisconnectEvent event) {

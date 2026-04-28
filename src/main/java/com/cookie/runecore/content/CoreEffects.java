@@ -226,7 +226,7 @@ public class CoreEffects {
             .withBuff(ctx -> {
                 String uid = ctx.source != null ? ctx.source.getUuid().toString() : ctx.target.toString();
                 return ActiveBuff.builder(uid, "bleeding", 300)
-                    .interval(30)
+                    .interval(20)
                     .onTick(ref -> {
                         StatHelper.subtractHealth(ref, 1.0f);
                         StatusEffectHelper.onBleedingTick(ref);
@@ -340,11 +340,9 @@ public class CoreEffects {
         );
 
         core.registerEffect(new RuneEffect("water_breathing", "Water_Breathing", 1200));
-        core.registerEffect(new RuneEffect("darkness", "Darkness", 400));
         core.registerEffect(new RuneEffect("fire_resistance", "Fire_Resistance", 1200));
         core.registerEffect(new RuneEffect("resistance", "Resistance", 1200));
         core.registerEffect(new RuneEffect("strength", "Strength", 1200));
         core.registerEffect(new RuneEffect("weakness", "Weakness", 600));
-        core.registerEffect(new RuneEffect("electrified", "Electrified", 200));
     }
 }
