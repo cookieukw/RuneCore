@@ -88,6 +88,34 @@ eventRegistry.registerGlobal(EffectTimerListener.class);
 eventRegistry.registerGlobal(CastListener.class);
 ```
 
+### 🧠 How and Where to Use Effects (Examples)
+
+Modders can apply these effects dynamically in the world using the `RuneCore` API. Here are some examples of programmatic implementation:
+
+```java
+// Apply an effect directly to an entity (e.g., player or mob)
+RuneCore core = RuneCore.getInstance();
+RuneEffect poison = core.getEffect("poison");
+
+if (poison != null) {
+    // Create context with source and target
+    CastContext ctx = new CastContext(sourceEntity, targetEntity);
+    poison.execute(ctx);
+}
+```
+
+#### 🛡️ Recommended Use Cases:
+
+*   **🧪 Alchemy and Potions:** Consume items that give buffs like `speed`, `jump_boost`, or heals like `regeneration` and `instant_health`.
+*   **⚔️ Weapon and Arrow Enchantments:** Add poison (`poison`), bleeding (`bleeding`), or slowness (`slowness`) when hitting targets with specific weapons.
+*   **👹 Boss / Mob Mechanics:**
+    *   An ice boss that freezes (`frozen`) the player in a charged attack.
+    *   A dark attack that inflicts blindness (`blindness`) in the area around the boss.
+    *   A fire monster that burns (`burn`) on contact.
+*   **🌍 Environmental Traps:**
+    *   Spikes on the ground that cause `bleeding`.
+    *   Falling into toxic swamps that apply `decay`.
+
 ---
 
 ## 🛠️ Modder's Guide
