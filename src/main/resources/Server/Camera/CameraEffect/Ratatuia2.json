@@ -1,0 +1,8 @@
+{
+  "Type": "CameraShake",
+  "CameraShake": "Impact_Strong",
+  "Intensity": {
+    "Value": 1,
+    "AccumulationMode": "Average"
+  }
+}

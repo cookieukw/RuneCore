@@ -1,5 +1,14 @@
 {
-  "StatusEffectIcon": "UI/StatusEffects/Nausea.png",
-  "Duration": 10.0,
-  "OverlapBehavior": "Extend"
+  "ApplicationEffects": {
+    "EntityBottomTint": "#ffffff",
+    "EntityTopTint": "#ffffff",
+    "ScreenEffect": "ScreenEffects/Daggers.png",
+    "MouseSensitivityAdjustmentTarget": 1,
+    "MouseSensitivityAdjustmentDuration": 1,
+    "LocalSoundEventId": "SFX_Attn_VeryQuiet",
+    "WorldSoundEventId": "SFX_Attn_VeryQuiet"
+  },
+  "Duration": 0.5,
+  "OverlapBehavior": "Extend",
+  "Debuff": true
 }

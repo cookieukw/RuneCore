@@ -1,5 +1,10 @@
 {
-  "StatusEffectIcon": "UI/StatusEffects/Strength.png",
-  "Duration": 60.0,
-  "OverlapBehavior": "Extend"
+  "DamageCalculator": {
+    "BaseDamage": {
+      "Physical": 10
+    }
+  },
+  "ApplicationEffects": {
+    "KnockbackMultiplier": 0.5
+  }
 }

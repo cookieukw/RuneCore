@@ -1,5 +1,20 @@
 {
-  "StatusEffectIcon": "UI/StatusEffects/Blindness.png",
-  "Duration": 10.0,
-  "OverlapBehavior": "Extend"
+  "OverlapBehavior": "Extend",
+  "Debuff": true,
+  "ApplicationEffects": {
+    "Particles": [
+      {
+        "SystemId": "Fog",
+        "DetachedFromModel": false,
+        "PositionOffset": {
+          "Y": 0
+        },
+        "Color": "#100f0f"
+      }
+    ],
+    "EntityTopTint": "#100f0f"
+  },
+  "StatModifierEffects": {
+    "ViewDistance": 1
+  }
 }

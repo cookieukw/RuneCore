@@ -1,0 +1,24 @@
+{
+  "ApplicationEffects": {
+    "ModelVFXId": "Burn",
+    "Particles": [
+      {
+        "SystemId": "Fluid_Fire",
+        "Color": "#844a36",
+        "TargetEntityPart": "Self"
+      }
+    ],
+    "ScreenEffect": "ScreenEffects/Fire.png",
+    "MouseSensitivityAdjustmentTarget": 0,
+    "MouseSensitivityAdjustmentDuration": 0,
+    "EntityBottomTint": "#ffc900",
+    "EntityTopTint": "#ff8d00",
+    "FirstPersonParticles": [
+      {
+        "SystemId": "Burning_Wasteland",
+        "Color": "#f50000"
+      }
+    ]
+  },
+  "Debuff": true
+}

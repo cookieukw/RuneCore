@@ -1,5 +1,10 @@
 {
-  "StatusEffectIcon": "UI/StatusEffects/NightVision.png",
-  "Duration": 60.0,
-  "OverlapBehavior": "Extend"
+  "ApplicationEffects": {
+    "EntityBottomTint": "#fff800",
+    "EntityTopTint": "#cdd71f",
+    "MouseSensitivityAdjustmentTarget": 0,
+    "MouseSensitivityAdjustmentDuration": 0
+  },
+  "OverlapBehavior": "Extend",
+  "Debuff": false
 }

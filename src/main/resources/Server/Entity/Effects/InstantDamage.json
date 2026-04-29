@@ -21,8 +21,7 @@
   "StatModifierEffects": {
     "ModelParticles": [
       {
-        "SystemId": "Bleending2",
-        "Color": "#ff0a0a"
+        "SystemId": "Bleending2"
       }
     ]
   },

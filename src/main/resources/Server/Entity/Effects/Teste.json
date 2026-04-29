@@ -1,0 +1,6 @@
+{
+  "ApplicationEffects": {
+    "EntityBottomTint": "#fe0000",
+    "EntityTopTint": "#ff0000"
+  }
+}

@@ -1,5 +1,31 @@
 {
-  "StatusEffectIcon": "UI/StatusEffects/Weakness.png",
-  "Duration": 30.0,
-  "OverlapBehavior": "Extend"
+  "DamageCalculator": {
+    "BaseDamage": {
+      "Physical": -0.1
+    },
+    "Type": "Dps"
+  },
+  "ApplicationEffects": {
+    "KnockbackMultiplier": 0.5
+  },
+  "DamageEffects": {
+    "Knockback": {
+      "VelocityType": "Set",
+      "Force": -1,
+      "VelocityConfig": {
+        "GroundResistance": 0.516,
+        "GroundResistanceMax": 0.024,
+        "AirResistance": 0.432,
+        "AirResistanceMax": 0.044
+      }
+    },
+    "StaminaDrainMultiplier": 4
+  },
+  "StatModifierEffects": {
+    "Knockback": {
+      "Force": 0,
+      "Duration": 0,
+      "VelocityType": "Set"
+    }
+  }
 }

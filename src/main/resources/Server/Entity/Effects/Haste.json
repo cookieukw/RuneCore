@@ -1,4 +1,9 @@
 {
-  "StatusEffectIcon": "UI/StatusEffects/Haste.png",
-  "Duration": 60.0
+  "ApplicationEffects": {
+    "ModelVFXId": "Creative_Tool",
+    "EntityBottomTint": "#4f40f4",
+    "EntityTopTint": "#6588f8",
+    "HorizontalSpeedMultiplier": 0.2,
+    "KnockbackMultiplier": 0.3
+  }
 }

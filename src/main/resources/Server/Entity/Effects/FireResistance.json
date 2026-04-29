@@ -1,0 +1,10 @@
+{
+  "DamageResistance": {
+    "Fire": [
+      {
+        "CalculationType": "Additive",
+        "Amount": 100
+      }
+    ]
+  }
+}
