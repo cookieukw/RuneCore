@@ -1,4 +1,9 @@
 {
   "StatusEffectIcon": "UI/StatusEffects/Decay.png",
-  "Duration": 20.0
+  "OverlapBehavior": "Extend",
+  "Debuff": true,
+  "ApplicationEffects": {
+    "ModelVFXId": "Death",
+    "EntityBottomTint": "#000000"
+  }
 }
