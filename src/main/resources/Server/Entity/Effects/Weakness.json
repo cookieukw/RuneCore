@@ -1,4 +1,5 @@
 {
+  "StatusEffectIcon": "UI/StatusEffects/Weakness.png",
   "DamageCalculator": {
     "BaseDamage": {
       "Physical": -0.1
