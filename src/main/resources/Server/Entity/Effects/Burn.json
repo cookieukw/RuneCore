@@ -1,4 +1,5 @@
 {
+  "StatusEffectIcon": "UI/StatusEffects/Burn.png",
   "ApplicationEffects": {
     "ModelVFXId": "Burn",
     "Particles": [
