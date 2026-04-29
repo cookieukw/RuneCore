@@ -1,4 +1,5 @@
 {
+  "StatusEffectIcon": "UI/StatusEffects/Speed.png",
   "ApplicationEffects": {
     "ModelVFXId": "Drop_Legendary",
     "Particles": [
