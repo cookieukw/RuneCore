@@ -60,8 +60,8 @@ public class RuneCoreHudManager {
         Player player = event.getPlayer();
         if (player == null) return;
 
-        // Hide original Hytale HUDs
-        player.getHudManager().hideHudComponents(playerRef, HudComponent.Mana, HudComponent.Health);
+        // Hide original Hytale HUDs (Keep Health visible since we only implement Mana for now)
+        player.getHudManager().hideHudComponents(playerRef, HudComponent.Mana);
 
         RuneCoreHud hud = new RuneCoreHud(playerRef);
         activeHuds.put(playerRef.getUuid(), hud);
