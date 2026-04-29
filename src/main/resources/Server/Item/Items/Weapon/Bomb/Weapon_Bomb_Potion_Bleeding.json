@@ -36,7 +36,7 @@
   "MaxStack": 16,
   "Model": "Items/Weapons/Bomb/Potion_Onion.blockymodel",
   "Icon": "Icons/ItemsGenerated/Weapon_Bomb_Potion_Bleeding.png",
-  "Texture": "Items/Weapons/Bomb/Potion_Onion.png",
+  "Texture": "Items/Weapons/Bomb/Potion_Onion_Poison.png",
   "Tags": {
     "Type": [
       "Weapon"

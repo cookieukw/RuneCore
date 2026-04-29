@@ -14,7 +14,7 @@
   },
   "MinScale": 1,
   "Model": "Items/Weapons/Bomb/Potion_Onion.blockymodel",
-  "Texture": "Items/Weapons/Bomb/Potion_Onion.png",
+  "Texture": "Items/Weapons/Bomb/Potion_Onion_Poison.png",
   "AnimationSets": {
     "FlyIdle": {
       "Animations": [
