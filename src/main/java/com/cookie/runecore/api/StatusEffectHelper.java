@@ -59,7 +59,7 @@ public final class StatusEffectHelper {
     }
 
     public static void onBurnTick(Ref<EntityStore> ref) {
-        EffectHelper.spawnParticleEffect(ref, "hytale:fire");
+        // Particles and visuals are handled by the native Burn.json entity effect
     }
 
     // ── Nausea ────────────────────────────────────────────────────────────────

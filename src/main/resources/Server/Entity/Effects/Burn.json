@@ -1,4 +1,22 @@
 {
-  "StatusEffectIcon": "UI/StatusEffects/Burn.png",
-  "Duration": 10.0
+  "ApplicationEffects": {
+    "ModelVFXId": "Burn",
+    "Particles": [
+      {
+        "SystemId": "Effect_Fire",
+        "Color": "#802d08"
+      }
+    ]
+  },
+  "Duration": 0.5,
+  "OverlapBehavior": "Extend",
+  "StatModifierEffects": {
+    "ModelParticles": [
+      {
+        "SystemId": "Bleending2",
+        "Color": "#ff0a0a"
+      }
+    ]
+  },
+  "Debuff": true
 }
