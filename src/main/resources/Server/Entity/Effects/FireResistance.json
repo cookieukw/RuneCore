@@ -1,4 +1,5 @@
 {
+  "StatusEffectIcon": "UI/StatusEffects/Fire_Resistance.png",
   "DamageResistance": {
     "Fire": [
       {

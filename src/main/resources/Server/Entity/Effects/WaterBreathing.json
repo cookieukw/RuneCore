@@ -1,5 +1,5 @@
 {
-  "StatusEffectIcon": "UI/StatusEffects/WaterBreathing.png",
+  "StatusEffectIcon": "UI/StatusEffects/Water_Breathing.png",
   "ApplicationEffects": {
     "ModelVFXId": "Creative_Tool",
     "EntityBottomTint": "#4f40f4",
