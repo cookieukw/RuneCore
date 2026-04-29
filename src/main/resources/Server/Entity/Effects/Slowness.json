@@ -1,4 +1,5 @@
 {
+  "StatusEffectIcon": "UI/StatusEffects/Slowness.png",
   "ApplicationEffects": {
     "ModelVFXId": "Stoneskin",
     "Particles": [
