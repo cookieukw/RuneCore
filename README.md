@@ -40,22 +40,45 @@ For a full breakdown of all 20 elements and their mechanics, see our [**Technica
 
 ---
 
-## 🎮 How to Test In-Game
+## 🎮 How to Test In-Game & Current Status Effects
 
-You can test the current status effects and spell system using the built-in administrative command.
+You can test the registered status effects and spell system using the built-in administrative command:
 
-### Apply a Status Effect
-Use the following command to apply an effect to yourself:
 ```text
 /rune effect <id>
 ```
 
-**Common IDs for testing:**
-- `speed` / `slowness`
-- `high_jump`
-- `poison` / `regeneration`
-- `frozen`
-- `invisibility` (Native Hytale effect)
+Below is the complete table of effects currently registered in the `RuneCore` engine, their development states, and the expected behavior of each:
+
+| Status | Effect ID | Has Native/JSON Visual? | What it should do |
+| :---: | :--- | :--- | :--- |
+| [x] | `speed` | Speed | Gives movement speed buff. |
+| [x] | `slowness` | Slowness | Slows down the entity. |
+| [ ] | `haste` | Haste | Modifies Attack Speed and Mining Speed (+50%) and shows UI. (Attack/Mining Speed pending) |
+| [ ] | `mining_fatigue`| Mining_Fatigue | Modifies Attack Speed and Mining Speed (-70%) and shows UI. (Attack/Mining Speed pending) |
+| [x] | `jump_boost` | Jump_Boost | Jump higher. |
+| [x] | `high_jump` | High_Jump | Jump much higher. |
+| [x] | `slow_falling` | Slow_Falling | Slow falling. |
+| [x] | `levitation` | Levitation | Causes the entity to float upwards. |
+| [x] | `regeneration` | Regeneration | Heals +1 health every 50 ticks. |
+| [x] | `poison` | Poison | Deals 1 health damage every 25 ticks. |
+| [x] | `decay` | Decay | Deals 1 health damage every 40 ticks. |
+| [x] | `burn` | Burn | Deals 1 health damage every 20 ticks + UI. |
+| [x] | `nausea` | Nausea | Rotates the camera (NauseaTick) + UI. |
+| [x] | `bleeding` | Bleeding | Deals 1 health damage every 20 ticks + UI + Custom blood particles. |
+| [x] | `frozen` | Frozen | Prevents movement temporarily. |
+| [x] | `instant_health`| (none) | Instant healing (4.0 * power). |
+| [x] | `instant_damage`| InstantDamage | Instant damage (6.0 * power). |
+| [ ] | `damage_fire_instant`| DamageFireInstant | Instant fire damage (10.0 * power). |
+| [x] | `invisibility` | Invisibility | Hides the player from others. (Fine-tuning of own visibility pending) |
+| [ ] | `glowing` | Glowing | Adds dynamic light (DynamicLight) + UI. (Does not persist through logout/relog) |
+| [x] | `blindness` | Blindness | Modifies vision (VisualEffectHelper) + UI. |
+| [x] | `night_vision` | NightVision | White dynamic light around the player + UI. |
+| [ ] | `water_breathing`| WaterBreathing | Allows native underwater breathing. (Simply does not work) |
+| [x] | `fire_resistance`| FireResistance | Native fire resistance. |
+| [ ] | `resistance` | Resistance | Native resistance. (Does not work, needs improvements) |
+| [ ] | `strength` | Strength | Native strength. (Does not work, needs improvements) |
+| [ ] | `weakness` | Weakness | Native weakness. (Does not work, needs improvements) |
 
 ### Implementation Note
 To enable all systems during development, ensure they are registered in your entry point:

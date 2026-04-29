@@ -40,22 +40,45 @@ Para um detalhamento completo de todos os 20 elementos e suas mecânicas, veja n
 
 ---
 
-## 🎮 Como Testar In-Game
+## 🎮 Como Testar In-Game & Efeitos de Status Atuais
 
-Você pode testar os efeitos de status atuais e o sistema de feitiços usando o comando administrativo integrado.
+Você pode testar os efeitos de status registrados e o sistema de feitiços usando o comando administrativo integrado:
 
-### Aplicar um Efeito de Status
-Use o seguinte comando para aplicar um efeito a você mesmo:
 ```text
 /rune effect <id>
 ```
 
-**IDs comuns para teste:**
-- `speed` / `slowness` (Velocidade / Lentidão)
-- `high_jump` (Pulo Alto)
-- `poison` / `regeneration` (Veneno / Regeneração)
-- `frozen` (Congelado)
-- `invisibility` (Efeito nativo do Hytale: Invisibilidade)
+Abaixo está a tabela completa dos efeitos atualmente registrados no motor `RuneCore`, seus estados de desenvolvimento e o comportamento esperado de cada um:
+
+| Status | ID do Efeito | Tem Visual Nativo/JSON? | O que deve fazer |
+| :---: | :--- | :--- | :--- |
+| [x] | `speed` | Speed | Dá o buff de velocidade. |
+| [x] | `slowness` | Slowness | Lentidão na entidade. |
+| [ ] | `haste` | Haste | Modifica Attack Speed e Mining Speed (+50%) e mostra UI. (Attack/Mining Speed pendentes) |
+| [ ] | `mining_fatigue`| Mining_Fatigue | Modifica Attack Speed e Mining Speed (-70%) e mostra UI. (Attack/Mining Speed pendentes) |
+| [x] | `jump_boost` | Jump_Boost | Pulo mais alto. |
+| [x] | `high_jump` | High_Jump | Pulo muito mais alto. |
+| [x] | `slow_falling` | Slow_Falling | Queda lenta. |
+| [x] | `levitation` | Levitation | Faz a entidade flutuar para cima. |
+| [x] | `regeneration` | Regeneration | Cura +1 de vida a cada 50 ticks. |
+| [x] | `poison` | Poison | Dano de 1 de vida a cada 25 ticks. |
+| [x] | `decay` | Decay | Dano de 1 de vida a cada 40 ticks. |
+| [x] | `burn` | Burn | Dano de 1 de vida a cada 20 ticks + UI. |
+| [x] | `nausea` | Nausea | Roda a câmera (NauseaTick) + UI. |
+| [x] | `bleeding` | Bleeding | Dano de 1 vida a cada 20 ticks + UI + Partículas custom de sangue. |
+| [x] | `frozen` | Frozen | Impede movimento temporariamente. |
+| [x] | `instant_health`| (nenhum) | Cura instantânea (4.0 * power). |
+| [x] | `instant_damage`| InstantDamage | Dano instantâneo (6.0 * power). |
+| [ ] | `damage_fire_instant`| DamageFireInstant | Dano de fogo instantâneo (10.0 * power). |
+| [x] | `invisibility` | Invisibility | Esconde o jogador dos outros. (Ajuste fino de visibilidade próprio pendente) |
+| [ ] | `glowing` | Glowing | Adiciona luz dinâmica (DynamicLight) + UI. (Não persiste no logout/relog) |
+| [x] | `blindness` | Blindness | Modifica a visão (VisualEffectHelper) + UI. |
+| [x] | `night_vision` | NightVision | Luz dinâmica branca ao redor do jogador + UI. |
+| [ ] | `water_breathing`| WaterBreathing | Permite respirar embaixo d'água nativamente. (Simplesmente não funciona) |
+| [x] | `fire_resistance`| FireResistance | Resistência a fogo nativa. |
+| [ ] | `resistance` | Resistance | Resistência nativa. (Não funciona, precisa de melhorias) |
+| [ ] | `strength` | Strength | Força nativa. (Não funciona, precisa de melhorias) |
+| [ ] | `weakness` | Weakness | Fraqueza nativa. (Não funciona, precisa de melhorias) |
 
 ### Nota de Implementação
 Para habilitar todos os sistemas durante o desenvolvimento, certifique-se de que eles estão registrados no seu ponto de entrada:
