@@ -17,16 +17,9 @@ public class CoreEffects {
 
         core.registerEffect(new RuneEffect("speed", 1200)
             .withAsset("Speed")
-            .withAction(ctx -> {
-                if (ctx.target instanceof Ref<?> raw) {
-                    @SuppressWarnings("unchecked") Ref<EntityStore> ref = (Ref<EntityStore>) raw;
-                    MovementHelper.applySpeed(ref);
-                }
-            })
             .withBuff(ctx -> {
                 String uid = ctx.source != null ? ctx.source.getUuid().toString() : ctx.target.toString();
                 return ActiveBuff.builder(uid, "speed", 1200)
-                    .onExpire(ref -> MovementHelper.revertSpeed(ref))
                     .build();
             })
         );
@@ -266,14 +259,14 @@ public class CoreEffects {
                 @SuppressWarnings("unchecked") Ref<EntityStore> ref = (Ref<EntityStore>) raw;
                 StatHelper.subtractHealth(ref, (float) (6.0 * ctx.power));
             }
-        }));
+        }).withAsset("InstantDamage"));
 
         core.registerEffect(new RuneEffect("damage_fire_instant", true, 0, ctx -> {
             if (ctx.target instanceof Ref<?> raw) {
                 @SuppressWarnings("unchecked") Ref<EntityStore> ref = (Ref<EntityStore>) raw;
                 StatHelper.subtractHealth(ref, (float) (10.0 * ctx.power));
             }
-        }));
+        }).withAsset("DamageFireInstant"));
 
         core.registerEffect(new RuneEffect("invisibility", "Invisibility", 1200)
             .withAction(ctx -> {
@@ -339,10 +332,44 @@ public class CoreEffects {
             })
         );
 
-        core.registerEffect(new RuneEffect("water_breathing", "Water_Breathing", 1200));
-        core.registerEffect(new RuneEffect("fire_resistance", "Fire_Resistance", 1200));
-        core.registerEffect(new RuneEffect("resistance", "Resistance", 1200));
-        core.registerEffect(new RuneEffect("strength", "Strength", 1200));
-        core.registerEffect(new RuneEffect("weakness", "Weakness", 600));
+        core.registerEffect(new RuneEffect("water_breathing", 1200)
+            .withAsset("WaterBreathing")
+            .withBuff(ctx -> {
+                String uid = ctx.source != null ? ctx.source.getUuid().toString() : ctx.target.toString();
+                return ActiveBuff.builder(uid, "water_breathing", 1200).build();
+            })
+        );
+
+        core.registerEffect(new RuneEffect("fire_resistance", 1200)
+            .withAsset("FireResistance")
+            .withBuff(ctx -> {
+                String uid = ctx.source != null ? ctx.source.getUuid().toString() : ctx.target.toString();
+                return ActiveBuff.builder(uid, "fire_resistance", 1200).build();
+            })
+        );
+
+        core.registerEffect(new RuneEffect("resistance", 1200)
+            .withAsset("Resistance")
+            .withBuff(ctx -> {
+                String uid = ctx.source != null ? ctx.source.getUuid().toString() : ctx.target.toString();
+                return ActiveBuff.builder(uid, "resistance", 1200).build();
+            })
+        );
+
+        core.registerEffect(new RuneEffect("strength", 1200)
+            .withAsset("Strength")
+            .withBuff(ctx -> {
+                String uid = ctx.source != null ? ctx.source.getUuid().toString() : ctx.target.toString();
+                return ActiveBuff.builder(uid, "strength", 1200).build();
+            })
+        );
+
+        core.registerEffect(new RuneEffect("weakness", 600)
+            .withAsset("Weakness")
+            .withBuff(ctx -> {
+                String uid = ctx.source != null ? ctx.source.getUuid().toString() : ctx.target.toString();
+                return ActiveBuff.builder(uid, "weakness", 600).build();
+            })
+        );
     }
 }

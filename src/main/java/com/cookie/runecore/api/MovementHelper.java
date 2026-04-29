@@ -20,15 +20,7 @@ public final class MovementHelper {
 
     private MovementHelper() {}
 
-    // ── Speed ─────────────────────────────────────────────────────────────────
-
-    public static void applySpeed(Ref<EntityStore> ref) {
-        EffectHelper.modifyMovement(ref, s -> s.baseSpeed += 2.75f);
-    }
-
-    public static void revertSpeed(Ref<EntityStore> ref) {
-        EffectHelper.modifyMovement(ref, s -> s.baseSpeed = Math.max(EffectHelper.DEFAULT_SPEED, s.baseSpeed - 2.75f));
-    }
+    // ── Removed Speed (handled by JSON natively) ──────────────────────────────
 
     public static void applySlowness(Ref<EntityStore> ref) {
         EffectHelper.modifyMovement(ref, s -> s.baseSpeed = Math.max(1.0f, s.baseSpeed - 2.0f));
@@ -119,16 +111,6 @@ public final class MovementHelper {
     // ── Frozen ────────────────────────────────────────────────────────────────
 
     public static void applyFrozen(Ref<EntityStore> ref) {
-        EffectHelper.modifyMovement(ref, s -> {
-            s.baseSpeed = 0.0f;
-            s.jumpForce = 0.0f;
-            s.swimJumpForce = 0.0f;
-            s.fallJumpForce = 0.0f;
-            s.autoJumpDisableJumping = true;
-            s.jumpBufferDuration = 0.0f;
-            s.jumpBufferMaxYVelocity = 0.0f;
-        });
-
         Store<EntityStore> store = ref.getStore();
         if (store == null) return;
 
@@ -144,7 +126,6 @@ public final class MovementHelper {
             }
         }
 
-        clearMovementStates(store, ref);
         EffectHelper.updateHud(ref, hud -> hud.setFrozen(true));
 
         PlayerRef pr = (PlayerRef) store.getComponent(ref, PlayerRef.getComponentType());
@@ -152,25 +133,11 @@ public final class MovementHelper {
     }
 
     public static void revertFrozen(Ref<EntityStore> ref) {
-        EffectHelper.modifyMovement(ref, s -> {
-            s.baseSpeed = EffectHelper.DEFAULT_SPEED;
-            s.jumpForce = EffectHelper.DEFAULT_JUMP_FORCE;
-            s.swimJumpForce = EffectHelper.DEFAULT_JUMP_FORCE;
-            s.fallJumpForce = EffectHelper.DEFAULT_JUMP_FORCE;
-            s.autoJumpDisableJumping = false;
-            s.jumpBufferDuration = 0.5f;
-        });
-
         Store<EntityStore> store = ref.getStore();
         if (store == null) return;
 
         PlayerDataComponent data = store.getComponent(ref, PlayerDataComponent.TYPE);
         if (data != null) data.setFrozen(false);
-
-        MovementStatesComponent msc = store.getComponent(ref, MovementStatesComponent.getComponentType());
-        if (msc != null && msc.getMovementStates() != null) {
-            msc.getMovementStates().idle = false;
-        }
 
         EffectHelper.updateHud(ref, hud -> hud.setFrozen(false));
 
