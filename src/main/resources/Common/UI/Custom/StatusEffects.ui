@@ -4,6 +4,10 @@ Group #StatusEffectsContainer {
   Group #Effect1 {
     Visible: false;
     Anchor: (Width: 70, Height: 85, Top: 0, Left: 0);
+    Group #Frame {
+      Anchor: (Width: 64, Height: 64, Top: 0, Left: 3);
+      Background: (TexturePath: "StatusEffects/Frame.png");
+    }
     Group #BleedingIcon {
       Visible: false;
       Anchor: (Width: 64, Height: 64, Top: 0, Left: 3);
@@ -142,6 +146,10 @@ Group #StatusEffectsContainer {
   Group #Effect2 {
     Visible: false;
     Anchor: (Width: 70, Height: 85, Top: 95, Left: 0);
+    Group #Frame {
+      Anchor: (Width: 64, Height: 64, Top: 0, Left: 3);
+      Background: (TexturePath: "StatusEffects/Frame.png");
+    }
     Group #BleedingIcon {
       Visible: false;
       Anchor: (Width: 64, Height: 64, Top: 0, Left: 3);
@@ -280,6 +288,10 @@ Group #StatusEffectsContainer {
   Group #Effect3 {
     Visible: false;
     Anchor: (Width: 70, Height: 85, Top: 190, Left: 0);
+    Group #Frame {
+      Anchor: (Width: 64, Height: 64, Top: 0, Left: 3);
+      Background: (TexturePath: "StatusEffects/Frame.png");
+    }
     Group #BleedingIcon {
       Visible: false;
       Anchor: (Width: 64, Height: 64, Top: 0, Left: 3);
@@ -418,6 +430,10 @@ Group #StatusEffectsContainer {
   Group #Effect4 {
     Visible: false;
     Anchor: (Width: 70, Height: 85, Top: 285, Left: 0);
+    Group #Frame {
+      Anchor: (Width: 64, Height: 64, Top: 0, Left: 3);
+      Background: (TexturePath: "StatusEffects/Frame.png");
+    }
     Group #BleedingIcon {
       Visible: false;
       Anchor: (Width: 64, Height: 64, Top: 0, Left: 3);
@@ -556,6 +572,10 @@ Group #StatusEffectsContainer {
   Group #Effect5 {
     Visible: false;
     Anchor: (Width: 70, Height: 85, Top: 380, Left: 0);
+    Group #Frame {
+      Anchor: (Width: 64, Height: 64, Top: 0, Left: 3);
+      Background: (TexturePath: "StatusEffects/Frame.png");
+    }
     Group #BleedingIcon {
       Visible: false;
       Anchor: (Width: 64, Height: 64, Top: 0, Left: 3);
@@ -694,6 +714,10 @@ Group #StatusEffectsContainer {
   Group #Effect6 {
     Visible: false;
     Anchor: (Width: 70, Height: 85, Top: 475, Left: 0);
+    Group #Frame {
+      Anchor: (Width: 64, Height: 64, Top: 0, Left: 3);
+      Background: (TexturePath: "StatusEffects/Frame.png");
+    }
     Group #BleedingIcon {
       Visible: false;
       Anchor: (Width: 64, Height: 64, Top: 0, Left: 3);
@@ -832,6 +856,10 @@ Group #StatusEffectsContainer {
   Group #Effect7 {
     Visible: false;
     Anchor: (Width: 70, Height: 85, Top: 570, Left: 0);
+    Group #Frame {
+      Anchor: (Width: 64, Height: 64, Top: 0, Left: 3);
+      Background: (TexturePath: "StatusEffects/Frame.png");
+    }
     Group #BleedingIcon {
       Visible: false;
       Anchor: (Width: 64, Height: 64, Top: 0, Left: 3);
@@ -970,6 +998,10 @@ Group #StatusEffectsContainer {
   Group #Effect8 {
     Visible: false;
     Anchor: (Width: 70, Height: 85, Top: 665, Left: 0);
+    Group #Frame {
+      Anchor: (Width: 64, Height: 64, Top: 0, Left: 3);
+      Background: (TexturePath: "StatusEffects/Frame.png");
+    }
     Group #BleedingIcon {
       Visible: false;
       Anchor: (Width: 64, Height: 64, Top: 0, Left: 3);
