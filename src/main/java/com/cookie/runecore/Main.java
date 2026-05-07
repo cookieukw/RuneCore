@@ -8,6 +8,7 @@ import com.cookie.runecore.systems.CastListener;
 import com.cookie.runecore.systems.EffectTimerListener;
 import com.cookie.runecore.systems.FrozenInteractionListener;
 import com.cookie.runecore.systems.MobDropSystem;
+import com.cookie.runecore.systems.PotionHitSystem;
 import com.cookie.runecore.systems.ui.RuneCoreHudManager;
 import com.cookie.runemagic.MagicListener;
 import com.cookie.runemagic.SwitchSpellCommand;
@@ -42,6 +43,7 @@ public class Main extends JavaPlugin {
                 PlayerDataComponent.CODEC);
 
         this.getEntityStoreRegistry().registerSystem(new MobDropSystem());
+        this.getEntityStoreRegistry().registerSystem(new PotionHitSystem(this.getEventRegistry()));
         new RuneCoreHudManager(this.getEventRegistry());
         new CastListener(this.getEventRegistry());
         new EffectTimerListener(this.getEventRegistry());
