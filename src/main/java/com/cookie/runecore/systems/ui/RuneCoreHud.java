@@ -200,17 +200,17 @@ public class RuneCoreHud extends CustomUIHud {
         if (id.equalsIgnoreCase("night_vision"))
             return "NightVision";
         if (id.equalsIgnoreCase("jump_boost"))
-            return "Jump_Boost";
+            return "JumpBoost";
         if (id.equalsIgnoreCase("high_jump"))
-            return "High_Jump";
+            return "HighJump";
         if (id.equalsIgnoreCase("slow_falling"))
-            return "Slow_Falling";
+            return "SlowFalling";
         if (id.equalsIgnoreCase("mining_fatigue"))
-            return "Mining_Fatigue";
+            return "MiningFatigue";
         if (id.equalsIgnoreCase("water_breathing"))
-            return "Water_Breathing";
+            return "WaterBreathing";
         if (id.equalsIgnoreCase("fire_resistance"))
-            return "Fire_Resistance";
+            return "FireResistance";
 
         // Default: Capitalize first letter (e.g. speed -> Speed)
         if (id.length() > 0) {

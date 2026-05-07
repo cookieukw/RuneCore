@@ -34,7 +34,7 @@ Group #StatusEffectsContainer {
       Anchor: (Width: 64, Height: 64, Top: 0, Left: 3);
       Background: (TexturePath: "StatusEffects/Electrified.png");
     }
-    Group #Fire_ResistanceIcon {
+    Group #FireResistanceIcon {
       Visible: false;
       Anchor: (Width: 64, Height: 64, Top: 0, Left: 3);
       Background: (TexturePath: "StatusEffects/Fire_Resistance.png");
@@ -54,7 +54,7 @@ Group #StatusEffectsContainer {
       Anchor: (Width: 64, Height: 64, Top: 0, Left: 3);
       Background: (TexturePath: "StatusEffects/Haste.png");
     }
-    Group #High_JumpIcon {
+    Group #HighJumpIcon {
       Visible: false;
       Anchor: (Width: 64, Height: 64, Top: 0, Left: 3);
       Background: (TexturePath: "StatusEffects/High_Jump.png");
@@ -64,7 +64,7 @@ Group #StatusEffectsContainer {
       Anchor: (Width: 64, Height: 64, Top: 0, Left: 3);
       Background: (TexturePath: "StatusEffects/Invisibility.png");
     }
-    Group #Jump_BoostIcon {
+    Group #JumpBoostIcon {
       Visible: false;
       Anchor: (Width: 64, Height: 64, Top: 0, Left: 3);
       Background: (TexturePath: "StatusEffects/Jump_Boost.png");
@@ -74,7 +74,7 @@ Group #StatusEffectsContainer {
       Anchor: (Width: 64, Height: 64, Top: 0, Left: 3);
       Background: (TexturePath: "StatusEffects/Levitation.png");
     }
-    Group #Mining_FatigueIcon {
+    Group #MiningFatigueIcon {
       Visible: false;
       Anchor: (Width: 64, Height: 64, Top: 0, Left: 3);
       Background: (TexturePath: "StatusEffects/Mining_Fatigue.png");
@@ -104,7 +104,7 @@ Group #StatusEffectsContainer {
       Anchor: (Width: 64, Height: 64, Top: 0, Left: 3);
       Background: (TexturePath: "StatusEffects/Resistance.png");
     }
-    Group #Slow_FallingIcon {
+    Group #SlowFallingIcon {
       Visible: false;
       Anchor: (Width: 64, Height: 64, Top: 0, Left: 3);
       Background: (TexturePath: "StatusEffects/Slow_Falling.png");
@@ -124,7 +124,7 @@ Group #StatusEffectsContainer {
       Anchor: (Width: 64, Height: 64, Top: 0, Left: 3);
       Background: (TexturePath: "StatusEffects/Strength.png");
     }
-    Group #Water_BreathingIcon {
+    Group #WaterBreathingIcon {
       Visible: false;
       Anchor: (Width: 64, Height: 64, Top: 0, Left: 3);
       Background: (TexturePath: "StatusEffects/Water_Breathing.png");
@@ -172,7 +172,7 @@ Group #StatusEffectsContainer {
       Anchor: (Width: 64, Height: 64, Top: 0, Left: 3);
       Background: (TexturePath: "StatusEffects/Electrified.png");
     }
-    Group #Fire_ResistanceIcon {
+    Group #FireResistanceIcon {
       Visible: false;
       Anchor: (Width: 64, Height: 64, Top: 0, Left: 3);
       Background: (TexturePath: "StatusEffects/Fire_Resistance.png");
@@ -192,7 +192,7 @@ Group #StatusEffectsContainer {
       Anchor: (Width: 64, Height: 64, Top: 0, Left: 3);
       Background: (TexturePath: "StatusEffects/Haste.png");
     }
-    Group #High_JumpIcon {
+    Group #HighJumpIcon {
       Visible: false;
       Anchor: (Width: 64, Height: 64, Top: 0, Left: 3);
       Background: (TexturePath: "StatusEffects/High_Jump.png");
@@ -202,7 +202,7 @@ Group #StatusEffectsContainer {
       Anchor: (Width: 64, Height: 64, Top: 0, Left: 3);
       Background: (TexturePath: "StatusEffects/Invisibility.png");
     }
-    Group #Jump_BoostIcon {
+    Group #JumpBoostIcon {
       Visible: false;
       Anchor: (Width: 64, Height: 64, Top: 0, Left: 3);
       Background: (TexturePath: "StatusEffects/Jump_Boost.png");
@@ -212,7 +212,7 @@ Group #StatusEffectsContainer {
       Anchor: (Width: 64, Height: 64, Top: 0, Left: 3);
       Background: (TexturePath: "StatusEffects/Levitation.png");
     }
-    Group #Mining_FatigueIcon {
+    Group #MiningFatigueIcon {
       Visible: false;
       Anchor: (Width: 64, Height: 64, Top: 0, Left: 3);
       Background: (TexturePath: "StatusEffects/Mining_Fatigue.png");
@@ -242,7 +242,7 @@ Group #StatusEffectsContainer {
       Anchor: (Width: 64, Height: 64, Top: 0, Left: 3);
       Background: (TexturePath: "StatusEffects/Resistance.png");
     }
-    Group #Slow_FallingIcon {
+    Group #SlowFallingIcon {
       Visible: false;
       Anchor: (Width: 64, Height: 64, Top: 0, Left: 3);
       Background: (TexturePath: "StatusEffects/Slow_Falling.png");
@@ -262,7 +262,7 @@ Group #StatusEffectsContainer {
       Anchor: (Width: 64, Height: 64, Top: 0, Left: 3);
       Background: (TexturePath: "StatusEffects/Strength.png");
     }
-    Group #Water_BreathingIcon {
+    Group #WaterBreathingIcon {
       Visible: false;
       Anchor: (Width: 64, Height: 64, Top: 0, Left: 3);
       Background: (TexturePath: "StatusEffects/Water_Breathing.png");
@@ -310,7 +310,7 @@ Group #StatusEffectsContainer {
       Anchor: (Width: 64, Height: 64, Top: 0, Left: 3);
       Background: (TexturePath: "StatusEffects/Electrified.png");
     }
-    Group #Fire_ResistanceIcon {
+    Group #FireResistanceIcon {
       Visible: false;
       Anchor: (Width: 64, Height: 64, Top: 0, Left: 3);
       Background: (TexturePath: "StatusEffects/Fire_Resistance.png");
@@ -330,7 +330,7 @@ Group #StatusEffectsContainer {
       Anchor: (Width: 64, Height: 64, Top: 0, Left: 3);
       Background: (TexturePath: "StatusEffects/Haste.png");
     }
-    Group #High_JumpIcon {
+    Group #HighJumpIcon {
       Visible: false;
       Anchor: (Width: 64, Height: 64, Top: 0, Left: 3);
       Background: (TexturePath: "StatusEffects/High_Jump.png");
@@ -340,7 +340,7 @@ Group #StatusEffectsContainer {
       Anchor: (Width: 64, Height: 64, Top: 0, Left: 3);
       Background: (TexturePath: "StatusEffects/Invisibility.png");
     }
-    Group #Jump_BoostIcon {
+    Group #JumpBoostIcon {
       Visible: false;
       Anchor: (Width: 64, Height: 64, Top: 0, Left: 3);
       Background: (TexturePath: "StatusEffects/Jump_Boost.png");
@@ -350,7 +350,7 @@ Group #StatusEffectsContainer {
       Anchor: (Width: 64, Height: 64, Top: 0, Left: 3);
       Background: (TexturePath: "StatusEffects/Levitation.png");
     }
-    Group #Mining_FatigueIcon {
+    Group #MiningFatigueIcon {
       Visible: false;
       Anchor: (Width: 64, Height: 64, Top: 0, Left: 3);
       Background: (TexturePath: "StatusEffects/Mining_Fatigue.png");
@@ -380,7 +380,7 @@ Group #StatusEffectsContainer {
       Anchor: (Width: 64, Height: 64, Top: 0, Left: 3);
       Background: (TexturePath: "StatusEffects/Resistance.png");
     }
-    Group #Slow_FallingIcon {
+    Group #SlowFallingIcon {
       Visible: false;
       Anchor: (Width: 64, Height: 64, Top: 0, Left: 3);
       Background: (TexturePath: "StatusEffects/Slow_Falling.png");
@@ -400,7 +400,7 @@ Group #StatusEffectsContainer {
       Anchor: (Width: 64, Height: 64, Top: 0, Left: 3);
       Background: (TexturePath: "StatusEffects/Strength.png");
     }
-    Group #Water_BreathingIcon {
+    Group #WaterBreathingIcon {
       Visible: false;
       Anchor: (Width: 64, Height: 64, Top: 0, Left: 3);
       Background: (TexturePath: "StatusEffects/Water_Breathing.png");
@@ -448,7 +448,7 @@ Group #StatusEffectsContainer {
       Anchor: (Width: 64, Height: 64, Top: 0, Left: 3);
       Background: (TexturePath: "StatusEffects/Electrified.png");
     }
-    Group #Fire_ResistanceIcon {
+    Group #FireResistanceIcon {
       Visible: false;
       Anchor: (Width: 64, Height: 64, Top: 0, Left: 3);
       Background: (TexturePath: "StatusEffects/Fire_Resistance.png");
@@ -468,7 +468,7 @@ Group #StatusEffectsContainer {
       Anchor: (Width: 64, Height: 64, Top: 0, Left: 3);
       Background: (TexturePath: "StatusEffects/Haste.png");
     }
-    Group #High_JumpIcon {
+    Group #HighJumpIcon {
       Visible: false;
       Anchor: (Width: 64, Height: 64, Top: 0, Left: 3);
       Background: (TexturePath: "StatusEffects/High_Jump.png");
@@ -478,7 +478,7 @@ Group #StatusEffectsContainer {
       Anchor: (Width: 64, Height: 64, Top: 0, Left: 3);
       Background: (TexturePath: "StatusEffects/Invisibility.png");
     }
-    Group #Jump_BoostIcon {
+    Group #JumpBoostIcon {
       Visible: false;
       Anchor: (Width: 64, Height: 64, Top: 0, Left: 3);
       Background: (TexturePath: "StatusEffects/Jump_Boost.png");
@@ -488,7 +488,7 @@ Group #StatusEffectsContainer {
       Anchor: (Width: 64, Height: 64, Top: 0, Left: 3);
       Background: (TexturePath: "StatusEffects/Levitation.png");
     }
-    Group #Mining_FatigueIcon {
+    Group #MiningFatigueIcon {
       Visible: false;
       Anchor: (Width: 64, Height: 64, Top: 0, Left: 3);
       Background: (TexturePath: "StatusEffects/Mining_Fatigue.png");
@@ -518,7 +518,7 @@ Group #StatusEffectsContainer {
       Anchor: (Width: 64, Height: 64, Top: 0, Left: 3);
       Background: (TexturePath: "StatusEffects/Resistance.png");
     }
-    Group #Slow_FallingIcon {
+    Group #SlowFallingIcon {
       Visible: false;
       Anchor: (Width: 64, Height: 64, Top: 0, Left: 3);
       Background: (TexturePath: "StatusEffects/Slow_Falling.png");
@@ -538,7 +538,7 @@ Group #StatusEffectsContainer {
       Anchor: (Width: 64, Height: 64, Top: 0, Left: 3);
       Background: (TexturePath: "StatusEffects/Strength.png");
     }
-    Group #Water_BreathingIcon {
+    Group #WaterBreathingIcon {
       Visible: false;
       Anchor: (Width: 64, Height: 64, Top: 0, Left: 3);
       Background: (TexturePath: "StatusEffects/Water_Breathing.png");
@@ -586,7 +586,7 @@ Group #StatusEffectsContainer {
       Anchor: (Width: 64, Height: 64, Top: 0, Left: 3);
       Background: (TexturePath: "StatusEffects/Electrified.png");
     }
-    Group #Fire_ResistanceIcon {
+    Group #FireResistanceIcon {
       Visible: false;
       Anchor: (Width: 64, Height: 64, Top: 0, Left: 3);
       Background: (TexturePath: "StatusEffects/Fire_Resistance.png");
@@ -606,7 +606,7 @@ Group #StatusEffectsContainer {
       Anchor: (Width: 64, Height: 64, Top: 0, Left: 3);
       Background: (TexturePath: "StatusEffects/Haste.png");
     }
-    Group #High_JumpIcon {
+    Group #HighJumpIcon {
       Visible: false;
       Anchor: (Width: 64, Height: 64, Top: 0, Left: 3);
       Background: (TexturePath: "StatusEffects/High_Jump.png");
@@ -616,7 +616,7 @@ Group #StatusEffectsContainer {
       Anchor: (Width: 64, Height: 64, Top: 0, Left: 3);
       Background: (TexturePath: "StatusEffects/Invisibility.png");
     }
-    Group #Jump_BoostIcon {
+    Group #JumpBoostIcon {
       Visible: false;
       Anchor: (Width: 64, Height: 64, Top: 0, Left: 3);
       Background: (TexturePath: "StatusEffects/Jump_Boost.png");
@@ -626,7 +626,7 @@ Group #StatusEffectsContainer {
       Anchor: (Width: 64, Height: 64, Top: 0, Left: 3);
       Background: (TexturePath: "StatusEffects/Levitation.png");
     }
-    Group #Mining_FatigueIcon {
+    Group #MiningFatigueIcon {
       Visible: false;
       Anchor: (Width: 64, Height: 64, Top: 0, Left: 3);
       Background: (TexturePath: "StatusEffects/Mining_Fatigue.png");
@@ -656,7 +656,7 @@ Group #StatusEffectsContainer {
       Anchor: (Width: 64, Height: 64, Top: 0, Left: 3);
       Background: (TexturePath: "StatusEffects/Resistance.png");
     }
-    Group #Slow_FallingIcon {
+    Group #SlowFallingIcon {
       Visible: false;
       Anchor: (Width: 64, Height: 64, Top: 0, Left: 3);
       Background: (TexturePath: "StatusEffects/Slow_Falling.png");
@@ -676,7 +676,7 @@ Group #StatusEffectsContainer {
       Anchor: (Width: 64, Height: 64, Top: 0, Left: 3);
       Background: (TexturePath: "StatusEffects/Strength.png");
     }
-    Group #Water_BreathingIcon {
+    Group #WaterBreathingIcon {
       Visible: false;
       Anchor: (Width: 64, Height: 64, Top: 0, Left: 3);
       Background: (TexturePath: "StatusEffects/Water_Breathing.png");
@@ -724,7 +724,7 @@ Group #StatusEffectsContainer {
       Anchor: (Width: 64, Height: 64, Top: 0, Left: 3);
       Background: (TexturePath: "StatusEffects/Electrified.png");
     }
-    Group #Fire_ResistanceIcon {
+    Group #FireResistanceIcon {
       Visible: false;
       Anchor: (Width: 64, Height: 64, Top: 0, Left: 3);
       Background: (TexturePath: "StatusEffects/Fire_Resistance.png");
@@ -744,7 +744,7 @@ Group #StatusEffectsContainer {
       Anchor: (Width: 64, Height: 64, Top: 0, Left: 3);
       Background: (TexturePath: "StatusEffects/Haste.png");
     }
-    Group #High_JumpIcon {
+    Group #HighJumpIcon {
       Visible: false;
       Anchor: (Width: 64, Height: 64, Top: 0, Left: 3);
       Background: (TexturePath: "StatusEffects/High_Jump.png");
@@ -754,7 +754,7 @@ Group #StatusEffectsContainer {
       Anchor: (Width: 64, Height: 64, Top: 0, Left: 3);
       Background: (TexturePath: "StatusEffects/Invisibility.png");
     }
-    Group #Jump_BoostIcon {
+    Group #JumpBoostIcon {
       Visible: false;
       Anchor: (Width: 64, Height: 64, Top: 0, Left: 3);
       Background: (TexturePath: "StatusEffects/Jump_Boost.png");
@@ -764,7 +764,7 @@ Group #StatusEffectsContainer {
       Anchor: (Width: 64, Height: 64, Top: 0, Left: 3);
       Background: (TexturePath: "StatusEffects/Levitation.png");
     }
-    Group #Mining_FatigueIcon {
+    Group #MiningFatigueIcon {
       Visible: false;
       Anchor: (Width: 64, Height: 64, Top: 0, Left: 3);
       Background: (TexturePath: "StatusEffects/Mining_Fatigue.png");
@@ -794,7 +794,7 @@ Group #StatusEffectsContainer {
       Anchor: (Width: 64, Height: 64, Top: 0, Left: 3);
       Background: (TexturePath: "StatusEffects/Resistance.png");
     }
-    Group #Slow_FallingIcon {
+    Group #SlowFallingIcon {
       Visible: false;
       Anchor: (Width: 64, Height: 64, Top: 0, Left: 3);
       Background: (TexturePath: "StatusEffects/Slow_Falling.png");
@@ -814,7 +814,7 @@ Group #StatusEffectsContainer {
       Anchor: (Width: 64, Height: 64, Top: 0, Left: 3);
       Background: (TexturePath: "StatusEffects/Strength.png");
     }
-    Group #Water_BreathingIcon {
+    Group #WaterBreathingIcon {
       Visible: false;
       Anchor: (Width: 64, Height: 64, Top: 0, Left: 3);
       Background: (TexturePath: "StatusEffects/Water_Breathing.png");
@@ -862,7 +862,7 @@ Group #StatusEffectsContainer {
       Anchor: (Width: 64, Height: 64, Top: 0, Left: 3);
       Background: (TexturePath: "StatusEffects/Electrified.png");
     }
-    Group #Fire_ResistanceIcon {
+    Group #FireResistanceIcon {
       Visible: false;
       Anchor: (Width: 64, Height: 64, Top: 0, Left: 3);
       Background: (TexturePath: "StatusEffects/Fire_Resistance.png");
@@ -882,7 +882,7 @@ Group #StatusEffectsContainer {
       Anchor: (Width: 64, Height: 64, Top: 0, Left: 3);
       Background: (TexturePath: "StatusEffects/Haste.png");
     }
-    Group #High_JumpIcon {
+    Group #HighJumpIcon {
       Visible: false;
       Anchor: (Width: 64, Height: 64, Top: 0, Left: 3);
       Background: (TexturePath: "StatusEffects/High_Jump.png");
@@ -892,7 +892,7 @@ Group #StatusEffectsContainer {
       Anchor: (Width: 64, Height: 64, Top: 0, Left: 3);
       Background: (TexturePath: "StatusEffects/Invisibility.png");
     }
-    Group #Jump_BoostIcon {
+    Group #JumpBoostIcon {
       Visible: false;
       Anchor: (Width: 64, Height: 64, Top: 0, Left: 3);
       Background: (TexturePath: "StatusEffects/Jump_Boost.png");
@@ -902,7 +902,7 @@ Group #StatusEffectsContainer {
       Anchor: (Width: 64, Height: 64, Top: 0, Left: 3);
       Background: (TexturePath: "StatusEffects/Levitation.png");
     }
-    Group #Mining_FatigueIcon {
+    Group #MiningFatigueIcon {
       Visible: false;
       Anchor: (Width: 64, Height: 64, Top: 0, Left: 3);
       Background: (TexturePath: "StatusEffects/Mining_Fatigue.png");
@@ -932,7 +932,7 @@ Group #StatusEffectsContainer {
       Anchor: (Width: 64, Height: 64, Top: 0, Left: 3);
       Background: (TexturePath: "StatusEffects/Resistance.png");
     }
-    Group #Slow_FallingIcon {
+    Group #SlowFallingIcon {
       Visible: false;
       Anchor: (Width: 64, Height: 64, Top: 0, Left: 3);
       Background: (TexturePath: "StatusEffects/Slow_Falling.png");
@@ -952,7 +952,7 @@ Group #StatusEffectsContainer {
       Anchor: (Width: 64, Height: 64, Top: 0, Left: 3);
       Background: (TexturePath: "StatusEffects/Strength.png");
     }
-    Group #Water_BreathingIcon {
+    Group #WaterBreathingIcon {
       Visible: false;
       Anchor: (Width: 64, Height: 64, Top: 0, Left: 3);
       Background: (TexturePath: "StatusEffects/Water_Breathing.png");
@@ -1000,7 +1000,7 @@ Group #StatusEffectsContainer {
       Anchor: (Width: 64, Height: 64, Top: 0, Left: 3);
       Background: (TexturePath: "StatusEffects/Electrified.png");
     }
-    Group #Fire_ResistanceIcon {
+    Group #FireResistanceIcon {
       Visible: false;
       Anchor: (Width: 64, Height: 64, Top: 0, Left: 3);
       Background: (TexturePath: "StatusEffects/Fire_Resistance.png");
@@ -1020,7 +1020,7 @@ Group #StatusEffectsContainer {
       Anchor: (Width: 64, Height: 64, Top: 0, Left: 3);
       Background: (TexturePath: "StatusEffects/Haste.png");
     }
-    Group #High_JumpIcon {
+    Group #HighJumpIcon {
       Visible: false;
       Anchor: (Width: 64, Height: 64, Top: 0, Left: 3);
       Background: (TexturePath: "StatusEffects/High_Jump.png");
@@ -1030,7 +1030,7 @@ Group #StatusEffectsContainer {
       Anchor: (Width: 64, Height: 64, Top: 0, Left: 3);
       Background: (TexturePath: "StatusEffects/Invisibility.png");
     }
-    Group #Jump_BoostIcon {
+    Group #JumpBoostIcon {
       Visible: false;
       Anchor: (Width: 64, Height: 64, Top: 0, Left: 3);
       Background: (TexturePath: "StatusEffects/Jump_Boost.png");
@@ -1040,7 +1040,7 @@ Group #StatusEffectsContainer {
       Anchor: (Width: 64, Height: 64, Top: 0, Left: 3);
       Background: (TexturePath: "StatusEffects/Levitation.png");
     }
-    Group #Mining_FatigueIcon {
+    Group #MiningFatigueIcon {
       Visible: false;
       Anchor: (Width: 64, Height: 64, Top: 0, Left: 3);
       Background: (TexturePath: "StatusEffects/Mining_Fatigue.png");
@@ -1070,7 +1070,7 @@ Group #StatusEffectsContainer {
       Anchor: (Width: 64, Height: 64, Top: 0, Left: 3);
       Background: (TexturePath: "StatusEffects/Resistance.png");
     }
-    Group #Slow_FallingIcon {
+    Group #SlowFallingIcon {
       Visible: false;
       Anchor: (Width: 64, Height: 64, Top: 0, Left: 3);
       Background: (TexturePath: "StatusEffects/Slow_Falling.png");
@@ -1090,7 +1090,7 @@ Group #StatusEffectsContainer {
       Anchor: (Width: 64, Height: 64, Top: 0, Left: 3);
       Background: (TexturePath: "StatusEffects/Strength.png");
     }
-    Group #Water_BreathingIcon {
+    Group #WaterBreathingIcon {
       Visible: false;
       Anchor: (Width: 64, Height: 64, Top: 0, Left: 3);
       Background: (TexturePath: "StatusEffects/Water_Breathing.png");
