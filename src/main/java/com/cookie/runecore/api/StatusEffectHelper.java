@@ -44,7 +44,7 @@ public final class StatusEffectHelper {
         for (int i = 0; i < 2; i++) {
             double height = 0.8 + (Math.random() * 0.7); // Height between 0.8m and 1.5m (chest area)
             double spread = (Math.random() - 0.5) * 0.3; // Small horizontal spread
-            EffectHelper.spawnParticleEffect(ref, "runecore:Blood_Drop", spread, height, spread);
+            // EffectHelper.spawnParticleEffect(ref, "runecore:Blood_Drop", spread, height, spread);
         }
     }
 

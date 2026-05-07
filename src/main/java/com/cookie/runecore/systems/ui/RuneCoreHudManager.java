@@ -14,11 +14,14 @@ import com.hypixel.hytale.server.core.modules.entitystats.EntityStatMap;
 import com.hypixel.hytale.server.core.modules.entitystats.EntityStatValue;
 import com.hypixel.hytale.server.core.modules.entitystats.asset.DefaultEntityStatTypes;
 
+import java.util.List;
 import java.util.Map;
 import java.util.Timer;
 import java.util.TimerTask;
 import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
+import com.cookie.runecore.api.ActiveBuff;
+import com.cookie.runecore.systems.EffectTickSystem;
 
 public class RuneCoreHudManager {
 
@@ -61,7 +64,8 @@ public class RuneCoreHudManager {
         if (player == null) return;
 
         // Hide original Hytale HUDs (Keep Health visible since we only implement Mana for now)
-        player.getHudManager().hideHudComponents(playerRef, HudComponent.Mana);
+        System.out.println("[RuneCore-HUD] Hiding vanilla components for " + playerRef.getUuid());
+        player.getHudManager().hideHudComponents(playerRef, HudComponent.Mana, HudComponent.StatusIcons);
 
         RuneCoreHud hud = new RuneCoreHud(playerRef);
         activeHuds.put(playerRef.getUuid(), hud);
@@ -100,6 +104,10 @@ public class RuneCoreHudManager {
                 if (manaVal != null) {
                     hud.setMana(manaVal.get(), 100f);
                 }
+
+                // Sync Buffs
+                List<ActiveBuff> buffs = EffectTickSystem.getInstance().getBuffsForPlayer(playerRef.getUuid().toString());
+                hud.setBuffs(buffs);
             });
         }
     }

@@ -1,0 +1,1108 @@
+Group #StatusEffectsContainer {
+  Anchor: (Right: 30, Top: 120, Width: 80, Height: 800);
+
+  Group #Effect1 {
+    Visible: false;
+    Anchor: (Width: 70, Height: 85, Top: 0, Left: 0);
+    Group #BleedingIcon {
+      Visible: false;
+      Anchor: (Width: 64, Height: 64, Top: 0, Left: 3);
+      Background: (TexturePath: "StatusEffects/Bleeding.png");
+    }
+    Group #BlindnessIcon {
+      Visible: false;
+      Anchor: (Width: 64, Height: 64, Top: 0, Left: 3);
+      Background: (TexturePath: "StatusEffects/Blindness.png");
+    }
+    Group #BurnIcon {
+      Visible: false;
+      Anchor: (Width: 64, Height: 64, Top: 0, Left: 3);
+      Background: (TexturePath: "StatusEffects/Burn.png");
+    }
+    Group #DarknessIcon {
+      Visible: false;
+      Anchor: (Width: 64, Height: 64, Top: 0, Left: 3);
+      Background: (TexturePath: "StatusEffects/Darkness.png");
+    }
+    Group #DecayIcon {
+      Visible: false;
+      Anchor: (Width: 64, Height: 64, Top: 0, Left: 3);
+      Background: (TexturePath: "StatusEffects/Decay.png");
+    }
+    Group #ElectrifiedIcon {
+      Visible: false;
+      Anchor: (Width: 64, Height: 64, Top: 0, Left: 3);
+      Background: (TexturePath: "StatusEffects/Electrified.png");
+    }
+    Group #Fire_ResistanceIcon {
+      Visible: false;
+      Anchor: (Width: 64, Height: 64, Top: 0, Left: 3);
+      Background: (TexturePath: "StatusEffects/Fire_Resistance.png");
+    }
+    Group #FrozenIcon {
+      Visible: false;
+      Anchor: (Width: 64, Height: 64, Top: 0, Left: 3);
+      Background: (TexturePath: "StatusEffects/Frozen.png");
+    }
+    Group #GlowingIcon {
+      Visible: false;
+      Anchor: (Width: 64, Height: 64, Top: 0, Left: 3);
+      Background: (TexturePath: "StatusEffects/Glowing.png");
+    }
+    Group #HasteIcon {
+      Visible: false;
+      Anchor: (Width: 64, Height: 64, Top: 0, Left: 3);
+      Background: (TexturePath: "StatusEffects/Haste.png");
+    }
+    Group #High_JumpIcon {
+      Visible: false;
+      Anchor: (Width: 64, Height: 64, Top: 0, Left: 3);
+      Background: (TexturePath: "StatusEffects/High_Jump.png");
+    }
+    Group #InvisibilityIcon {
+      Visible: false;
+      Anchor: (Width: 64, Height: 64, Top: 0, Left: 3);
+      Background: (TexturePath: "StatusEffects/Invisibility.png");
+    }
+    Group #Jump_BoostIcon {
+      Visible: false;
+      Anchor: (Width: 64, Height: 64, Top: 0, Left: 3);
+      Background: (TexturePath: "StatusEffects/Jump_Boost.png");
+    }
+    Group #LevitationIcon {
+      Visible: false;
+      Anchor: (Width: 64, Height: 64, Top: 0, Left: 3);
+      Background: (TexturePath: "StatusEffects/Levitation.png");
+    }
+    Group #Mining_FatigueIcon {
+      Visible: false;
+      Anchor: (Width: 64, Height: 64, Top: 0, Left: 3);
+      Background: (TexturePath: "StatusEffects/Mining_Fatigue.png");
+    }
+    Group #NauseaIcon {
+      Visible: false;
+      Anchor: (Width: 64, Height: 64, Top: 0, Left: 3);
+      Background: (TexturePath: "StatusEffects/Nausea.png");
+    }
+    Group #NightVisionIcon {
+      Visible: false;
+      Anchor: (Width: 64, Height: 64, Top: 0, Left: 3);
+      Background: (TexturePath: "StatusEffects/NightVision.png");
+    }
+    Group #PoisonIcon {
+      Visible: false;
+      Anchor: (Width: 64, Height: 64, Top: 0, Left: 3);
+      Background: (TexturePath: "StatusEffects/Poison.png");
+    }
+    Group #RegenerationIcon {
+      Visible: false;
+      Anchor: (Width: 64, Height: 64, Top: 0, Left: 3);
+      Background: (TexturePath: "StatusEffects/Regeneration.png");
+    }
+    Group #ResistanceIcon {
+      Visible: false;
+      Anchor: (Width: 64, Height: 64, Top: 0, Left: 3);
+      Background: (TexturePath: "StatusEffects/Resistance.png");
+    }
+    Group #Slow_FallingIcon {
+      Visible: false;
+      Anchor: (Width: 64, Height: 64, Top: 0, Left: 3);
+      Background: (TexturePath: "StatusEffects/Slow_Falling.png");
+    }
+    Group #SlownessIcon {
+      Visible: false;
+      Anchor: (Width: 64, Height: 64, Top: 0, Left: 3);
+      Background: (TexturePath: "StatusEffects/Slowness.png");
+    }
+    Group #SpeedIcon {
+      Visible: false;
+      Anchor: (Width: 64, Height: 64, Top: 0, Left: 3);
+      Background: (TexturePath: "StatusEffects/Speed.png");
+    }
+    Group #StrengthIcon {
+      Visible: false;
+      Anchor: (Width: 64, Height: 64, Top: 0, Left: 3);
+      Background: (TexturePath: "StatusEffects/Strength.png");
+    }
+    Group #Water_BreathingIcon {
+      Visible: false;
+      Anchor: (Width: 64, Height: 64, Top: 0, Left: 3);
+      Background: (TexturePath: "StatusEffects/Water_Breathing.png");
+    }
+    Group #WeaknessIcon {
+      Visible: false;
+      Anchor: (Width: 64, Height: 64, Top: 0, Left: 3);
+      Background: (TexturePath: "StatusEffects/Weakness.png");
+    }
+    Label #Time {
+      Anchor: (Bottom: 0, Left: 0, Right: 0);
+      Style: (FontSize: 14, HorizontalAlignment: Center);
+    }
+  }
+  Group #Effect2 {
+    Visible: false;
+    Anchor: (Width: 70, Height: 85, Top: 95, Left: 0);
+    Group #BleedingIcon {
+      Visible: false;
+      Anchor: (Width: 64, Height: 64, Top: 0, Left: 3);
+      Background: (TexturePath: "StatusEffects/Bleeding.png");
+    }
+    Group #BlindnessIcon {
+      Visible: false;
+      Anchor: (Width: 64, Height: 64, Top: 0, Left: 3);
+      Background: (TexturePath: "StatusEffects/Blindness.png");
+    }
+    Group #BurnIcon {
+      Visible: false;
+      Anchor: (Width: 64, Height: 64, Top: 0, Left: 3);
+      Background: (TexturePath: "StatusEffects/Burn.png");
+    }
+    Group #DarknessIcon {
+      Visible: false;
+      Anchor: (Width: 64, Height: 64, Top: 0, Left: 3);
+      Background: (TexturePath: "StatusEffects/Darkness.png");
+    }
+    Group #DecayIcon {
+      Visible: false;
+      Anchor: (Width: 64, Height: 64, Top: 0, Left: 3);
+      Background: (TexturePath: "StatusEffects/Decay.png");
+    }
+    Group #ElectrifiedIcon {
+      Visible: false;
+      Anchor: (Width: 64, Height: 64, Top: 0, Left: 3);
+      Background: (TexturePath: "StatusEffects/Electrified.png");
+    }
+    Group #Fire_ResistanceIcon {
+      Visible: false;
+      Anchor: (Width: 64, Height: 64, Top: 0, Left: 3);
+      Background: (TexturePath: "StatusEffects/Fire_Resistance.png");
+    }
+    Group #FrozenIcon {
+      Visible: false;
+      Anchor: (Width: 64, Height: 64, Top: 0, Left: 3);
+      Background: (TexturePath: "StatusEffects/Frozen.png");
+    }
+    Group #GlowingIcon {
+      Visible: false;
+      Anchor: (Width: 64, Height: 64, Top: 0, Left: 3);
+      Background: (TexturePath: "StatusEffects/Glowing.png");
+    }
+    Group #HasteIcon {
+      Visible: false;
+      Anchor: (Width: 64, Height: 64, Top: 0, Left: 3);
+      Background: (TexturePath: "StatusEffects/Haste.png");
+    }
+    Group #High_JumpIcon {
+      Visible: false;
+      Anchor: (Width: 64, Height: 64, Top: 0, Left: 3);
+      Background: (TexturePath: "StatusEffects/High_Jump.png");
+    }
+    Group #InvisibilityIcon {
+      Visible: false;
+      Anchor: (Width: 64, Height: 64, Top: 0, Left: 3);
+      Background: (TexturePath: "StatusEffects/Invisibility.png");
+    }
+    Group #Jump_BoostIcon {
+      Visible: false;
+      Anchor: (Width: 64, Height: 64, Top: 0, Left: 3);
+      Background: (TexturePath: "StatusEffects/Jump_Boost.png");
+    }
+    Group #LevitationIcon {
+      Visible: false;
+      Anchor: (Width: 64, Height: 64, Top: 0, Left: 3);
+      Background: (TexturePath: "StatusEffects/Levitation.png");
+    }
+    Group #Mining_FatigueIcon {
+      Visible: false;
+      Anchor: (Width: 64, Height: 64, Top: 0, Left: 3);
+      Background: (TexturePath: "StatusEffects/Mining_Fatigue.png");
+    }
+    Group #NauseaIcon {
+      Visible: false;
+      Anchor: (Width: 64, Height: 64, Top: 0, Left: 3);
+      Background: (TexturePath: "StatusEffects/Nausea.png");
+    }
+    Group #NightVisionIcon {
+      Visible: false;
+      Anchor: (Width: 64, Height: 64, Top: 0, Left: 3);
+      Background: (TexturePath: "StatusEffects/NightVision.png");
+    }
+    Group #PoisonIcon {
+      Visible: false;
+      Anchor: (Width: 64, Height: 64, Top: 0, Left: 3);
+      Background: (TexturePath: "StatusEffects/Poison.png");
+    }
+    Group #RegenerationIcon {
+      Visible: false;
+      Anchor: (Width: 64, Height: 64, Top: 0, Left: 3);
+      Background: (TexturePath: "StatusEffects/Regeneration.png");
+    }
+    Group #ResistanceIcon {
+      Visible: false;
+      Anchor: (Width: 64, Height: 64, Top: 0, Left: 3);
+      Background: (TexturePath: "StatusEffects/Resistance.png");
+    }
+    Group #Slow_FallingIcon {
+      Visible: false;
+      Anchor: (Width: 64, Height: 64, Top: 0, Left: 3);
+      Background: (TexturePath: "StatusEffects/Slow_Falling.png");
+    }
+    Group #SlownessIcon {
+      Visible: false;
+      Anchor: (Width: 64, Height: 64, Top: 0, Left: 3);
+      Background: (TexturePath: "StatusEffects/Slowness.png");
+    }
+    Group #SpeedIcon {
+      Visible: false;
+      Anchor: (Width: 64, Height: 64, Top: 0, Left: 3);
+      Background: (TexturePath: "StatusEffects/Speed.png");
+    }
+    Group #StrengthIcon {
+      Visible: false;
+      Anchor: (Width: 64, Height: 64, Top: 0, Left: 3);
+      Background: (TexturePath: "StatusEffects/Strength.png");
+    }
+    Group #Water_BreathingIcon {
+      Visible: false;
+      Anchor: (Width: 64, Height: 64, Top: 0, Left: 3);
+      Background: (TexturePath: "StatusEffects/Water_Breathing.png");
+    }
+    Group #WeaknessIcon {
+      Visible: false;
+      Anchor: (Width: 64, Height: 64, Top: 0, Left: 3);
+      Background: (TexturePath: "StatusEffects/Weakness.png");
+    }
+    Label #Time {
+      Anchor: (Bottom: 0, Left: 0, Right: 0);
+      Style: (FontSize: 14, HorizontalAlignment: Center);
+    }
+  }
+  Group #Effect3 {
+    Visible: false;
+    Anchor: (Width: 70, Height: 85, Top: 190, Left: 0);
+    Group #BleedingIcon {
+      Visible: false;
+      Anchor: (Width: 64, Height: 64, Top: 0, Left: 3);
+      Background: (TexturePath: "StatusEffects/Bleeding.png");
+    }
+    Group #BlindnessIcon {
+      Visible: false;
+      Anchor: (Width: 64, Height: 64, Top: 0, Left: 3);
+      Background: (TexturePath: "StatusEffects/Blindness.png");
+    }
+    Group #BurnIcon {
+      Visible: false;
+      Anchor: (Width: 64, Height: 64, Top: 0, Left: 3);
+      Background: (TexturePath: "StatusEffects/Burn.png");
+    }
+    Group #DarknessIcon {
+      Visible: false;
+      Anchor: (Width: 64, Height: 64, Top: 0, Left: 3);
+      Background: (TexturePath: "StatusEffects/Darkness.png");
+    }
+    Group #DecayIcon {
+      Visible: false;
+      Anchor: (Width: 64, Height: 64, Top: 0, Left: 3);
+      Background: (TexturePath: "StatusEffects/Decay.png");
+    }
+    Group #ElectrifiedIcon {
+      Visible: false;
+      Anchor: (Width: 64, Height: 64, Top: 0, Left: 3);
+      Background: (TexturePath: "StatusEffects/Electrified.png");
+    }
+    Group #Fire_ResistanceIcon {
+      Visible: false;
+      Anchor: (Width: 64, Height: 64, Top: 0, Left: 3);
+      Background: (TexturePath: "StatusEffects/Fire_Resistance.png");
+    }
+    Group #FrozenIcon {
+      Visible: false;
+      Anchor: (Width: 64, Height: 64, Top: 0, Left: 3);
+      Background: (TexturePath: "StatusEffects/Frozen.png");
+    }
+    Group #GlowingIcon {
+      Visible: false;
+      Anchor: (Width: 64, Height: 64, Top: 0, Left: 3);
+      Background: (TexturePath: "StatusEffects/Glowing.png");
+    }
+    Group #HasteIcon {
+      Visible: false;
+      Anchor: (Width: 64, Height: 64, Top: 0, Left: 3);
+      Background: (TexturePath: "StatusEffects/Haste.png");
+    }
+    Group #High_JumpIcon {
+      Visible: false;
+      Anchor: (Width: 64, Height: 64, Top: 0, Left: 3);
+      Background: (TexturePath: "StatusEffects/High_Jump.png");
+    }
+    Group #InvisibilityIcon {
+      Visible: false;
+      Anchor: (Width: 64, Height: 64, Top: 0, Left: 3);
+      Background: (TexturePath: "StatusEffects/Invisibility.png");
+    }
+    Group #Jump_BoostIcon {
+      Visible: false;
+      Anchor: (Width: 64, Height: 64, Top: 0, Left: 3);
+      Background: (TexturePath: "StatusEffects/Jump_Boost.png");
+    }
+    Group #LevitationIcon {
+      Visible: false;
+      Anchor: (Width: 64, Height: 64, Top: 0, Left: 3);
+      Background: (TexturePath: "StatusEffects/Levitation.png");
+    }
+    Group #Mining_FatigueIcon {
+      Visible: false;
+      Anchor: (Width: 64, Height: 64, Top: 0, Left: 3);
+      Background: (TexturePath: "StatusEffects/Mining_Fatigue.png");
+    }
+    Group #NauseaIcon {
+      Visible: false;
+      Anchor: (Width: 64, Height: 64, Top: 0, Left: 3);
+      Background: (TexturePath: "StatusEffects/Nausea.png");
+    }
+    Group #NightVisionIcon {
+      Visible: false;
+      Anchor: (Width: 64, Height: 64, Top: 0, Left: 3);
+      Background: (TexturePath: "StatusEffects/NightVision.png");
+    }
+    Group #PoisonIcon {
+      Visible: false;
+      Anchor: (Width: 64, Height: 64, Top: 0, Left: 3);
+      Background: (TexturePath: "StatusEffects/Poison.png");
+    }
+    Group #RegenerationIcon {
+      Visible: false;
+      Anchor: (Width: 64, Height: 64, Top: 0, Left: 3);
+      Background: (TexturePath: "StatusEffects/Regeneration.png");
+    }
+    Group #ResistanceIcon {
+      Visible: false;
+      Anchor: (Width: 64, Height: 64, Top: 0, Left: 3);
+      Background: (TexturePath: "StatusEffects/Resistance.png");
+    }
+    Group #Slow_FallingIcon {
+      Visible: false;
+      Anchor: (Width: 64, Height: 64, Top: 0, Left: 3);
+      Background: (TexturePath: "StatusEffects/Slow_Falling.png");
+    }
+    Group #SlownessIcon {
+      Visible: false;
+      Anchor: (Width: 64, Height: 64, Top: 0, Left: 3);
+      Background: (TexturePath: "StatusEffects/Slowness.png");
+    }
+    Group #SpeedIcon {
+      Visible: false;
+      Anchor: (Width: 64, Height: 64, Top: 0, Left: 3);
+      Background: (TexturePath: "StatusEffects/Speed.png");
+    }
+    Group #StrengthIcon {
+      Visible: false;
+      Anchor: (Width: 64, Height: 64, Top: 0, Left: 3);
+      Background: (TexturePath: "StatusEffects/Strength.png");
+    }
+    Group #Water_BreathingIcon {
+      Visible: false;
+      Anchor: (Width: 64, Height: 64, Top: 0, Left: 3);
+      Background: (TexturePath: "StatusEffects/Water_Breathing.png");
+    }
+    Group #WeaknessIcon {
+      Visible: false;
+      Anchor: (Width: 64, Height: 64, Top: 0, Left: 3);
+      Background: (TexturePath: "StatusEffects/Weakness.png");
+    }
+    Label #Time {
+      Anchor: (Bottom: 0, Left: 0, Right: 0);
+      Style: (FontSize: 14, HorizontalAlignment: Center);
+    }
+  }
+  Group #Effect4 {
+    Visible: false;
+    Anchor: (Width: 70, Height: 85, Top: 285, Left: 0);
+    Group #BleedingIcon {
+      Visible: false;
+      Anchor: (Width: 64, Height: 64, Top: 0, Left: 3);
+      Background: (TexturePath: "StatusEffects/Bleeding.png");
+    }
+    Group #BlindnessIcon {
+      Visible: false;
+      Anchor: (Width: 64, Height: 64, Top: 0, Left: 3);
+      Background: (TexturePath: "StatusEffects/Blindness.png");
+    }
+    Group #BurnIcon {
+      Visible: false;
+      Anchor: (Width: 64, Height: 64, Top: 0, Left: 3);
+      Background: (TexturePath: "StatusEffects/Burn.png");
+    }
+    Group #DarknessIcon {
+      Visible: false;
+      Anchor: (Width: 64, Height: 64, Top: 0, Left: 3);
+      Background: (TexturePath: "StatusEffects/Darkness.png");
+    }
+    Group #DecayIcon {
+      Visible: false;
+      Anchor: (Width: 64, Height: 64, Top: 0, Left: 3);
+      Background: (TexturePath: "StatusEffects/Decay.png");
+    }
+    Group #ElectrifiedIcon {
+      Visible: false;
+      Anchor: (Width: 64, Height: 64, Top: 0, Left: 3);
+      Background: (TexturePath: "StatusEffects/Electrified.png");
+    }
+    Group #Fire_ResistanceIcon {
+      Visible: false;
+      Anchor: (Width: 64, Height: 64, Top: 0, Left: 3);
+      Background: (TexturePath: "StatusEffects/Fire_Resistance.png");
+    }
+    Group #FrozenIcon {
+      Visible: false;
+      Anchor: (Width: 64, Height: 64, Top: 0, Left: 3);
+      Background: (TexturePath: "StatusEffects/Frozen.png");
+    }
+    Group #GlowingIcon {
+      Visible: false;
+      Anchor: (Width: 64, Height: 64, Top: 0, Left: 3);
+      Background: (TexturePath: "StatusEffects/Glowing.png");
+    }
+    Group #HasteIcon {
+      Visible: false;
+      Anchor: (Width: 64, Height: 64, Top: 0, Left: 3);
+      Background: (TexturePath: "StatusEffects/Haste.png");
+    }
+    Group #High_JumpIcon {
+      Visible: false;
+      Anchor: (Width: 64, Height: 64, Top: 0, Left: 3);
+      Background: (TexturePath: "StatusEffects/High_Jump.png");
+    }
+    Group #InvisibilityIcon {
+      Visible: false;
+      Anchor: (Width: 64, Height: 64, Top: 0, Left: 3);
+      Background: (TexturePath: "StatusEffects/Invisibility.png");
+    }
+    Group #Jump_BoostIcon {
+      Visible: false;
+      Anchor: (Width: 64, Height: 64, Top: 0, Left: 3);
+      Background: (TexturePath: "StatusEffects/Jump_Boost.png");
+    }
+    Group #LevitationIcon {
+      Visible: false;
+      Anchor: (Width: 64, Height: 64, Top: 0, Left: 3);
+      Background: (TexturePath: "StatusEffects/Levitation.png");
+    }
+    Group #Mining_FatigueIcon {
+      Visible: false;
+      Anchor: (Width: 64, Height: 64, Top: 0, Left: 3);
+      Background: (TexturePath: "StatusEffects/Mining_Fatigue.png");
+    }
+    Group #NauseaIcon {
+      Visible: false;
+      Anchor: (Width: 64, Height: 64, Top: 0, Left: 3);
+      Background: (TexturePath: "StatusEffects/Nausea.png");
+    }
+    Group #NightVisionIcon {
+      Visible: false;
+      Anchor: (Width: 64, Height: 64, Top: 0, Left: 3);
+      Background: (TexturePath: "StatusEffects/NightVision.png");
+    }
+    Group #PoisonIcon {
+      Visible: false;
+      Anchor: (Width: 64, Height: 64, Top: 0, Left: 3);
+      Background: (TexturePath: "StatusEffects/Poison.png");
+    }
+    Group #RegenerationIcon {
+      Visible: false;
+      Anchor: (Width: 64, Height: 64, Top: 0, Left: 3);
+      Background: (TexturePath: "StatusEffects/Regeneration.png");
+    }
+    Group #ResistanceIcon {
+      Visible: false;
+      Anchor: (Width: 64, Height: 64, Top: 0, Left: 3);
+      Background: (TexturePath: "StatusEffects/Resistance.png");
+    }
+    Group #Slow_FallingIcon {
+      Visible: false;
+      Anchor: (Width: 64, Height: 64, Top: 0, Left: 3);
+      Background: (TexturePath: "StatusEffects/Slow_Falling.png");
+    }
+    Group #SlownessIcon {
+      Visible: false;
+      Anchor: (Width: 64, Height: 64, Top: 0, Left: 3);
+      Background: (TexturePath: "StatusEffects/Slowness.png");
+    }
+    Group #SpeedIcon {
+      Visible: false;
+      Anchor: (Width: 64, Height: 64, Top: 0, Left: 3);
+      Background: (TexturePath: "StatusEffects/Speed.png");
+    }
+    Group #StrengthIcon {
+      Visible: false;
+      Anchor: (Width: 64, Height: 64, Top: 0, Left: 3);
+      Background: (TexturePath: "StatusEffects/Strength.png");
+    }
+    Group #Water_BreathingIcon {
+      Visible: false;
+      Anchor: (Width: 64, Height: 64, Top: 0, Left: 3);
+      Background: (TexturePath: "StatusEffects/Water_Breathing.png");
+    }
+    Group #WeaknessIcon {
+      Visible: false;
+      Anchor: (Width: 64, Height: 64, Top: 0, Left: 3);
+      Background: (TexturePath: "StatusEffects/Weakness.png");
+    }
+    Label #Time {
+      Anchor: (Bottom: 0, Left: 0, Right: 0);
+      Style: (FontSize: 14, HorizontalAlignment: Center);
+    }
+  }
+  Group #Effect5 {
+    Visible: false;
+    Anchor: (Width: 70, Height: 85, Top: 380, Left: 0);
+    Group #BleedingIcon {
+      Visible: false;
+      Anchor: (Width: 64, Height: 64, Top: 0, Left: 3);
+      Background: (TexturePath: "StatusEffects/Bleeding.png");
+    }
+    Group #BlindnessIcon {
+      Visible: false;
+      Anchor: (Width: 64, Height: 64, Top: 0, Left: 3);
+      Background: (TexturePath: "StatusEffects/Blindness.png");
+    }
+    Group #BurnIcon {
+      Visible: false;
+      Anchor: (Width: 64, Height: 64, Top: 0, Left: 3);
+      Background: (TexturePath: "StatusEffects/Burn.png");
+    }
+    Group #DarknessIcon {
+      Visible: false;
+      Anchor: (Width: 64, Height: 64, Top: 0, Left: 3);
+      Background: (TexturePath: "StatusEffects/Darkness.png");
+    }
+    Group #DecayIcon {
+      Visible: false;
+      Anchor: (Width: 64, Height: 64, Top: 0, Left: 3);
+      Background: (TexturePath: "StatusEffects/Decay.png");
+    }
+    Group #ElectrifiedIcon {
+      Visible: false;
+      Anchor: (Width: 64, Height: 64, Top: 0, Left: 3);
+      Background: (TexturePath: "StatusEffects/Electrified.png");
+    }
+    Group #Fire_ResistanceIcon {
+      Visible: false;
+      Anchor: (Width: 64, Height: 64, Top: 0, Left: 3);
+      Background: (TexturePath: "StatusEffects/Fire_Resistance.png");
+    }
+    Group #FrozenIcon {
+      Visible: false;
+      Anchor: (Width: 64, Height: 64, Top: 0, Left: 3);
+      Background: (TexturePath: "StatusEffects/Frozen.png");
+    }
+    Group #GlowingIcon {
+      Visible: false;
+      Anchor: (Width: 64, Height: 64, Top: 0, Left: 3);
+      Background: (TexturePath: "StatusEffects/Glowing.png");
+    }
+    Group #HasteIcon {
+      Visible: false;
+      Anchor: (Width: 64, Height: 64, Top: 0, Left: 3);
+      Background: (TexturePath: "StatusEffects/Haste.png");
+    }
+    Group #High_JumpIcon {
+      Visible: false;
+      Anchor: (Width: 64, Height: 64, Top: 0, Left: 3);
+      Background: (TexturePath: "StatusEffects/High_Jump.png");
+    }
+    Group #InvisibilityIcon {
+      Visible: false;
+      Anchor: (Width: 64, Height: 64, Top: 0, Left: 3);
+      Background: (TexturePath: "StatusEffects/Invisibility.png");
+    }
+    Group #Jump_BoostIcon {
+      Visible: false;
+      Anchor: (Width: 64, Height: 64, Top: 0, Left: 3);
+      Background: (TexturePath: "StatusEffects/Jump_Boost.png");
+    }
+    Group #LevitationIcon {
+      Visible: false;
+      Anchor: (Width: 64, Height: 64, Top: 0, Left: 3);
+      Background: (TexturePath: "StatusEffects/Levitation.png");
+    }
+    Group #Mining_FatigueIcon {
+      Visible: false;
+      Anchor: (Width: 64, Height: 64, Top: 0, Left: 3);
+      Background: (TexturePath: "StatusEffects/Mining_Fatigue.png");
+    }
+    Group #NauseaIcon {
+      Visible: false;
+      Anchor: (Width: 64, Height: 64, Top: 0, Left: 3);
+      Background: (TexturePath: "StatusEffects/Nausea.png");
+    }
+    Group #NightVisionIcon {
+      Visible: false;
+      Anchor: (Width: 64, Height: 64, Top: 0, Left: 3);
+      Background: (TexturePath: "StatusEffects/NightVision.png");
+    }
+    Group #PoisonIcon {
+      Visible: false;
+      Anchor: (Width: 64, Height: 64, Top: 0, Left: 3);
+      Background: (TexturePath: "StatusEffects/Poison.png");
+    }
+    Group #RegenerationIcon {
+      Visible: false;
+      Anchor: (Width: 64, Height: 64, Top: 0, Left: 3);
+      Background: (TexturePath: "StatusEffects/Regeneration.png");
+    }
+    Group #ResistanceIcon {
+      Visible: false;
+      Anchor: (Width: 64, Height: 64, Top: 0, Left: 3);
+      Background: (TexturePath: "StatusEffects/Resistance.png");
+    }
+    Group #Slow_FallingIcon {
+      Visible: false;
+      Anchor: (Width: 64, Height: 64, Top: 0, Left: 3);
+      Background: (TexturePath: "StatusEffects/Slow_Falling.png");
+    }
+    Group #SlownessIcon {
+      Visible: false;
+      Anchor: (Width: 64, Height: 64, Top: 0, Left: 3);
+      Background: (TexturePath: "StatusEffects/Slowness.png");
+    }
+    Group #SpeedIcon {
+      Visible: false;
+      Anchor: (Width: 64, Height: 64, Top: 0, Left: 3);
+      Background: (TexturePath: "StatusEffects/Speed.png");
+    }
+    Group #StrengthIcon {
+      Visible: false;
+      Anchor: (Width: 64, Height: 64, Top: 0, Left: 3);
+      Background: (TexturePath: "StatusEffects/Strength.png");
+    }
+    Group #Water_BreathingIcon {
+      Visible: false;
+      Anchor: (Width: 64, Height: 64, Top: 0, Left: 3);
+      Background: (TexturePath: "StatusEffects/Water_Breathing.png");
+    }
+    Group #WeaknessIcon {
+      Visible: false;
+      Anchor: (Width: 64, Height: 64, Top: 0, Left: 3);
+      Background: (TexturePath: "StatusEffects/Weakness.png");
+    }
+    Label #Time {
+      Anchor: (Bottom: 0, Left: 0, Right: 0);
+      Style: (FontSize: 14, HorizontalAlignment: Center);
+    }
+  }
+  Group #Effect6 {
+    Visible: false;
+    Anchor: (Width: 70, Height: 85, Top: 475, Left: 0);
+    Group #BleedingIcon {
+      Visible: false;
+      Anchor: (Width: 64, Height: 64, Top: 0, Left: 3);
+      Background: (TexturePath: "StatusEffects/Bleeding.png");
+    }
+    Group #BlindnessIcon {
+      Visible: false;
+      Anchor: (Width: 64, Height: 64, Top: 0, Left: 3);
+      Background: (TexturePath: "StatusEffects/Blindness.png");
+    }
+    Group #BurnIcon {
+      Visible: false;
+      Anchor: (Width: 64, Height: 64, Top: 0, Left: 3);
+      Background: (TexturePath: "StatusEffects/Burn.png");
+    }
+    Group #DarknessIcon {
+      Visible: false;
+      Anchor: (Width: 64, Height: 64, Top: 0, Left: 3);
+      Background: (TexturePath: "StatusEffects/Darkness.png");
+    }
+    Group #DecayIcon {
+      Visible: false;
+      Anchor: (Width: 64, Height: 64, Top: 0, Left: 3);
+      Background: (TexturePath: "StatusEffects/Decay.png");
+    }
+    Group #ElectrifiedIcon {
+      Visible: false;
+      Anchor: (Width: 64, Height: 64, Top: 0, Left: 3);
+      Background: (TexturePath: "StatusEffects/Electrified.png");
+    }
+    Group #Fire_ResistanceIcon {
+      Visible: false;
+      Anchor: (Width: 64, Height: 64, Top: 0, Left: 3);
+      Background: (TexturePath: "StatusEffects/Fire_Resistance.png");
+    }
+    Group #FrozenIcon {
+      Visible: false;
+      Anchor: (Width: 64, Height: 64, Top: 0, Left: 3);
+      Background: (TexturePath: "StatusEffects/Frozen.png");
+    }
+    Group #GlowingIcon {
+      Visible: false;
+      Anchor: (Width: 64, Height: 64, Top: 0, Left: 3);
+      Background: (TexturePath: "StatusEffects/Glowing.png");
+    }
+    Group #HasteIcon {
+      Visible: false;
+      Anchor: (Width: 64, Height: 64, Top: 0, Left: 3);
+      Background: (TexturePath: "StatusEffects/Haste.png");
+    }
+    Group #High_JumpIcon {
+      Visible: false;
+      Anchor: (Width: 64, Height: 64, Top: 0, Left: 3);
+      Background: (TexturePath: "StatusEffects/High_Jump.png");
+    }
+    Group #InvisibilityIcon {
+      Visible: false;
+      Anchor: (Width: 64, Height: 64, Top: 0, Left: 3);
+      Background: (TexturePath: "StatusEffects/Invisibility.png");
+    }
+    Group #Jump_BoostIcon {
+      Visible: false;
+      Anchor: (Width: 64, Height: 64, Top: 0, Left: 3);
+      Background: (TexturePath: "StatusEffects/Jump_Boost.png");
+    }
+    Group #LevitationIcon {
+      Visible: false;
+      Anchor: (Width: 64, Height: 64, Top: 0, Left: 3);
+      Background: (TexturePath: "StatusEffects/Levitation.png");
+    }
+    Group #Mining_FatigueIcon {
+      Visible: false;
+      Anchor: (Width: 64, Height: 64, Top: 0, Left: 3);
+      Background: (TexturePath: "StatusEffects/Mining_Fatigue.png");
+    }
+    Group #NauseaIcon {
+      Visible: false;
+      Anchor: (Width: 64, Height: 64, Top: 0, Left: 3);
+      Background: (TexturePath: "StatusEffects/Nausea.png");
+    }
+    Group #NightVisionIcon {
+      Visible: false;
+      Anchor: (Width: 64, Height: 64, Top: 0, Left: 3);
+      Background: (TexturePath: "StatusEffects/NightVision.png");
+    }
+    Group #PoisonIcon {
+      Visible: false;
+      Anchor: (Width: 64, Height: 64, Top: 0, Left: 3);
+      Background: (TexturePath: "StatusEffects/Poison.png");
+    }
+    Group #RegenerationIcon {
+      Visible: false;
+      Anchor: (Width: 64, Height: 64, Top: 0, Left: 3);
+      Background: (TexturePath: "StatusEffects/Regeneration.png");
+    }
+    Group #ResistanceIcon {
+      Visible: false;
+      Anchor: (Width: 64, Height: 64, Top: 0, Left: 3);
+      Background: (TexturePath: "StatusEffects/Resistance.png");
+    }
+    Group #Slow_FallingIcon {
+      Visible: false;
+      Anchor: (Width: 64, Height: 64, Top: 0, Left: 3);
+      Background: (TexturePath: "StatusEffects/Slow_Falling.png");
+    }
+    Group #SlownessIcon {
+      Visible: false;
+      Anchor: (Width: 64, Height: 64, Top: 0, Left: 3);
+      Background: (TexturePath: "StatusEffects/Slowness.png");
+    }
+    Group #SpeedIcon {
+      Visible: false;
+      Anchor: (Width: 64, Height: 64, Top: 0, Left: 3);
+      Background: (TexturePath: "StatusEffects/Speed.png");
+    }
+    Group #StrengthIcon {
+      Visible: false;
+      Anchor: (Width: 64, Height: 64, Top: 0, Left: 3);
+      Background: (TexturePath: "StatusEffects/Strength.png");
+    }
+    Group #Water_BreathingIcon {
+      Visible: false;
+      Anchor: (Width: 64, Height: 64, Top: 0, Left: 3);
+      Background: (TexturePath: "StatusEffects/Water_Breathing.png");
+    }
+    Group #WeaknessIcon {
+      Visible: false;
+      Anchor: (Width: 64, Height: 64, Top: 0, Left: 3);
+      Background: (TexturePath: "StatusEffects/Weakness.png");
+    }
+    Label #Time {
+      Anchor: (Bottom: 0, Left: 0, Right: 0);
+      Style: (FontSize: 14, HorizontalAlignment: Center);
+    }
+  }
+  Group #Effect7 {
+    Visible: false;
+    Anchor: (Width: 70, Height: 85, Top: 570, Left: 0);
+    Group #BleedingIcon {
+      Visible: false;
+      Anchor: (Width: 64, Height: 64, Top: 0, Left: 3);
+      Background: (TexturePath: "StatusEffects/Bleeding.png");
+    }
+    Group #BlindnessIcon {
+      Visible: false;
+      Anchor: (Width: 64, Height: 64, Top: 0, Left: 3);
+      Background: (TexturePath: "StatusEffects/Blindness.png");
+    }
+    Group #BurnIcon {
+      Visible: false;
+      Anchor: (Width: 64, Height: 64, Top: 0, Left: 3);
+      Background: (TexturePath: "StatusEffects/Burn.png");
+    }
+    Group #DarknessIcon {
+      Visible: false;
+      Anchor: (Width: 64, Height: 64, Top: 0, Left: 3);
+      Background: (TexturePath: "StatusEffects/Darkness.png");
+    }
+    Group #DecayIcon {
+      Visible: false;
+      Anchor: (Width: 64, Height: 64, Top: 0, Left: 3);
+      Background: (TexturePath: "StatusEffects/Decay.png");
+    }
+    Group #ElectrifiedIcon {
+      Visible: false;
+      Anchor: (Width: 64, Height: 64, Top: 0, Left: 3);
+      Background: (TexturePath: "StatusEffects/Electrified.png");
+    }
+    Group #Fire_ResistanceIcon {
+      Visible: false;
+      Anchor: (Width: 64, Height: 64, Top: 0, Left: 3);
+      Background: (TexturePath: "StatusEffects/Fire_Resistance.png");
+    }
+    Group #FrozenIcon {
+      Visible: false;
+      Anchor: (Width: 64, Height: 64, Top: 0, Left: 3);
+      Background: (TexturePath: "StatusEffects/Frozen.png");
+    }
+    Group #GlowingIcon {
+      Visible: false;
+      Anchor: (Width: 64, Height: 64, Top: 0, Left: 3);
+      Background: (TexturePath: "StatusEffects/Glowing.png");
+    }
+    Group #HasteIcon {
+      Visible: false;
+      Anchor: (Width: 64, Height: 64, Top: 0, Left: 3);
+      Background: (TexturePath: "StatusEffects/Haste.png");
+    }
+    Group #High_JumpIcon {
+      Visible: false;
+      Anchor: (Width: 64, Height: 64, Top: 0, Left: 3);
+      Background: (TexturePath: "StatusEffects/High_Jump.png");
+    }
+    Group #InvisibilityIcon {
+      Visible: false;
+      Anchor: (Width: 64, Height: 64, Top: 0, Left: 3);
+      Background: (TexturePath: "StatusEffects/Invisibility.png");
+    }
+    Group #Jump_BoostIcon {
+      Visible: false;
+      Anchor: (Width: 64, Height: 64, Top: 0, Left: 3);
+      Background: (TexturePath: "StatusEffects/Jump_Boost.png");
+    }
+    Group #LevitationIcon {
+      Visible: false;
+      Anchor: (Width: 64, Height: 64, Top: 0, Left: 3);
+      Background: (TexturePath: "StatusEffects/Levitation.png");
+    }
+    Group #Mining_FatigueIcon {
+      Visible: false;
+      Anchor: (Width: 64, Height: 64, Top: 0, Left: 3);
+      Background: (TexturePath: "StatusEffects/Mining_Fatigue.png");
+    }
+    Group #NauseaIcon {
+      Visible: false;
+      Anchor: (Width: 64, Height: 64, Top: 0, Left: 3);
+      Background: (TexturePath: "StatusEffects/Nausea.png");
+    }
+    Group #NightVisionIcon {
+      Visible: false;
+      Anchor: (Width: 64, Height: 64, Top: 0, Left: 3);
+      Background: (TexturePath: "StatusEffects/NightVision.png");
+    }
+    Group #PoisonIcon {
+      Visible: false;
+      Anchor: (Width: 64, Height: 64, Top: 0, Left: 3);
+      Background: (TexturePath: "StatusEffects/Poison.png");
+    }
+    Group #RegenerationIcon {
+      Visible: false;
+      Anchor: (Width: 64, Height: 64, Top: 0, Left: 3);
+      Background: (TexturePath: "StatusEffects/Regeneration.png");
+    }
+    Group #ResistanceIcon {
+      Visible: false;
+      Anchor: (Width: 64, Height: 64, Top: 0, Left: 3);
+      Background: (TexturePath: "StatusEffects/Resistance.png");
+    }
+    Group #Slow_FallingIcon {
+      Visible: false;
+      Anchor: (Width: 64, Height: 64, Top: 0, Left: 3);
+      Background: (TexturePath: "StatusEffects/Slow_Falling.png");
+    }
+    Group #SlownessIcon {
+      Visible: false;
+      Anchor: (Width: 64, Height: 64, Top: 0, Left: 3);
+      Background: (TexturePath: "StatusEffects/Slowness.png");
+    }
+    Group #SpeedIcon {
+      Visible: false;
+      Anchor: (Width: 64, Height: 64, Top: 0, Left: 3);
+      Background: (TexturePath: "StatusEffects/Speed.png");
+    }
+    Group #StrengthIcon {
+      Visible: false;
+      Anchor: (Width: 64, Height: 64, Top: 0, Left: 3);
+      Background: (TexturePath: "StatusEffects/Strength.png");
+    }
+    Group #Water_BreathingIcon {
+      Visible: false;
+      Anchor: (Width: 64, Height: 64, Top: 0, Left: 3);
+      Background: (TexturePath: "StatusEffects/Water_Breathing.png");
+    }
+    Group #WeaknessIcon {
+      Visible: false;
+      Anchor: (Width: 64, Height: 64, Top: 0, Left: 3);
+      Background: (TexturePath: "StatusEffects/Weakness.png");
+    }
+    Label #Time {
+      Anchor: (Bottom: 0, Left: 0, Right: 0);
+      Style: (FontSize: 14, HorizontalAlignment: Center);
+    }
+  }
+  Group #Effect8 {
+    Visible: false;
+    Anchor: (Width: 70, Height: 85, Top: 665, Left: 0);
+    Group #BleedingIcon {
+      Visible: false;
+      Anchor: (Width: 64, Height: 64, Top: 0, Left: 3);
+      Background: (TexturePath: "StatusEffects/Bleeding.png");
+    }
+    Group #BlindnessIcon {
+      Visible: false;
+      Anchor: (Width: 64, Height: 64, Top: 0, Left: 3);
+      Background: (TexturePath: "StatusEffects/Blindness.png");
+    }
+    Group #BurnIcon {
+      Visible: false;
+      Anchor: (Width: 64, Height: 64, Top: 0, Left: 3);
+      Background: (TexturePath: "StatusEffects/Burn.png");
+    }
+    Group #DarknessIcon {
+      Visible: false;
+      Anchor: (Width: 64, Height: 64, Top: 0, Left: 3);
+      Background: (TexturePath: "StatusEffects/Darkness.png");
+    }
+    Group #DecayIcon {
+      Visible: false;
+      Anchor: (Width: 64, Height: 64, Top: 0, Left: 3);
+      Background: (TexturePath: "StatusEffects/Decay.png");
+    }
+    Group #ElectrifiedIcon {
+      Visible: false;
+      Anchor: (Width: 64, Height: 64, Top: 0, Left: 3);
+      Background: (TexturePath: "StatusEffects/Electrified.png");
+    }
+    Group #Fire_ResistanceIcon {
+      Visible: false;
+      Anchor: (Width: 64, Height: 64, Top: 0, Left: 3);
+      Background: (TexturePath: "StatusEffects/Fire_Resistance.png");
+    }
+    Group #FrozenIcon {
+      Visible: false;
+      Anchor: (Width: 64, Height: 64, Top: 0, Left: 3);
+      Background: (TexturePath: "StatusEffects/Frozen.png");
+    }
+    Group #GlowingIcon {
+      Visible: false;
+      Anchor: (Width: 64, Height: 64, Top: 0, Left: 3);
+      Background: (TexturePath: "StatusEffects/Glowing.png");
+    }
+    Group #HasteIcon {
+      Visible: false;
+      Anchor: (Width: 64, Height: 64, Top: 0, Left: 3);
+      Background: (TexturePath: "StatusEffects/Haste.png");
+    }
+    Group #High_JumpIcon {
+      Visible: false;
+      Anchor: (Width: 64, Height: 64, Top: 0, Left: 3);
+      Background: (TexturePath: "StatusEffects/High_Jump.png");
+    }
+    Group #InvisibilityIcon {
+      Visible: false;
+      Anchor: (Width: 64, Height: 64, Top: 0, Left: 3);
+      Background: (TexturePath: "StatusEffects/Invisibility.png");
+    }
+    Group #Jump_BoostIcon {
+      Visible: false;
+      Anchor: (Width: 64, Height: 64, Top: 0, Left: 3);
+      Background: (TexturePath: "StatusEffects/Jump_Boost.png");
+    }
+    Group #LevitationIcon {
+      Visible: false;
+      Anchor: (Width: 64, Height: 64, Top: 0, Left: 3);
+      Background: (TexturePath: "StatusEffects/Levitation.png");
+    }
+    Group #Mining_FatigueIcon {
+      Visible: false;
+      Anchor: (Width: 64, Height: 64, Top: 0, Left: 3);
+      Background: (TexturePath: "StatusEffects/Mining_Fatigue.png");
+    }
+    Group #NauseaIcon {
+      Visible: false;
+      Anchor: (Width: 64, Height: 64, Top: 0, Left: 3);
+      Background: (TexturePath: "StatusEffects/Nausea.png");
+    }
+    Group #NightVisionIcon {
+      Visible: false;
+      Anchor: (Width: 64, Height: 64, Top: 0, Left: 3);
+      Background: (TexturePath: "StatusEffects/NightVision.png");
+    }
+    Group #PoisonIcon {
+      Visible: false;
+      Anchor: (Width: 64, Height: 64, Top: 0, Left: 3);
+      Background: (TexturePath: "StatusEffects/Poison.png");
+    }
+    Group #RegenerationIcon {
+      Visible: false;
+      Anchor: (Width: 64, Height: 64, Top: 0, Left: 3);
+      Background: (TexturePath: "StatusEffects/Regeneration.png");
+    }
+    Group #ResistanceIcon {
+      Visible: false;
+      Anchor: (Width: 64, Height: 64, Top: 0, Left: 3);
+      Background: (TexturePath: "StatusEffects/Resistance.png");
+    }
+    Group #Slow_FallingIcon {
+      Visible: false;
+      Anchor: (Width: 64, Height: 64, Top: 0, Left: 3);
+      Background: (TexturePath: "StatusEffects/Slow_Falling.png");
+    }
+    Group #SlownessIcon {
+      Visible: false;
+      Anchor: (Width: 64, Height: 64, Top: 0, Left: 3);
+      Background: (TexturePath: "StatusEffects/Slowness.png");
+    }
+    Group #SpeedIcon {
+      Visible: false;
+      Anchor: (Width: 64, Height: 64, Top: 0, Left: 3);
+      Background: (TexturePath: "StatusEffects/Speed.png");
+    }
+    Group #StrengthIcon {
+      Visible: false;
+      Anchor: (Width: 64, Height: 64, Top: 0, Left: 3);
+      Background: (TexturePath: "StatusEffects/Strength.png");
+    }
+    Group #Water_BreathingIcon {
+      Visible: false;
+      Anchor: (Width: 64, Height: 64, Top: 0, Left: 3);
+      Background: (TexturePath: "StatusEffects/Water_Breathing.png");
+    }
+    Group #WeaknessIcon {
+      Visible: false;
+      Anchor: (Width: 64, Height: 64, Top: 0, Left: 3);
+      Background: (TexturePath: "StatusEffects/Weakness.png");
+    }
+    Label #Time {
+      Anchor: (Bottom: 0, Left: 0, Right: 0);
+      Style: (FontSize: 14, HorizontalAlignment: Center);
+    }
+  }
+}

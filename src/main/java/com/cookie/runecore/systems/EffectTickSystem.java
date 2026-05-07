@@ -4,9 +4,12 @@ import com.cookie.runecore.api.ActiveBuff;
 import com.hypixel.hytale.component.Ref;
 import com.hypixel.hytale.server.core.universe.world.storage.EntityStore;
 
+import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.stream.Collectors;
 
 public class EffectTickSystem {
 
@@ -46,6 +49,14 @@ public class EffectTickSystem {
 
     public ActiveBuff getBuff(String playerId, String effectId) {
         return activeBuffs.get(buffKey(playerId, effectId));
+    }
+
+    public List<ActiveBuff> getBuffsForPlayer(String playerId) {
+        String prefix = playerId + "|";
+        return activeBuffs.entrySet().stream()
+                .filter(e -> e.getKey().startsWith(prefix))
+                .map(Map.Entry::getValue)
+                .collect(Collectors.toList());
     }
 
     public void tick(com.hypixel.hytale.server.core.universe.world.World world) {
