@@ -1,0 +1,11 @@
+{
+  "StatusEffectIcon": "UI/StatusEffects/Strength.png",
+  "DamageCalculator": {
+    "BaseDamage": {
+      "Physical": 10
+    }
+  },
+  "ApplicationEffects": {
+    "KnockbackMultiplier": 0.5
+  }
+}

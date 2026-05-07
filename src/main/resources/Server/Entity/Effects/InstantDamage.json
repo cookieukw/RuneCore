@@ -1,0 +1,29 @@
+{
+  "ApplicationEffects": {
+    "ModelVFXId": "Bleeding",
+    "Particles": [
+      {
+        "SystemId": "Potion_Health_Heal",
+        "Color": "#ff0000"
+      }
+    ],
+    "FirstPersonParticles": [
+      {
+        "SystemId": "Test_Mage_Orb",
+        "Color": "#ff0000"
+      }
+    ],
+    "EntityBottomTint": "#ff0000",
+    "EntityTopTint": "#8d2121"
+  },
+  "Duration": 0.5,
+  "OverlapBehavior": "Extend",
+  "StatModifierEffects": {
+    "ModelParticles": [
+      {
+        "SystemId": "Bleending2"
+      }
+    ]
+  },
+  "Debuff": true
+}

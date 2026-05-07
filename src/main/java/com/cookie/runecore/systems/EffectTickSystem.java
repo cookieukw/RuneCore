@@ -4,9 +4,12 @@ import com.cookie.runecore.api.ActiveBuff;
 import com.hypixel.hytale.component.Ref;
 import com.hypixel.hytale.server.core.universe.world.storage.EntityStore;
 
+import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.stream.Collectors;
 
 public class EffectTickSystem {
 
@@ -27,8 +30,6 @@ public class EffectTickSystem {
         if (ref != null) {
             entityRefs.put(key, ref);
         }
-        System.out.println("[RuneCore-Effects] Buff applied: " + buff.effectId +
-                " on " + buff.playerId + " for " + buff.remainingTicks + " ticks");
     }
 
     public void cancelBuff(String playerId, String effectId) {
@@ -50,6 +51,14 @@ public class EffectTickSystem {
         return activeBuffs.get(buffKey(playerId, effectId));
     }
 
+    public List<ActiveBuff> getBuffsForPlayer(String playerId) {
+        String prefix = playerId + "|";
+        return activeBuffs.entrySet().stream()
+                .filter(e -> e.getKey().startsWith(prefix))
+                .map(Map.Entry::getValue)
+                .collect(Collectors.toList());
+    }
+
     public void tick(com.hypixel.hytale.server.core.universe.world.World world) {
         Iterator<Map.Entry<String, ActiveBuff>> it = activeBuffs.entrySet().iterator();
         while (it.hasNext()) {
@@ -58,30 +67,24 @@ public class EffectTickSystem {
             ActiveBuff buff = entry.getValue();
             Ref<EntityStore> ref = entityRefs.get(key);
 
-            if (ref == null) {
-                if (world != null) {
-                    it.remove();
-                    entityRefs.remove(key);
-                    continue;
-                }
-            } else if (!ref.isValid()) {
+            if (ref == null || !ref.isValid()) {
                 it.remove();
                 entityRefs.remove(key);
                 continue;
             }
 
-            if (world != null && ref != null) {
-                com.hypixel.hytale.server.core.universe.world.World refWorld = ref.getStore().getExternalData().getWorld();
-                if (refWorld == null || !refWorld.equals(world)) {
-                    continue;
-                }
+            boolean alive;
+            try {
+                alive = buff.tick(ref);
+            } catch (IllegalStateException ex) {
+                // Entity invalidated mid-tick (shutdown race condition) — discard buff cleanly
+                it.remove();
+                entityRefs.remove(key);
+                continue;
             }
-
-            boolean alive = buff.tick(ref);
             if (!alive) {
                 it.remove();
                 entityRefs.remove(key);
-                System.out.println("[RuneCore-Effects] Buff expired: " + buff.effectId + " on " + buff.playerId);
             }
         }
     }

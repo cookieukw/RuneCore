@@ -8,7 +8,6 @@ import com.hypixel.hytale.component.Ref;
 import com.hypixel.hytale.component.Store;
 import com.hypixel.hytale.protocol.MovementSettings;
 import com.hypixel.hytale.protocol.packets.player.UpdateMovementSettings;
-import com.hypixel.hytale.server.core.Message;
 import com.hypixel.hytale.server.core.entity.entities.player.movement.MovementManager;
 import com.hypixel.hytale.server.core.io.PacketHandler;
 import com.hypixel.hytale.server.core.modules.entitystats.EntityStatMap;
@@ -57,12 +56,7 @@ public class PlayerStats {
                     float current = statValue.get();
                     float newValue = Math.max(0, Math.min(MAX_STAT, current + amount));
                     statMap.setStatValue(statId, newValue);
-                    System.out.println("[RuneCore-Stats] Modified stat " + statId + ": " + current + " -> " + newValue);
-                } else {
-                    System.err.println("[RuneCore-Stats] Stat " + statId + " not found on player!");
                 }
-            } else {
-                 System.err.println("[RuneCore-Stats] EntityStatMap not found on player!");
             }
         });
     }
@@ -84,12 +78,10 @@ public class PlayerStats {
             if (statMap != null) {
                 float clampedValue = Math.max(0, Math.min(MAX_STAT, value));
                 statMap.setStatValue(statId, clampedValue);
-                System.out.println("[PlayerStats] Set stat " + statId + " to " + clampedValue);
-            } else {
-                 System.err.println("[PlayerStats] EntityStatMap not found on player!");
             }
         });
     }
+
 
     private CompletableFuture<Float> getStat(int statId) {
         CompletableFuture<Float> future = new CompletableFuture<>();
@@ -207,25 +199,14 @@ public class PlayerStats {
                 MovementSettings settings = moveManager.getSettings();
                 if (settings != null) {
                     float newSpeed = settings.baseSpeed + amount;
-                     float clampedSpeed = Math.max(MIN_SPEED, Math.min(MAX_SPEED, newSpeed));
-                    
+                    float clampedSpeed = Math.max(MIN_SPEED, Math.min(MAX_SPEED, newSpeed));
                     settings.baseSpeed = clampedSpeed;
                     
-                    PlayerRef playerRefComp = 
-                        (PlayerRef) store.getComponent(playerRef, PlayerRef.getComponentType());
-                    
+                    PlayerRef playerRefComp = (PlayerRef) store.getComponent(playerRef, PlayerRef.getComponentType());
                     if (playerRefComp != null) {
                         PacketHandler packetHandler = playerRefComp.getPacketHandler();
                         if (packetHandler != null) {
                             packetHandler.write(new UpdateMovementSettings(settings));
-                        }
-                        // Feedback
-                        if (newSpeed != clampedSpeed) {
-                             if (newSpeed > MAX_SPEED) {
-                                  playerRefComp.sendMessage(com.hypixel.hytale.server.core.Message.raw("Speed capped at " + MAX_SPEED));
-                             } else if (newSpeed < MIN_SPEED) {
-                                  playerRefComp.sendMessage(com.hypixel.hytale.server.core.Message.raw("Speed clamped to " + MIN_SPEED));
-                             }
                         }
                     }
                 }
@@ -243,8 +224,8 @@ public class PlayerStats {
         if (world == null) return;
 
         world.execute(() -> {
-             MovementManager moveManager = 
-                (MovementManager) store.getComponent(playerRef, MovementManager.getComponentType());
+            MovementManager moveManager = 
+               (MovementManager) store.getComponent(playerRef, MovementManager.getComponentType());
             
             if (moveManager != null) {
                 MovementSettings settings = moveManager.getSettings();
@@ -259,15 +240,6 @@ public class PlayerStats {
                         PacketHandler packetHandler = playerRefComp.getPacketHandler();
                         if (packetHandler != null) {
                             packetHandler.write(new UpdateMovementSettings(settings));
-                            playerRefComp.sendMessage(Message.raw("Debug: Speed set to " + clampedSpeed));
-                        }
-                         // Feedback
-                        if (amount != clampedSpeed) {
-                             if (amount > MAX_SPEED) {
-                                  playerRefComp.sendMessage(Message.raw("Speed capped at " + MAX_SPEED));
-                             } else if (amount < MIN_SPEED) {
-                                  playerRefComp.sendMessage(Message.raw("Speed clamped to " + MIN_SPEED));
-                             }
                         }
                     }
                 }

@@ -1,0 +1,5 @@
+{
+  "StatusEffectIcon": "UI/StatusEffects/Darkness.png",
+  "Duration": 20.0,
+  "OverlapBehavior": "Extend"
+}

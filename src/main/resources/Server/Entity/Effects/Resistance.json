@@ -1,0 +1,17 @@
+{
+  "StatusEffectIcon": "UI/StatusEffects/Resistance.png",
+  "DamageResistance": {
+    "Physical": [
+      {
+        "CalculationType": "Additive",
+        "Amount": 20
+      }
+    ],
+    "Projectile": [
+      {
+        "Amount": 20,
+        "CalculationType": "Additive"
+      }
+    ]
+  }
+}

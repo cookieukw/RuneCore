@@ -2,7 +2,7 @@ target/
 !.mvn/wrapper/maven-wrapper.jar
 !**/src/main/**/target/
 !**/src/test/**/target/
-
+RuneCore_Effects_Roadmap.md
 ### IntelliJ IDEA ###
 .idea
 .idea/modules.xml
@@ -45,3 +45,6 @@ build
 hytale_api
 bin
 libs
+libs/HytaleServer.jar
+effects_roadmap.md
+particles.particles

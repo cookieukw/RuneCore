@@ -53,7 +53,10 @@ public class TestPage extends BasicCustomUIPage {
     public void build(UICommandBuilder commandBuilder) {
         // Step 1: Load the UI layout file
         // Path is relative to: src/main/resources/Common/UI/Custom/
-        commandBuilder.append("Pages/TestPage.ui");
+        commandBuilder.append("StatusEffects.ui");
+       // commandBuilder.append("Pages/TestPage.ui");
+
+        // Step 2: Override the message text dynamically
 
         // Step 2: Override the message text dynamically
         // Selector format: #ElementId.Property

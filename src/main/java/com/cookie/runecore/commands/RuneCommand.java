@@ -14,6 +14,9 @@ import com.hypixel.hytale.server.core.universe.PlayerRef;
 import com.hypixel.hytale.server.core.universe.world.World;
 import com.hypixel.hytale.server.core.universe.world.storage.EntityStore;
 import com.hypixel.hytale.server.core.Message;
+import com.hypixel.hytale.server.core.asset.type.entityeffect.config.EntityEffect;
+
+import java.util.Map;
 
 import javax.annotation.Nonnull;
 
@@ -24,7 +27,7 @@ public class RuneCommand extends AbstractPlayerCommand {
 
     public RuneCommand() {
         super("rune", "RuneCore administrative commands");
-        this.subCommandArg = this.withRequiredArg("subcommand", "Subcommand (effect|stats)", ArgTypes.STRING);
+        this.subCommandArg = this.withRequiredArg("subcommand", "Subcommand (effect|dump|stats)", ArgTypes.STRING);
         this.effectIdArg = this.withRequiredArg("id", "Effect identifier or Stat", ArgTypes.STRING);
         this.durationArg = this.withOptionalArg("duration", "Duration in ticks (for effects)", ArgTypes.INTEGER);
     }
@@ -41,8 +44,15 @@ public class RuneCommand extends AbstractPlayerCommand {
         
         if ("effect".equalsIgnoreCase(subCommand)) {
             handleEffect(ctx, ref, playerRef, world);
+        } else if ("dump".equalsIgnoreCase(subCommand)) {
+            ctx.sendMessage(Message.raw("Dumped keys to console!"));
+            System.out.println("=== ENTITY EFFECT ASSETS ===");
+            Map<String, EntityEffect> map = EntityEffect.getAssetMap().getAssetMap();
+            for (Object key : map.keySet()) {
+                System.out.println(key.toString());
+            }
         } else {
-            ctx.sendMessage(Message.raw("Unknown subcommand: " + subCommand + ". Use 'effect'."));
+            ctx.sendMessage(Message.raw("Unknown subcommand: " + subCommand + ". Use 'effect' or 'dump'."));
         }
     }
 

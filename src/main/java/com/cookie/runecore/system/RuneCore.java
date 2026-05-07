@@ -28,7 +28,6 @@ public class RuneCore {
 
     public void registerEssence(Essence essence) {
         essenceRegistry.put(essence.id(), essence);
-        System.out.println("[RuneCore] Registered Essence: " + essence.id());
     }
 
     public void registerResource(GameResource res) {
@@ -88,13 +87,9 @@ public class RuneCore {
         // Deduct mana if source is a player
         if (ctx.source != null) {
             PlayerStats stats = new PlayerStats(ctx.source.getReference());
-
-            if (stats != null) {
-                for (Map.Entry<String, Integer> entry : spell.getResourceCost().entrySet()) {
-                    if (entry.getKey().equalsIgnoreCase("arcane_mana") || entry.getKey().equalsIgnoreCase("mana")) {
-                        stats.subtractMana(entry.getValue());
-                        System.out.println("[RuneCore] Deducted " + entry.getValue() + " mana from player.");
-                    }
+            for (Map.Entry<String, Integer> entry : spell.getResourceCost().entrySet()) {
+                if (entry.getKey().equalsIgnoreCase("arcane_mana") || entry.getKey().equalsIgnoreCase("mana")) {
+                    stats.subtractMana(entry.getValue());
                 }
             }
         }

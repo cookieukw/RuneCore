@@ -1,0 +1,18 @@
+{
+  "StatusEffectIcon": "UI/StatusEffects/Slowness.png",
+  "ApplicationEffects": {
+    "ModelVFXId": "Stoneskin",
+    "Particles": [
+      {
+        "SystemId": "ForgottenTemple_Leaves_Small",
+        "Color": "#424141"
+      }
+    ],
+    "EntityBottomTint": "#000000",
+    "EntityTopTint": "#000000",
+    "ScreenEffect": "ScreenEffects/Sand.png"
+  },
+  "Duration": 0.5,
+  "OverlapBehavior": "Extend",
+  "Debuff": true
+}

@@ -1,8 +1,11 @@
 package com.cookie.runecore.content;
 
 import com.cookie.runecore.api.ActiveBuff;
-import com.cookie.runecore.api.EffectHelper;
+import com.cookie.runecore.api.MovementHelper;
 import com.cookie.runecore.api.RuneEffect;
+import com.cookie.runecore.api.StatHelper;
+import com.cookie.runecore.api.StatusEffectHelper;
+import com.cookie.runecore.api.VisualEffectHelper;
 import com.cookie.runecore.system.RuneCore;
 import com.hypixel.hytale.component.Ref;
 import com.hypixel.hytale.server.core.universe.world.storage.EntityStore;
@@ -13,200 +16,233 @@ public class CoreEffects {
         RuneCore core = RuneCore.get();
 
         core.registerEffect(new RuneEffect("speed", 1200)
-            .withAsset("runecore:Speed")
-            .withAction(ctx -> {
-                if (ctx.target instanceof Ref<?> raw) {
-                    @SuppressWarnings("unchecked") Ref<EntityStore> ref = (Ref<EntityStore>) raw;
-                    EffectHelper.applySpeed(ref);
-                }
-            })
+            .withAsset("Speed")
             .withBuff(ctx -> {
                 String uid = ctx.source != null ? ctx.source.getUuid().toString() : ctx.target.toString();
                 return ActiveBuff.builder(uid, "speed", 1200)
-                    .onExpire(ref -> EffectHelper.revertSpeed(ref))
                     .build();
             })
         );
 
         core.registerEffect(new RuneEffect("slowness", 600)
-            .withAsset("runecore:Slowness")
+            .withAsset("Slowness")
             .withAction(ctx -> {
                 if (ctx.target instanceof Ref<?> raw) {
                     @SuppressWarnings("unchecked") Ref<EntityStore> ref = (Ref<EntityStore>) raw;
-                    EffectHelper.applySlowness(ref);
+                    MovementHelper.applySlowness(ref);
                 }
             })
             .withBuff(ctx -> {
                 String uid = ctx.source != null ? ctx.source.getUuid().toString() : ctx.target.toString();
                 return ActiveBuff.builder(uid, "slowness", 600)
-                    .onExpire(ref -> EffectHelper.revertSlowness(ref))
+                    .onExpire(ref -> MovementHelper.revertSlowness(ref))
                     .build();
             })
         );
 
         core.registerEffect(new RuneEffect("haste", 1200)
-            .withAsset("runecore:Haste")
+            .withAsset("Haste")
             .withAction(ctx -> {
                 if (ctx.target instanceof Ref<?> raw) {
                     @SuppressWarnings("unchecked") Ref<EntityStore> ref = (Ref<EntityStore>) raw;
-                    EffectHelper.applyHaste(ref);
+                    StatusEffectHelper.applyHaste(ref);
                 }
             })
             .withBuff(ctx -> {
                 String uid = ctx.source != null ? ctx.source.getUuid().toString() : ctx.target.toString();
                 return ActiveBuff.builder(uid, "haste", 1200)
-                    .onExpire(ref -> EffectHelper.revertHaste(ref))
+                    .onExpire(ref -> StatusEffectHelper.revertHaste(ref))
                     .build();
             })
         );
 
         core.registerEffect(new RuneEffect("mining_fatigue", 1200)
-            .withAsset("runecore:Mining_Fatigue")
+            .withAsset("Mining_Fatigue")
             .withAction(ctx -> {
                 if (ctx.target instanceof Ref<?> raw) {
                     @SuppressWarnings("unchecked") Ref<EntityStore> ref = (Ref<EntityStore>) raw;
-                    EffectHelper.applyMiningFatigue(ref);
+                    StatusEffectHelper.applyMiningFatigue(ref);
                 }
             })
             .withBuff(ctx -> {
                 String uid = ctx.source != null ? ctx.source.getUuid().toString() : ctx.target.toString();
                 return ActiveBuff.builder(uid, "mining_fatigue", 1200)
-                    .onExpire(ref -> EffectHelper.revertMiningFatigue(ref))
+                    .onExpire(ref -> StatusEffectHelper.revertMiningFatigue(ref))
                     .build();
             })
         );
 
         core.registerEffect(new RuneEffect("jump_boost", 1200)
-            .withAsset("runecore:Jump_Boost")
+            .withAsset("Jump_Boost")
             .withAction(ctx -> {
                 if (ctx.target instanceof Ref<?> raw) {
                     @SuppressWarnings("unchecked") Ref<EntityStore> ref = (Ref<EntityStore>) raw;
-                    EffectHelper.applyJumpBoost(ref);
+                    MovementHelper.applyJumpBoost(ref);
                 }
             })
             .withBuff(ctx -> {
                 String uid = ctx.source != null ? ctx.source.getUuid().toString() : ctx.target.toString();
                 return ActiveBuff.builder(uid, "jump_boost", 1200)
-                    .onExpire(ref -> EffectHelper.revertJumpBoost(ref))
+                    .onExpire(ref -> MovementHelper.revertJumpBoost(ref))
                     .build();
             })
         );
 
         core.registerEffect(new RuneEffect("high_jump", 600)
-            .withAsset("runecore:High_Jump")
+            .withAsset("High_Jump")
             .withAction(ctx -> {
                 if (ctx.target instanceof Ref<?> raw) {
                     @SuppressWarnings("unchecked") Ref<EntityStore> ref = (Ref<EntityStore>) raw;
-                    EffectHelper.applyHighJump(ref);
+                    MovementHelper.applyHighJump(ref);
                 }
             })
             .withBuff(ctx -> {
                 String uid = ctx.source != null ? ctx.source.getUuid().toString() : ctx.target.toString();
                 return ActiveBuff.builder(uid, "high_jump", 600)
-                    .onExpire(ref -> EffectHelper.revertHighJump(ref))
+                    .onExpire(ref -> MovementHelper.revertHighJump(ref))
                     .build();
             })
         );
 
         core.registerEffect(new RuneEffect("slow_falling", 1200)
-            .withAsset("runecore:Slow_Falling")
+            .withAsset("Slow_Falling")
             .withAction(ctx -> {
                 if (ctx.target instanceof Ref<?> raw) {
                     @SuppressWarnings("unchecked") Ref<EntityStore> ref = (Ref<EntityStore>) raw;
-                    EffectHelper.applySlowFalling(ref);
+                    MovementHelper.applySlowFalling(ref);
                 }
             })
             .withBuff(ctx -> {
                 String uid = ctx.source != null ? ctx.source.getUuid().toString() : ctx.target.toString();
                 return ActiveBuff.builder(uid, "slow_falling", 1200)
-                    .onExpire(ref -> EffectHelper.revertSlowFalling(ref))
+                    .onExpire(ref -> MovementHelper.revertSlowFalling(ref))
                     .build();
             })
         );
 
-        core.registerEffect(new RuneEffect("levitation", 200)
-            .withAsset("runecore:Levitation")
+        core.registerEffect(new RuneEffect("levitation", 60)
+            .withAsset("Levitation")
             .withAction(ctx -> {
                 if (ctx.target instanceof Ref<?> raw) {
                     @SuppressWarnings("unchecked") Ref<EntityStore> ref = (Ref<EntityStore>) raw;
-                    EffectHelper.applyLevitation(ref);
+                    MovementHelper.applyLevitation(ref);
                 }
             })
             .withBuff(ctx -> {
                 String uid = ctx.source != null ? ctx.source.getUuid().toString() : ctx.target.toString();
-                return ActiveBuff.builder(uid, "levitation", 200)
-                    .onExpire(ref -> EffectHelper.revertLevitation(ref))
+                return ActiveBuff.builder(uid, "levitation", 60)
+                    .onExpire(ref -> MovementHelper.revertLevitation(ref))
                     .build();
             })
         );
 
         core.registerEffect(new RuneEffect("regeneration", 400)
-            .withAsset("runecore:Regeneration")
+            .withAsset("Regeneration")
             .withBuff(ctx -> {
                 String uid = ctx.source != null ? ctx.source.getUuid().toString() : ctx.target.toString();
                 return ActiveBuff.builder(uid, "regeneration", 400)
                     .interval(50)
-                    .onTick(ref -> EffectHelper.addHealth(ref, 1.0f))
+                    .onTick(ref -> StatHelper.addHealth(ref, 1.0f))
                     .build();
             })
         );
 
         core.registerEffect(new RuneEffect("poison", 400)
-            .withAsset("runecore:Poison")
+            .withAsset("Poison")
             .withBuff(ctx -> {
                 String uid = ctx.source != null ? ctx.source.getUuid().toString() : ctx.target.toString();
                 return ActiveBuff.builder(uid, "poison", 400)
                     .interval(25)
-                    .onTick(ref -> EffectHelper.subtractHealth(ref, 1.0f))
+                    .onTick(ref -> StatHelper.subtractHealth(ref, 1.0f))
                     .build();
             })
         );
 
-        core.registerEffect(new RuneEffect("wither", 400)
-            .withAsset("runecore:Wither")
+        core.registerEffect(new RuneEffect("decay", 400)
+            .withAsset("Decay")
             .withBuff(ctx -> {
                 String uid = ctx.source != null ? ctx.source.getUuid().toString() : ctx.target.toString();
-                return ActiveBuff.builder(uid, "wither", 400)
+                return ActiveBuff.builder(uid, "decay", 400)
                     .interval(40)
-                    .onTick(ref -> EffectHelper.subtractHealth(ref, 1.0f))
+                    .onTick(ref -> StatHelper.subtractHealth(ref, 1.0f))
                     .build();
             })
         );
 
         core.registerEffect(new RuneEffect("burn", 200)
-            .withAsset("runecore:Burn")
+            .withAsset("Burn")
+            .withAction(ctx -> {
+                if (ctx.target instanceof Ref<?> raw) {
+                    @SuppressWarnings("unchecked") Ref<EntityStore> ref = (Ref<EntityStore>) raw;
+                    StatusEffectHelper.applyBurn(ref);
+                }
+            })
             .withBuff(ctx -> {
                 String uid = ctx.source != null ? ctx.source.getUuid().toString() : ctx.target.toString();
                 return ActiveBuff.builder(uid, "burn", 200)
                     .interval(20)
-                    .onTick(ref -> EffectHelper.subtractHealth(ref, 1.0f))
+                    .onTick(ref -> {
+                        StatHelper.subtractHealth(ref, 1.0f);
+                        StatusEffectHelper.onBurnTick(ref);
+                    })
+                    .onExpire(ref -> StatusEffectHelper.revertBurn(ref))
+                    .build();
+            })
+        );
+
+        core.registerEffect(new RuneEffect("nausea", 200)
+            .withAsset("Nausea")
+            .withAction(ctx -> {
+                if (ctx.target instanceof Ref<?> raw) {
+                    @SuppressWarnings("unchecked") Ref<EntityStore> ref = (Ref<EntityStore>) raw;
+                    StatusEffectHelper.applyNausea(ref);
+                }
+            })
+            .withBuff(ctx -> {
+                String uid = ctx.source != null ? ctx.source.getUuid().toString() : ctx.target.toString();
+                return ActiveBuff.builder(uid, "nausea", 200)
+                    .interval(1)
+                    .onTick(ref -> StatusEffectHelper.onNauseaTick(ref))
+                    .onExpire(ref -> StatusEffectHelper.revertNausea(ref))
                     .build();
             })
         );
 
         core.registerEffect(new RuneEffect("bleeding", 300)
-            .withAsset("runecore:Bleeding")
+            .withAsset("Bleeding")
+            .withAction(ctx -> {
+                if (ctx.target instanceof Ref<?> raw) {
+                    @SuppressWarnings("unchecked") Ref<EntityStore> ref = (Ref<EntityStore>) raw;
+                    StatusEffectHelper.applyBleeding(ref);
+                }
+            })
             .withBuff(ctx -> {
                 String uid = ctx.source != null ? ctx.source.getUuid().toString() : ctx.target.toString();
                 return ActiveBuff.builder(uid, "bleeding", 300)
-                    .interval(30)
-                    .onTick(ref -> EffectHelper.subtractHealth(ref, 1.0f))
+                    .interval(20)
+                    .onTick(ref -> {
+                        StatHelper.subtractHealth(ref, 1.0f);
+                        StatusEffectHelper.onBleedingTick(ref);
+                    })
+                    .onExpire(ref -> StatusEffectHelper.revertBleeding(ref))
                     .build();
             })
         );
 
         core.registerEffect(new RuneEffect("frozen", 600)
-            .withAsset("runecore:Frozen")
+            .withAsset("Frozen")
             .withAction(ctx -> {
                 if (ctx.target instanceof Ref<?> raw) {
                     @SuppressWarnings("unchecked") Ref<EntityStore> ref = (Ref<EntityStore>) raw;
-                    EffectHelper.applyFrozen(ref);
+                    MovementHelper.applyFrozen(ref);
                 }
             })
             .withBuff(ctx -> {
                 String uid = ctx.source != null ? ctx.source.getUuid().toString() : ctx.target.toString();
                 return ActiveBuff.builder(uid, "frozen", 600)
-                    .onExpire(ref -> EffectHelper.revertFrozen(ref))
+                    .interval(10)
+                    .onTick(ref -> MovementHelper.onFrozenTick(ref))
+                    .onExpire(ref -> MovementHelper.revertFrozen(ref))
                     .build();
             })
         );
@@ -214,41 +250,126 @@ public class CoreEffects {
         core.registerEffect(new RuneEffect("instant_health", true, 0, ctx -> {
             if (ctx.target instanceof Ref<?> raw) {
                 @SuppressWarnings("unchecked") Ref<EntityStore> ref = (Ref<EntityStore>) raw;
-                float amount = (float)(4.0 * ctx.power);
-                EffectHelper.addHealth(ref, amount);
-                System.out.println("[RuneCore-Effects] Instant Health: +" + amount + " HP");
+                StatHelper.addHealth(ref, (float) (4.0 * ctx.power));
             }
         }));
 
         core.registerEffect(new RuneEffect("instant_damage", true, 0, ctx -> {
             if (ctx.target instanceof Ref<?> raw) {
                 @SuppressWarnings("unchecked") Ref<EntityStore> ref = (Ref<EntityStore>) raw;
-                float amount = (float)(6.0 * ctx.power);
-                EffectHelper.subtractHealth(ref, amount);
-                System.out.println("[RuneCore-Effects] Instant Damage: -" + amount + " HP");
+                StatHelper.subtractHealth(ref, (float) (6.0 * ctx.power));
             }
-        }));
+        }).withAsset("InstantDamage"));
 
         core.registerEffect(new RuneEffect("damage_fire_instant", true, 0, ctx -> {
             if (ctx.target instanceof Ref<?> raw) {
                 @SuppressWarnings("unchecked") Ref<EntityStore> ref = (Ref<EntityStore>) raw;
-                float amount = (float)(10.0 * ctx.power);
-                EffectHelper.subtractHealth(ref, amount);
-                System.out.println("[RuneCore-Effects] Fire Damage: -" + amount + " HP");
+                StatHelper.subtractHealth(ref, (float) (10.0 * ctx.power));
             }
-        }));
+        }).withAsset("DamageFireInstant"));
 
-        core.registerEffect(new RuneEffect("invisibility", "hytale:invisibility", 1200));
-        core.registerEffect(new RuneEffect("glowing", "hytale:glowing", 1200));
-        core.registerEffect(new RuneEffect("blindness", "hytale:blindness", 200));
-        core.registerEffect(new RuneEffect("nausea", "hytale:nausea", 200));
-        core.registerEffect(new RuneEffect("darkness", "hytale:darkness", 400));
-        core.registerEffect(new RuneEffect("night_vision", "hytale:night_vision", 1200));
-        core.registerEffect(new RuneEffect("water_breathing", "hytale:water_breathing", 1200));
-        core.registerEffect(new RuneEffect("fire_resistance", "hytale:fire_resistance", 1200));
-        core.registerEffect(new RuneEffect("resistance", "hytale:resistance", 1200));
-        core.registerEffect(new RuneEffect("strength", "hytale:strength", 1200));
-        core.registerEffect(new RuneEffect("weakness", "hytale:weakness", 600));
-        core.registerEffect(new RuneEffect("electrified", "hytale:electrified", 200));
+        core.registerEffect(new RuneEffect("invisibility", "Invisibility", 1200)
+            .withAction(ctx -> {
+                if (ctx.target instanceof Ref<?> raw) {
+                    @SuppressWarnings("unchecked") Ref<EntityStore> ref = (Ref<EntityStore>) raw;
+                    StatusEffectHelper.applyInvisibility(ref);
+                }
+            })
+            .withBuff(ctx -> {
+                String uid = ctx.source != null ? ctx.source.getUuid().toString() : ctx.target.toString();
+                return ActiveBuff.builder(uid, "invisibility", 1200)
+                    .onExpire(ref -> StatusEffectHelper.revertInvisibility(ref))
+                    .build();
+            })
+        );
+
+        core.registerEffect(new RuneEffect("glowing", 1200)
+            .withAsset("Glowing")
+            .withAction(ctx -> {
+                if (ctx.target instanceof Ref<?> raw) {
+                    @SuppressWarnings("unchecked") Ref<EntityStore> ref = (Ref<EntityStore>) raw;
+                    VisualEffectHelper.applyGlowing(ref);
+                }
+            })
+            .withBuff(ctx -> {
+                String uid = ctx.source != null ? ctx.source.getUuid().toString() : ctx.target.toString();
+                return ActiveBuff.builder(uid, "glowing", 1200)
+                    .onExpire(ref -> VisualEffectHelper.revertGlowing(ref))
+                    .build();
+            })
+        );
+
+        core.registerEffect(new RuneEffect("blindness", 200)
+            .withAsset("Blindness")
+            .withAction(ctx -> {
+                if (ctx.target instanceof Ref<?> raw) {
+                    @SuppressWarnings("unchecked") Ref<EntityStore> ref = (Ref<EntityStore>) raw;
+                    VisualEffectHelper.applyBlindness(ref);
+                }
+            })
+            .withBuff(ctx -> {
+                String uid = ctx.source != null ? ctx.source.getUuid().toString() : ctx.target.toString();
+                return ActiveBuff.builder(uid, "blindness", 200)
+                    .onExpire(ref -> VisualEffectHelper.revertBlindness(ref))
+                    .build();
+            })
+        );
+
+        
+        core.registerEffect(new RuneEffect("night_vision", 1200)
+        .withAsset("NightVision")
+            .withAction(ctx -> {
+                if (ctx.target instanceof Ref<?> raw) {
+                    @SuppressWarnings("unchecked") Ref<EntityStore> ref = (Ref<EntityStore>) raw;
+                    VisualEffectHelper.applyNightVision(ref);
+                }
+            })
+            .withBuff(ctx -> {
+                String uid = ctx.source != null ? ctx.source.getUuid().toString() : ctx.target.toString();
+                return ActiveBuff.builder(uid, "night_vision", 1200)
+                    .onExpire(ref -> VisualEffectHelper.revertNightVision(ref))
+                    .build();
+            })
+        );
+
+        core.registerEffect(new RuneEffect("water_breathing", 1200)
+            .withAsset("WaterBreathing")
+            .withBuff(ctx -> {
+                String uid = ctx.source != null ? ctx.source.getUuid().toString() : ctx.target.toString();
+                return ActiveBuff.builder(uid, "water_breathing", 1200).build();
+            })
+        );
+
+        core.registerEffect(new RuneEffect("fire_resistance", 1200)
+            .withAsset("FireResistance")
+            .withBuff(ctx -> {
+                String uid = ctx.source != null ? ctx.source.getUuid().toString() : ctx.target.toString();
+                return ActiveBuff.builder(uid, "fire_resistance", 1200).build();
+            })
+        );
+
+        core.registerEffect(new RuneEffect("resistance", 1200)
+            .withAsset("Resistance")
+            .withBuff(ctx -> {
+                String uid = ctx.source != null ? ctx.source.getUuid().toString() : ctx.target.toString();
+                return ActiveBuff.builder(uid, "resistance", 1200).build();
+            })
+        );
+
+        core.registerEffect(new RuneEffect("strength", 1200)
+            .withAsset("Strength")
+            .withBuff(ctx -> {
+                String uid = ctx.source != null ? ctx.source.getUuid().toString() : ctx.target.toString();
+                return ActiveBuff.builder(uid, "strength", 1200).build();
+            })
+        );
+
+        core.registerEffect(new RuneEffect("weakness", 600)
+            .withAsset("Weakness")
+            .withBuff(ctx -> {
+                String uid = ctx.source != null ? ctx.source.getUuid().toString() : ctx.target.toString();
+                return ActiveBuff.builder(uid, "weakness", 600).build();
+            })
+        );
     }
 }

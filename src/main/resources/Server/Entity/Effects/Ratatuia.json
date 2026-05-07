@@ -1,0 +1,34 @@
+{
+  "ApplicationEffects": {
+    "ModelVFXId": "Erosion_Test",
+    "Particles": [
+      {
+        "SystemId": "Erosion_Status_Effect"
+      }
+    ],
+    "FirstPersonParticles": [
+      {
+        "SystemId": "Sauce_Splash",
+        "Color": "#ff0000"
+      }
+    ],
+    "MovementEffects": {
+      "DisableAll": true,
+      "DisableForward": true,
+      "DisableBackward": true,
+      "DisableLeft": true,
+      "DisableRight": true,
+      "DisableSprint": true,
+      "DisableJump": true,
+      "DisableCrouch": true
+    },
+    "AbilityEffects": {
+      "Disabled": [
+        "EntityStatEffect"
+      ]
+    },
+    "ScreenEffect": "ScreenEffects/Snow.png"
+  },
+  "Duration": 0.5,
+  "OverlapBehavior": "Extend"
+}

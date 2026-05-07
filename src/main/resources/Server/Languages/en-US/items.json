@@ -1,0 +1,22 @@
+{
+  "server.items.essence_acid.name": "Acid Essence",
+  "server.items.essence_aether.name": "Aether Essence",
+  "server.items.essence_blood.name": "Blood Essence",
+  "server.items.essence_chaos.name": "Chaos Essence",
+  "server.items.essence_crystal.name": "Crystal Essence",
+  "server.items.essence_death.name": "Death Essence",
+  "server.items.essence_earth.name": "Earth Essence",
+  "server.items.essence_fire.name": "Fire Essence",
+  "server.items.essence_ice.name": "Ice Essence",
+  "server.items.essence_life.name": "Life Essence",
+  "server.items.essence_light.name": "Light Essence",
+  "server.items.essence_lightning.name": "Lightning Essence",
+  "server.items.essence_metal.name": "Metal Essence",
+  "server.items.essence_mind.name": "Mind Essence",
+  "server.items.essence_poison.name": "Poison Essence",
+  "server.items.essence_shadow.name": "Shadow Essence",
+  "server.items.essence_time.name": "Time Essence",
+  "server.items.essence_void.name": "Void Essence",
+  "server.items.essence_water.name": "Water Essence",
+  "server.items.essence_wind.name": "Wind Essence"
+}

@@ -84,7 +84,15 @@ public class RuneEffect {
             Ref<EntityStore> entityRef = (ctx.target instanceof Ref) ? (Ref<EntityStore>) ctx.target : null;
             ActiveBuff buff = this.buffFactory.apply(ctx);
             if (buff != null) {
+                boolean refValid = (entityRef != null && entityRef.isValid());
+                System.out.println("[RuneCore] Registering buff: " + buff.effectId
+                        + " | player=" + buff.playerId
+                        + " | duration=" + buff.remainingTicks
+                        + " | interval=" + buff.intervalTicks
+                        + " | refValid=" + refValid);
                 EffectTickSystem.getInstance().applyBuff(buff, entityRef);
+            } else {
+                System.err.println("[RuneCore] buffFactory returned null for effect: " + id);
             }
         }
 
@@ -107,15 +115,22 @@ public class RuneEffect {
             store.putComponent(entityRef, EffectControllerComponent.getComponentType(), controller);
         }
 
+        // Try bare name first, then fall back to runecore: namespace prefix
         EntityEffect nativeEffect = EntityEffect.getAssetMap().getAsset(nativeEffectId);
         int index = EntityEffect.getAssetMap().getIndex(nativeEffectId);
 
-        if (nativeEffect != null) {
+        if (nativeEffect == null || index < 0) {
+            String namespacedId = "runecore:" + nativeEffectId;
+            nativeEffect = EntityEffect.getAssetMap().getAsset(namespacedId);
+            index = EntityEffect.getAssetMap().getIndex(namespacedId);
+        }
+
+        if (nativeEffect != null && index >= 0) {
             float durationSecs = defaultDurationTicks / 20.0f;
-            controller.addEffect(entityRef, index, nativeEffect, durationSecs, OverlapBehavior.EXTEND, store);
-            System.out.println("[RuneCore] Applied native effect " + nativeEffectId + " (Amp: " + amplifier + ")");
+            System.out.println("[RuneCore] Applying native effect: " + nativeEffectId + " (Index: " + index + ", Duration: " + durationSecs + "s)");
+            controller.addEffect(entityRef, index, nativeEffect, durationSecs, OverlapBehavior.OVERWRITE, store);
         } else {
-            System.err.println("[RuneCore] Native effect not found: " + nativeEffectId);
+            System.err.println("[RuneCore] Native effect not found (tried bare + runecore: prefix): " + nativeEffectId);
         }
     }
 

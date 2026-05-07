@@ -1,0 +1,5 @@
+{
+  "StatusEffectIcon": "UI/StatusEffects/Electrified.png",
+  "Duration": 10.0,
+  "OverlapBehavior": "Extend"
+}

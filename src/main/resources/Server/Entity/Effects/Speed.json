@@ -1,0 +1,21 @@
+{
+  "StatusEffectIcon": "UI/StatusEffects/Speed.png",
+  "ApplicationEffects": {
+    "ModelVFXId": "Drop_Legendary",
+    "Particles": [
+      {
+        "SystemId": "Rings_Rings",
+        "Color": "#ffffff"
+      }
+    ],
+    "FirstPersonParticles": [
+      {
+        "SystemId": "Test_Mage_Orb",
+        "Color": "#ff0000"
+      }
+    ],
+    "HorizontalSpeedMultiplier": 3
+  },
+  "Duration": 0.5,
+  "OverlapBehavior": "Extend"
+}

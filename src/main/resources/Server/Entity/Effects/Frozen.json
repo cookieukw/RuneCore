@@ -1,0 +1,37 @@
+{
+  "StatusEffectIcon": "UI/StatusEffects/Frozen.png",
+  "ApplicationEffects": {
+    "ModelVFXId": "Freeze",
+    "Particles": [
+      {
+        "SystemId": "Erosion_Status_Effect"
+      },
+      {
+        "SystemId": "Potion_Morph_Burst"
+      }
+    ],
+    "FirstPersonParticles": [
+      {
+        "SystemId": "Impact_Battleaxe_Bash",
+        "Color": "#007fff"
+      }
+    ],
+    "MovementEffects": {
+      "DisableAll": true,
+      "DisableForward": true,
+      "DisableBackward": true,
+      "DisableLeft": true,
+      "DisableRight": true,
+      "DisableSprint": true,
+      "DisableJump": true,
+      "DisableCrouch": true
+    },
+    "ScreenEffect": "ScreenEffects/Snow.png",
+    "MouseSensitivityAdjustmentTarget": 1,
+    "MouseSensitivityAdjustmentDuration": 0
+  },
+  "Duration": 0.5,
+  "OverlapBehavior": "Extend",
+  "Infinite": false,
+  "Debuff": true
+}

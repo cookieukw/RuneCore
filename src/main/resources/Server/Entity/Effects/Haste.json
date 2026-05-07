@@ -1,0 +1,8 @@
+{
+  "StatusEffectIcon": "UI/StatusEffects/Haste.png",
+  "ApplicationEffects": {
+    "ModelVFXId": "Creative_Tool",
+    "EntityBottomTint": "#4f40f4",
+    "EntityTopTint": "#6588f8"
+  }
+}

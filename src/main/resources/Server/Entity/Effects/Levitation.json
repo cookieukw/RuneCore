@@ -1,0 +1,18 @@
+{
+  "StatusEffectIcon": "UI/StatusEffects/Levitation.png",
+  "ApplicationEffects": {
+    "ModelVFXId": "Creative_Tool",
+    "EntityBottomTint": "#4f40f4",
+    "EntityTopTint": "#6588f8",
+    "HorizontalSpeedMultiplier": 0.2,
+    "KnockbackMultiplier": 0.3
+  },
+  "DamageResistance": {
+    "Fall": [
+      {
+        "CalculationType": "Additive",
+        "Amount": 1
+      }
+    ]
+  }
+}

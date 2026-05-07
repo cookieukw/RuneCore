@@ -1,10 +1,14 @@
 {
   "TranslationProperties": {
-    "Name": "server.items.essence_void.name"
+    "Name": "server.Essence_Void.name"
   },
-  "Quality": "Common",
   "Icon": "Icons/Items/void_essence.png",
+  "Quality": "Common",
+  "Model": "Resources/Ingredients/Essence.blockymodel",
+  "Texture": "Resources/Ingredients/Essence_Textures/Void_Essence_Texture.png",
+  "PlayerAnimationsId": "Item",
   "MaxStack": 64,
+  "Scale": 0.8,
   "Tags": {
     "Type": [
       "Essence"
