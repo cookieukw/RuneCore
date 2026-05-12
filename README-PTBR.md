@@ -1,6 +1,6 @@
 # 🔮 RuneCore: Motor de Magia para Hytale
 
-[Read in English](README.md) | [Guia da API](API_USAGE-PTBR.md) | [Docs Técnicos](docs/ELEMENTS-PTBR.md) | [Manual](RuneCore_Manual-PTBR.md)
+[Read in English](README.md) | [Guia da API](API_USAGE-PTBR.md) | [Referência da API](docs/API_REFERENCE.md) | [Docs Técnicos](docs/ELEMENTS-PTBR.md) | [Manual](RuneCore_Manual-PTBR.md)
 
 > [!IMPORTANT]
 > **Status do Projeto: Em Desenvolvimento**

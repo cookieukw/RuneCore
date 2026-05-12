@@ -1,6 +1,6 @@
 # 🔮 RuneCore: Magic Engine for Hytale
 
-[Leia em português](README-PTBR.md) | [API Guide](API_USAGE.md) | [Technical Docs](docs/ELEMENTS.md) | [Manual](RuneCore_Manual.md)
+[Leia em português](README-PTBR.md) | [API Guide](API_USAGE.md) | [API Reference](docs/API_REFERENCE.md) | [Technical Docs](docs/ELEMENTS.md) | [Manual](RuneCore_Manual.md)
 
 > [!IMPORTANT]
 > **Project Status: Under Development**
