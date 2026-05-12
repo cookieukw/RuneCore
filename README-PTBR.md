@@ -2,13 +2,19 @@
 
 [Read in English](README.md) | [Guia da API](API_USAGE-PTBR.md) | [Referência da API](docs/API_REFERENCE.md) | [Docs Técnicos](docs/ELEMENTS-PTBR.md) | [Manual](RuneCore_Manual-PTBR.md)
 
+<p align="center">
+  <img src="icons/logo/runecore-logo.png" alt="Logo do RuneCore" height="180">
+  &nbsp;&nbsp;&nbsp;&nbsp;
+  <img src="icons/logo/runecore-logo-construction.png" alt="Logo do RuneCore — Camadas e traços" height="180">
+</p>
+
 > [!IMPORTANT]
 > **Status do Projeto: Em Desenvolvimento**
 >
 > - 🛠️ **Em Progresso:** O sistema de drops e a mecânica de drop de essências estão sendo desenvolvidos no momento.
 > - ✅ **Funcional:** Comandos principais e o sistema de gerenciamento de status do jogador estão totalmente operacionais.
 > - 🧪 **API:** A API ainda está em fase de testes.
-> - 🎨 **Visuais:** O projeto ainda não possui um ícone próprio. As essências utilizam ícones temporários em pixel art.
+> - 🎨 **Visuais:** O projeto agora tem sua própria logo! As essências utilizam ícones em pixel art.
 > - 🚀 **Próximos Passos:** Adicionar modelos 3D para as essências, reciclando modelos já existentes dentro do jogo.
 >
 > **Nota para testes:** Caso deseje testar o mod totalmente, lembre-se de descomentar o registro dos sistemas no arquivo principal do plugin (`ExamplePlugin.java`).

@@ -2,13 +2,19 @@
 
 [Leia em português](README-PTBR.md) | [API Guide](API_USAGE.md) | [API Reference](docs/API_REFERENCE.md) | [Technical Docs](docs/ELEMENTS.md) | [Manual](RuneCore_Manual.md)
 
+<p align="center">
+  <img src="icons/logo/runecore-logo.png" alt="RuneCore Logo" height="180">
+  &nbsp;&nbsp;&nbsp;&nbsp;
+  <img src="icons/logo/runecore-logo-construction.png" alt="RuneCore Logo — Layers and traces" height="180">
+</p>
+
 > [!IMPORTANT]
 > **Project Status: Under Development**
 >
 > - 🛠️ **In Progress:** Drop system and essence drop mechanics are currently being developed.
 > - ✅ **Functional:** Core commands and player status management system are fully operational.
 > - 🧪 **API:** The API is currently in the testing phase.
-> - 🎨 **Visuals:** The project does not have a custom icon yet. Essences currently use temporary pixel art icons.
+> - 🎨 **Visuals:** The project now has its own logo! Essences currently use pixel art icons.
 > - 🚀 **Next Steps:** Implementing 3D models for essences by recycling existing in-game assets.
 >
 > **Note for testing:** If you wish to fully test the mod, please uncomment the system registrations in the main plugin file (`ExamplePlugin.java`).
