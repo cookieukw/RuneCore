@@ -50,35 +50,37 @@ You can test the registered status effects and spell system using the built-in a
 
 Below is the complete table of effects currently registered in the `RuneCore` engine, their development states, and the expected behavior of each:
 
-| Status | Effect ID | Has Native/JSON Visual? | What it should do |
-| :---: | :--- | :--- | :--- |
-| [x] | `speed` | Speed | Gives movement speed buff. |
-| [x] | `slowness` | Slowness | Slows down the entity. |
-| [ ] | `haste` | Haste | Modifies Attack Speed and Mining Speed (+50%) and shows UI. (Attack/Mining Speed pending) |
-| [ ] | `mining_fatigue`| Mining_Fatigue | Modifies Attack Speed and Mining Speed (-70%) and shows UI. (Attack/Mining Speed pending) |
-| [x] | `jump_boost` | Jump_Boost | Jump higher. |
-| [x] | `high_jump` | High_Jump | Jump much higher. |
-| [x] | `slow_falling` | Slow_Falling | Slow falling. |
-| [x] | `levitation` | Levitation | Causes the entity to float upwards. |
-| [x] | `regeneration` | Regeneration | Heals +1 health every 50 ticks. |
-| [x] | `poison` | Poison | Deals 1 health damage every 25 ticks. |
-| [x] | `decay` | Decay | Deals 1 health damage every 40 ticks. |
-| [x] | `burn` | Burn | Deals 1 health damage every 20 ticks + UI. |
-| [x] | `nausea` | Nausea | Rotates the camera (NauseaTick) + UI. |
-| [x] | `bleeding` | Bleeding | Deals 1 health damage every 20 ticks + UI + Custom blood particles. |
-| [x] | `frozen` | Frozen | Prevents movement temporarily. |
-| [x] | `instant_health`| (none) | Instant healing (4.0 * power). |
-| [x] | `instant_damage`| InstantDamage | Instant damage (6.0 * power). |
-| [ ] | `damage_fire_instant`| DamageFireInstant | Instant fire damage (10.0 * power). |
-| [x] | `invisibility` | Invisibility | Hides the player from others. (Fine-tuning of own visibility pending) |
-| [ ] | `glowing` | Glowing | Adds dynamic light (DynamicLight) + UI. (Does not persist through logout/relog) |
-| [x] | `blindness` | Blindness | Modifies vision (VisualEffectHelper) + UI. |
-| [x] | `night_vision` | NightVision | White dynamic light around the player + UI. |
-| [ ] | `water_breathing`| WaterBreathing | Allows native underwater breathing. (Simply does not work) |
-| [x] | `fire_resistance`| FireResistance | Native fire resistance. |
-| [ ] | `resistance` | Resistance | Native resistance. (Does not work, needs improvements) |
-| [ ] | `strength` | Strength | Native strength. (Does not work, needs improvements) |
-| [ ] | `weakness` | Weakness | Native weakness. (Does not work, needs improvements) |
+| Icon | Status | Effect ID | Has Native/JSON Visual? | What it should do |
+| :---: | :---: | :--- | :--- | :--- |
+| <img src="icons/128x/speed.png" height="32"> | [x] | `speed` | Speed | Gives movement speed buff. |
+| <img src="icons/128x/slowness.png" height="32"> | [x] | `slowness` | Slowness | Slows down the entity. |
+| <img src="icons/128x/haste.png" height="32"> | [ ] | `haste` | Haste | Modifies Attack Speed and Mining Speed (+50%) and shows UI. (Attack/Mining Speed pending) |
+| <img src="icons/128x/mining_fatigue.png" height="32"> | [ ] | `mining_fatigue`| Mining_Fatigue | Modifies Attack Speed and Mining Speed (-70%) and shows UI. (Attack/Mining Speed pending) |
+| <img src="icons/128x/jump_boost.png" height="32"> | [x] | `jump_boost` | Jump_Boost | Jump higher. |
+| <img src="icons/128x/high_jump.png" height="32"> | [x] | `high_jump` | High_Jump | Jump much higher. |
+| <img src="icons/128x/slow_falling.png" height="32"> | [x] | `slow_falling` | Slow_Falling | Slow falling. |
+| <img src="icons/128x/levitation.png" height="32"> | [x] | `levitation` | Levitation | Causes the entity to float upwards. |
+| <img src="icons/128x/regeneration.png" height="32"> | [x] | `regeneration` | Regeneration | Heals +1 health every 50 ticks. |
+| <img src="icons/128x/poison.png" height="32"> | [x] | `poison` | Poison | Deals 1 health damage every 25 ticks. |
+| <img src="icons/128x/decay.png" height="32"> | [x] | `decay` | Decay | Deals 1 health damage every 40 ticks. |
+| <img src="icons/128x/darkness.png" height="32"> | [x] | `darkness` | Darkness | Reduces vision brightness significantly. |
+| <img src="icons/128x/electrified.png" height="32"> | [x] | `electrified` | Electrified | Deals electric damage and shows sparkles. |
+| <img src="icons/128x/burn.png" height="32"> | [x] | `burn` | Burn | Deals 1 health damage every 20 ticks + UI. |
+| <img src="icons/128x/nausea.png" height="32"> | [x] | `nausea` | Nausea | Rotates the camera (NauseaTick) + UI. |
+| <img src="icons/128x/bleeding.png" height="32"> | [x] | `bleeding` | Bleeding | Deals 1 health damage every 20 ticks + UI + Custom blood particles. |
+| <img src="icons/128x/frozen.png" height="32"> | [x] | `frozen` | Frozen | Prevents movement temporarily. |
+| | [x] | `instant_health`| (none) | Instant healing (4.0 * power). |
+| | [x] | `instant_damage`| InstantDamage | Instant damage (6.0 * power). |
+| | [ ] | `damage_fire_instant`| DamageFireInstant | Instant fire damage (10.0 * power). |
+| <img src="icons/128x/invisibility.png" height="32"> | [x] | `invisibility` | Invisibility | Hides the player from others. (Fine-tuning of own visibility pending) |
+| <img src="icons/128x/glowing.png" height="32"> | [ ] | `glowing` | Glowing | Adds dynamic light (DynamicLight) + UI. (Does not persist through logout/relog) |
+| <img src="icons/128x/blindness.png" height="32"> | [x] | `blindness` | Blindness | Modifies vision (VisualEffectHelper) + UI. |
+| <img src="icons/128x/night_vision.png" height="32"> | [x] | `night_vision` | NightVision | White dynamic light around the player + UI. |
+| <img src="icons/128x/water_breathing.png" height="32"> | [ ] | `water_breathing`| WaterBreathing | Allows native underwater breathing. (Simply does not work) |
+| <img src="icons/128x/fire_resistance.png" height="32"> | [x] | `fire_resistance`| FireResistance | Native fire resistance. |
+| <img src="icons/128x/resistance.png" height="32"> | [ ] | `resistance` | Resistance | Native resistance. (Does not work, needs improvements) |
+| <img src="icons/128x/strength.png" height="32"> | [ ] | `strength` | Strength | Native strength. (Does not work, needs improvements) |
+| <img src="icons/128x/weakness.png" height="32"> | [ ] | `weakness` | Weakness | Native weakness. (Does not work, needs improvements) |
 
 ### Implementation Note
 To enable all systems during development, ensure they are registered in your entry point:
