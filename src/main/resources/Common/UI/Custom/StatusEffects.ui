@@ -6,7 +6,7 @@
   }
   Group #IconBackground {
     Anchor: (Width: 84, Height: 84, Top: 6, Left: 9);
-    Background: (Color: #2B2B2BAA);
+    Background: (Color: #111114ab);
   }
   Group #BleedingIcon {
     Visible: false;
