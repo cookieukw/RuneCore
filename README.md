@@ -123,3 +123,13 @@ if (poison != null) {
 ## 🛠️ Modder's Guide
 
 Interested in building on top of RuneCore? Check out our [**API Usage Guide**](API_USAGE.md) for code examples and integration steps.
+
+## ⚖️ License
+
+This project, including its source code, documentation, and **pixel art icons** (located in the `/icons` directory), is licensed under the **Creative Commons Attribution-NonCommercial 4.0 International (CC BY-NC 4.0)**.
+
+- **Attribution (BY):** You must give appropriate credit to the original author.
+- **NonCommercial (NC):** You may not use the material for commercial purposes.
+- **Derivative works:** You may remix and build upon this work under a different license, as long as you respect the conditions above.
+
+For more details, see the [LICENSE](LICENSE) file or visit [Creative Commons](https://creativecommons.org/licenses/by-nc/4.0/).

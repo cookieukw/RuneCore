@@ -123,3 +123,13 @@ if (poison != null) {
 ## 🛠️ Guia para Modders
 
 Interessado em construir em cima do RuneCore? Confira nosso [**Guia de Uso da API**](API_USAGE.md) para exemplos de código e passos de integração.
+
+## ⚖️ Licença
+
+Este projeto, incluindo seu código-fonte, documentação e **ícones em pixel art** (localizados no diretório `/icons`), está licenciado sob a **Creative Commons Attribution-NonCommercial 4.0 International (CC BY-NC 4.0)**.
+
+- **Atribuição (BY):** Você deve dar o crédito apropriado ao autor original.
+- **Não Comercial (NC):** Você não pode usar o material para fins comerciais.
+- **Obras derivadas:** Quem modificar pode escolher outra licença para o derivado, desde que respeite as condições acima.
+
+Para mais detalhes, veja o arquivo [LICENSE](LICENSE) ou visite o site da [Creative Commons](https://creativecommons.org/licenses/by-nc/4.0/deed.pt_BR).
