@@ -11,13 +11,11 @@
 > [!IMPORTANT]
 > **Status do Projeto: Em Desenvolvimento**
 >
-> - 🛠️ **Em Progresso:** O sistema de drops e a mecânica de drop de essências estão sendo desenvolvidos no momento.
-> - ✅ **Funcional:** Comandos principais e o sistema de gerenciamento de status do jogador estão totalmente operacionais.
+> - 🛠️ **Em Progresso:** Desenvolvimento de novas poções e sistemas de craft para utilizar os novos efeitos de status.
+> - ✅ **Funcional:** Comandos principais, gerenciamento de status e sistema de drop de essências.
 > - 🧪 **API:** A API ainda está em fase de testes.
-> - 🎨 **Visuais:** O projeto agora tem sua própria logo! As essências utilizam ícones em pixel art.
-> - 🚀 **Próximos Passos:** Adicionar modelos 3D para as essências, reciclando modelos já existentes dentro do jogo.
->
-> **Nota para testes:** Caso deseje testar o mod totalmente, lembre-se de descomentar o registro dos sistemas no arquivo principal do plugin (`ExamplePlugin.java`).
+> - 🎨 **Visuais:** Logo própria e ícones de essência em alta qualidade. Modelos 3D das essências já implementados (reciclados do jogo).
+> - 🚀 **Próximos Passos:** Implementar o sistema completo de Alquimia (**RuneAlchemy**) e criação complexa de poções.
 
 ---
 

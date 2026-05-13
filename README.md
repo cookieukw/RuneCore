@@ -11,13 +11,11 @@
 > [!IMPORTANT]
 > **Project Status: Under Development**
 >
-> - 🛠️ **In Progress:** Drop system and essence drop mechanics are currently being developed.
-> - ✅ **Functional:** Core commands and player status management system are fully operational.
+> - 🛠️ **In Progress:** Developing new potions and crafting recipes to utilize the new status effects.
+> - ✅ **Functional:** Core commands, player status management, and essence drop system.
 > - 🧪 **API:** The API is currently in the testing phase.
-> - 🎨 **Visuals:** The project now has its own logo! Essences currently use pixel art icons.
-> - 🚀 **Next Steps:** Implementing 3D models for essences by recycling existing in-game assets.
->
-> **Note for testing:** If you wish to fully test the mod, please uncomment the system registrations in the main plugin file (`ExamplePlugin.java`).
+> - 🎨 **Visuals:** Custom logo and high-quality essence icons. 3D models for essences are now implemented using recycled game assets.
+> - 🚀 **Next Steps:** Implementing the full **RuneAlchemy** system and complex potion brewing.
 
 ---
 
