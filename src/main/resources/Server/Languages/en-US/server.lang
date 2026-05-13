@@ -1,20 +1,66 @@
-Essence_Acid.name = Acid Essence
-Essence_Aether.name = Aether Essence
-Essence_Blood.name = Blood Essence
-Essence_Chaos.name = Chaos Essence
-Essence_Crystal.name = Crystal Essence
-Essence_Death.name = Death Essence
-Essence_Earth.name = Earth Essence
-Essence_Fire.name = Fire Essence
-Essence_Ice.name = Ice Essence
-Essence_Life.name = Life Essence
-Essence_Light.name = Light Essence
-Essence_Lightning.name = Lightning Essence
-Essence_Metal.name = Metal Essence
-Essence_Mind.name = Mind Essence
-Essence_Poison.name = Poison Essence
-Essence_Shadow.name = Shadow Essence
-Essence_Time.name = Time Essence
-Essence_Void.name = Void Essence
-Essence_Water.name = Water Essence
-Essence_Wind.name = Wind Essence
+
+items.Ingredient_Acid_Essence.name = Acid Essence
+items.Ingredient_Acid_Essence.description = A concentrated essence of acid.
+
+items.Ingredient_Aether_Essence.name = Aether Essence
+items.Ingredient_Aether_Essence.description = A concentrated essence of the aether.
+
+items.Ingredient_Blood_Essence.name = Blood Essence
+items.Ingredient_Blood_Essence.description = A concentrated essence of blood.
+
+items.Ingredient_Chaos_Essence.name = Chaos Essence
+items.Ingredient_Chaos_Essence.description = A concentrated essence of chaos.
+
+items.Ingredient_Crystal_Essence.name = Crystal Essence
+items.Ingredient_Crystal_Essence.description = A concentrated essence of crystal.
+
+items.Ingredient_Death_Essence.name = Death Essence
+items.Ingredient_Death_Essence.description = A concentrated essence of death.
+
+items.Ingredient_Earth_Essence.name = Earth Essence
+items.Ingredient_Earth_Essence.description = A concentrated essence of earth.
+
+items.Ingredient_Fire_Essence.name = Fire Essence
+items.Ingredient_Fire_Essence.description = A concentrated essence of fire.
+
+items.Ingredient_Ice_Essence.name = Ice Essence
+items.Ingredient_Ice_Essence.description = A concentrated essence of ice.
+
+items.Ingredient_Life_Essence.name = Life Essence
+items.Ingredient_Life_Essence.description = A concentrated essence of life.
+
+items.Ingredient_Life_Essence_Concentrated.name = Concentrated Life Essence
+items.Ingredient_Life_Essence_Concentrated.description = An extremely powerful concentrated life essence.
+
+items.Ingredient_Light_Essence.name = Light Essence
+items.Ingredient_Light_Essence.description = A concentrated essence of light.
+
+items.Ingredient_Lightning_Essence.name = Lightning Essence
+items.Ingredient_Lightning_Essence.description = A concentrated essence of lightning.
+
+items.Ingredient_Metal_Essence.name = Metal Essence
+items.Ingredient_Metal_Essence.description = A concentrated essence of metal.
+
+items.Ingredient_Mind_Essence.name = Mind Essence
+items.Ingredient_Mind_Essence.description = A concentrated essence of mind.
+
+items.Ingredient_Poison_Essence.name = Poison Essence
+items.Ingredient_Poison_Essence.description = A concentrated essence of poison.
+
+items.Ingredient_Shadow_Essence.name = Shadow Essence
+items.Ingredient_Shadow_Essence.description = A concentrated essence of shadow.
+
+items.Ingredient_Time_Essence.name = Time Essence
+items.Ingredient_Time_Essence.description = A concentrated essence of time.
+
+items.Ingredient_Void_Essence.name = Void Essence
+items.Ingredient_Void_Essence.description = A concentrated essence of void.
+
+items.Ingredient_Water_Essence.name = Water Essence
+items.Ingredient_Water_Essence.description = A concentrated essence of water.
+
+items.Ingredient_Wind_Essence.name = Wind Essence
+items.Ingredient_Wind_Essence.description = A concentrated essence of wind.
+
+items.Ingredient_Voidheart.name = Voidheart
+items.Ingredient_Voidheart.description = A pulsating heart extracted from the depths of the void.

@@ -1,20 +1,65 @@
-Essence_Acid.name = Essência de Ácido
-Essence_Aether.name = Essência do Éter
-Essence_Blood.name = Essência de Sangue
-Essence_Chaos.name = Essência do Caos
-Essence_Crystal.name = Essência de Cristal
-Essence_Death.name = Essência da Morte
-Essence_Earth.name = Essência da Terra
-Essence_Fire.name = Essência do Fogo
-Essence_Ice.name = Essência do Gelo
-Essence_Life.name = Essência da Vida
-Essence_Light.name = Essência da Luz
-Essence_Lightning.name = Essência do Trovão
-Essence_Metal.name = Essência de Metal
-Essence_Mind.name = Essência da Mente
-Essence_Poison.name = Essência de Veneno
-Essence_Shadow.name = Essência das Sombras
-Essence_Time.name = Essência do Tempo
-Essence_Void.name = Essência do Vazio
-Essence_Water.name = Essência da Água
-Essence_Wind.name = Essência do Vento
+items.Ingredient_Acid_Essence.name=Essência de Ácido
+items.Ingredient_Acid_Essence.description = Uma essência concentrada de ácido.
+
+items.Ingredient_Aether_Essence.name = Essência do Éter
+items.Ingredient_Aether_Essence.description = Uma essência concentrada do éter.
+
+items.Ingredient_Blood_Essence.name = Essência de Sangue
+items.Ingredient_Blood_Essence.description = Uma essência concentrada de sangue.
+
+items.Ingredient_Chaos_Essence.name = Essência do Caos
+items.Ingredient_Chaos_Essence.description = Uma essência concentrada do caos.
+
+items.Ingredient_Crystal_Essence.name = Essência de Cristal
+items.Ingredient_Crystal_Essence.description = Uma essência concentrada de cristal.
+
+items.Ingredient_Death_Essence.name = Essência da Morte
+items.Ingredient_Death_Essence.description = Uma essência concentrada da morte.
+
+items.Ingredient_Earth_Essence.name = Essência da Terra
+items.Ingredient_Earth_Essence.description = Uma essência concentrada da terra.
+
+items.Ingredient_Fire_Essence.name = Essência do Fogo
+items.Ingredient_Fire_Essence.description = Uma essência concentrada do fogo.
+
+items.Ingredient_Ice_Essence.name = Essência do Gelo
+items.Ingredient_Ice_Essence.description = Uma essência concentrada do gelo.
+
+items.Ingredient_Life_Essence.name = Essência da Vida
+items.Ingredient_Life_Essence.description = Uma essência concentrada da vida.
+
+items.Ingredient_Life_Essence_Concentrated.name = Essência da Vida Concentrada
+items.Ingredient_Life_Essence_Concentrated.description = Uma essência da vida extremamente poderosa e concentrada.
+
+items.Ingredient_Light_Essence.name = Essência da Luz
+items.Ingredient_Light_Essence.description = Uma essência concentrada da luz.
+
+items.Ingredient_Lightning_Essence.name = Essência do Trovão
+items.Ingredient_Lightning_Essence.description = Uma essência concentrada do trovão.
+
+items.Ingredient_Metal_Essence.name = Essência de Metal
+items.Ingredient_Metal_Essence.description = Uma essência concentrada de metal.
+
+items.Ingredient_Mind_Essence.name = Essência da Mente
+items.Ingredient_Mind_Essence.description = Uma essência concentrada da mente.
+
+items.Ingredient_Poison_Essence.name = Essência de Veneno
+items.Ingredient_Poison_Essence.description = Uma essência concentrada de veneno.
+
+items.Ingredient_Shadow_Essence.name = Essência das Sombras
+items.Ingredient_Shadow_Essence.description = Uma essência concentrada das sombras.
+
+items.Ingredient_Time_Essence.name = Essência do Tempo
+items.Ingredient_Time_Essence.description = Uma essência concentrada do tempo.
+
+items.Ingredient_Void_Essence.name = Essência do Vazio
+items.Ingredient_Void_Essence.description = Uma essência concentrada do vazio.
+
+items.Ingredient_Water_Essence.name = Essência da Água
+items.Ingredient_Water_Essence.description = Uma essência concentrada da água.
+
+items.Ingredient_Wind_Essence.name = Essência do Vento
+items.Ingredient_Wind_Essence.description = Uma essência concentrada do vento.
+
+items.Ingredient_Voidheart.name = Coração do Vazio
+items.Ingredient_Voidheart.description = Um coração pulsante extraído das profundezas do vazio.
