@@ -1,66 +1,66 @@
-# Essence Items
-server.items.Ingredient_Acid_Essence.name = Acid Essence
-server.items.Ingredient_Acid_Essence.description = A corrosive essence that dissolves even the most resilient materials.
 
-server.items.Ingredient_Aether_Essence.name = Aether Essence
-server.items.Ingredient_Aether_Essence.description = Pure energy from celestial planes, vibrating with ancient power.
+items.Ingredient_Acid_Essence.name = Acid Essence
+items.Ingredient_Acid_Essence.description = A corrosive essence that dissolves even the most resilient materials.
 
-server.items.Ingredient_Blood_Essence.name = Blood Essence
-server.items.Ingredient_Blood_Essence.description = A vital fragment harvested from the core of powerful beings.
+items.Ingredient_Aether_Essence.name = Aether Essence
+items.Ingredient_Aether_Essence.description = Pure energy from celestial planes, vibrating with ancient power.
 
-server.items.Ingredient_Chaos_Essence.name = Chaos Essence
-server.items.Ingredient_Chaos_Essence.description = Unstable matter that defies the laws of reality and logic.
+items.Ingredient_Blood_Essence.name = Blood Essence
+items.Ingredient_Blood_Essence.description = A vital fragment harvested from the core of powerful beings.
 
-server.items.Ingredient_Crystal_Essence.name = Crystal Essence
-server.items.Ingredient_Crystal_Essence.description = A solidified form of pure magic, shining with absolute clarity.
+items.Ingredient_Chaos_Essence.name = Chaos Essence
+items.Ingredient_Chaos_Essence.description = Unstable matter that defies the laws of reality and logic.
 
-server.items.Ingredient_Death_Essence.name = Death Essence
-server.items.Ingredient_Death_Essence.description = The cold whisper of the end, contained in a tangible form.
+items.Ingredient_Crystal_Essence.name = Crystal Essence
+items.Ingredient_Crystal_Essence.description = A solidified form of pure magic, shining with absolute clarity.
 
-server.items.Ingredient_Earth_Essence.name = Earth Essence
-server.items.Ingredient_Earth_Essence.description = The weight of mountains and the strength of eras concentrated in a crystal.
+items.Ingredient_Death_Essence.name = Death Essence
+items.Ingredient_Death_Essence.description = The cold whisper of the end, contained in a tangible form.
 
-server.items.Ingredient_Fire_Essence.name = Fire Essence
-server.items.Ingredient_Fire_Essence.description = Eternal flames that never go out, emanating intense heat.
+items.Ingredient_Earth_Essence.name = Earth Essence
+items.Ingredient_Earth_Essence.description = The weight of mountains and the strength of eras concentrated in a crystal.
 
-server.items.Ingredient_Ice_Essence.name = Ice Essence
-server.items.Ingredient_Ice_Essence.description = An absolute cold that freezes the very soul of whoever touches it.
+items.Ingredient_Fire_Essence.name = Fire Essence
+items.Ingredient_Fire_Essence.description = Eternal flames that never go out, emanating intense heat.
 
-server.items.Ingredient_Life_Essence.name = Life Essence
-server.items.Ingredient_Life_Essence.description = A vibrant spark that pulses with the rhythm of all creation.
+items.Ingredient_Ice_Essence.name = Ice Essence
+items.Ingredient_Ice_Essence.description = An absolute cold that freezes the very soul of whoever touches it.
 
-server.items.Ingredient_Life_Essence_Concentrated.name = Concentrated Life Essence
-server.items.Ingredient_Life_Essence_Concentrated.description = An extremely powerful life essence, pulsing with an overwhelming vital force.
+items.Ingredient_Life_Essence.name = Life Essence
+items.Ingredient_Life_Essence.description = A vibrant spark that pulses with the rhythm of all creation.
 
-server.items.Ingredient_Light_Essence.name = Light Essence
-server.items.Ingredient_Light_Essence.description = The purifying glow of the sun, capable of dispelling any darkness.
+items.Ingredient_Life_Essence_Concentrated.name = Concentrated Life Essence
+items.Ingredient_Life_Essence_Concentrated.description = An extremely powerful life essence, pulsing with an overwhelming vital force.
 
-server.items.Ingredient_Lightning_Essence.name = Lightning Essence
-server.items.Ingredient_Lightning_Essence.description = Frenetic electrical energy, crackling with the power of storms.
+items.Ingredient_Light_Essence.name = Light Essence
+items.Ingredient_Light_Essence.description = The purifying glow of the sun, capable of dispelling any darkness.
 
-server.items.Ingredient_Metal_Essence.name = Metal Essence
-server.items.Ingredient_Metal_Essence.description = The essence of resistance, shaped by the pressure of the depths.
+items.Ingredient_Lightning_Essence.name = Lightning Essence
+items.Ingredient_Lightning_Essence.description = Frenetic electrical energy, crackling with the power of storms.
 
-server.items.Ingredient_Mind_Essence.name = Mind Essence
-server.items.Ingredient_Mind_Essence.description = The echo of thoughts and wisdom, vibrating at a psychic frequency.
+items.Ingredient_Metal_Essence.name = Metal Essence
+items.Ingredient_Metal_Essence.description = The essence of resistance, shaped by the pressure of the depths.
 
-server.items.Ingredient_Poison_Essence.name = Poison Essence
-server.items.Ingredient_Poison_Essence.description = A lethal toxin that flows like a viscous shadow.
+items.Ingredient_Mind_Essence.name = Mind Essence
+items.Ingredient_Mind_Essence.description = The echo of thoughts and wisdom, vibrating at a psychic frequency.
 
-server.items.Ingredient_Shadow_Essence.name = Shadow Essence
-server.items.Ingredient_Shadow_Essence.description = The void between the stars, where light dares not enter.
+items.Ingredient_Poison_Essence.name = Poison Essence
+items.Ingredient_Poison_Essence.description = A lethal toxin that flows like a viscous shadow.
 
-server.items.Ingredient_Time_Essence.name = Time Essence
-server.items.Ingredient_Time_Essence.description = A fragment of eternity, where past and future meet.
+items.Ingredient_Shadow_Essence.name = Shadow Essence
+items.Ingredient_Shadow_Essence.description = The void between the stars, where light dares not enter.
 
-server.items.Ingredient_Void_Essence.name = Void Essence
-server.items.Ingredient_Void_Essence.description = The absolute nothingness that consumes everything it touches.
+items.Ingredient_Time_Essence.name = Time Essence
+items.Ingredient_Time_Essence.description = A fragment of eternity, where past and future meet.
 
-server.items.Ingredient_Water_Essence.name = Water Essence
-server.items.Ingredient_Water_Essence.description = The fluidity of the oceans, adaptable and unstoppable.
+items.Ingredient_Void_Essence.name = Void Essence
+items.Ingredient_Void_Essence.description = The absolute nothingness that consumes everything it touches.
 
-server.items.Ingredient_Wind_Essence.name = Wind Essence
-server.items.Ingredient_Wind_Essence.description = The impalpable breath of the heavens, swift as thought.
+items.Ingredient_Water_Essence.name = Water Essence
+items.Ingredient_Water_Essence.description = The fluidity of the oceans, adaptable and unstoppable.
 
-server.items.Ingredient_Voidheart.name = Voidheart
-server.items.Ingredient_Voidheart.description = A pulsating heart extracted from the depths of the void, emanating an aura of terror.
+items.Ingredient_Wind_Essence.name = Wind Essence
+items.Ingredient_Wind_Essence.description = The impalpable breath of the heavens, swift as thought.
+
+items.Ingredient_Voidheart.name = Voidheart
+items.Ingredient_Voidheart.description = A pulsating heart extracted from the depths of the void, emanating an aura of terror.
