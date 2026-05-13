@@ -74,7 +74,7 @@ Para um detalhamento completo de todos os 20 elementos e suas mecânicas, veja n
 
 ---
 
-## 🎮 Como Testar In-Game & Efeitos de Status Atuais
+## 5. 🎮 Como Testar In-Game & Efeitos de Status Atuais
 
 Você pode testar os efeitos de status registrados e o sistema de feitiços usando o comando administrativo integrado:
 
@@ -154,11 +154,11 @@ if (poison != null) {
 
 ---
 
-## 🛠️ Guia para Modders
+## 6. 🛠️ Guia para Modders
 
 Interessado em construir em cima do RuneCore? Confira nosso [**Guia de Uso da API**](API_USAGE.md) para exemplos de código e passos de integração.
 
-## ⚖️ Licença
+## 7. ⚖️ Licença
 
 Este projeto, incluindo seu código-fonte, documentação e **ícones em pixel art** (localizados no diretório `/icons`), está licenciado sob a **Creative Commons Attribution-NonCommercial 4.0 International (CC BY-NC 4.0)**.
 
