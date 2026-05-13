@@ -35,7 +35,35 @@ O RuneCore é um sistema de magia modular. Ele é dividido em módulos interdepe
 *   **⚔️ RuneMagic:** Focado em feitiços, runas (efeitos passivos), artefatos e grimórios.
 *   **⚗️ RuneAlchemy:** Um sistema químico e alquímico para criar poções e encantar itens usando essências.
 
-## 3. Recursos Principais ✨
+## 3. Essências Elementais 🔮
+
+O RuneCore apresenta 20 elementos distintos, cada um com sua própria essência utilizada para crafting e conjuração de feitiços. Abaixo estão os ícones das essências em alta qualidade atualmente implementados:
+
+### Nível Básico
+| Ícone | Elemento | Nível | Ícone | Elemento | Nível |
+| :---: | :--- | :--- | :---: | :--- | :--- |
+| <img src="icons/essences/Ingredient_Fire_Essence.png" height="48"> | **Fogo** | Básico | <img src="icons/essences/Ingredient_Water_Essence.png" height="48"> | **Água** | Básico |
+| <img src="icons/essences/Ingredient_Earth_Essence.png" height="48"> | **Terra** | Básico | <img src="icons/essences/Ingredient_Wind_Essence.png" height="48"> | **Vento** | Básico |
+| <img src="icons/essences/Ingredient_Ice_Essence.png" height="48"> | **Gelo** | Básico | <img src="icons/essences/Ingredient_Lightning_Essence.png" height="48"> | **Trovão** | Básico |
+
+### Nível Avançado
+| Ícone | Elemento | Nível | Ícone | Elemento | Nível |
+| :---: | :--- | :--- | :---: | :--- | :--- |
+| <img src="icons/essences/Ingredient_Life_Essence.png" height="48"> | **Vida** | Avançado | <img src="icons/essences/Ingredient_Death_Essence.png" height="48"> | **Morte** | Avançado |
+| <img src="icons/essences/Ingredient_Light_Essence.png" height="48"> | **Luz** | Avançado | <img src="icons/essences/Ingredient_Shadow_Essence.png" height="48"> | **Sombras** | Avançado |
+| <img src="icons/essences/Ingredient_Mind_Essence.png" height="48"> | **Mente** | Avançado | <img src="icons/essences/Ingredient_Blood_Essence.png" height="48"> | **Sangue** | Avançado |
+
+### Níveis Instável e Químico
+| Ícone | Elemento | Nível | Ícone | Elemento | Nível |
+| :---: | :--- | :--- | :---: | :--- | :--- |
+| <img src="icons/essences/Ingredient_Chaos_Essence.png" height="48"> | **Caos** | Instável | <img src="icons/essences/Ingredient_Aether_Essence.png" height="48"> | **Éter** | Instável |
+| <img src="icons/essences/Ingredient_Void_Essence.png" height="48"> | **Vazio** | Instável | <img src="icons/essences/Ingredient_Time_Essence.png" height="48"> | **Tempo** | Instável |
+| <img src="icons/essences/Ingredient_Metal_Essence.png" height="48"> | **Metal** | Químico | <img src="icons/essences/Ingredient_Crystal_Essence.png" height="48"> | **Cristal** | Químico |
+| <img src="icons/essences/Ingredient_Poison_Essence.png" height="48"> | **Veneno** | Químico | <img src="icons/essences/Ingredient_Acid_Essence.png" height="48"> | **Ácido** | Químico |
+
+---
+
+## 4. Recursos Principais ✨
 
 *   **20 Elementos:** Divididos em níveis Básico, Avançado, Instável e Químico.
 *   **API Modular:** Registre facilmente essências, feitiços e efeitos de status personalizados.

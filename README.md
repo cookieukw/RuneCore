@@ -35,7 +35,35 @@ RuneCore is a modular magic system engine. It is divided into interdependent mod
 *   **⚔️ RuneMagic:** Focused on spells, runes (passive effects), artifacts, and grimoires.
 *   **⚗️ RuneAlchemy:** A chemical and alchemical system for creating potions and enchanting items using essences.
 
-## 3. Core Features ✨
+## 3. Elemental Essences 🔮
+
+RuneCore features 20 distinct elements, each with its own essence used for crafting and spellcasting. Below are the high-quality essence icons currently implemented:
+
+### Basic Tier
+| Icon | Element | Tier | Icon | Element | Tier |
+| :---: | :--- | :--- | :---: | :--- | :--- |
+| <img src="icons/essences/Ingredient_Fire_Essence.png" height="48"> | **Fire** | Basic | <img src="icons/essences/Ingredient_Water_Essence.png" height="48"> | **Water** | Basic |
+| <img src="icons/essences/Ingredient_Earth_Essence.png" height="48"> | **Earth** | Basic | <img src="icons/essences/Ingredient_Wind_Essence.png" height="48"> | **Wind** | Basic |
+| <img src="icons/essences/Ingredient_Ice_Essence.png" height="48"> | **Ice** | Basic | <img src="icons/essences/Ingredient_Lightning_Essence.png" height="48"> | **Lightning** | Basic |
+
+### Advanced Tier
+| Icon | Element | Tier | Icon | Element | Tier |
+| :---: | :--- | :--- | :---: | :--- | :--- |
+| <img src="icons/essences/Ingredient_Life_Essence.png" height="48"> | **Life** | Advanced | <img src="icons/essences/Ingredient_Death_Essence.png" height="48"> | **Death** | Advanced |
+| <img src="icons/essences/Ingredient_Light_Essence.png" height="48"> | **Light** | Advanced | <img src="icons/essences/Ingredient_Shadow_Essence.png" height="48"> | **Shadow** | Advanced |
+| <img src="icons/essences/Ingredient_Mind_Essence.png" height="48"> | **Mind** | Advanced | <img src="icons/essences/Ingredient_Blood_Essence.png" height="48"> | **Blood** | Advanced |
+
+### Unstable & Chemical Tiers
+| Icon | Element | Tier | Icon | Element | Tier |
+| :---: | :--- | :--- | :---: | :--- | :--- |
+| <img src="icons/essences/Ingredient_Chaos_Essence.png" height="48"> | **Chaos** | Unstable | <img src="icons/essences/Ingredient_Aether_Essence.png" height="48"> | **Aether** | Unstable |
+| <img src="icons/essences/Ingredient_Void_Essence.png" height="48"> | **Void** | Unstable | <img src="icons/essences/Ingredient_Time_Essence.png" height="48"> | **Time** | Unstable |
+| <img src="icons/essences/Ingredient_Metal_Essence.png" height="48"> | **Metal** | Chemical | <img src="icons/essences/Ingredient_Crystal_Essence.png" height="48"> | **Crystal** | Chemical |
+| <img src="icons/essences/Ingredient_Poison_Essence.png" height="48"> | **Poison** | Chemical | <img src="icons/essences/Ingredient_Acid_Essence.png" height="48"> | **Acid** | Chemical |
+
+---
+
+## 4. Core Features ✨
 
 *   **20 Elements:** Divided into Basic, Advanced, Unstable, and Chemical tiers.
 *   **Modular API:** Easily register custom essences, spells, and status effects.
@@ -46,7 +74,7 @@ For a full breakdown of all 20 elements and their mechanics, see our [**Technica
 
 ---
 
-## 🎮 How to Test In-Game & Current Status Effects
+## 5. 🎮 How to Test In-Game & Current Status Effects
 
 You can test the registered status effects and spell system using the built-in administrative command:
 
@@ -126,11 +154,11 @@ if (poison != null) {
 
 ---
 
-## 🛠️ Modder's Guide
+## 6. 🛠️ Modder's Guide
 
 Interested in building on top of RuneCore? Check out our [**API Usage Guide**](API_USAGE.md) for code examples and integration steps.
 
-## ⚖️ License
+## 7. ⚖️ License
 
 This project, including its source code, documentation, and **pixel art icons** (located in the `/icons` directory), is licensed under the **Creative Commons Attribution-NonCommercial 4.0 International (CC BY-NC 4.0)**.
 
