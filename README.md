@@ -63,7 +63,34 @@ RuneCore features 20 distinct elements, each with its own essence used for craft
 
 ---
 
-## 4. Core Features ✨
+## 4. Mob Drops & Essence Loot Tables 🦅
+
+Every creature in Hytale has a chance to drop elemental essences when defeated by a player. The current base drop rate is **25%**.
+
+| Essence | Dropped by (Common Mobs) |
+| :--- | :--- |
+| **Fire** | Emberwulf, Fire Dragon, Magma/Flame creatures |
+| **Earth** | Trork, Earth Golem, Bison, Tortoise, Molerat |
+| **Wind** | Birds (Hawk, Owl, Crow, etc.), Feran Windwalker |
+| **Water** | Fish (Shark, Piranha, etc.), Crab, Frog, Whale |
+| **Ice** | Polar Bear, Frost Dragon, Yeti, Frost Skeleton |
+| **Lightning** | Thunder Golem, Thunder Spirit, Living Spark |
+| **Light** | Spirit Root, Christmas Kweebec |
+| **Shadow** | Shadow Knight, Wraith, Skrill |
+| **Life** | Animals (Cow, Pig, Sheep, Deer), Kweebec |
+| **Death** | Skeleton, Zombie, Ghoul |
+| **Mind** | Slothian, Outlander Sorcerer |
+| **Blood** | Bat, Mosquito |
+| **Chaos** | Outlander Berserker, Trork Chieftain |
+| **Aether** | Ember Spirit |
+| **Void** | Void-corrupted creatures |
+| **Metal** | Firesteel Golem, Tank, Turret |
+| **Crystal** | Crystal Golem, Scarak |
+| **Poison** | Snake, Spider, Scorpion |
+
+---
+
+## 5. Core Features ✨
 
 *   **20 Elements:** Divided into Basic, Advanced, Unstable, and Chemical tiers.
 *   **Modular API:** Easily register custom essences, spells, and status effects.
@@ -74,7 +101,7 @@ For a full breakdown of all 20 elements and their mechanics, see our [**Technica
 
 ---
 
-## 5. 🎮 How to Test In-Game & Current Status Effects
+## 6. 🎮 How to Test In-Game & Current Status Effects
 
 You can test the registered status effects and spell system using the built-in administrative command:
 
@@ -154,11 +181,11 @@ if (poison != null) {
 
 ---
 
-## 6. 🛠️ Modder's Guide
+## 7. 🛠️ Modder's Guide
 
 Interested in building on top of RuneCore? Check out our [**API Usage Guide**](API_USAGE.md) for code examples and integration steps.
 
-## 7. ⚖️ License
+## 8. ⚖️ License
 
 This project, including its source code, documentation, and **pixel art icons** (located in the `/icons` directory), is licensed under the **Creative Commons Attribution-NonCommercial 4.0 International (CC BY-NC 4.0)**.
 

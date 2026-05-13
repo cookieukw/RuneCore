@@ -63,7 +63,34 @@ O RuneCore apresenta 20 elementos distintos, cada um com sua própria essência 
 
 ---
 
-## 4. Recursos Principais ✨
+## 4. Drops de Mobs & Tabelas de Saque 🦅
+
+Cada criatura em Hytale tem uma chance de dropar essências elementais quando derrotada por um jogador. A taxa de drop base atual é de **25%**.
+
+| Essência | Dropado por (Mobs Comuns) |
+| :--- | :--- |
+| **Fogo** | Emberwulf, Dragão de Fogo, Criaturas de Magma/Chama |
+| **Terra** | Trork, Golem de Terra, Bisão, Tartaruga, Toupeira |
+| **Vento** | Pássaros (Falcão, Coruja, Corvo, etc.), Feran Windwalker |
+| **Água** | Peixes (Tubarão, Piranha, etc.), Caranguejo, Sapo, Baleia |
+| **Gelo** | Urso Polar, Dragão de Gelo, Yeti, Esqueleto de Gelo |
+| **Trovão** | Golem de Trovão, Espírito do Trovão, Faísca Viva |
+| **Luz** | Espírito de Raiz, Kweebec de Natal |
+| **Sombras** | Cavaleiro das Sombras, Wraith, Skrill |
+| **Vida** | Animais (Vaca, Porco, Ovelha, Cervo), Kweebec |
+| **Morte** | Esqueleto, Zumbi, Ghoul |
+| **Mente** | Slothian, Feiticeiro Outlander |
+| **Sangue** | Morcego, Mosquito |
+| **Caos** | Berserker Outlander, Chefe Trork |
+| **Éter** | Espírito de Brasa |
+| **Vazio** | Criaturas corrompidas pelo Vazio |
+| **Metal** | Golem de Aço, Tanque, Torreta |
+| **Cristal** | Golem de Cristal, Scarak |
+| **Veneno** | Cobra, Aranha, Escorpião |
+
+---
+
+## 5. Recursos Principais ✨
 
 *   **20 Elementos:** Divididos em níveis Básico, Avançado, Instável e Químico.
 *   **API Modular:** Registre facilmente essências, feitiços e efeitos de status personalizados.
@@ -74,7 +101,7 @@ Para um detalhamento completo de todos os 20 elementos e suas mecânicas, veja n
 
 ---
 
-## 5. 🎮 Como Testar In-Game & Efeitos de Status Atuais
+## 6. 🎮 Como Testar In-Game & Efeitos de Status Atuais
 
 Você pode testar os efeitos de status registrados e o sistema de feitiços usando o comando administrativo integrado:
 
@@ -154,11 +181,11 @@ if (poison != null) {
 
 ---
 
-## 6. 🛠️ Guia para Modders
+## 7. 🛠️ Guia para Modders
 
 Interessado em construir em cima do RuneCore? Confira nosso [**Guia de Uso da API**](API_USAGE.md) para exemplos de código e passos de integração.
 
-## 7. ⚖️ Licença
+## 8. ⚖️ Licença
 
 Este projeto, incluindo seu código-fonte, documentação e **ícones em pixel art** (localizados no diretório `/icons`), está licenciado sob a **Creative Commons Attribution-NonCommercial 4.0 International (CC BY-NC 4.0)**.
 
