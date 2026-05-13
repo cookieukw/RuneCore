@@ -89,12 +89,12 @@ public class MobDropSystem extends DeathSystems.OnDeathSystem {
     private String getEssenceDrop(String entityType) {
         if (entityType.contains("emberwulf") || entityType.contains("dragon_fire") ||
                 entityType.contains("magma") || entityType.contains("flame")) {
-            return "Essence_Fire";
+            return "Ingredient_Fire_Essence";
         }
         if (entityType.contains("golem_crystal_earth") || entityType.contains("trork") ||
                 entityType.contains("mouflon") || entityType.contains("bison") ||
                 entityType.contains("tortoise") || entityType.contains("molerat")) {
-            return "Essence_Earth";
+            return "Ingredient_Earth_Essence";
         }
         if (entityType.contains("archaeopteryx") || entityType.contains("bluebird") ||
                 entityType.contains("crow") || entityType.contains("duck") ||
@@ -102,7 +102,7 @@ public class MobDropSystem extends DeathSystems.OnDeathSystem {
                 entityType.contains("owl") || entityType.contains("parrot") ||
                 entityType.contains("pigeon") || entityType.contains("sparrow") ||
                 entityType.contains("vulture")) {
-            return "Essence_Wind";
+            return "Ingredient_Wind_Essence";
         }
         if (entityType.contains("bluegill") || entityType.contains("catfish") ||
                 entityType.contains("clownfish") || entityType.contains("crab") ||
@@ -112,61 +112,61 @@ public class MobDropSystem extends DeathSystems.OnDeathSystem {
                 entityType.contains("salmon") || entityType.contains("shark") ||
                 entityType.contains("tang") || entityType.contains("trout") ||
                 entityType.contains("whale")) {
-            return "Essence_Water";
+            return "Ingredient_Water_Essence";
         }
         if (entityType.contains("bear_polar") || entityType.contains("dragon_frost") ||
                 entityType.contains("golem_crystal_frost") || entityType.contains("leopard_snow") ||
                 entityType.contains("penguin") || entityType.contains("skeleton_frost") ||
                 entityType.contains("snail_frost") || entityType.contains("worlming_frost") ||
                 entityType.contains("yeti")) {
-            return "Essence_Ice";
+            return "Ingredient_Ice_Essence";
         }
         if (entityType.contains("golem_crystal_thunder") || entityType.contains("spirit_thunder") ||
                 entityType.contains("spark_living")) {
-            return "Essence_Lightning";
+            return "Ingredient_Lightning_Essence";
         }
         if (entityType.contains("kweebec_sapling_christmas") || entityType.contains("spirit_root")) {
-            return "Essence_Light";
+            return "Ingredient_Light_Essence";
         }
         if (entityType.contains("shadow_knight") || entityType.contains("wraith") ||
                 entityType.contains("skrill")) {
-            return "Essence_Shadow";
+            return "Ingredient_Shadow_Essence";
         }
         if (entityType.contains("kweebec") || entityType.contains("cow") ||
                 entityType.contains("pig") || entityType.contains("sheep") ||
                 entityType.contains("chicken") || entityType.contains("deer") ||
                 entityType.contains("mosshorn")) {
-            return "Essence_Life";
+            return "Ingredient_Life_Essence";
         }
         if (entityType.contains("skeleton") || entityType.contains("zombie") ||
                 entityType.contains("ghoul")) {
-            return "Essence_Death";
+            return "Ingredient_Death_Essence";
         }
         if (entityType.contains("slothian") || entityType.contains("outlander_sorcerer")) {
-            return "Essence_Mind";
+            return "Ingredient_Mind_Essence";
         }
         if (entityType.contains("bat") || entityType.contains("mosquito")) {
-            return "Essence_Blood";
+            return "Ingredient_Blood_Essence";
         }
         if (entityType.contains("outlander_berserker") || entityType.contains("trork_chieftain")) {
-            return "Essence_Chaos";
+            return "Ingredient_Chaos_Essence";
         }
         if (entityType.contains("spirit_ember")) {
-            return "Essence_Aether";
+            return "Ingredient_Aether_Essence";
         }
         if (entityType.contains("void")) {
-            return "Essence_Void";
+            return "Ingredient_Void_Essence";
         }
         if (entityType.contains("golem_firesteel") || entityType.contains("tank") ||
                 entityType.contains("turret")) {
-            return "Essence_Metal";
+            return "Ingredient_Metal_Essence";
         }
         if (entityType.contains("golem_crystal") || entityType.contains("scarak")) {
-            return "Essence_Crystal";
+            return "Ingredient_Crystal_Essence";
         }
         if (entityType.contains("snake") || entityType.contains("spider") ||
                 entityType.contains("scorpion")) {
-            return "Essence_Poison";
+            return "Ingredient_Poison_Essence";
         }
         return null;
     }
