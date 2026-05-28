@@ -24,7 +24,7 @@ public class RuneCoreHud extends CustomUIHud {
     private List<ActiveBuff> activeBuffsList = new ArrayList<>();
 
     public RuneCoreHud(@Nonnull PlayerRef playerRef) {
-        super(playerRef);
+        super(playerRef, "runecore:hud");
     }
 
     @Override

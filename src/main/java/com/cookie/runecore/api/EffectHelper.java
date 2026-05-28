@@ -4,11 +4,11 @@ import java.util.function.Consumer;
 
 import com.hypixel.hytale.component.Ref;
 import com.hypixel.hytale.component.Store;
-import com.hypixel.hytale.math.vector.Vector3d;
+import org.joml.Vector3d;
 import com.hypixel.hytale.protocol.ClientCameraView;
 import com.hypixel.hytale.protocol.MovementSettings;
 import com.hypixel.hytale.protocol.ServerCameraSettings;
-import com.hypixel.hytale.protocol.Vector2f;
+import org.joml.Vector2f;
 import com.hypixel.hytale.protocol.packets.camera.SetServerCamera;
 import com.hypixel.hytale.protocol.packets.player.UpdateMovementSettings;
 import com.hypixel.hytale.server.core.asset.type.entityeffect.config.EntityEffect;
@@ -112,7 +112,7 @@ public final class EffectHelper {
         Store<EntityStore> store = ref.getStore();
         if (store == null) return;
 
-        Vector3d pos = Vector3d.ZERO;
+        Vector3d pos = null;
         
         try {
             // Re-validate inside the try block to avoid race conditions
@@ -126,7 +126,7 @@ public final class EffectHelper {
             Object mm = store.getComponent(ref, MovementManager.getComponentType());
             if (mm != null) {
                 // We'll trust the transform for now if it exists, otherwise movement
-                if (pos == Vector3d.ZERO || Math.abs(pos.y - 83.0) < 1.0) { // Specific fix for the 83-height bug seen earlier
+                if (pos == null || Math.abs(pos.y - 83.0) < 1.0) { // Specific fix for the 83-height bug seen earlier
                      // If we could access MovementManager position we would here
                 }
             }
@@ -135,10 +135,8 @@ public final class EffectHelper {
             return;
         }
 
-        // Safely create a completely new primitive-backed vector to avoid aliasing the player's transform
-        Vector3d finalPos = new Vector3d(pos.x + offsetX, pos.y + offsetY, pos.z + offsetZ);
-        
-        if (pos != Vector3d.ZERO) {
+        if (pos != null) {
+            Vector3d finalPos = new Vector3d(pos.x + offsetX, pos.y + offsetY, pos.z + offsetZ);
             ParticleUtil.spawnParticleEffect(particleId, finalPos, store);
         }
     }

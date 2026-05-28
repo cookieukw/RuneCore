@@ -2,7 +2,7 @@ package com.cookie.runecore.api;
 
 import com.hypixel.hytale.component.Ref;
 import com.hypixel.hytale.component.Store;
-import com.hypixel.hytale.math.vector.Vector3f;
+import com.hypixel.hytale.math.vector.Rotation3f;
 import com.hypixel.hytale.protocol.MovementSettings;
 import com.hypixel.hytale.protocol.MovementStates;
 import com.hypixel.hytale.server.core.entity.entities.player.movement.MovementManager;
@@ -119,7 +119,7 @@ public final class MovementHelper {
             data.setFrozen(true);
             TransformComponent transform = store.getComponent(ref, TransformComponent.getComponentType());
             if (transform != null) {
-                Vector3f rot = transform.getRotation();
+                Rotation3f rot = transform.getRotation();
                 data.setFrozenRotX(rot.x);
                 data.setFrozenRotY(rot.y);
                 data.setFrozenRotZ(rot.z);
@@ -153,7 +153,7 @@ public final class MovementHelper {
         if (data != null && data.isFrozen()) {
             TransformComponent transform = store.getComponent(ref, TransformComponent.getComponentType());
             if (transform != null) {
-                transform.setRotation(new Vector3f(data.getFrozenRotX(), data.getFrozenRotY(), data.getFrozenRotZ()));
+                transform.setRotation(new Rotation3f(data.getFrozenRotX(), data.getFrozenRotY(), data.getFrozenRotZ()));
             }
         }
 
