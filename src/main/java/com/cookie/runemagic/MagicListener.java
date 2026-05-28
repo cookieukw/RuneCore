@@ -15,7 +15,7 @@ public class MagicListener {
 
     public MagicListener(EventRegistry eventRegistry) {
         eventRegistry.registerGlobal(PlayerMouseButtonEvent.class, this::onMouseClick);
-        // SwitchActiveSlotEvent will be handled when we find the right entity reference
+        // InventoryActiveSlotRequestEvent will be handled when we find the right entity reference
         // method
     }
 

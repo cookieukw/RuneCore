@@ -3,14 +3,14 @@
   "DamageResistance": {
     "Physical": [
       {
-        "CalculationType": "Additive",
+        "CalculationType": "Flat",
         "Amount": 20
       }
     ],
     "Projectile": [
       {
         "Amount": 20,
-        "CalculationType": "Additive"
+        "CalculationType": "Flat"
       }
     ]
   }

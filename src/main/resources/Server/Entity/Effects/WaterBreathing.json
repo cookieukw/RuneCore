@@ -8,7 +8,7 @@
   "DamageResistance": {
     "Suffocation": [
       {
-        "CalculationType": "Additive",
+        "CalculationType": "Flat",
         "Amount": 1000
       }
     ]

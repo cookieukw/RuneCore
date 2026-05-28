@@ -10,7 +10,7 @@
   "DamageResistance": {
     "Fall": [
       {
-        "CalculationType": "Additive",
+        "CalculationType": "Flat",
         "Amount": 1
       }
     ]

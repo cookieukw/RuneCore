@@ -3,7 +3,7 @@
   "DamageResistance": {
     "Fire": [
       {
-        "CalculationType": "Additive",
+        "CalculationType": "Flat",
         "Amount": 100
       }
     ]
