@@ -5,10 +5,12 @@ import com.cookie.runecore.system.RuneCore;
 import com.hypixel.hytale.event.EventRegistry;
 import com.hypixel.hytale.server.core.event.events.player.PlayerMouseButtonEvent;
 import com.hypixel.hytale.server.core.universe.PlayerRef;
+import com.hypixel.hytale.server.core.Message;
 import com.hypixel.hytale.server.core.asset.type.item.config.Item;
 import com.hypixel.hytale.server.core.universe.world.World;
 import com.hypixel.hytale.server.core.universe.world.storage.EntityStore;
 import com.hypixel.hytale.component.Ref;
+import com.hypixel.hytale.component.Store;
 import com.cookie.runecore.api.PlayerDataComponent;
 
 public class MagicListener {
@@ -37,7 +39,7 @@ public class MagicListener {
         String itemId = itemType.getId().toString().toLowerCase();
 
         if (itemId.contains("grimoire") || itemId.contains("spellbook")) {
-            com.hypixel.hytale.component.Store<EntityStore> store = playerRef.getReference().getStore();
+            Store<EntityStore> store = playerRef.getReference().getStore();
             if (store == null)
                 return;
 
@@ -54,7 +56,7 @@ public class MagicListener {
             RuneCore.get().castSpell(activeSpellId, ctx);
 
             playerRef.sendMessage(
-                    com.hypixel.hytale.server.core.Message.raw("§6[RuneMagic] §fCast spell: §e" + activeSpellId));
+                    Message.raw("[RuneMagic] Cast spell: " + activeSpellId));
         }
     }
 }

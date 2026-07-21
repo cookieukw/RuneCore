@@ -21,6 +21,7 @@ import com.hypixel.hytale.server.core.universe.PlayerRef;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.UUID;
 
+import com.hypixel.hytale.server.core.Message;
 import com.hypixel.hytale.server.core.event.events.player.PlayerInteractEvent;
 
 public class PotionHitSystem extends DamageEventSystem {
@@ -42,10 +43,40 @@ public class PotionHitSystem extends DamageEventSystem {
             int idx = lowerId.indexOf("weapon_bomb_potion_");
             String effectName = lowerId.substring(idx + "weapon_bomb_potion_".length());
             
-            if (event.getPlayer() != null && event.getPlayer().getPlayerRef() != null) {
-                UUID uuid = event.getPlayer().getPlayerRef().getUuid();
-                playerPotions.put(uuid, effectName);
-                System.out.println("[PotionHitSystem] Tracked potion interact: " + uuid + " -> " + effectName);
+            Ref<EntityStore> entityRef = event.getPlayerRef();
+            if (entityRef != null && entityRef.isValid()) {
+                Store<EntityStore> store = entityRef.getStore();
+                if (store != null) {
+                    PlayerRef playerRef = (PlayerRef) store.getComponent(entityRef, PlayerRef.getComponentType());
+                    if (playerRef != null) {
+                        UUID uuid = playerRef.getUuid();
+                        playerPotions.put(uuid, effectName);
+                        System.out.println("[PotionHitSystem] Tracked potion interact: " + uuid + " -> " + effectName);
+                    }
+                }
+            }
+        } else if (itemId != null && itemId.toLowerCase().contains("potion_drinkable_")) {
+            String lowerId = itemId.toLowerCase();
+            int idx = lowerId.indexOf("potion_drinkable_");
+            String effectName = lowerId.substring(idx + "potion_drinkable_".length());
+            
+            Ref<EntityStore> entityRef = event.getPlayerRef();
+            if (entityRef != null && entityRef.isValid()) {
+                Store<EntityStore> store = entityRef.getStore();
+                if (store != null) {
+                    PlayerRef playerRef = (PlayerRef) store.getComponent(entityRef, PlayerRef.getComponentType());
+                    if (playerRef != null) {
+                        World world = entityRef.getStore().getExternalData() != null ? 
+                                      entityRef.getStore().getExternalData().getWorld() : null;
+
+                        CastContext ctx = new CastContext(null, entityRef, world, 1.0);
+                        if (RuneCore.get().getEffect(effectName) != null) {
+                            RuneCore.get().getEffect(effectName).execute(ctx);
+                            System.out.println("[PotionHitSystem] Player drank potion, applying effect: " + effectName);
+                            playerRef.sendMessage(Message.raw("[RuneCore] Você tomou a poção de: " + effectName));
+                        }
+                    }
+                }
             }
         }
     }
@@ -65,6 +96,26 @@ public class PotionHitSystem extends DamageEventSystem {
             if (playerRef != null) {
                 playerPotions.put(playerRef.getUuid(), effectName);
                 System.out.println("[PotionHitSystem] Tracked potion throw: " + playerRef.getUuid() + " -> " + effectName);
+            }
+        } else if (itemId.toLowerCase().contains("potion_drinkable_")) {
+            String lowerId = itemId.toLowerCase();
+            int idx = lowerId.indexOf("potion_drinkable_");
+            String effectName = lowerId.substring(idx + "potion_drinkable_".length());
+            
+            PlayerRef playerRef = event.getPlayerRefComponent();
+            if (playerRef != null) {
+                Ref<EntityStore> targetRef = playerRef.getReference();
+                if (targetRef != null && targetRef.isValid()) {
+                    World world = targetRef.getStore().getExternalData() != null ? 
+                                  targetRef.getStore().getExternalData().getWorld() : null;
+
+                    CastContext ctx = new CastContext(null, targetRef, world, 1.0);
+                    if (RuneCore.get().getEffect(effectName) != null) {
+                        RuneCore.get().getEffect(effectName).execute(ctx);
+                        System.out.println("[PotionHitSystem] Player drank potion via click, applying effect: " + effectName);
+                        playerRef.sendMessage(Message.raw("[RuneCore] Você tomou a poção de: " + effectName));
+                    }
+                }
             }
         }
     }

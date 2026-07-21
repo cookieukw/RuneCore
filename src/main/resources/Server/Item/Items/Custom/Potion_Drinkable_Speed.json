@@ -1,0 +1,23 @@
+{
+  "TranslationProperties": {
+    "Name": "Potion of Speed"
+  },
+  "Categories": [
+    "Items.Consumables"
+  ],
+  "Quality": "Uncommon",
+  "ItemLevel": 20,
+  "PlayerAnimationsId": "Item",
+  "Interactions": {
+    "Primary": "Item_Eat"
+  },
+  "MaxStack": 16,
+  "Model": "Items/Weapons/Bomb/Potion_Onion.blockymodel",
+  "Icon": "Icons/ItemsGenerated/Weapon_Bomb_Potion_Speed.png",
+  "Texture": "Items/Weapons/Bomb/Potion_Onion_Poison.png",
+  "Tags": {
+    "Type": [
+      "Consumable"
+    ]
+  }
+}
