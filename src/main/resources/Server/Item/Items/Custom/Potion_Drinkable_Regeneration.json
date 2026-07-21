@@ -1,29 +1,21 @@
 {
+  "Parent": "Potion_Template",
   "TranslationProperties": {
     "Name": "Potion of Regeneration"
   },
-  "Categories": [
-    "Items.Consumables"
-  ],
   "Quality": "Uncommon",
   "ItemLevel": 20,
-  "PlayerAnimationsId": "Item",
-  "Interactions": {
-    "Primary": {
+  "Model": "Items/PotionMedium.blockymodel",
+  "Icon": "Icons/ItemsGenerated/Weapon_Bomb_Potion_Regeneration.png",
+  "Texture": "Items/PotionMedium_texture.png",
+  "InteractionVars": {
+    "Effect": {
       "Interactions": [
         {
-          "Type": "CancelChain"
+          "Type": "Simple"
         }
       ]
     }
   },
-  "MaxStack": 16,
-  "Model": "Items/PotionMedium.blockymodel",
-  "Icon": "Icons/ItemsGenerated/Weapon_Bomb_Potion_Regeneration.png",
-  "Texture": "Items/PotionMedium_texture.png",
-  "Tags": {
-    "Type": [
-      "Consumable"
-    ]
-  }
+  "MaxStack": 16
 }
