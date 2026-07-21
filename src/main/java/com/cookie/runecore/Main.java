@@ -12,6 +12,8 @@ import com.cookie.runecore.systems.MobDropSystem;
 import com.cookie.runecore.systems.PotionDrinkInteraction;
 import com.cookie.runecore.systems.PotionHitSystem;
 import com.cookie.runecore.systems.PotionListener;
+import com.cookie.runecore.systems.PotionSplashPoisonInteraction;
+import com.cookie.runecore.systems.PotionSplashSlownessInteraction;
 import com.cookie.runecore.systems.ui.RuneCoreHudManager;
 import com.cookie.runemagic.MagicListener;
 import com.cookie.runemagic.SwitchSpellCommand;
@@ -35,6 +37,16 @@ public class Main extends JavaPlugin {
                 "runecore:potion_drink",
                 PotionDrinkInteraction.class,
                 PotionDrinkInteraction.CODEC
+        );
+        com.hypixel.hytale.server.core.modules.interaction.interaction.config.Interaction.CODEC.register(
+                "runecore:potion_splash_poison",
+                PotionSplashPoisonInteraction.class,
+                PotionSplashPoisonInteraction.CODEC
+        );
+        com.hypixel.hytale.server.core.modules.interaction.interaction.config.Interaction.CODEC.register(
+                "runecore:potion_splash_slowness",
+                PotionSplashSlownessInteraction.class,
+                PotionSplashSlownessInteraction.CODEC
         );
 
         // Initialize RuneCore engine defaults
