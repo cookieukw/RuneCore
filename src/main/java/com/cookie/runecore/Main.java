@@ -8,7 +8,9 @@ import com.cookie.runecore.systems.CastListener;
 import com.cookie.runecore.systems.EffectTimerListener;
 import com.cookie.runecore.systems.FrozenInteractionListener;
 import com.cookie.runecore.systems.MobDropSystem;
+import com.cookie.runecore.systems.PotionDrinkInteraction;
 import com.cookie.runecore.systems.PotionHitSystem;
+import com.cookie.runecore.systems.PotionListener;
 import com.cookie.runecore.systems.ui.RuneCoreHudManager;
 import com.cookie.runemagic.MagicListener;
 import com.cookie.runemagic.SwitchSpellCommand;
@@ -27,6 +29,13 @@ public class Main extends JavaPlugin {
 
     @Override
     protected void setup() {
+        // Register custom interaction codecs
+        com.hypixel.hytale.server.core.modules.interaction.interaction.config.Interaction.CODEC.register(
+                "runecore:potion_drink",
+                PotionDrinkInteraction.class,
+                PotionDrinkInteraction.CODEC
+        );
+
         // Initialize RuneCore engine defaults
         RuneCore.get().initDefaults();
 
@@ -43,7 +52,9 @@ public class Main extends JavaPlugin {
                 PlayerDataComponent.CODEC);
 
         this.getEntityStoreRegistry().registerSystem(new MobDropSystem());
-        this.getEntityStoreRegistry().registerSystem(new PotionHitSystem(this.getEventRegistry()));
+        PotionHitSystem potionHitSystem = new PotionHitSystem();
+        this.getEntityStoreRegistry().registerSystem(potionHitSystem);
+        new PotionListener(this.getEventRegistry(), potionHitSystem.getPlayerPotions());
         new RuneCoreHudManager(this.getEventRegistry());
         new CastListener(this.getEventRegistry());
         new EffectTimerListener(this.getEventRegistry());

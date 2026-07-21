@@ -28,96 +28,11 @@ public class PotionHitSystem extends DamageEventSystem {
 
     private final ConcurrentHashMap<UUID, String> playerPotions = new ConcurrentHashMap<>();
 
-    public PotionHitSystem(EventRegistry eventRegistry) {
-        eventRegistry.registerGlobal(PlayerMouseButtonEvent.class, this::onMouseClick);
-        eventRegistry.registerGlobal(PlayerInteractEvent.class, this::onPlayerInteract);
+    public PotionHitSystem() {
     }
 
-    private void onPlayerInteract(PlayerInteractEvent event) {
-        if (event.getItemInHand() == null) return;
-        String itemId = event.getItemInHand().getItemId();
-        System.out.println("[PotionHitSystem] onPlayerInteract - Item used: " + itemId);
-        
-        if (itemId != null && itemId.toLowerCase().contains("weapon_bomb_potion_")) {
-            String lowerId = itemId.toLowerCase();
-            int idx = lowerId.indexOf("weapon_bomb_potion_");
-            String effectName = lowerId.substring(idx + "weapon_bomb_potion_".length());
-            
-            Ref<EntityStore> entityRef = event.getPlayerRef();
-            if (entityRef != null && entityRef.isValid()) {
-                Store<EntityStore> store = entityRef.getStore();
-                if (store != null) {
-                    PlayerRef playerRef = (PlayerRef) store.getComponent(entityRef, PlayerRef.getComponentType());
-                    if (playerRef != null) {
-                        UUID uuid = playerRef.getUuid();
-                        playerPotions.put(uuid, effectName);
-                        System.out.println("[PotionHitSystem] Tracked potion interact: " + uuid + " -> " + effectName);
-                    }
-                }
-            }
-        } else if (itemId != null && itemId.toLowerCase().contains("potion_drinkable_")) {
-            String lowerId = itemId.toLowerCase();
-            int idx = lowerId.indexOf("potion_drinkable_");
-            String effectName = lowerId.substring(idx + "potion_drinkable_".length());
-            
-            Ref<EntityStore> entityRef = event.getPlayerRef();
-            if (entityRef != null && entityRef.isValid()) {
-                Store<EntityStore> store = entityRef.getStore();
-                if (store != null) {
-                    PlayerRef playerRef = (PlayerRef) store.getComponent(entityRef, PlayerRef.getComponentType());
-                    if (playerRef != null) {
-                        World world = entityRef.getStore().getExternalData() != null ? 
-                                      entityRef.getStore().getExternalData().getWorld() : null;
-
-                        CastContext ctx = new CastContext(null, entityRef, world, 1.0);
-                        if (RuneCore.get().getEffect(effectName) != null) {
-                            RuneCore.get().getEffect(effectName).execute(ctx);
-                            System.out.println("[PotionHitSystem] Player drank potion, applying effect: " + effectName);
-                            playerRef.sendMessage(Message.raw("[RuneCore] Você tomou a poção de: " + effectName));
-                        }
-                    }
-                }
-            }
-        }
-    }
-
-    private void onMouseClick(PlayerMouseButtonEvent event) {
-        if (event.getItemInHand() == null) return;
-        String itemId = event.getItemInHand().getId().toString();
-        System.out.println("[PotionHitSystem] onMouseClick - Item used: " + itemId);
-        
-        if (itemId.toLowerCase().contains("weapon_bomb_potion_")) {
-            // Find effect name: weapon_bomb_potion_regeneration -> regeneration
-            String lowerId = itemId.toLowerCase();
-            int idx = lowerId.indexOf("weapon_bomb_potion_");
-            String effectName = lowerId.substring(idx + "weapon_bomb_potion_".length());
-            
-            PlayerRef playerRef = event.getPlayerRefComponent();
-            if (playerRef != null) {
-                playerPotions.put(playerRef.getUuid(), effectName);
-                System.out.println("[PotionHitSystem] Tracked potion throw: " + playerRef.getUuid() + " -> " + effectName);
-            }
-        } else if (itemId.toLowerCase().contains("potion_drinkable_")) {
-            String lowerId = itemId.toLowerCase();
-            int idx = lowerId.indexOf("potion_drinkable_");
-            String effectName = lowerId.substring(idx + "potion_drinkable_".length());
-            
-            PlayerRef playerRef = event.getPlayerRefComponent();
-            if (playerRef != null) {
-                Ref<EntityStore> targetRef = playerRef.getReference();
-                if (targetRef != null && targetRef.isValid()) {
-                    World world = targetRef.getStore().getExternalData() != null ? 
-                                  targetRef.getStore().getExternalData().getWorld() : null;
-
-                    CastContext ctx = new CastContext(null, targetRef, world, 1.0);
-                    if (RuneCore.get().getEffect(effectName) != null) {
-                        RuneCore.get().getEffect(effectName).execute(ctx);
-                        System.out.println("[PotionHitSystem] Player drank potion via click, applying effect: " + effectName);
-                        playerRef.sendMessage(Message.raw("[RuneCore] Você tomou a poção de: " + effectName));
-                    }
-                }
-            }
-        }
+    public ConcurrentHashMap<UUID, String> getPlayerPotions() {
+        return this.playerPotions;
     }
 
     @Override

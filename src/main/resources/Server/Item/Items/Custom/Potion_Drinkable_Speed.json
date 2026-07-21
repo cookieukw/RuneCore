@@ -5,14 +5,21 @@
   },
   "Quality": "Uncommon",
   "ItemLevel": 20,
-  "Model": "Items/PotionMedium.blockymodel",
+  "BlockType": {
+    "CustomModel": "Items/PotionMedium.blockymodel",
+    "CustomModelTexture": [
+      {
+        "Texture": "Items/PotionMedium_texture.png",
+        "Weight": 1
+      }
+    ]
+  },
   "Icon": "Icons/ItemsGenerated/Weapon_Bomb_Potion_Speed.png",
-  "Texture": "Items/PotionMedium_texture.png",
   "InteractionVars": {
     "Effect": {
       "Interactions": [
         {
-          "Type": "Simple"
+          "Type": "runecore:potion_drink"
         }
       ]
     }
