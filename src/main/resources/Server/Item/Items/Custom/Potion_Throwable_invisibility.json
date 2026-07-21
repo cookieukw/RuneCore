@@ -31,7 +31,7 @@
   "Interactions": {
     "Secondary": {
       "Interactions": [
-        "Potion_Throwable_invisibility_Throw"
+        "Potion_Throwable_Generic_Throw"
       ]
     }
   },

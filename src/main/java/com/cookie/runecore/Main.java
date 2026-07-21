@@ -39,6 +39,12 @@ public class Main extends JavaPlugin {
                 PotionDrinkInteraction.CODEC
         );
 
+        Interaction.CODEC.register(
+                "runecore:potion_splash_generic",
+                GenericPotionSplashInteraction.class,
+                GenericPotionSplashInteraction.CODEC
+        );
+
         String[] splashEffects = {
             "speed", "slowness", "haste", "mining_fatigue", "jump_boost", "high_jump",
             "slow_falling", "levitation", "regeneration", "poison", "decay", "burn",

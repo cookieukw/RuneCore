@@ -1,13 +1,32 @@
 {
-  "Parent": "Projectile_Config_Potion_Throwable_Base",
-  "Model": "Potion_Projectile_burn",
+  "Model": "Potion_Projectile_Generic",
+  "SpawnRotationOffset": {
+    "Pitch": 10.0,
+    "Yaw": 1,
+    "Roll": 15
+  },
+  "Physics": {
+    "Type": "Standard",
+    "Gravity": 15,
+    "TerminalVelocityAir": 50,
+    "TerminalVelocityWater": 15,
+    "RotationMode": "VelocityRoll",
+    "Bounciness": 0.0,
+    "SticksVertically": true
+  },
+  "LaunchForce": 25,
+  "SpawnOffset": {
+    "X": 0.3,
+    "Y": 0.1,
+    "Z": 0.0
+  },
   "Interactions": {
     "ProjectileHit": {
       "Cooldown": {
         "Cooldown": 0
       },
       "Interactions": [
-        "Potion_Throwable_burn_Impact",
+        "Potion_Throwable_Generic_Impact",
         {
           "Type": "RemoveEntity",
           "Entity": "User",
@@ -23,7 +42,7 @@
         "Cooldown": 0
       },
       "Interactions": [
-        "Potion_Throwable_burn_Impact",
+        "Potion_Throwable_Generic_Impact",
         {
           "Type": "RemoveEntity",
           "Entity": "User",

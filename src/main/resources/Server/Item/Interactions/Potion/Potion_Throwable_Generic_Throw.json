@@ -16,7 +16,7 @@
     },
     {
       "Type": "Projectile",
-      "Config": "Projectile_Config_Potion_Throwable_invisibility",
+      "Config": "Projectile_Config_Potion_Throwable_Generic",
       "Next": {
         "Type": "Simple",
         "RunTime": 0.2
@@ -25,7 +25,7 @@
     {
       "Type": "ModifyInventory",
       "ItemToRemove": {
-        "Id": "Potion_Throwable_invisibility",
+        "HeldItem": true,
         "Quantity": 1
       }
     }
