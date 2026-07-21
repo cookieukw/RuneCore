@@ -1,0 +1,38 @@
+{
+  "Parent": "Projectile_Config_Potion_Throwable_Base",
+  "Model": "Potion_Projectile_frozen",
+  "Interactions": {
+    "ProjectileHit": {
+      "Cooldown": {
+        "Cooldown": 0
+      },
+      "Interactions": [
+        "Potion_Throwable_frozen_Impact",
+        {
+          "Type": "RemoveEntity",
+          "Entity": "User",
+          "Effects": {
+            "WorldSoundEventId": "SFX_Glass_Break",
+            "LocalSoundEventId": "SFX_Glass_Break"
+          }
+        }
+      ]
+    },
+    "ProjectileMiss": {
+      "Cooldown": {
+        "Cooldown": 0
+      },
+      "Interactions": [
+        "Potion_Throwable_frozen_Impact",
+        {
+          "Type": "RemoveEntity",
+          "Entity": "User",
+          "Effects": {
+            "WorldSoundEventId": "SFX_Glass_Break",
+            "LocalSoundEventId": "SFX_Glass_Break"
+          }
+        }
+      ]
+    }
+  }
+}

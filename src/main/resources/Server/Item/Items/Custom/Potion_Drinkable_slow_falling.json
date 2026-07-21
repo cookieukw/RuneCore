@@ -1,0 +1,28 @@
+{
+  "Parent": "Potion_Template",
+  "TranslationProperties": {
+    "Name": "Potion of Slow Falling"
+  },
+  "Quality": "Uncommon",
+  "ItemLevel": 20,
+  "BlockType": {
+    "CustomModel": "Items/PotionMedium.blockymodel",
+    "CustomModelTexture": [
+      {
+        "Texture": "Items/PotionMedium_texture.png",
+        "Weight": 1
+      }
+    ]
+  },
+  "Icon": "Icons/ItemsGenerated/Weapon_Bomb_Potion_Slow_Falling.png",
+  "InteractionVars": {
+    "Effect": {
+      "Interactions": [
+        {
+          "Type": "runecore:potion_drink"
+        }
+      ]
+    }
+  },
+  "MaxStack": 16
+}

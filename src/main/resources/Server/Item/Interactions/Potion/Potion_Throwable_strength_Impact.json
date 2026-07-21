@@ -1,0 +1,26 @@
+{
+  "Type": "Selector",
+  "Selector": {
+    "Id": "AOECircle",
+    "Range": 5
+  },
+  "Effects": {
+    "Particles": [
+      {
+        "SystemId": "Item_Break_GlassPotion",
+        "TargetEntityPart": "Entity"
+      }
+    ]
+  },
+  "HitEntity": {
+    "Interactions": [
+      {
+        "Type": "runecore:potion_splash_strength"
+      }
+    ]
+  },
+  "Next": {
+    "Type": "Simple",
+    "RunTime": 0.1
+  }
+}
