@@ -12,8 +12,8 @@
     "Primary": {
       "Interactions": [
         {
-          "Type": "CancelChain",
-          "ChainId": "potion_drink"
+          "Type": "ModifyInventory",
+          "AdjustHeldItemQuantity": -1
         }
       ]
     }
@@ -21,7 +21,7 @@
   "MaxStack": 16,
   "Model": "Items/PotionMedium.blockymodel",
   "Icon": "Icons/ItemsGenerated/Weapon_Bomb_Potion_Speed.png",
-  "Texture": "Items/PotionMedium_texture.png",
+  "Texture": "Items/PotionMedium.png",
   "Tags": {
     "Type": [
       "Consumable"
