@@ -147,32 +147,8 @@ public class RuneCoreHud extends CustomUIHud {
     }
 
     public void setBuffs(List<ActiveBuff> buffs) {
-        // Only refresh if the list changed meaningfully (e.g. size or first elements)
-        // For simplicity, we'll just check size and IDs for now
-        boolean changed = buffs.size() != this.activeBuffsList.size();
-        if (!changed) {
-            for (int i = 0; i < buffs.size(); i++) {
-                if (!buffs.get(i).effectId.equals(this.activeBuffsList.get(i).effectId)) {
-                    changed = true;
-                    break;
-                }
-            }
-        }
-
         this.activeBuffsList = new ArrayList<>(buffs);
-
-        // Always update timers, but only full refresh (update(true, ...)) if layout
-        // changed
-        if (changed) {
-            refreshHud();
-        } else {
-            UICommandBuilder b = new UICommandBuilder();
-            for (int i = 0; i < Math.min(activeBuffsList.size(), 8); i++) {
-                ActiveBuff buff = activeBuffsList.get(i);
-                b.set("#Effect" + (i + 1) + " #Time.Text", formatTicksToTime(buff.remainingTicks));
-            }
-            this.update(false, b);
-        }
+        refreshHud();
     }
 
     private void refreshHud() {
@@ -188,11 +164,13 @@ public class RuneCoreHud extends CustomUIHud {
     }
 
     private String formatTicksToTime(int ticks) {
-        int seconds = ticks / 20;
-        if (seconds < 60)
+        int seconds = Math.max(0, ticks / 20);
+        if (seconds < 60) {
             return seconds + "s";
+        }
         int minutes = seconds / 60;
-        return minutes + "m";
+        int remSecs = seconds % 60;
+        return minutes + "m " + remSecs + "s";
     }
 
     private String getIconName(String id) {
