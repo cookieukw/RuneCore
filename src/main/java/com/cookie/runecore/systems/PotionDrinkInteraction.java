@@ -56,7 +56,16 @@ public class PotionDrinkInteraction extends SimpleInstantInteraction {
                             World world = store.getExternalData() != null ? store.getExternalData().getWorld() : null;
                             CastContext ctx = new CastContext(playerRef, playerEntityRef, world, 1.0);
                             if (RuneCore.get().getEffect(effectName) != null) {
-                                RuneCore.get().getEffect(effectName).execute(ctx);
+                                final String eff = effectName;
+                                if (world != null) {
+                                    world.execute(() -> {
+                                        if (playerEntityRef.isValid()) {
+                                            RuneCore.get().getEffect(eff).execute(ctx);
+                                        }
+                                    });
+                                } else {
+                                    RuneCore.get().getEffect(eff).execute(ctx);
+                                }
                                 System.out.println("[RuneCore-PotionDrinkInteraction] Player drank potion, applying effect: " + effectName);
                             } else {
                                 System.err.println("[RuneCore-PotionDrinkInteraction] Effect not found: " + effectName);

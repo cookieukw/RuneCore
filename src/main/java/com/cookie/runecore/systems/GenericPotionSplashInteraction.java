@@ -71,7 +71,17 @@ public class GenericPotionSplashInteraction extends SimpleInstantInteraction {
 
         var effect = RuneCore.get().getEffect(effectName);
         if (effect != null) {
-            effect.execute(ctx);
+            final String eff = effectName;
+            final Ref<EntityStore> finalRef = entityRef;
+            if (world != null) {
+                world.execute(() -> {
+                    if (finalRef.isValid()) {
+                        RuneCore.get().getEffect(eff).execute(ctx);
+                    }
+                });
+            } else {
+                effect.execute(ctx);
+            }
         } else {
             System.err.println("[RuneCore] Effect '" + effectName + "' not found in RuneCore registry!");
         }
