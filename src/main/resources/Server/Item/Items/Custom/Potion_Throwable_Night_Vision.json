@@ -1,9 +1,9 @@
 {
   "Parent": "Potion_Throwable_Template",
   "TranslationProperties": {
-    "Name": "Splash Potion of Slowness"
+    "Name": "Splash Potion of Night Vision"
   },
-  "Icon": "Icons/ItemsGenerated/Weapon_Bomb_Potion_Slowness.png",
+  "Icon": "Icons/ItemsGenerated/Weapon_Bomb_Potion_Night_Vision.png",
   "IconProperties": {
     "Rotation": [
       22.5,
@@ -31,7 +31,7 @@
   "Interactions": {
     "Secondary": {
       "Interactions": [
-        "Potion_Throwable_Slowness_Throw"
+        "Potion_Throwable_Night_Vision_Throw"
       ]
     }
   },

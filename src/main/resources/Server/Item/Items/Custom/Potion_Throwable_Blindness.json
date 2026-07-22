@@ -1,9 +1,9 @@
 {
   "Parent": "Potion_Throwable_Template",
   "TranslationProperties": {
-    "Name": "Splash Potion of Slowness"
+    "Name": "Splash Potion of Blindness"
   },
-  "Icon": "Icons/ItemsGenerated/Weapon_Bomb_Potion_Slowness.png",
+  "Icon": "Icons/ItemsGenerated/Weapon_Bomb_Potion_Blindness.png",
   "IconProperties": {
     "Rotation": [
       22.5,
@@ -31,7 +31,7 @@
   "Interactions": {
     "Secondary": {
       "Interactions": [
-        "Potion_Throwable_Slowness_Throw"
+        "Potion_Throwable_Blindness_Throw"
       ]
     }
   },
