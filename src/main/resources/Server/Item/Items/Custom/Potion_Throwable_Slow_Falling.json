@@ -20,7 +20,7 @@
     "CustomModel": "Items/Consumables/Potions/Potion_Small.blockymodel",
     "CustomModelTexture": [
       {
-        "Texture": "Items/Consumables/Potions/Potion_Textures/Blue.png",
+        "Texture": "Items/Consumables/Potions/Potion_Textures/White.png",
         "Weight": 1
       }
     ],

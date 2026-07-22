@@ -6,13 +6,15 @@
   "Quality": "Uncommon",
   "ItemLevel": 20,
   "BlockType": {
-    "CustomModel": "Items/PotionMedium.blockymodel",
+    "CustomModel": "Items/Consumables/Potions/Potion_Normal.blockymodel",
     "CustomModelTexture": [
       {
-        "Texture": "Items/PotionMedium_texture.png",
+        "Texture": "Items/Consumables/Potions/Potion_Textures/Orange.png",
         "Weight": 1
       }
-    ]
+    ],
+    "BlockParticleSetId": "GlassSmall",
+    "DrawType": "Model"
   },
   "Icon": "Icons/ItemsGenerated/Weapon_Bomb_Potion_Nausea.png",
   "InteractionVars": {
