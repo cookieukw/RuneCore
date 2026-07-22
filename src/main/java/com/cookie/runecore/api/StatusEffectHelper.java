@@ -105,15 +105,16 @@ public final class StatusEffectHelper {
             data.setNauseaTime(time);
 
             ServerCameraSettings settings = new ServerCameraSettings();
-            settings.rotation = new Direction((time * 4.0f) % 360.0f,
-                    (float) Math.sin(time * 0.15f) * 20.0f, 0.0f);
-            settings.rotationType = RotationType.Custom;
-            settings.applyLookType = ApplyLookType.LocalPlayerLookOrientation;
-            settings.rotationLerpSpeed = 0.8f;
+            // Calculate a sway offset (pitch/roll) using sine/cosine waves
+            float pitchOffset = (float) Math.sin(time * 0.15f) * 4.0f;
+            float rollOffset = (float) Math.cos(time * 0.15f) * 6.0f;
+            
+            settings.rotationOffset = new Direction(0.0f, pitchOffset, rollOffset);
             settings.attachedToType = AttachedToType.LocalPlayer;
+            settings.attachedToEntityId = pr.getReference().getIndex();
             settings.eyeOffset = true;
             settings.isFirstPerson = true;
-            pr.getPacketHandler().write(new SetServerCamera(ClientCameraView.Custom, true, settings));
+            pr.getPacketHandler().write(new SetServerCamera(ClientCameraView.FirstPerson, true, settings));
         });
     }
 

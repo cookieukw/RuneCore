@@ -77,6 +77,7 @@ public class Main extends JavaPlugin {
         this.getEntityStoreRegistry().registerSystem(new MobDropSystem());
         PotionHitSystem potionHitSystem = new PotionHitSystem();
         this.getEntityStoreRegistry().registerSystem(potionHitSystem);
+        this.getEntityStoreRegistry().registerSystem(new com.cookie.runecore.systems.EffectTickSystemBridge());
         new PotionListener(this.getEventRegistry(), potionHitSystem.getPlayerPotions());
         new RuneCoreHudManager(this.getEventRegistry());
         new CastListener(this.getEventRegistry());
