@@ -16,6 +16,8 @@ public class EffectTickSystemBridge extends TickingSystem<EntityStore> {
         }
         lastStep = step;
 
+        System.out.println("[RuneCore-Bridge] Ticking step: " + step);
+
         World world = store.getExternalData() != null ? store.getExternalData().getWorld() : null;
         if (world != null) {
             EffectTickSystem.getInstance().tick(world);
