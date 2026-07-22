@@ -65,7 +65,6 @@ public class PotionListener {
                         if (RuneCore.get().getEffect(effectName) != null) {
                             RuneCore.get().getEffect(effectName).execute(ctx);
                             System.out.println("[RuneCore-PotionListener] Player drank potion, applying effect: " + effectName);
-                            playerRef.sendMessage(Message.raw("[RuneCore] Você tomou a poção de: " + effectName));
                         }
                     }
                 }
@@ -104,7 +103,6 @@ public class PotionListener {
                     if (RuneCore.get().getEffect(effectName) != null) {
                         RuneCore.get().getEffect(effectName).execute(ctx);
                         System.out.println("[RuneCore-PotionListener] Player drank potion via click, applying effect: " + effectName);
-                        playerRef.sendMessage(Message.raw("[RuneCore] Você tomou a poção de: " + effectName));
                     }
                 }
             }

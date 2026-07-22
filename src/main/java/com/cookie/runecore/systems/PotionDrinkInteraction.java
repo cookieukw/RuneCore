@@ -58,7 +58,6 @@ public class PotionDrinkInteraction extends SimpleInstantInteraction {
                             if (RuneCore.get().getEffect(effectName) != null) {
                                 RuneCore.get().getEffect(effectName).execute(ctx);
                                 System.out.println("[RuneCore-PotionDrinkInteraction] Player drank potion, applying effect: " + effectName);
-                                playerRef.sendMessage(Message.raw("[RuneCore] Você tomou a poção de: " + effectName));
                             } else {
                                 System.err.println("[RuneCore-PotionDrinkInteraction] Effect not found: " + effectName);
                             }
