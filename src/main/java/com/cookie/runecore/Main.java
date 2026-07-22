@@ -6,7 +6,6 @@ import com.hypixel.hytale.server.core.plugin.JavaPluginInit;
 import com.cookie.runecore.commands.RuneStatsCommand;
 import com.cookie.runecore.commands.TestUICommand;
 import com.cookie.runecore.systems.CastListener;
-import com.cookie.runecore.systems.EffectTickSystemBridge;
 import com.cookie.runecore.systems.EffectTimerListener;
 import com.cookie.runecore.systems.FrozenInteractionListener;
 import com.cookie.runecore.systems.MobDropSystem;
@@ -78,7 +77,6 @@ public class Main extends JavaPlugin {
         this.getEntityStoreRegistry().registerSystem(new MobDropSystem());
         PotionHitSystem potionHitSystem = new PotionHitSystem();
         this.getEntityStoreRegistry().registerSystem(potionHitSystem);
-        this.getEntityStoreRegistry().registerSystem(new EffectTickSystemBridge());
         new PotionListener(this.getEventRegistry(), potionHitSystem.getPlayerPotions());
         new RuneCoreHudManager(this.getEventRegistry());
         new CastListener(this.getEventRegistry());

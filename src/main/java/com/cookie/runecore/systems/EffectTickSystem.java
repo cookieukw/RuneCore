@@ -2,6 +2,8 @@ package com.cookie.runecore.systems;
 
 import com.cookie.runecore.api.ActiveBuff;
 import com.hypixel.hytale.component.Ref;
+import com.hypixel.hytale.component.Store;
+import com.hypixel.hytale.server.core.universe.world.World;
 import com.hypixel.hytale.server.core.universe.world.storage.EntityStore;
 
 import java.util.ArrayList;
@@ -70,6 +72,13 @@ public class EffectTickSystem {
             if (ref == null || !ref.isValid()) {
                 it.remove();
                 entityRefs.remove(key);
+                continue;
+            }
+
+            // Only tick if the entity belongs to the world currently being ticked
+            Store<EntityStore> store = ref.getStore();
+            World entityWorld = store != null && store.getExternalData() != null ? store.getExternalData().getWorld() : null;
+            if (entityWorld != world) {
                 continue;
             }
 

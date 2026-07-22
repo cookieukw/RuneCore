@@ -5,6 +5,9 @@ import com.hypixel.hytale.server.core.event.events.player.PlayerReadyEvent;
 import com.hypixel.hytale.server.core.universe.PlayerRef;
 import com.hypixel.hytale.protocol.packets.interface_.HudComponent;
 import com.hypixel.hytale.event.EventRegistry;
+import com.hypixel.hytale.server.core.asset.type.entityeffect.config.EntityEffect;
+import com.hypixel.hytale.server.core.entity.effect.ActiveEntityEffect;
+import com.hypixel.hytale.server.core.entity.effect.EffectControllerComponent;
 import com.hypixel.hytale.server.core.entity.entities.Player;
 import com.hypixel.hytale.component.Ref;
 import com.hypixel.hytale.component.Store;
@@ -21,6 +24,7 @@ import java.util.TimerTask;
 import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
 import com.cookie.runecore.api.ActiveBuff;
+import com.cookie.runecore.system.RuneCore;
 import com.cookie.runecore.systems.EffectTickSystem;
 
 public class RuneCoreHudManager {
@@ -105,8 +109,33 @@ public class RuneCoreHudManager {
                     hud.setMana(manaVal.get(), 100f);
                 }
 
-                // Sync Buffs
-                List<ActiveBuff> buffs = EffectTickSystem.getInstance().getBuffsForPlayer(playerRef.getUuid().toString());
+                // Sync Buffs directly from Hytale's EffectControllerComponent
+                EffectControllerComponent controller = 
+                    (EffectControllerComponent) store.getComponent(ref, EffectControllerComponent.getComponentType());
+                List<ActiveBuff> buffs = new java.util.ArrayList<>();
+                if (controller != null) {
+                    ActiveEntityEffect[] activeEffects = controller.getAllActiveEntityEffects();
+                    if (activeEffects != null) {
+                        for (ActiveEntityEffect activeEffect : activeEffects) {
+                            if (activeEffect == null) continue;
+                            int index = activeEffect.getEntityEffectIndex();
+                            EntityEffect nativeEffect = 
+                                EntityEffect.getAssetMap().getAsset(index);
+                            if (nativeEffect != null && nativeEffect.getId() != null) {
+                                String nativeId = nativeEffect.getId();
+                                String effectName = nativeId.replace("runecore:", "").toLowerCase();
+                                
+                                if (RuneCore.get().getEffect(effectName) != null) {
+                                    int remainingTicks = (int) (activeEffect.getRemainingDuration() * 20.0f);
+                                    if (remainingTicks > 0) {
+                                        ActiveBuff buff = ActiveBuff.builder(playerRef.getUuid().toString(), effectName, remainingTicks).build();
+                                        buffs.add(buff);
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
                 hud.setBuffs(buffs);
             });
         }
