@@ -1,26 +1,36 @@
 package com.cookie.runecore.systems;
 
+import com.hypixel.hytale.component.ArchetypeChunk;
+import com.hypixel.hytale.component.CommandBuffer;
 import com.hypixel.hytale.component.Store;
-import com.hypixel.hytale.component.system.tick.TickingSystem;
+import com.hypixel.hytale.component.query.Query;
+import com.hypixel.hytale.component.system.tick.ArchetypeTickingSystem;
+import com.hypixel.hytale.server.core.modules.entity.component.TransformComponent;
 import com.hypixel.hytale.server.core.universe.world.World;
 import com.hypixel.hytale.server.core.universe.world.storage.EntityStore;
 
-public class EffectTickSystemBridge extends TickingSystem<EntityStore> {
+public class EffectTickSystemBridge extends ArchetypeTickingSystem<EntityStore> {
 
-    private int lastStep = -1;
+    private long lastStep = -1;
 
     @Override
-    public void tick(float deltaTime, int step, Store<EntityStore> store) {
+    public void tick(float deltaTime, ArchetypeChunk<EntityStore> chunk, Store<EntityStore> store, CommandBuffer<EntityStore> commandBuffer) {
+        World world = store.getExternalData() != null ? store.getExternalData().getWorld() : null;
+        if (world == null) return;
+        
+        long step = world.getTick();
         if (step == lastStep) {
-            return; // Already ticked this game step/tick
+            return;
         }
         lastStep = step;
 
-        System.out.println("[RuneCore-Bridge] Ticking step: " + step);
+        EffectTickSystem.getInstance().tick(world);
+    }
 
-        World world = store.getExternalData() != null ? store.getExternalData().getWorld() : null;
-        if (world != null) {
-            EffectTickSystem.getInstance().tick(world);
-        }
+    @Override
+    public Query<EntityStore> getQuery() {
+        return Query.and(
+                TransformComponent.getComponentType()
+        );
     }
 }
