@@ -9,9 +9,11 @@ import com.hypixel.hytale.server.core.modules.entity.component.TransformComponen
 import com.hypixel.hytale.server.core.universe.world.World;
 import com.hypixel.hytale.server.core.universe.world.storage.EntityStore;
 
+import java.util.concurrent.atomic.AtomicLong;
+
 public class EffectTickSystemBridge extends ArchetypeTickingSystem<EntityStore> {
 
-    private long lastStep = -1;
+    private static final AtomicLong lastStep = new AtomicLong(-1);
 
     @Override
     public void tick(float deltaTime, ArchetypeChunk<EntityStore> chunk, Store<EntityStore> store, CommandBuffer<EntityStore> commandBuffer) {
@@ -19,10 +21,15 @@ public class EffectTickSystemBridge extends ArchetypeTickingSystem<EntityStore> 
         if (world == null) return;
         
         long step = world.getTick();
-        if (step == lastStep) {
+        
+        // Atomic compare and set: only execute if we successfully update lastStep to the new step
+        long currentLast = lastStep.get();
+        if (step <= currentLast) {
             return;
         }
-        lastStep = step;
+        if (!lastStep.compareAndSet(currentLast, step)) {
+            return; // Another thread already ticked this step
+        }
 
         EffectTickSystem.getInstance().tick(world);
     }
