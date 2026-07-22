@@ -7,12 +7,15 @@ import com.hypixel.hytale.server.core.entity.effect.EffectControllerComponent;
 import com.hypixel.hytale.server.core.modules.entity.component.DynamicLight;
 import com.hypixel.hytale.server.core.universe.world.storage.EntityStore;
 
+import java.util.function.Consumer;
+
 /**
  * Helpers for visual status effects that affect entity appearance and native effect icons.
  * <p>
- * DynamicLight creation/removal is centralised in {@link #applyDynamicLight} and
- * {@link #removeDynamicLight} to avoid duplication across Glowing and NightVision.
- * Native icon removal is handled by {@link #removeNativeEffect}.
+ * All apply/revert flows share the same shape: update HUD flag, update
+ * {@link PlayerDataComponent} flag, and optionally touch DynamicLight / native effect icons.
+ * That shared shape is centralised in {@link #setHudAndData} so each effect only declares
+ * what's different about it.
  */
 public final class VisualEffectHelper {
 
@@ -22,25 +25,17 @@ public final class VisualEffectHelper {
 
     public static void applyGlowing(Ref<EntityStore> ref) {
         EffectHelper.worldExecute(ref, () -> {
-            EffectHelper.updateHud(ref, hud -> hud.setGlowing(true));
-            Store<EntityStore> store = ref.getStore();
-            PlayerDataComponent data = store.ensureAndGetComponent(ref, PlayerDataComponent.TYPE);
-            if (data != null) data.setGlowing(true);
-
+            setHudAndData(ref, true, hud -> hud.setGlowing(true), data -> data.setGlowing(true));
             // Subtle local lighting: Radius 1, Low-intensity yellow
-            applyDynamicLight(store, ref, (byte) 1, (byte) 32, (byte) 32, (byte) 0);
+            applyDynamicLight(ref.getStore(), ref, (byte) 1, (byte) 32, (byte) 32, (byte) 0);
         });
     }
 
     public static void revertGlowing(Ref<EntityStore> ref) {
         EffectHelper.worldExecute(ref, () -> {
-            EffectHelper.updateHud(ref, hud -> hud.setGlowing(false));
-            Store<EntityStore> store = ref.getStore();
-            PlayerDataComponent data = store.getComponent(ref, PlayerDataComponent.TYPE);
-            if (data != null) data.setGlowing(false);
-
-            removeDynamicLight(store, ref);
-            removeNativeEffect(store, ref, "Glowing");
+            setHudAndData(ref, false, hud -> hud.setGlowing(false), data -> data.setGlowing(false));
+            removeDynamicLight(ref.getStore(), ref);
+            removeNativeEffect(ref.getStore(), ref, "Glowing");
         });
     }
 
@@ -48,25 +43,17 @@ public final class VisualEffectHelper {
 
     public static void applyNightVision(Ref<EntityStore> ref) {
         EffectHelper.worldExecute(ref, () -> {
-            EffectHelper.updateHud(ref, hud -> hud.setNightVision(true));
-            Store<EntityStore> store = ref.getStore();
-            PlayerDataComponent data = store.ensureAndGetComponent(ref, PlayerDataComponent.TYPE);
-            if (data != null) data.setNightVision(true);
-
+            setHudAndData(ref, true, hud -> hud.setNightVision(true), data -> data.setNightVision(true));
             // Global/FullBright: Radius -1, White (R:-1, G:-1, B:-1)
-            applyDynamicLight(store, ref, (byte) -1, (byte) -1, (byte) -1, (byte) -1);
+            applyDynamicLight(ref.getStore(), ref, (byte) -1, (byte) -1, (byte) -1, (byte) -1);
         });
     }
 
     public static void revertNightVision(Ref<EntityStore> ref) {
         EffectHelper.worldExecute(ref, () -> {
-            EffectHelper.updateHud(ref, hud -> hud.setNightVision(false));
-            Store<EntityStore> store = ref.getStore();
-            PlayerDataComponent data = store.getComponent(ref, PlayerDataComponent.TYPE);
-            if (data != null) data.setNightVision(false);
-
-            removeDynamicLight(store, ref);
-            removeNativeEffect(store, ref, "NightVision");
+            setHudAndData(ref, false, hud -> hud.setNightVision(false), data -> data.setNightVision(false));
+            removeDynamicLight(ref.getStore(), ref);
+            removeNativeEffect(ref.getStore(), ref, "NightVision");
         });
     }
 
@@ -75,25 +62,40 @@ public final class VisualEffectHelper {
     public static void applyBlindness(Ref<EntityStore> ref) {
         EffectHelper.worldExecute(ref, () -> {
             System.out.println("[RuneCore] Applying blindness visual to " + ref);
-            EffectHelper.updateHud(ref, hud -> hud.setBlinded(true));
-            Store<EntityStore> store = ref.getStore();
-            PlayerDataComponent data = store.ensureAndGetComponent(ref, PlayerDataComponent.TYPE);
-            if (data != null) data.setBlinded(true);
+            setHudAndData(ref, true, hud -> hud.setBlinded(true), data -> data.setBlinded(true));
         });
     }
 
     public static void revertBlindness(Ref<EntityStore> ref) {
         EffectHelper.worldExecute(ref, () -> {
-            EffectHelper.updateHud(ref, hud -> hud.setBlinded(false));
-            Store<EntityStore> store = ref.getStore();
-            PlayerDataComponent data = store.ensureAndGetComponent(ref, PlayerDataComponent.TYPE);
-            if (data != null) data.setBlinded(false);
-
-            removeNativeEffect(store, ref, "Blindness");
+            setHudAndData(ref, true, hud -> hud.setBlinded(false), data -> data.setBlinded(false));
+            removeNativeEffect(ref.getStore(), ref, "Blindness");
         });
     }
 
     // ── Internal helpers ──────────────────────────────────────────────────────
+
+    /**
+     * Updates the HUD flag and mirrors it onto {@link PlayerDataComponent}.
+     *
+     * @param ensure if true, uses {@code ensureAndGetComponent} (creates the component if
+     *               missing); if false, uses {@code getComponent} (no-op if it's not there,
+     *               used by most revert paths since the effect being removed implies the
+     *               component already exists).
+     */
+    private static void setHudAndData(Ref<EntityStore> ref, boolean ensure,
+            Consumer<HudComponent> hudSetter, Consumer<PlayerDataComponent> dataSetter) {
+        EffectHelper.updateHud(ref, hudSetter);
+
+        Store<EntityStore> store = ref.getStore();
+        PlayerDataComponent data = ensure
+                ? store.ensureAndGetComponent(ref, PlayerDataComponent.TYPE)
+                : store.getComponent(ref, PlayerDataComponent.TYPE);
+        if (data != null) {
+            dataSetter.accept(data);
+            store.putComponent(ref, PlayerDataComponent.TYPE, data);
+        }
+    }
 
     private static void applyDynamicLight(Store<EntityStore> store, Ref<EntityStore> ref,
             byte radius, byte r, byte g, byte b) {

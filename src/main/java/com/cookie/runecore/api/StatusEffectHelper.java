@@ -65,21 +65,29 @@ public final class StatusEffectHelper {
     // ── Nausea ────────────────────────────────────────────────────────────────
 
     public static void applyNausea(Ref<EntityStore> ref) {
+        System.out.println("[RuneCore-Nausea] applyNausea called for: " + ref);
         EffectHelper.updateHud(ref, hud -> hud.setNausea(true));
         withStore(ref, store -> {
-            PlayerDataComponent data = store.ensureAndGetComponent(ref, PlayerDataComponent.TYPE);
-            if (data != null) {
-                data.setNausea(true);
-                data.setNauseaTime(0.0f);
+            PlayerDataComponent data = store.getComponent(ref, PlayerDataComponent.TYPE);
+            if (data == null) {
+                data = new PlayerDataComponent();
             }
+            data.setNausea(true);
+            data.setNauseaTime(0.0f);
+            store.putComponent(ref, PlayerDataComponent.TYPE, data);
+            System.out.println("[RuneCore-Nausea] PlayerDataComponent updated. Nausea set to true.");
         });
     }
 
     public static void revertNausea(Ref<EntityStore> ref) {
+        System.out.println("[RuneCore-Nausea] revertNausea called for: " + ref);
         EffectHelper.updateHud(ref, hud -> hud.setNausea(false));
         withPlayerRef(ref, (store, pr) -> {
-            PlayerDataComponent data = store.ensureAndGetComponent(ref, PlayerDataComponent.TYPE);
-            if (data != null) data.setNausea(false);
+            PlayerDataComponent data = store.getComponent(ref, PlayerDataComponent.TYPE);
+            if (data != null) {
+                data.setNausea(false);
+                store.putComponent(ref, PlayerDataComponent.TYPE, data);
+            }
 
             ServerCameraSettings reset = new ServerCameraSettings();
             reset.attachedToType = AttachedToType.LocalPlayer;
@@ -93,28 +101,39 @@ public final class StatusEffectHelper {
                 int idx = EffectHelper.getEffectIndex("Nausea");
                 if (idx >= 0) ctrl.removeEffect(ref, idx, store);
             }
+            System.out.println("[RuneCore-Nausea] Nausea reverted, camera reset packet sent.");
         });
     }
 
     public static void onNauseaTick(Ref<EntityStore> ref) {
         withPlayerRef(ref, (store, pr) -> {
-            PlayerDataComponent data = store.ensureAndGetComponent(ref, PlayerDataComponent.TYPE);
-            if (data == null || !data.isNausea()) return;
+            PlayerDataComponent data = store.getComponent(ref, PlayerDataComponent.TYPE);
+            if (data == null) {
+                System.out.println("[RuneCore-Nausea] onNauseaTick: PlayerDataComponent is null for: " + ref);
+                return;
+            }
+            if (!data.isNausea()) {
+                // System.out.println("[RuneCore-Nausea] onNauseaTick: isNausea is false for: " + ref);
+                return;
+            }
 
             float time = data.getNauseaTime() + 1.0f;
             data.setNauseaTime(time);
+            store.putComponent(ref, PlayerDataComponent.TYPE, data);
+
+            System.out.println("[RuneCore-Nausea] onNauseaTick: sending camera sway at time " + time + " to: " + pr.getUsername());
 
             ServerCameraSettings settings = new ServerCameraSettings();
-            // Calculate a sway offset (pitch/roll) using sine/cosine waves
-            float pitchOffset = (float) Math.sin(time * 0.15f) * 4.0f;
-            float rollOffset = (float) Math.cos(time * 0.15f) * 6.0f;
-            
-            settings.rotationOffset = new Direction(0.0f, pitchOffset, rollOffset);
+            // Nausea sway effect: Rotates the camera dynamically and tilts it side to side
+            settings.rotation = new Direction((time * 4.0f) % 360.0f,
+                    (float) Math.sin(time * 0.15f) * 20.0f, 0.0f);
+            settings.rotationType = RotationType.Custom;
+            settings.applyLookType = ApplyLookType.LocalPlayerLookOrientation;
+            settings.rotationLerpSpeed = 0.8f;
             settings.attachedToType = AttachedToType.LocalPlayer;
-            settings.attachedToEntityId = pr.getReference().getIndex();
             settings.eyeOffset = true;
             settings.isFirstPerson = true;
-            pr.getPacketHandler().write(new SetServerCamera(ClientCameraView.FirstPerson, true, settings));
+            pr.getPacketHandler().write(new SetServerCamera(ClientCameraView.Custom, true, settings));
         });
     }
 

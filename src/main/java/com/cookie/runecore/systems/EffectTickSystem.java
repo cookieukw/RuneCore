@@ -78,7 +78,7 @@ public class EffectTickSystem {
             // Only tick if the entity belongs to the world currently being ticked
             Store<EntityStore> store = ref.getStore();
             World entityWorld = store != null && store.getExternalData() != null ? store.getExternalData().getWorld() : null;
-            if (entityWorld != world) {
+            if (entityWorld == null || !entityWorld.getName().equals(world.getName())) {
                 continue;
             }
 
