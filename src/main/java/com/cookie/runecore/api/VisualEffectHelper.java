@@ -1,8 +1,10 @@
 package com.cookie.runecore.api;
 
+import com.cookie.runecore.systems.ui.RuneCoreHud;
 import com.hypixel.hytale.component.Ref;
 import com.hypixel.hytale.component.Store;
 import com.hypixel.hytale.protocol.ColorLight;
+import com.hypixel.hytale.protocol.packets.interface_.HudComponent;
 import com.hypixel.hytale.server.core.entity.effect.EffectControllerComponent;
 import com.hypixel.hytale.server.core.modules.entity.component.DynamicLight;
 import com.hypixel.hytale.server.core.universe.world.storage.EntityStore;
@@ -84,7 +86,7 @@ public final class VisualEffectHelper {
      *               component already exists).
      */
     private static void setHudAndData(Ref<EntityStore> ref, boolean ensure,
-            Consumer<HudComponent> hudSetter, Consumer<PlayerDataComponent> dataSetter) {
+            Consumer<RuneCoreHud> hudSetter, Consumer<PlayerDataComponent> dataSetter) {
         EffectHelper.updateHud(ref, hudSetter);
 
         Store<EntityStore> store = ref.getStore();
