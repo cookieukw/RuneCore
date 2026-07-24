@@ -16,7 +16,8 @@ Group {
     Label #ManaText {
         Text: "100/100";
         Anchor: (Width: 302, Height: 60);
-        Style: (FontSize: 17,RenderBold: true, TextColor: #ffffff, HorizontalAlignment: Center, VerticalAlignment: Center);
+        Padding: (Right: 12);
+        Style: (FontSize: 17,RenderBold: true, TextColor: #ffffff, HorizontalAlignment: End, VerticalAlignment: Center);
       }
   }
 }
