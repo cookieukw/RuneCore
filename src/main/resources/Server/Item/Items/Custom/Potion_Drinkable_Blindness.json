@@ -20,7 +20,7 @@
       "Color": "#111"
     }
   },
-  "Icon": "Icons/ItemsGenerated/Weapon_Bomb_Potion_Blindness.png",
+  "Icon": "Icons/ItemsGenerated/Potion_Drinkable_Blindness.png",
   "InteractionVars": {
     "Effect": {
       "Interactions": [

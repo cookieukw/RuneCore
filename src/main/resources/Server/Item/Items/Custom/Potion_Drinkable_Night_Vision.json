@@ -20,7 +20,7 @@
       "Color": "#145"
     }
   },
-  "Icon": "Icons/ItemsGenerated/Weapon_Bomb_Potion_Night_Vision.png",
+  "Icon": "Icons/ItemsGenerated/Potion_Drinkable_Night_Vision.png",
   "InteractionVars": {
     "Effect": {
       "Interactions": [

@@ -20,7 +20,7 @@
       "Color": "#223"
     }
   },
-  "Icon": "Icons/ItemsGenerated/Weapon_Bomb_Potion_Slowness.png",
+  "Icon": "Icons/ItemsGenerated/Potion_Drinkable_Slowness.png",
   "InteractionVars": {
     "Effect": {
       "Interactions": [

@@ -20,7 +20,7 @@
       "Color": "#631"
     }
   },
-  "Icon": "Icons/ItemsGenerated/Weapon_Bomb_Potion_Burn.png",
+  "Icon": "Icons/ItemsGenerated/Potion_Drinkable_Burn.png",
   "InteractionVars": {
     "Effect": {
       "Interactions": [

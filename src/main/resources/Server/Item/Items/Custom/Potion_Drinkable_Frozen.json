@@ -20,7 +20,7 @@
       "Color": "#258"
     }
   },
-  "Icon": "Icons/ItemsGenerated/Weapon_Bomb_Potion_Frozen.png",
+  "Icon": "Icons/ItemsGenerated/Potion_Drinkable_Frozen.png",
   "InteractionVars": {
     "Effect": {
       "Interactions": [

@@ -20,7 +20,7 @@
       "Color": "#141"
     }
   },
-  "Icon": "Icons/ItemsGenerated/Weapon_Bomb_Potion_Jump_Boost.png",
+  "Icon": "Icons/ItemsGenerated/Potion_Drinkable_Jump_Boost.png",
   "InteractionVars": {
     "Effect": {
       "Interactions": [

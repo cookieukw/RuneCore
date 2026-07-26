@@ -20,7 +20,7 @@
       "Color": "#444"
     }
   },
-  "Icon": "Icons/ItemsGenerated/Weapon_Bomb_Potion_Invisibility.png",
+  "Icon": "Icons/ItemsGenerated/Potion_Drinkable_Invisibility.png",
   "InteractionVars": {
     "Effect": {
       "Interactions": [

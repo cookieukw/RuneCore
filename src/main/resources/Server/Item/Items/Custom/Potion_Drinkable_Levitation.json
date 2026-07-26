@@ -20,7 +20,7 @@
       "Color": "#325"
     }
   },
-  "Icon": "Icons/ItemsGenerated/Weapon_Bomb_Potion_Levitation.png",
+  "Icon": "Icons/ItemsGenerated/Potion_Drinkable_Levitation.png",
   "InteractionVars": {
     "Effect": {
       "Interactions": [

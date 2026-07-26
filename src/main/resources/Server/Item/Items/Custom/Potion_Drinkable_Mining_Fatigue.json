@@ -20,7 +20,7 @@
       "Color": "#431"
     }
   },
-  "Icon": "Icons/ItemsGenerated/Weapon_Bomb_Potion_Nausea.png",
+  "Icon": "Icons/ItemsGenerated/Potion_Drinkable_Mining_Fatigue.png",
   "InteractionVars": {
     "Effect": {
       "Interactions": [

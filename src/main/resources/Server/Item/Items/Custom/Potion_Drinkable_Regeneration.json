@@ -20,7 +20,7 @@
       "Color": "#514"
     }
   },
-  "Icon": "Icons/ItemsGenerated/Weapon_Bomb_Potion_Regeneration.png",
+  "Icon": "Icons/ItemsGenerated/Potion_Drinkable_Regeneration.png",
   "InteractionVars": {
     "Effect": {
       "Interactions": [

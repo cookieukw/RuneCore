@@ -20,7 +20,7 @@
       "Color": "#312"
     }
   },
-  "Icon": "Icons/ItemsGenerated/Weapon_Bomb_Potion_Instant_Damage.png",
+  "Icon": "Icons/ItemsGenerated/Potion_Drinkable_Instant_Damage.png",
   "InteractionVars": {
     "Effect": {
       "Interactions": [

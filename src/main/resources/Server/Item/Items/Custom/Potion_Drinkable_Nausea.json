@@ -20,7 +20,7 @@
       "Color": "#241"
     }
   },
-  "Icon": "Icons/ItemsGenerated/Weapon_Bomb_Potion_Nausea.png",
+  "Icon": "Icons/ItemsGenerated/Potion_Drinkable_Nausea.png",
   "InteractionVars": {
     "Effect": {
       "Interactions": [

@@ -20,7 +20,7 @@
       "Color": "#144"
     }
   },
-  "Icon": "Icons/ItemsGenerated/Weapon_Bomb_Potion_Speed.png",
+  "Icon": "Icons/ItemsGenerated/Potion_Drinkable_Water_Breathing.png",
   "InteractionVars": {
     "Effect": {
       "Interactions": [

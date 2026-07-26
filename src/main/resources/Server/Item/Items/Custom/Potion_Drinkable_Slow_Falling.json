@@ -20,7 +20,7 @@
       "Color": "#345"
     }
   },
-  "Icon": "Icons/ItemsGenerated/Weapon_Bomb_Potion_Slow_Falling.png",
+  "Icon": "Icons/ItemsGenerated/Potion_Drinkable_Slow_Falling.png",
   "InteractionVars": {
     "Effect": {
       "Interactions": [
