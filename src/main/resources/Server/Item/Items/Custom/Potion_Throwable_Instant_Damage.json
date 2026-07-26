@@ -1,0 +1,63 @@
+{
+  "Parent": "Potion_Throwable_Template",
+  "TranslationProperties": {
+    "Name": "Splash Potion of Instant Damage"
+  },
+  "Icon": "Icons/ItemsGenerated/Weapon_Bomb_Potion_Instant_Damage.png",
+  "IconProperties": {
+    "Rotation": [
+      22.5,
+      45,
+      22.5
+    ],
+    "Scale": 0.8,
+    "Translation": [
+      0,
+      -10
+    ]
+  },
+  "BlockType": {
+    "CustomModel": "Items/Consumables/Potions/Potion_Small.blockymodel",
+    "CustomModelTexture": [
+      {
+        "Texture": "Items/Consumables/Potions/Potion_Textures/Purple.png",
+        "Weight": 1
+      }
+    ],
+    "BlockParticleSetId": "GlassSmall",
+    "DrawType": "Model"
+  },
+  "MaxStack": 16,
+  "Interactions": {
+    "Secondary": {
+      "Interactions": [
+        "Potion_Throwable_Instant_Damage_Throw"
+      ]
+    }
+  },
+  "ItemLevel": 20,
+  "DropOnDeath": true,
+  "Recipe": {
+    "TimeSeconds": 2.0,
+    "KnowledgeRequired": false,
+    "Input": [
+      {
+        "ItemId": "Potion_Drinkable_Instant_Damage",
+        "Quantity": 1
+      },
+      {
+        "ItemId": "Ingredient_Powder_Boom",
+        "Quantity": 2
+      }
+    ],
+    "BenchRequirement": [
+      {
+        "Type": "Crafting",
+        "Id": "Alchemybench",
+        "Categories": [
+          "Alchemy_Potions"
+        ]
+      }
+    ]
+  }
+}

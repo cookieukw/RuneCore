@@ -99,7 +99,44 @@ For a full breakdown of all 20 elements and their mechanics, see our [**Technica
 
 ---
 
-## 6. 🎮 How to Test In-Game & Current Status Effects
+## 6. ⚗️ Potion Crafting Recipes
+
+All potions are crafted at the **Alchemy Bench** using a **Glass Bottle** (Potion_Empty) + an **Elemental Essence** + a **Secondary Material**. Crafting time: **4 seconds**.
+
+| Potion | Essence | Qty | Secondary Material | Qty |
+| :--- | :--- | :---: | :--- | :---: |
+| **Speed** | Wind Essence | 1 | Feathers (Light) | 2 |
+| **Slowness** | Earth Essence | 1 | Bramble Moss | 2 |
+| **Haste** | Lightning Essence | 1 | Crystal (Yellow) | 1 |
+| **Mining Fatigue** | Earth Essence | 1 | Bone Fragment | 2 |
+| **Jump Boost** | Wind Essence | 1 | Feathers (Blue) | 2 |
+| **High Jump** | Aether Essence | 1 | Feathers (Red) | 2 |
+| **Slow Falling** | Wind Essence | 1 | Feathers (Dark) | 3 |
+| **Levitation** | Aether Essence | 2 | Crystal (White) | 2 |
+| **Regeneration** | Life Essence | 2 | Pink Flower | 3 |
+| **Poison** | Poison Essence | 1 | Poison Mushroom | 2 |
+| **Decay** | Death Essence | 1 | Bone Fragment | 3 |
+| **Burn** | Fire Essence | 1 | Charcoal | 2 |
+| **Nausea** | Chaos Essence | 1 | Green Mushroom | 2 |
+| **Bleeding** | Blood Essence | 1 | Crystal (Red) | 1 |
+| **Frozen** | Ice Essence | 1 | Crystal (Cyan) | 2 |
+| **Instant Health** | Life Essence (Concentrated) | 1 | Red Flower | 3 |
+| **Instant Damage** | Void Essence | 1 | Boom Powder | 2 |
+| **Invisibility** | Shadow Essence | 2 | Crystal (White) | 2 |
+| **Glowing** | Light Essence | 1 | Glowing Mushroom (Orange) | 2 |
+| **Blindness** | Shadow Essence | 1 | Crystal (Purple) | 2 |
+| **Night Vision** | Light Essence | 1 | Glowing Mushroom (Blue) | 2 |
+| **Water Breathing** | Water Essence | 1 | Blue Coral | 3 |
+| **Fire Resistance** | Fire Essence | 2 | Crystal (Red) | 2 |
+| **Resistance** | Metal Essence | 2 | Crystal (Blue) | 2 |
+| **Strength** | Blood Essence | 2 | Crystal (Red) | 2 |
+| **Weakness** | Death Essence | 1 | Grey Flower | 2 |
+
+> **Note:** More powerful effects (Levitation, Invisibility, Resistance, Strength, Fire Resistance, Regeneration) require **2 essences** instead of 1.
+
+---
+
+## 7. 🎮 How to Test In-Game & Current Status Effects
 
 You can test the registered status effects and spell system using the built-in administrative command:
 
@@ -179,11 +216,11 @@ if (poison != null) {
 
 ---
 
-## 7. 🛠️ Modder's Guide
+## 8. 🛠️ Modder's Guide
 
 Interested in building on top of RuneCore? Check out our [**API Usage Guide**](API_USAGE.md) for code examples and integration steps.
 
-## 8. ⚖️ License
+## 9. ⚖️ License
 
 This project, including its source code, documentation, and **pixel art icons** (located in the `/icons` directory), is licensed under the **Creative Commons Attribution-NonCommercial 4.0 International (CC BY-NC 4.0)**.
 

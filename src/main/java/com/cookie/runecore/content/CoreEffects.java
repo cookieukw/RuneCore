@@ -1,6 +1,7 @@
 package com.cookie.runecore.content;
 
 import com.cookie.runecore.api.ActiveBuff;
+import com.cookie.runecore.api.CastContext;
 import com.cookie.runecore.api.MovementHelper;
 import com.cookie.runecore.api.RuneEffect;
 import com.cookie.runecore.api.StatHelper;
@@ -8,9 +9,27 @@ import com.cookie.runecore.api.StatusEffectHelper;
 import com.cookie.runecore.api.VisualEffectHelper;
 import com.cookie.runecore.system.RuneCore;
 import com.hypixel.hytale.component.Ref;
+import com.hypixel.hytale.server.core.universe.PlayerRef;
 import com.hypixel.hytale.server.core.universe.world.storage.EntityStore;
 
 public class CoreEffects {
+
+    public static String getPlayerUuid(CastContext ctx) {
+        if (ctx.source != null && ctx.source.getUuid() != null) {
+            return ctx.source.getUuid().toString();
+        }
+        if (ctx.target instanceof Ref<?> raw && raw.isValid()) {
+            @SuppressWarnings("unchecked") Ref<EntityStore> ref = (Ref<EntityStore>) raw;
+            var store = ref.getStore();
+            if (store != null) {
+                PlayerRef pRef = store.getComponent(ref, PlayerRef.getComponentType());
+                if (pRef != null && pRef.getUuid() != null) {
+                    return pRef.getUuid().toString();
+                }
+            }
+        }
+        return ctx.target != null ? ctx.target.toString() : "unknown";
+    }
 
     public static void init() {
         RuneCore core = RuneCore.get();
@@ -18,7 +37,7 @@ public class CoreEffects {
         core.registerEffect(new RuneEffect("speed", 1200)
             .withAsset("Speed")
             .withBuff(ctx -> {
-                String uid = ctx.source != null ? ctx.source.getUuid().toString() : ctx.target.toString();
+                String uid = getPlayerUuid(ctx);
                 return ActiveBuff.builder(uid, "speed", 1200)
                     .build();
             })
@@ -33,7 +52,7 @@ public class CoreEffects {
                 }
             })
             .withBuff(ctx -> {
-                String uid = ctx.source != null ? ctx.source.getUuid().toString() : ctx.target.toString();
+                String uid = getPlayerUuid(ctx);
                 return ActiveBuff.builder(uid, "slowness", 600)
                     .onExpire(ref -> MovementHelper.revertSlowness(ref))
                     .build();
@@ -49,7 +68,7 @@ public class CoreEffects {
                 }
             })
             .withBuff(ctx -> {
-                String uid = ctx.source != null ? ctx.source.getUuid().toString() : ctx.target.toString();
+                String uid = getPlayerUuid(ctx);
                 return ActiveBuff.builder(uid, "haste", 1200)
                     .onExpire(ref -> StatusEffectHelper.revertHaste(ref))
                     .build();
@@ -65,7 +84,7 @@ public class CoreEffects {
                 }
             })
             .withBuff(ctx -> {
-                String uid = ctx.source != null ? ctx.source.getUuid().toString() : ctx.target.toString();
+                String uid = getPlayerUuid(ctx);
                 return ActiveBuff.builder(uid, "mining_fatigue", 1200)
                     .onExpire(ref -> StatusEffectHelper.revertMiningFatigue(ref))
                     .build();
@@ -81,7 +100,7 @@ public class CoreEffects {
                 }
             })
             .withBuff(ctx -> {
-                String uid = ctx.source != null ? ctx.source.getUuid().toString() : ctx.target.toString();
+                String uid = getPlayerUuid(ctx);
                 return ActiveBuff.builder(uid, "jump_boost", 1200)
                     .onExpire(ref -> MovementHelper.revertJumpBoost(ref))
                     .build();
@@ -97,7 +116,7 @@ public class CoreEffects {
                 }
             })
             .withBuff(ctx -> {
-                String uid = ctx.source != null ? ctx.source.getUuid().toString() : ctx.target.toString();
+                String uid = getPlayerUuid(ctx);
                 return ActiveBuff.builder(uid, "high_jump", 600)
                     .onExpire(ref -> MovementHelper.revertHighJump(ref))
                     .build();
@@ -113,7 +132,7 @@ public class CoreEffects {
                 }
             })
             .withBuff(ctx -> {
-                String uid = ctx.source != null ? ctx.source.getUuid().toString() : ctx.target.toString();
+                String uid = getPlayerUuid(ctx);
                 return ActiveBuff.builder(uid, "slow_falling", 1200)
                     .onExpire(ref -> MovementHelper.revertSlowFalling(ref))
                     .build();
@@ -129,7 +148,7 @@ public class CoreEffects {
                 }
             })
             .withBuff(ctx -> {
-                String uid = ctx.source != null ? ctx.source.getUuid().toString() : ctx.target.toString();
+                String uid = getPlayerUuid(ctx);
                 return ActiveBuff.builder(uid, "levitation", 60)
                     .onExpire(ref -> MovementHelper.revertLevitation(ref))
                     .build();
@@ -139,7 +158,7 @@ public class CoreEffects {
         core.registerEffect(new RuneEffect("regeneration", 400)
             .withAsset("Regeneration")
             .withBuff(ctx -> {
-                String uid = ctx.source != null ? ctx.source.getUuid().toString() : ctx.target.toString();
+                String uid = getPlayerUuid(ctx);
                 return ActiveBuff.builder(uid, "regeneration", 400)
                     .interval(50)
                     .onTick(ref -> StatHelper.addHealth(ref, 1.0f))
@@ -150,7 +169,7 @@ public class CoreEffects {
         core.registerEffect(new RuneEffect("poison", 400)
             .withAsset("Poison")
             .withBuff(ctx -> {
-                String uid = ctx.source != null ? ctx.source.getUuid().toString() : ctx.target.toString();
+                String uid = getPlayerUuid(ctx);
                 return ActiveBuff.builder(uid, "poison", 400)
                     .interval(25)
                     .onTick(ref -> StatHelper.subtractHealth(ref, 1.0f))
@@ -161,7 +180,7 @@ public class CoreEffects {
         core.registerEffect(new RuneEffect("decay", 400)
             .withAsset("Decay")
             .withBuff(ctx -> {
-                String uid = ctx.source != null ? ctx.source.getUuid().toString() : ctx.target.toString();
+                String uid = getPlayerUuid(ctx);
                 return ActiveBuff.builder(uid, "decay", 400)
                     .interval(40)
                     .onTick(ref -> StatHelper.subtractHealth(ref, 1.0f))
@@ -178,7 +197,7 @@ public class CoreEffects {
                 }
             })
             .withBuff(ctx -> {
-                String uid = ctx.source != null ? ctx.source.getUuid().toString() : ctx.target.toString();
+                String uid = getPlayerUuid(ctx);
                 return ActiveBuff.builder(uid, "burn", 200)
                     .interval(20)
                     .onTick(ref -> {
@@ -199,10 +218,14 @@ public class CoreEffects {
                 }
             })
             .withBuff(ctx -> {
-                String uid = ctx.source != null ? ctx.source.getUuid().toString() : ctx.target.toString();
+                String uid = getPlayerUuid(ctx);
+                float[] time = {0.0f};
                 return ActiveBuff.builder(uid, "nausea", 200)
                     .interval(1)
-                    .onTick(ref -> StatusEffectHelper.onNauseaTick(ref))
+                    .onTick(ref -> {
+                        time[0] += 1.0f;
+                        StatusEffectHelper.onNauseaTick(ref, time[0]);
+                    })
                     .onExpire(ref -> StatusEffectHelper.revertNausea(ref))
                     .build();
             })
@@ -217,7 +240,7 @@ public class CoreEffects {
                 }
             })
             .withBuff(ctx -> {
-                String uid = ctx.source != null ? ctx.source.getUuid().toString() : ctx.target.toString();
+                String uid = getPlayerUuid(ctx);
                 return ActiveBuff.builder(uid, "bleeding", 300)
                     .interval(20)
                     .onTick(ref -> {
@@ -238,7 +261,7 @@ public class CoreEffects {
                 }
             })
             .withBuff(ctx -> {
-                String uid = ctx.source != null ? ctx.source.getUuid().toString() : ctx.target.toString();
+                String uid = getPlayerUuid(ctx);
                 return ActiveBuff.builder(uid, "frozen", 600)
                     .interval(10)
                     .onTick(ref -> MovementHelper.onFrozenTick(ref))
@@ -276,7 +299,7 @@ public class CoreEffects {
                 }
             })
             .withBuff(ctx -> {
-                String uid = ctx.source != null ? ctx.source.getUuid().toString() : ctx.target.toString();
+                String uid = getPlayerUuid(ctx);
                 return ActiveBuff.builder(uid, "invisibility", 1200)
                     .onExpire(ref -> StatusEffectHelper.revertInvisibility(ref))
                     .build();
@@ -292,7 +315,7 @@ public class CoreEffects {
                 }
             })
             .withBuff(ctx -> {
-                String uid = ctx.source != null ? ctx.source.getUuid().toString() : ctx.target.toString();
+                String uid = getPlayerUuid(ctx);
                 return ActiveBuff.builder(uid, "glowing", 1200)
                     .onExpire(ref -> VisualEffectHelper.revertGlowing(ref))
                     .build();
@@ -308,7 +331,7 @@ public class CoreEffects {
                 }
             })
             .withBuff(ctx -> {
-                String uid = ctx.source != null ? ctx.source.getUuid().toString() : ctx.target.toString();
+                String uid = getPlayerUuid(ctx);
                 return ActiveBuff.builder(uid, "blindness", 200)
                     .onExpire(ref -> VisualEffectHelper.revertBlindness(ref))
                     .build();
@@ -325,7 +348,7 @@ public class CoreEffects {
                 }
             })
             .withBuff(ctx -> {
-                String uid = ctx.source != null ? ctx.source.getUuid().toString() : ctx.target.toString();
+                String uid = getPlayerUuid(ctx);
                 return ActiveBuff.builder(uid, "night_vision", 1200)
                     .onExpire(ref -> VisualEffectHelper.revertNightVision(ref))
                     .build();
@@ -335,40 +358,67 @@ public class CoreEffects {
         core.registerEffect(new RuneEffect("water_breathing", 1200)
             .withAsset("WaterBreathing")
             .withBuff(ctx -> {
-                String uid = ctx.source != null ? ctx.source.getUuid().toString() : ctx.target.toString();
-                return ActiveBuff.builder(uid, "water_breathing", 1200).build();
+                String uid = getPlayerUuid(ctx);
+                return ActiveBuff.builder(uid, "water_breathing", 1200)
+                    .interval(10)
+                    .onTick(ref -> StatusEffectHelper.onWaterBreathingTick(ref))
+                    .build();
             })
         );
 
         core.registerEffect(new RuneEffect("fire_resistance", 1200)
             .withAsset("FireResistance")
             .withBuff(ctx -> {
-                String uid = ctx.source != null ? ctx.source.getUuid().toString() : ctx.target.toString();
+                String uid = getPlayerUuid(ctx);
                 return ActiveBuff.builder(uid, "fire_resistance", 1200).build();
             })
         );
 
         core.registerEffect(new RuneEffect("resistance", 1200)
             .withAsset("Resistance")
+            .withAction(ctx -> {
+                if (ctx.target instanceof Ref<?> raw) {
+                    @SuppressWarnings("unchecked") Ref<EntityStore> ref = (Ref<EntityStore>) raw;
+                    StatusEffectHelper.applyResistance(ref);
+                }
+            })
             .withBuff(ctx -> {
-                String uid = ctx.source != null ? ctx.source.getUuid().toString() : ctx.target.toString();
-                return ActiveBuff.builder(uid, "resistance", 1200).build();
+                String uid = getPlayerUuid(ctx);
+                return ActiveBuff.builder(uid, "resistance", 1200)
+                    .onExpire(ref -> StatusEffectHelper.revertResistance(ref))
+                    .build();
             })
         );
 
         core.registerEffect(new RuneEffect("strength", 1200)
             .withAsset("Strength")
+            .withAction(ctx -> {
+                if (ctx.target instanceof Ref<?> raw) {
+                    @SuppressWarnings("unchecked") Ref<EntityStore> ref = (Ref<EntityStore>) raw;
+                    StatusEffectHelper.applyStrength(ref);
+                }
+            })
             .withBuff(ctx -> {
-                String uid = ctx.source != null ? ctx.source.getUuid().toString() : ctx.target.toString();
-                return ActiveBuff.builder(uid, "strength", 1200).build();
+                String uid = getPlayerUuid(ctx);
+                return ActiveBuff.builder(uid, "strength", 1200)
+                    .onExpire(ref -> StatusEffectHelper.revertStrength(ref))
+                    .build();
             })
         );
 
         core.registerEffect(new RuneEffect("weakness", 600)
             .withAsset("Weakness")
+            .withAction(ctx -> {
+                if (ctx.target instanceof Ref<?> raw) {
+                    @SuppressWarnings("unchecked") Ref<EntityStore> ref = (Ref<EntityStore>) raw;
+                    StatusEffectHelper.applyWeakness(ref);
+                }
+            })
             .withBuff(ctx -> {
-                String uid = ctx.source != null ? ctx.source.getUuid().toString() : ctx.target.toString();
-                return ActiveBuff.builder(uid, "weakness", 600).build();
+                String uid = getPlayerUuid(ctx);
+                return ActiveBuff.builder(uid, "weakness", 600)
+                    .onExpire(ref -> StatusEffectHelper.revertWeakness(ref))
+                    .build();
             })
         );
     }

@@ -1,5 +1,6 @@
 package com.cookie.runecore;
 
+import com.hypixel.hytale.server.core.modules.interaction.interaction.config.Interaction;
 import com.hypixel.hytale.server.core.plugin.JavaPlugin;
 import com.hypixel.hytale.server.core.plugin.JavaPluginInit;
 import com.cookie.runecore.commands.RuneStatsCommand;
@@ -8,7 +9,10 @@ import com.cookie.runecore.systems.CastListener;
 import com.cookie.runecore.systems.EffectTimerListener;
 import com.cookie.runecore.systems.FrozenInteractionListener;
 import com.cookie.runecore.systems.MobDropSystem;
+import com.cookie.runecore.systems.GenericPotionSplashInteraction;
+import com.cookie.runecore.systems.PotionDrinkInteraction;
 import com.cookie.runecore.systems.PotionHitSystem;
+import com.cookie.runecore.systems.PotionListener;
 import com.cookie.runecore.systems.ui.RuneCoreHudManager;
 import com.cookie.runemagic.MagicListener;
 import com.cookie.runemagic.SwitchSpellCommand;
@@ -27,6 +31,34 @@ public class Main extends JavaPlugin {
 
     @Override
     protected void setup() {
+        // Register custom interaction codecs
+        com.hypixel.hytale.server.core.modules.interaction.interaction.config.Interaction.CODEC.register(
+                "runecore:potion_drink",
+                PotionDrinkInteraction.class,
+                PotionDrinkInteraction.CODEC
+        );
+
+        Interaction.CODEC.register(
+                "runecore:potion_splash_generic",
+                GenericPotionSplashInteraction.class,
+                GenericPotionSplashInteraction.CODEC
+        );
+
+        String[] splashEffects = {
+            "speed", "slowness", "haste", "mining_fatigue", "jump_boost", "high_jump",
+            "slow_falling", "levitation", "regeneration", "poison", "decay", "burn",
+            "nausea", "bleeding", "frozen", "invisibility", "glowing", "blindness",
+            "night_vision", "water_breathing", "fire_resistance", "resistance",
+            "strength", "weakness", "instant_health", "instant_damage"
+        };
+        for (String eff : splashEffects) {
+            Interaction.CODEC.register(
+                    "runecore:potion_splash_" + eff,
+                    GenericPotionSplashInteraction.class,
+                    GenericPotionSplashInteraction.CODEC
+            );
+        }
+
         // Initialize RuneCore engine defaults
         RuneCore.get().initDefaults();
 
@@ -43,7 +75,10 @@ public class Main extends JavaPlugin {
                 PlayerDataComponent.CODEC);
 
         this.getEntityStoreRegistry().registerSystem(new MobDropSystem());
-        this.getEntityStoreRegistry().registerSystem(new PotionHitSystem(this.getEventRegistry()));
+        PotionHitSystem potionHitSystem = new PotionHitSystem();
+        this.getEntityStoreRegistry().registerSystem(potionHitSystem);
+        this.getEntityStoreRegistry().registerSystem(new com.cookie.runecore.systems.EffectTickSystemBridge());
+        new PotionListener(this.getEventRegistry(), potionHitSystem.getPlayerPotions());
         new RuneCoreHudManager(this.getEventRegistry());
         new CastListener(this.getEventRegistry());
         new EffectTimerListener(this.getEventRegistry());

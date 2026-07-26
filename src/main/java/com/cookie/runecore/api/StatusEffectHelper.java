@@ -12,6 +12,8 @@ import com.hypixel.hytale.protocol.RotationType;
 import com.hypixel.hytale.protocol.ServerCameraSettings;
 import com.hypixel.hytale.protocol.packets.camera.SetServerCamera;
 import com.hypixel.hytale.server.core.entity.effect.EffectControllerComponent;
+import com.hypixel.hytale.server.core.modules.entitystats.EntityStatMap;
+import com.hypixel.hytale.server.core.modules.entitystats.asset.DefaultEntityStatTypes;
 import com.hypixel.hytale.server.core.modules.entitystats.modifier.StaticModifier;
 import com.hypixel.hytale.server.core.universe.PlayerRef;
 import com.hypixel.hytale.server.core.universe.world.World;
@@ -65,22 +67,14 @@ public final class StatusEffectHelper {
     // ── Nausea ────────────────────────────────────────────────────────────────
 
     public static void applyNausea(Ref<EntityStore> ref) {
+        System.out.println("[RuneCore-Nausea] applyNausea called for: " + ref);
         EffectHelper.updateHud(ref, hud -> hud.setNausea(true));
-        withStore(ref, store -> {
-            PlayerDataComponent data = store.ensureAndGetComponent(ref, PlayerDataComponent.TYPE);
-            if (data != null) {
-                data.setNausea(true);
-                data.setNauseaTime(0.0f);
-            }
-        });
     }
 
     public static void revertNausea(Ref<EntityStore> ref) {
+        System.out.println("[RuneCore-Nausea] revertNausea called for: " + ref);
         EffectHelper.updateHud(ref, hud -> hud.setNausea(false));
         withPlayerRef(ref, (store, pr) -> {
-            PlayerDataComponent data = store.ensureAndGetComponent(ref, PlayerDataComponent.TYPE);
-            if (data != null) data.setNausea(false);
-
             ServerCameraSettings reset = new ServerCameraSettings();
             reset.attachedToType = AttachedToType.LocalPlayer;
             reset.eyeOffset = true;
@@ -93,16 +87,13 @@ public final class StatusEffectHelper {
                 int idx = EffectHelper.getEffectIndex("Nausea");
                 if (idx >= 0) ctrl.removeEffect(ref, idx, store);
             }
+            System.out.println("[RuneCore-Nausea] Nausea reverted, camera reset packet sent.");
         });
     }
 
-    public static void onNauseaTick(Ref<EntityStore> ref) {
+    public static void onNauseaTick(Ref<EntityStore> ref, float time) {
         withPlayerRef(ref, (store, pr) -> {
-            PlayerDataComponent data = store.ensureAndGetComponent(ref, PlayerDataComponent.TYPE);
-            if (data == null || !data.isNausea()) return;
-
-            float time = data.getNauseaTime() + 1.0f;
-            data.setNauseaTime(time);
+            System.out.println("[RuneCore-Nausea] onNauseaTick: sending camera sway at time " + time + " to: " + pr.getUsername());
 
             ServerCameraSettings settings = new ServerCameraSettings();
             settings.rotation = new Direction((time * 4.0f) % 360.0f,
@@ -121,32 +112,70 @@ public final class StatusEffectHelper {
 
     public static void applyHaste(Ref<EntityStore> ref) {
         EffectHelper.updateHud(ref, hud -> hud.setHaste(true));
-        StatHelper.applyStatModifier(ref, "hytale:attack_speed", "Haste", 1.5f,
-                StaticModifier.CalculationType.MULTIPLICATIVE);
-        StatHelper.applyStatModifier(ref, "hytale:mining_speed", "Haste", 1.5f,
+        StatHelper.applyStatModifier(ref, "Stamina", "Haste", 1.5f,
                 StaticModifier.CalculationType.MULTIPLICATIVE);
     }
 
     public static void revertHaste(Ref<EntityStore> ref) {
         EffectHelper.updateHud(ref, hud -> hud.setHaste(false));
-        StatHelper.removeStatModifier(ref, "hytale:attack_speed", "Haste");
-        StatHelper.removeStatModifier(ref, "hytale:mining_speed", "Haste");
+        StatHelper.removeStatModifier(ref, "Stamina", "Haste");
     }
 
     // ── Mining Fatigue ────────────────────────────────────────────────────────
 
     public static void applyMiningFatigue(Ref<EntityStore> ref) {
         EffectHelper.updateHud(ref, hud -> hud.setMiningFatigue(true));
-        StatHelper.applyStatModifier(ref, "hytale:attack_speed", "Mining_Fatigue", 0.3f,
-                StaticModifier.CalculationType.MULTIPLICATIVE);
-        StatHelper.applyStatModifier(ref, "hytale:mining_speed", "Mining_Fatigue", 0.3f,
+        StatHelper.applyStatModifier(ref, "Stamina", "Mining_Fatigue", 0.3f,
                 StaticModifier.CalculationType.MULTIPLICATIVE);
     }
 
     public static void revertMiningFatigue(Ref<EntityStore> ref) {
         EffectHelper.updateHud(ref, hud -> hud.setMiningFatigue(false));
-        StatHelper.removeStatModifier(ref, "hytale:attack_speed", "Mining_Fatigue");
-        StatHelper.removeStatModifier(ref, "hytale:mining_speed", "Mining_Fatigue");
+        StatHelper.removeStatModifier(ref, "Stamina", "Mining_Fatigue");
+    }
+
+    // ── Water Breathing ───────────────────────────────────────────────────────
+
+    public static void onWaterBreathingTick(Ref<EntityStore> ref) {
+        if (ref == null || !ref.isValid()) return;
+        Store<EntityStore> store = ref.getStore();
+        if (store == null) return;
+        EntityStatMap statMap = (EntityStatMap) store.getComponent(ref, EntityStatMap.getComponentType());
+        if (statMap == null) return;
+        statMap.setStatValue(DefaultEntityStatTypes.getOxygen(), 100f);
+    }
+
+    // ── Strength ─────────────────────────────────────────────────────────────
+
+    public static void applyStrength(Ref<EntityStore> ref) {
+        StatHelper.applyStatModifier(ref, "Health", "Strength",
+                20f, StaticModifier.CalculationType.ADDITIVE);
+    }
+
+    public static void revertStrength(Ref<EntityStore> ref) {
+        StatHelper.removeStatModifier(ref, "Health", "Strength");
+    }
+
+    // ── Weakness ─────────────────────────────────────────────────────────────
+
+    public static void applyWeakness(Ref<EntityStore> ref) {
+        StatHelper.applyStatModifier(ref, "Health", "Weakness",
+                -20f, StaticModifier.CalculationType.ADDITIVE);
+    }
+
+    public static void revertWeakness(Ref<EntityStore> ref) {
+        StatHelper.removeStatModifier(ref, "Health", "Weakness");
+    }
+
+    // ── Resistance ───────────────────────────────────────────────────────────
+
+    public static void applyResistance(Ref<EntityStore> ref) {
+        StatHelper.applyStatModifier(ref, "Health", "Resistance",
+                1.2f, StaticModifier.CalculationType.MULTIPLICATIVE);
+    }
+
+    public static void revertResistance(Ref<EntityStore> ref) {
+        StatHelper.removeStatModifier(ref, "Health", "Resistance");
     }
 
     // ── Invisibility ──────────────────────────────────────────────────────────

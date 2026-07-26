@@ -1,0 +1,88 @@
+{
+  "Parent": "Potion_Template",
+  "TranslationProperties": {
+    "Name": "Potion of Water Breathing"
+  },
+  "Quality": "Uncommon",
+  "ItemLevel": 20,
+  "BlockType": {
+    "CustomModel": "Items/Consumables/Potions/Potion_Normal.blockymodel",
+    "CustomModelTexture": [
+      {
+        "Texture": "Items/Consumables/Potions/Potion_Textures/Blue.png",
+        "Weight": 1
+      }
+    ],
+    "BlockParticleSetId": "GlassSmall",
+    "DrawType": "Model",
+    "ParticleColor": "#22aaaa",
+    "Light": {
+      "Color": "#144"
+    }
+  },
+  "Icon": "Icons/ItemsGenerated/Potion_Drinkable_Water_Breathing.png",
+  "InteractionVars": {
+    "Effect": {
+      "Interactions": [
+        {
+          "Type": "runecore:potion_drink"
+        }
+      ]
+    },
+    "RemoveEffect": {
+      "Interactions": [
+        {
+          "Type": "Simple"
+        }
+      ]
+    },
+    "ConsumeSFX": {
+      "Interactions": [
+        {
+          "Parent": "Consume_SFX",
+          "Effects": {
+            "LocalSoundEventId": "SFX_Health_Potion_Low_Drink"
+          }
+        }
+      ]
+    },
+    "ConsumedSFX": {
+      "Interactions": [
+        {
+          "Parent": "Consumed_SFX",
+          "Effects": {
+            "LocalSoundEventId": "SFX_Potion_Drink_Success"
+          }
+        }
+      ]
+    }
+  },
+  "MaxStack": 16,
+  "Recipe": {
+    "TimeSeconds": 4.0,
+    "KnowledgeRequired": false,
+    "Input": [
+      {
+        "ItemId": "Potion_Empty",
+        "Quantity": 1
+      },
+      {
+        "ItemId": "Ingredient_Water_Essence",
+        "Quantity": 1
+      },
+      {
+        "ItemId": "Plant_Coral_Bush_Blue",
+        "Quantity": 3
+      }
+    ],
+    "BenchRequirement": [
+      {
+        "Type": "Crafting",
+        "Id": "Alchemybench",
+        "Categories": [
+          "Alchemy_Potions"
+        ]
+      }
+    ]
+  }
+}

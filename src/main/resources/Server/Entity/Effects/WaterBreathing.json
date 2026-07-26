@@ -1,15 +1,17 @@
 {
   "StatusEffectIcon": "UI/StatusEffects/Water_Breathing.png",
+  "Duration": 60.0,
+  "OverlapBehavior": "Extend",
   "ApplicationEffects": {
-    "ModelVFXId": "Creative_Tool",
-    "EntityBottomTint": "#4f40f4",
-    "EntityTopTint": "#6588f8"
+    "EntityBottomTint": "#2a7fba",
+    "EntityTopTint": "#4a9fda"
   },
-  "DamageResistance": {
-    "Suffocation": [
+  "RawStatModifiers": {
+    "Oxygen": [
       {
-        "CalculationType": "Flat",
-        "Amount": 1000
+        "Amount": 100,
+        "CalculationType": "Additive",
+        "Target": "Max"
       }
     ]
   }

@@ -1,11 +1,17 @@
 {
   "StatusEffectIcon": "UI/StatusEffects/Strength.png",
-  "DamageCalculator": {
-    "BaseDamage": {
-      "Physical": 10
-    }
-  },
   "ApplicationEffects": {
-    "KnockbackMultiplier": 0.5
+    "KnockbackMultiplier": 1.5,
+    "EntityBottomTint": "#8b0000",
+    "EntityTopTint": "#cc3333"
+  },
+  "RawStatModifiers": {
+    "Health": [
+      {
+        "Amount": 20,
+        "CalculationType": "Additive",
+        "Target": "Max"
+      }
+    ]
   }
 }

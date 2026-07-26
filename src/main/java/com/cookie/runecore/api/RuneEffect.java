@@ -6,6 +6,7 @@ import com.hypixel.hytale.component.Store;
 import com.hypixel.hytale.server.core.asset.type.entityeffect.config.EntityEffect;
 import com.hypixel.hytale.server.core.asset.type.entityeffect.config.OverlapBehavior;
 import com.hypixel.hytale.server.core.entity.effect.EffectControllerComponent;
+import com.hypixel.hytale.server.core.universe.world.World;
 import com.hypixel.hytale.server.core.universe.world.storage.EntityStore;
 
 import java.util.function.Function;
@@ -109,28 +110,42 @@ public class RuneEffect {
         Store<EntityStore> store = entityRef.getStore();
         if (store == null) return;
 
-        EffectControllerComponent controller = store.getComponent(entityRef, EffectControllerComponent.getComponentType());
-        if (controller == null) {
-            controller = new EffectControllerComponent();
-            store.putComponent(entityRef, EffectControllerComponent.getComponentType(), controller);
-        }
+        World world = ctx.world != null ? ctx.world : (store.getExternalData() != null ? store.getExternalData().getWorld() : null);
 
-        // Try bare name first, then fall back to runecore: namespace prefix
-        EntityEffect nativeEffect = EntityEffect.getAssetMap().getAsset(nativeEffectId);
-        int index = EntityEffect.getAssetMap().getIndex(nativeEffectId);
+        Runnable applyTask = () -> {
+            if (!entityRef.isValid()) return;
+            EffectControllerComponent controller = store.getComponent(entityRef, EffectControllerComponent.getComponentType());
+            if (controller == null) {
+                controller = new EffectControllerComponent();
+                store.putComponent(entityRef, EffectControllerComponent.getComponentType(), controller);
+            }
 
-        if (nativeEffect == null || index < 0) {
             String namespacedId = "runecore:" + nativeEffectId;
-            nativeEffect = EntityEffect.getAssetMap().getAsset(namespacedId);
-            index = EntityEffect.getAssetMap().getIndex(namespacedId);
-        }
+            EntityEffect nativeEffect = EntityEffect.getAssetMap().getAsset(namespacedId);
+            int index = EntityEffect.getAssetMap().getIndex(namespacedId);
 
-        if (nativeEffect != null && index >= 0) {
-            float durationSecs = defaultDurationTicks / 20.0f;
-            System.out.println("[RuneCore] Applying native effect: " + nativeEffectId + " (Index: " + index + ", Duration: " + durationSecs + "s)");
-            controller.addEffect(entityRef, index, nativeEffect, durationSecs, OverlapBehavior.OVERWRITE, store);
+            if (nativeEffect == null || index < 0) {
+                nativeEffect = EntityEffect.getAssetMap().getAsset(nativeEffectId);
+                index = EntityEffect.getAssetMap().getIndex(nativeEffectId);
+            }
+
+            if (nativeEffect != null && index >= 0) {
+                float durationSecs = defaultDurationTicks / 20.0f;
+                System.out.println("[RuneCore] Applying native effect: " + nativeEffectId + " (Index: " + index + ", Duration: " + durationSecs + "s)");
+                controller.addEffect(entityRef, index, nativeEffect, durationSecs, OverlapBehavior.OVERWRITE, store);
+            } else {
+                System.err.println("[RuneCore] Native effect not found (tried bare + runecore: prefix): " + nativeEffectId);
+            }
+        };
+
+        if (world != null) {
+            world.execute(applyTask);
         } else {
-            System.err.println("[RuneCore] Native effect not found (tried bare + runecore: prefix): " + nativeEffectId);
+            try {
+                applyTask.run();
+            } catch (IllegalStateException e) {
+                System.err.println("[RuneCore] Could not apply native effect immediately due to ECS store lock: " + e.getMessage());
+            }
         }
     }
 

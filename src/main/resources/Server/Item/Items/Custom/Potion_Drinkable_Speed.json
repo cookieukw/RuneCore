@@ -1,0 +1,88 @@
+{
+  "Parent": "Potion_Template",
+  "TranslationProperties": {
+    "Name": "Potion of Speed"
+  },
+  "Quality": "Uncommon",
+  "ItemLevel": 20,
+  "BlockType": {
+    "CustomModel": "Items/Consumables/Potions/Potion_Normal.blockymodel",
+    "CustomModelTexture": [
+      {
+        "Texture": "Items/Consumables/Potions/Potion_Textures/Blue.png",
+        "Weight": 1
+      }
+    ],
+    "BlockParticleSetId": "GlassSmall",
+    "DrawType": "Model",
+    "ParticleColor": "#3399ff",
+    "Light": {
+      "Color": "#135"
+    }
+  },
+  "Icon": "Icons/ItemsGenerated/Potion_Drinkable_Speed.png",
+  "InteractionVars": {
+    "Effect": {
+      "Interactions": [
+        {
+          "Type": "runecore:potion_drink"
+        }
+      ]
+    },
+    "RemoveEffect": {
+      "Interactions": [
+        {
+          "Type": "Simple"
+        }
+      ]
+    },
+    "ConsumeSFX": {
+      "Interactions": [
+        {
+          "Parent": "Consume_SFX",
+          "Effects": {
+            "LocalSoundEventId": "SFX_Health_Potion_Low_Drink"
+          }
+        }
+      ]
+    },
+    "ConsumedSFX": {
+      "Interactions": [
+        {
+          "Parent": "Consumed_SFX",
+          "Effects": {
+            "LocalSoundEventId": "SFX_Potion_Drink_Success"
+          }
+        }
+      ]
+    }
+  },
+  "MaxStack": 16,
+  "Recipe": {
+    "TimeSeconds": 4.0,
+    "KnowledgeRequired": false,
+    "Input": [
+      {
+        "ItemId": "Potion_Empty",
+        "Quantity": 1
+      },
+      {
+        "ItemId": "Ingredient_Wind_Essence",
+        "Quantity": 1
+      },
+      {
+        "ItemId": "Ingredient_Feathers_Light",
+        "Quantity": 2
+      }
+    ],
+    "BenchRequirement": [
+      {
+        "Type": "Crafting",
+        "Id": "Alchemybench",
+        "Categories": [
+          "Alchemy_Potions"
+        ]
+      }
+    ]
+  }
+}

@@ -1,4 +1,19 @@
 {
   "StatusEffectIcon": "UI/StatusEffects/Mining_Fatigue.png",
-  "Duration": 60.0
+  "Duration": 60.0,
+  "Debuff": true,
+  "ApplicationEffects": {
+    "HorizontalSpeedMultiplier": 0.7,
+    "EntityBottomTint": "#8b7355",
+    "EntityTopTint": "#6b5335"
+  },
+  "RawStatModifiers": {
+    "Stamina": [
+      {
+        "Amount": -0.3,
+        "CalculationType": "Multiplicative",
+        "Target": "Max"
+      }
+    ]
+  }
 }

@@ -1,9 +1,11 @@
 package com.cookie.runemagic;
 
+import com.hypixel.hytale.server.core.Message;
 import com.hypixel.hytale.server.core.command.system.AbstractCommand;
 import com.hypixel.hytale.server.core.command.system.CommandContext;
 import com.hypixel.hytale.server.core.universe.PlayerRef;
 import com.hypixel.hytale.server.core.universe.world.storage.EntityStore;
+import com.hypixel.hytale.component.Ref;
 import com.hypixel.hytale.component.Store;
 import com.cookie.runecore.api.PlayerDataComponent;
 import java.util.concurrent.CompletableFuture;
@@ -16,14 +18,14 @@ public class SwitchSpellCommand extends AbstractCommand {
 
     @Override
     protected CompletableFuture<Void> execute(@Nonnull CommandContext ctx) {
-        com.hypixel.hytale.component.Ref<EntityStore> playerEntityRef = null;
+        Ref<EntityStore> playerEntityRef = null;
         try {
             playerEntityRef = ctx.senderAsPlayerRef();
         } catch (Exception ignored) {
         }
 
         if (playerEntityRef == null) {
-            ctx.sendMessage(com.hypixel.hytale.server.core.Message.raw("You must be a player to use this command."));
+            ctx.sendMessage(Message.raw("You must be a player to use this command."));
             return CompletableFuture.completedFuture(null);
         }
 
@@ -44,7 +46,7 @@ public class SwitchSpellCommand extends AbstractCommand {
 
         String spellName = newIndex == 0 ? "Fireball" : "Toxic Bolt";
         player.sendMessage(
-                com.hypixel.hytale.server.core.Message.raw("§6[RuneMagic] §fSpell switched to: §e" + spellName));
+                Message.raw("[RuneMagic] Spell switched to: " + spellName));
 
         return CompletableFuture.completedFuture(null);
     }
