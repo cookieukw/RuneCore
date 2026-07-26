@@ -80,7 +80,7 @@
         "Type": "Crafting",
         "Id": "Alchemybench",
         "Categories": [
-          "Potions"
+          "Alchemy_Potions"
         ]
       }
     ]
