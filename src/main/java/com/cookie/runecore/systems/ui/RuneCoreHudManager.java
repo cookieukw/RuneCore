@@ -123,8 +123,12 @@ public class RuneCoreHudManager {
                                 EntityEffect.getAssetMap().getAsset(index);
                             if (nativeEffect != null && nativeEffect.getId() != null) {
                                 String nativeId = nativeEffect.getId();
-                                String effectName = nativeId.replace("runecore:", "").toLowerCase();
-                                
+                                String assetName = nativeId.replace("runecore:", "");
+                                String effectName = RuneCore.get().getEffectIdByAsset(assetName);
+                                if (effectName == null) {
+                                    effectName = toSnakeCase(assetName);
+                                }
+
                                 if (RuneCore.get().getEffect(effectName) != null) {
                                     int remainingTicks = (int) (activeEffect.getRemainingDuration() * 20.0f);
                                     if (remainingTicks > 0) {
@@ -139,5 +143,20 @@ public class RuneCoreHudManager {
                 hud.setBuffs(buffs);
             });
         }
+    }
+
+    private static String toSnakeCase(String input) {
+        if (input == null || input.isEmpty()) return input;
+        StringBuilder sb = new StringBuilder();
+        for (int i = 0; i < input.length(); i++) {
+            char c = input.charAt(i);
+            if (Character.isUpperCase(c)) {
+                if (i > 0 && input.charAt(i - 1) != '_') sb.append('_');
+                sb.append(Character.toLowerCase(c));
+            } else {
+                sb.append(c);
+            }
+        }
+        return sb.toString();
     }
 }

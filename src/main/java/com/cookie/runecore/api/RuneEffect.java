@@ -120,13 +120,13 @@ public class RuneEffect {
                 store.putComponent(entityRef, EffectControllerComponent.getComponentType(), controller);
             }
 
-            EntityEffect nativeEffect = EntityEffect.getAssetMap().getAsset(nativeEffectId);
-            int index = EntityEffect.getAssetMap().getIndex(nativeEffectId);
+            String namespacedId = "runecore:" + nativeEffectId;
+            EntityEffect nativeEffect = EntityEffect.getAssetMap().getAsset(namespacedId);
+            int index = EntityEffect.getAssetMap().getIndex(namespacedId);
 
             if (nativeEffect == null || index < 0) {
-                String namespacedId = "runecore:" + nativeEffectId;
-                nativeEffect = EntityEffect.getAssetMap().getAsset(namespacedId);
-                index = EntityEffect.getAssetMap().getIndex(namespacedId);
+                nativeEffect = EntityEffect.getAssetMap().getAsset(nativeEffectId);
+                index = EntityEffect.getAssetMap().getIndex(nativeEffectId);
             }
 
             if (nativeEffect != null && index >= 0) {

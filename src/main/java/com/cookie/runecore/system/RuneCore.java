@@ -15,6 +15,7 @@ public class RuneCore {
     private final Map<String, Essence> essenceRegistry = new HashMap<>();
     private final Map<String, GameResource> resourceRegistry = new HashMap<>();
     private final Map<String, RuneEffect> effectRegistry = new HashMap<>();
+    private final Map<String, String> assetToEffectId = new HashMap<>();
     private final Map<String, Spell> spellRegistry = new HashMap<>();
 
     private final Map<String, List<Consumer<CastContext>>> eventListeners = new HashMap<>();
@@ -36,6 +37,9 @@ public class RuneCore {
 
     public void registerEffect(RuneEffect effect) {
         effectRegistry.put(effect.getId(), effect);
+        if (effect.getAssetPath() != null) {
+            assetToEffectId.put(effect.getAssetPath().toLowerCase(), effect.getId());
+        }
     }
 
     public void registerSpell(Spell spell) {
@@ -44,6 +48,10 @@ public class RuneCore {
 
     public RuneEffect getEffect(String id) {
         return effectRegistry.get(id);
+    }
+
+    public String getEffectIdByAsset(String assetName) {
+        return assetToEffectId.get(assetName.toLowerCase());
     }
 
     public void on(String eventType, Consumer<CastContext> listener) {
