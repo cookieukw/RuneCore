@@ -57,5 +57,32 @@
       ]
     }
   },
-  "MaxStack": 16
+  "MaxStack": 16,
+  "Recipe": {
+    "TimeSeconds": 4.0,
+    "KnowledgeRequired": false,
+    "Input": [
+      {
+        "ItemId": "Potion_Empty",
+        "Quantity": 1
+      },
+      {
+        "ItemId": "Ingredient_Light_Essence",
+        "Quantity": 1
+      },
+      {
+        "ItemId": "Plant_Crop_Mushroom_Glowing_Orange",
+        "Quantity": 2
+      }
+    ],
+    "BenchRequirement": [
+      {
+        "Type": "Crafting",
+        "Id": "Alchemybench",
+        "Categories": [
+          "Potions"
+        ]
+      }
+    ]
+  }
 }

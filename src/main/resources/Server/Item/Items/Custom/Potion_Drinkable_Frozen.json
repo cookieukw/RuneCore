@@ -57,5 +57,32 @@
       ]
     }
   },
-  "MaxStack": 16
+  "MaxStack": 16,
+  "Recipe": {
+    "TimeSeconds": 4.0,
+    "KnowledgeRequired": false,
+    "Input": [
+      {
+        "ItemId": "Potion_Empty",
+        "Quantity": 1
+      },
+      {
+        "ItemId": "Ingredient_Ice_Essence",
+        "Quantity": 1
+      },
+      {
+        "ItemId": "Ingredient_Crystal_Cyan",
+        "Quantity": 2
+      }
+    ],
+    "BenchRequirement": [
+      {
+        "Type": "Crafting",
+        "Id": "Alchemybench",
+        "Categories": [
+          "Potions"
+        ]
+      }
+    ]
+  }
 }
