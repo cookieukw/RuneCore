@@ -359,7 +359,10 @@ public class CoreEffects {
             .withAsset("WaterBreathing")
             .withBuff(ctx -> {
                 String uid = getPlayerUuid(ctx);
-                return ActiveBuff.builder(uid, "water_breathing", 1200).build();
+                return ActiveBuff.builder(uid, "water_breathing", 1200)
+                    .interval(10)
+                    .onTick(ref -> StatusEffectHelper.onWaterBreathingTick(ref))
+                    .build();
             })
         );
 
@@ -373,25 +376,49 @@ public class CoreEffects {
 
         core.registerEffect(new RuneEffect("resistance", 1200)
             .withAsset("Resistance")
+            .withAction(ctx -> {
+                if (ctx.target instanceof Ref<?> raw) {
+                    @SuppressWarnings("unchecked") Ref<EntityStore> ref = (Ref<EntityStore>) raw;
+                    StatusEffectHelper.applyResistance(ref);
+                }
+            })
             .withBuff(ctx -> {
                 String uid = getPlayerUuid(ctx);
-                return ActiveBuff.builder(uid, "resistance", 1200).build();
+                return ActiveBuff.builder(uid, "resistance", 1200)
+                    .onExpire(ref -> StatusEffectHelper.revertResistance(ref))
+                    .build();
             })
         );
 
         core.registerEffect(new RuneEffect("strength", 1200)
             .withAsset("Strength")
+            .withAction(ctx -> {
+                if (ctx.target instanceof Ref<?> raw) {
+                    @SuppressWarnings("unchecked") Ref<EntityStore> ref = (Ref<EntityStore>) raw;
+                    StatusEffectHelper.applyStrength(ref);
+                }
+            })
             .withBuff(ctx -> {
                 String uid = getPlayerUuid(ctx);
-                return ActiveBuff.builder(uid, "strength", 1200).build();
+                return ActiveBuff.builder(uid, "strength", 1200)
+                    .onExpire(ref -> StatusEffectHelper.revertStrength(ref))
+                    .build();
             })
         );
 
         core.registerEffect(new RuneEffect("weakness", 600)
             .withAsset("Weakness")
+            .withAction(ctx -> {
+                if (ctx.target instanceof Ref<?> raw) {
+                    @SuppressWarnings("unchecked") Ref<EntityStore> ref = (Ref<EntityStore>) raw;
+                    StatusEffectHelper.applyWeakness(ref);
+                }
+            })
             .withBuff(ctx -> {
                 String uid = getPlayerUuid(ctx);
-                return ActiveBuff.builder(uid, "weakness", 600).build();
+                return ActiveBuff.builder(uid, "weakness", 600)
+                    .onExpire(ref -> StatusEffectHelper.revertWeakness(ref))
+                    .build();
             })
         );
     }

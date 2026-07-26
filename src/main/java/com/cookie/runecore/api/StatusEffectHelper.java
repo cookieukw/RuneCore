@@ -12,6 +12,8 @@ import com.hypixel.hytale.protocol.RotationType;
 import com.hypixel.hytale.protocol.ServerCameraSettings;
 import com.hypixel.hytale.protocol.packets.camera.SetServerCamera;
 import com.hypixel.hytale.server.core.entity.effect.EffectControllerComponent;
+import com.hypixel.hytale.server.core.modules.entitystats.EntityStatMap;
+import com.hypixel.hytale.server.core.modules.entitystats.asset.DefaultEntityStatTypes;
 import com.hypixel.hytale.server.core.modules.entitystats.modifier.StaticModifier;
 import com.hypixel.hytale.server.core.universe.PlayerRef;
 import com.hypixel.hytale.server.core.universe.world.World;
@@ -136,6 +138,50 @@ public final class StatusEffectHelper {
         EffectHelper.updateHud(ref, hud -> hud.setMiningFatigue(false));
         StatHelper.removeStatModifier(ref, "hytale:attack_speed", "Mining_Fatigue");
         StatHelper.removeStatModifier(ref, "hytale:mining_speed", "Mining_Fatigue");
+    }
+
+    // ── Water Breathing ───────────────────────────────────────────────────────
+
+    public static void onWaterBreathingTick(Ref<EntityStore> ref) {
+        if (ref == null || !ref.isValid()) return;
+        Store<EntityStore> store = ref.getStore();
+        if (store == null) return;
+        EntityStatMap statMap = (EntityStatMap) store.getComponent(ref, EntityStatMap.getComponentType());
+        if (statMap == null) return;
+        statMap.setStatValue(DefaultEntityStatTypes.getOxygen(), 100f);
+    }
+
+    // ── Strength ─────────────────────────────────────────────────────────────
+
+    public static void applyStrength(Ref<EntityStore> ref) {
+        StatHelper.applyStatModifier(ref, "Health", "Strength",
+                20f, StaticModifier.CalculationType.ADDITIVE);
+    }
+
+    public static void revertStrength(Ref<EntityStore> ref) {
+        StatHelper.removeStatModifier(ref, "Health", "Strength");
+    }
+
+    // ── Weakness ─────────────────────────────────────────────────────────────
+
+    public static void applyWeakness(Ref<EntityStore> ref) {
+        StatHelper.applyStatModifier(ref, "Health", "Weakness",
+                -20f, StaticModifier.CalculationType.ADDITIVE);
+    }
+
+    public static void revertWeakness(Ref<EntityStore> ref) {
+        StatHelper.removeStatModifier(ref, "Health", "Weakness");
+    }
+
+    // ── Resistance ───────────────────────────────────────────────────────────
+
+    public static void applyResistance(Ref<EntityStore> ref) {
+        StatHelper.applyStatModifier(ref, "Health", "Resistance",
+                1.2f, StaticModifier.CalculationType.MULTIPLICATIVE);
+    }
+
+    public static void revertResistance(Ref<EntityStore> ref) {
+        StatHelper.removeStatModifier(ref, "Health", "Resistance");
     }
 
     // ── Invisibility ──────────────────────────────────────────────────────────
