@@ -14,7 +14,11 @@
       }
     ],
     "BlockParticleSetId": "GlassSmall",
-    "DrawType": "Model"
+    "DrawType": "Model",
+    "ParticleColor": "#888833",
+    "Light": {
+      "Color": "#332"
+    }
   },
   "Icon": "Icons/ItemsGenerated/Weapon_Bomb_Potion_Poison.png",
   "InteractionVars": {
@@ -22,6 +26,25 @@
       "Interactions": [
         {
           "Type": "runecore:potion_drink"
+        }
+      ]
+    },
+    "Stat_Check": {
+      "Interactions": [
+        {
+          "Parent": "Stat_Check",
+          "Costs": {
+            "Health": 1
+          },
+          "ValueType": "Percent",
+          "LessThan": false
+        }
+      ]
+    },
+    "RemoveEffect": {
+      "Interactions": [
+        {
+          "Type": "Simple"
         }
       ]
     }
