@@ -1,23 +1,28 @@
 
 Group {
   LayoutMode: Center;
-  Anchor: (Left: 60, Top: 30, Width: 358, Height: 64);
+  Anchor: (Left: 60, Top: 30, Width: 520, Height: 40);
   Group {
- 
-   Group {
-      Anchor: (Left: 0, Width: 302, Height: 60);
+  
+    Group {
+      Anchor: (Left: 0, Width: 520, Height: 40);
       Background: "ManaBackground.png";
     }
     ProgressBar #ManaBar {
-        Anchor: (Width: 302, Height: 60);
-        BarTexturePath: "ManaBarFill.png";
-      }
-      
+      Anchor: (Width: 520, Height: 40);
+      BarTexturePath: "ManaBarFill.png";
+    }
     Label #ManaText {
-        Text: "100/100";
-        Anchor: (Width: 302, Height: 60);
-        Padding: (Right: 12);
-        Style: (FontSize: 17,RenderBold: true, TextColor: #ffffff, HorizontalAlignment: End, VerticalAlignment: Center);
-      }
+      Padding: (Right: 30);
+      Text: "100/100";
+      Anchor: (Width: 520, Height: 40);
+      Style: (
+        FontSize: 13,
+        RenderBold: true,
+        TextColor: #ffffff,
+        HorizontalAlignment: End,
+        VerticalAlignment: Center
+      );
+    }
   }
 }
