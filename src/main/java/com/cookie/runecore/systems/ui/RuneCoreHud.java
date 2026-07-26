@@ -74,8 +74,12 @@ public class RuneCoreHud extends CustomUIHud {
         this.targetManaValue = Math.max(0, Math.min(1.0f, current / max));
         this.maxManaValue = max;
 
-        // Simple Lerp
-        this.manaValue = this.manaValue + (this.targetManaValue - this.manaValue) * 0.5f;
+        float diff = Math.abs(this.targetManaValue - this.manaValue);
+        if (diff < 0.001f) {
+            this.manaValue = this.targetManaValue;
+        } else {
+            this.manaValue = this.manaValue + (this.targetManaValue - this.manaValue) * 0.08f;
+        }
 
         UICommandBuilder b = new UICommandBuilder();
         b.set("#ManaBar.Value", this.manaValue);

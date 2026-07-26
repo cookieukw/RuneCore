@@ -43,7 +43,7 @@ public class RuneCoreHudManager {
             public void run() {
                 updateAllHuds();
             }
-        }, 1000, 500);
+        }, 1000, 50);
     }
 
     public static RuneCoreHudManager get() {
