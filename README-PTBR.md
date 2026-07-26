@@ -99,7 +99,44 @@ Para um detalhamento completo de todos os 20 elementos e suas mecânicas, veja n
 
 ---
 
-## 6. 🎮 Como Testar In-Game & Efeitos de Status Atuais
+## 6. ⚗️ Receitas de Poções
+
+Todas as poções são craftadas na **Mesa de Alquimia** usando uma **Garrafa de Vidro** (Potion_Empty) + uma **Essência Elemental** + um **Material Secundário**. Tempo de craft: **4 segundos**.
+
+| Poção | Essência | Qtd | Material Secundário | Qtd |
+| :--- | :--- | :---: | :--- | :---: |
+| **Velocidade** | Essência de Vento | 1 | Penas (Claras) | 2 |
+| **Lentidão** | Essência de Terra | 1 | Musgo de Espinhos | 2 |
+| **Pressa** | Essência de Trovão | 1 | Cristal (Amarelo) | 1 |
+| **Fadiga de Mineração** | Essência de Terra | 1 | Fragmento de Osso | 2 |
+| **Impulso de Pulo** | Essência de Vento | 1 | Penas (Azuis) | 2 |
+| **Super Pulo** | Essência de Éter | 1 | Penas (Vermelhas) | 2 |
+| **Queda Lenta** | Essência de Vento | 1 | Penas (Escuras) | 3 |
+| **Levitação** | Essência de Éter | 2 | Cristal (Branco) | 2 |
+| **Regeneração** | Essência de Vida | 2 | Flor Rosa | 3 |
+| **Veneno** | Essência de Veneno | 1 | Cogumelo Venenoso | 2 |
+| **Deterioração** | Essência de Morte | 1 | Fragmento de Osso | 3 |
+| **Queimadura** | Essência de Fogo | 1 | Carvão | 2 |
+| **Náusea** | Essência de Caos | 1 | Cogumelo Verde | 2 |
+| **Sangramento** | Essência de Sangue | 1 | Cristal (Vermelho) | 1 |
+| **Congelamento** | Essência de Gelo | 1 | Cristal (Ciano) | 2 |
+| **Cura Instantânea** | Essência de Vida (Concentrada) | 1 | Flor Vermelha | 3 |
+| **Dano Instantâneo** | Essência do Vazio | 1 | Pó Explosivo | 2 |
+| **Invisibilidade** | Essência de Sombras | 2 | Cristal (Branco) | 2 |
+| **Brilho** | Essência de Luz | 1 | Cogumelo Brilhante (Laranja) | 2 |
+| **Cegueira** | Essência de Sombras | 1 | Cristal (Roxo) | 2 |
+| **Visão Noturna** | Essência de Luz | 1 | Cogumelo Brilhante (Azul) | 2 |
+| **Respiração Aquática** | Essência de Água | 1 | Coral Azul | 3 |
+| **Resistência ao Fogo** | Essência de Fogo | 2 | Cristal (Vermelho) | 2 |
+| **Resistência** | Essência de Metal | 2 | Cristal (Azul) | 2 |
+| **Força** | Essência de Sangue | 2 | Cristal (Vermelho) | 2 |
+| **Fraqueza** | Essência de Morte | 1 | Flor Cinza | 2 |
+
+> **Nota:** Efeitos mais poderosos (Levitação, Invisibilidade, Resistência, Força, Resistência ao Fogo, Regeneração) requerem **2 essências** em vez de 1.
+
+---
+
+## 7. 🎮 Como Testar In-Game & Efeitos de Status Atuais
 
 Você pode testar os efeitos de status registrados e o sistema de feitiços usando o comando administrativo integrado:
 
@@ -179,11 +216,11 @@ if (poison != null) {
 
 ---
 
-## 7. 🛠️ Guia para Modders
+## 8. 🛠️ Guia para Modders
 
 Interessado em construir em cima do RuneCore? Confira nosso [**Guia de Uso da API**](API_USAGE.md) para exemplos de código e passos de integração.
 
-## 8. ⚖️ Licença
+## 9. ⚖️ Licença
 
 Este projeto, incluindo seu código-fonte, documentação e **ícones em pixel art** (localizados no diretório `/icons`), está licenciado sob a **Creative Commons Attribution-NonCommercial 4.0 International (CC BY-NC 4.0)**.
 
