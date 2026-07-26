@@ -36,5 +36,28 @@
     }
   },
   "ItemLevel": 20,
-  "DropOnDeath": true
+  "DropOnDeath": true,
+  "Recipe": {
+    "TimeSeconds": 2.0,
+    "KnowledgeRequired": false,
+    "Input": [
+      {
+        "ItemId": "Potion_Drinkable_Haste",
+        "Quantity": 1
+      },
+      {
+        "ItemId": "Ingredient_Powder_Boom",
+        "Quantity": 2
+      }
+    ],
+    "BenchRequirement": [
+      {
+        "Type": "Crafting",
+        "Id": "Alchemybench",
+        "Categories": [
+          "Alchemy_Potions"
+        ]
+      }
+    ]
+  }
 }
