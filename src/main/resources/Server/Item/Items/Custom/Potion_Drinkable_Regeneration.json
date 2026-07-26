@@ -29,22 +29,30 @@
         }
       ]
     },
-    "Stat_Check": {
-      "Interactions": [
-        {
-          "Parent": "Stat_Check",
-          "Costs": {
-            "Health": 1
-          },
-          "ValueType": "Percent",
-          "LessThan": false
-        }
-      ]
-    },
     "RemoveEffect": {
       "Interactions": [
         {
           "Type": "Simple"
+        }
+      ]
+    },
+    "ConsumeSFX": {
+      "Interactions": [
+        {
+          "Parent": "Consume_SFX",
+          "Effects": {
+            "LocalSoundEventId": "SFX_Health_Potion_Low_Drink"
+          }
+        }
+      ]
+    },
+    "ConsumedSFX": {
+      "Interactions": [
+        {
+          "Parent": "Consumed_SFX",
+          "Effects": {
+            "LocalSoundEventId": "SFX_Potion_Drink_Success"
+          }
         }
       ]
     }
