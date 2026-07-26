@@ -219,9 +219,13 @@ public class CoreEffects {
             })
             .withBuff(ctx -> {
                 String uid = getPlayerUuid(ctx);
+                float[] time = {0.0f};
                 return ActiveBuff.builder(uid, "nausea", 200)
                     .interval(1)
-                    .onTick(ref -> StatusEffectHelper.onNauseaTick(ref))
+                    .onTick(ref -> {
+                        time[0] += 1.0f;
+                        StatusEffectHelper.onNauseaTick(ref, time[0]);
+                    })
                     .onExpire(ref -> StatusEffectHelper.revertNausea(ref))
                     .build();
             })

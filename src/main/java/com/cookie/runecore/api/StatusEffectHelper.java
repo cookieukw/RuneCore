@@ -67,28 +67,12 @@ public final class StatusEffectHelper {
     public static void applyNausea(Ref<EntityStore> ref) {
         System.out.println("[RuneCore-Nausea] applyNausea called for: " + ref);
         EffectHelper.updateHud(ref, hud -> hud.setNausea(true));
-        withStore(ref, store -> {
-            PlayerDataComponent data = store.getComponent(ref, PlayerDataComponent.TYPE);
-            if (data == null) {
-                data = new PlayerDataComponent();
-            }
-            data.setNausea(true);
-            data.setNauseaTime(0.0f);
-            store.putComponent(ref, PlayerDataComponent.TYPE, data);
-            System.out.println("[RuneCore-Nausea] PlayerDataComponent updated. Nausea set to true.");
-        });
     }
 
     public static void revertNausea(Ref<EntityStore> ref) {
         System.out.println("[RuneCore-Nausea] revertNausea called for: " + ref);
         EffectHelper.updateHud(ref, hud -> hud.setNausea(false));
         withPlayerRef(ref, (store, pr) -> {
-            PlayerDataComponent data = store.getComponent(ref, PlayerDataComponent.TYPE);
-            if (data != null) {
-                data.setNausea(false);
-                store.putComponent(ref, PlayerDataComponent.TYPE, data);
-            }
-
             ServerCameraSettings reset = new ServerCameraSettings();
             reset.attachedToType = AttachedToType.LocalPlayer;
             reset.eyeOffset = true;
@@ -105,26 +89,11 @@ public final class StatusEffectHelper {
         });
     }
 
-    public static void onNauseaTick(Ref<EntityStore> ref) {
+    public static void onNauseaTick(Ref<EntityStore> ref, float time) {
         withPlayerRef(ref, (store, pr) -> {
-            PlayerDataComponent data = store.getComponent(ref, PlayerDataComponent.TYPE);
-            if (data == null) {
-                System.out.println("[RuneCore-Nausea] onNauseaTick: PlayerDataComponent is null for: " + ref);
-                return;
-            }
-            if (!data.isNausea()) {
-                // System.out.println("[RuneCore-Nausea] onNauseaTick: isNausea is false for: " + ref);
-                return;
-            }
-
-            float time = data.getNauseaTime() + 1.0f;
-            data.setNauseaTime(time);
-            store.putComponent(ref, PlayerDataComponent.TYPE, data);
-
             System.out.println("[RuneCore-Nausea] onNauseaTick: sending camera sway at time " + time + " to: " + pr.getUsername());
 
             ServerCameraSettings settings = new ServerCameraSettings();
-            // Nausea sway effect: Rotates the camera dynamically and tilts it side to side
             settings.rotation = new Direction((time * 4.0f) % 360.0f,
                     (float) Math.sin(time * 0.15f) * 20.0f, 0.0f);
             settings.rotationType = RotationType.Custom;
