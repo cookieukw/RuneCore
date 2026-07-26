@@ -1,5 +1,9 @@
 {
   "StatusEffectIcon": "UI/StatusEffects/Resistance.png",
+  "ApplicationEffects": {
+    "EntityBottomTint": "#4a86c7",
+    "EntityTopTint": "#6ca6e7"
+  },
   "DamageResistance": {
     "Physical": [
       {
@@ -9,8 +13,23 @@
     ],
     "Projectile": [
       {
-        "Amount": 20,
-        "CalculationType": "Flat"
+        "CalculationType": "Flat",
+        "Amount": 20
+      }
+    ],
+    "Environmental": [
+      {
+        "CalculationType": "Flat",
+        "Amount": 10
+      }
+    ]
+  },
+  "RawStatModifiers": {
+    "Health": [
+      {
+        "Amount": 1.2,
+        "CalculationType": "Multiplicative",
+        "Target": "Max"
       }
     ]
   }

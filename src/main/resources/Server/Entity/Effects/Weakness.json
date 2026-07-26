@@ -1,32 +1,18 @@
 {
   "StatusEffectIcon": "UI/StatusEffects/Weakness.png",
-  "DamageCalculator": {
-    "BaseDamage": {
-      "Physical": -0.1
-    },
-    "Type": "Dps"
-  },
+  "Debuff": true,
   "ApplicationEffects": {
-    "KnockbackMultiplier": 0.5
+    "KnockbackMultiplier": 0.5,
+    "EntityBottomTint": "#555555",
+    "EntityTopTint": "#777777"
   },
-  "DamageEffects": {
-    "Knockback": {
-      "VelocityType": "Set",
-      "Force": -1,
-      "VelocityConfig": {
-        "GroundResistance": 0.516,
-        "GroundResistanceMax": 0.024,
-        "AirResistance": 0.432,
-        "AirResistanceMax": 0.044
+  "RawStatModifiers": {
+    "Health": [
+      {
+        "Amount": -20,
+        "CalculationType": "Additive",
+        "Target": "Max"
       }
-    },
-    "StaminaDrainMultiplier": 4
-  },
-  "StatModifierEffects": {
-    "Knockback": {
-      "Force": 0,
-      "Duration": 0,
-      "VelocityType": "Set"
-    }
+    ]
   }
 }

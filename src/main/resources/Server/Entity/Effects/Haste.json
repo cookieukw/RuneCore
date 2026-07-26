@@ -3,6 +3,16 @@
   "ApplicationEffects": {
     "ModelVFXId": "Creative_Tool",
     "EntityBottomTint": "#4f40f4",
-    "EntityTopTint": "#6588f8"
+    "EntityTopTint": "#6588f8",
+    "HorizontalSpeedMultiplier": 1.3
+  },
+  "RawStatModifiers": {
+    "Stamina": [
+      {
+        "Amount": 0.5,
+        "CalculationType": "Multiplicative",
+        "Target": "Max"
+      }
+    ]
   }
 }

@@ -112,32 +112,26 @@ public final class StatusEffectHelper {
 
     public static void applyHaste(Ref<EntityStore> ref) {
         EffectHelper.updateHud(ref, hud -> hud.setHaste(true));
-        StatHelper.applyStatModifier(ref, "hytale:attack_speed", "Haste", 1.5f,
-                StaticModifier.CalculationType.MULTIPLICATIVE);
-        StatHelper.applyStatModifier(ref, "hytale:mining_speed", "Haste", 1.5f,
+        StatHelper.applyStatModifier(ref, "Stamina", "Haste", 1.5f,
                 StaticModifier.CalculationType.MULTIPLICATIVE);
     }
 
     public static void revertHaste(Ref<EntityStore> ref) {
         EffectHelper.updateHud(ref, hud -> hud.setHaste(false));
-        StatHelper.removeStatModifier(ref, "hytale:attack_speed", "Haste");
-        StatHelper.removeStatModifier(ref, "hytale:mining_speed", "Haste");
+        StatHelper.removeStatModifier(ref, "Stamina", "Haste");
     }
 
     // ── Mining Fatigue ────────────────────────────────────────────────────────
 
     public static void applyMiningFatigue(Ref<EntityStore> ref) {
         EffectHelper.updateHud(ref, hud -> hud.setMiningFatigue(true));
-        StatHelper.applyStatModifier(ref, "hytale:attack_speed", "Mining_Fatigue", 0.3f,
-                StaticModifier.CalculationType.MULTIPLICATIVE);
-        StatHelper.applyStatModifier(ref, "hytale:mining_speed", "Mining_Fatigue", 0.3f,
+        StatHelper.applyStatModifier(ref, "Stamina", "Mining_Fatigue", 0.3f,
                 StaticModifier.CalculationType.MULTIPLICATIVE);
     }
 
     public static void revertMiningFatigue(Ref<EntityStore> ref) {
         EffectHelper.updateHud(ref, hud -> hud.setMiningFatigue(false));
-        StatHelper.removeStatModifier(ref, "hytale:attack_speed", "Mining_Fatigue");
-        StatHelper.removeStatModifier(ref, "hytale:mining_speed", "Mining_Fatigue");
+        StatHelper.removeStatModifier(ref, "Stamina", "Mining_Fatigue");
     }
 
     // ── Water Breathing ───────────────────────────────────────────────────────

@@ -1,5 +1,18 @@
 {
   "StatusEffectIcon": "UI/StatusEffects/Water_Breathing.png",
   "Duration": 60.0,
-  "OverlapBehavior": "Extend"
+  "OverlapBehavior": "Extend",
+  "ApplicationEffects": {
+    "EntityBottomTint": "#2a7fba",
+    "EntityTopTint": "#4a9fda"
+  },
+  "RawStatModifiers": {
+    "Oxygen": [
+      {
+        "Amount": 100,
+        "CalculationType": "Additive",
+        "Target": "Max"
+      }
+    ]
+  }
 }
