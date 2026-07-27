@@ -165,7 +165,57 @@ danoFinal = (fisicoReduzido + magicoReduzido) × (1 - reducaoDano%) + danoVerdad
 
 ### Integração com Equipamentos
 
-Itens registrados no `CombatStatsRegistry` aplicam automaticamente seus bônus de atributos de combate quando equipados nos slots de armadura. Os atributos são recalculados a cada mudança de armadura.
+Itens registrados no `CombatStatsRegistry` aplicam automaticamente seus bônus de atributos de combate quando equipados nos slots de armadura. Os atributos são recalculados a cada mudança de armadura. Todas as armaduras e armas vanilla do Hytale já estão pré-registradas.
+
+#### Stats de Armadura por Tier
+
+Peças escalam por slot: Peitoral 100%, Calças 85%, Capacete 70%, Luvas 50%.
+
+| Tier | Materiais | Armadura (Peitoral) | Res. Mágica (Peitoral) |
+|------|-----------|:-------------------:|:----------------------:|
+| 1 | Cloth (Cotton, Linen, Wool, Silk, Cindercloth), Wood | 4–8 | 10–20 |
+| 2 | Leather Soft/Light, Copper | 10–14 | 8–10 |
+| 3 | Leather Medium/Heavy/Raven, Bronze, Iron | 18–25 | 5–8 |
+| 4 | Steel, Steel Ancient, Cobalt | 30–35 | 5–7 |
+| 5 | Mithril, Thorium | 42–45 | 12–14 |
+| 6 | Adamantite, Onyxium, Prisma | 50–58 | 18–22 |
+
+> **Design:** Armaduras de pano/mágicas têm baixa Armadura mas alta Resistência Mágica. Armaduras de metal têm alta Armadura mas baixa Resistência Mágica. Tiers altos (Mithril+) equilibram ambos.
+
+#### Stats de Armas por Tipo
+
+| Tipo | Stat Primário | Stat Secundário | Identidade |
+|------|--------------|-----------------|------------|
+| Espadas | Dano Físico | — | Melee balanceado |
+| Espadas Longas | Dano Físico (alto) | — | Lento, golpes pesados |
+| Machados | Dano Físico | Pen. de Armadura | Anti-armadura melee |
+| Machados de Guerra | Dano Físico (alto) | Pen. de Armadura (alta) | Anti-armadura pesado |
+| Clavas / Maças | Dano Físico | — | Melee contundente |
+| Lanças | Dano Físico | Pen. Mágica | Anti-mago melee |
+| Adagas | Dano Físico (baixo) | Pen. de Armadura (muito alta) | Assassino / shred |
+| Cajados | Dano Mágico | — | Arma básica de mago |
+| Grimórios | Dano Mágico (alto) | Pen. Mágica | Burst de mago |
+| Varinhas | Dano Mágico (leve) | — | Utilitário de mago |
+| Arcos / Bestas | Dano Físico | — | Ranged físico |
+| Escudos | Armadura | HP de Escudo | Defensivo |
+| Armas de Fogo / Bombas | Dano Físico | Pen. de Armadura | Ranged explosivo |
+
+> **Armas híbridas:** Algumas variantes especiais (Espada de Gelo, Espada Longa do Vazio, Arco Flamejante, etc.) causam tanto Dano Físico quanto Mágico.
+
+#### Dano de Armas por Tier (exemplo armas físicas)
+
+| Material | Espada | Espada Longa | Machado | Machado de Guerra | Adaga |
+|----------|:------:|:------------:|:-------:|:-----------------:|:-----:|
+| Crude/Wood | 6–8 | 12 | 10 | 14 | 6 |
+| Copper | 14 | 20 | 16 | 22 | 10 |
+| Bronze | 18 | — | — | — | 14 |
+| Iron | 22 | 30 | 24 | 32 | 18 |
+| Steel | 28 | — | — | 34 | — |
+| Cobalt | 30 | 40 | 32 | 42 | 24 |
+| Mithril | 38 | 50 | 40 | 52 | 30 |
+| Thorium | 42 | 55 | 44 | 56 | 34 |
+| Onyxium | 48 | 62 | 50 | 64 | 38 |
+| Adamantite | 50 | 65 | 52 | 68 | 40 |
 
 ### Comandos
 

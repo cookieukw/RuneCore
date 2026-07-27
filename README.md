@@ -165,7 +165,57 @@ finalDamage = (physReduced + magReduced) × (1 - damageReduction%) + trueDamage
 
 ### Equipment Integration
 
-Items registered in `CombatStatsRegistry` automatically apply their combat stat bonuses when equipped in armor slots. Stats are recalculated on every armor change.
+Items registered in `CombatStatsRegistry` automatically apply their combat stat bonuses when equipped in armor slots. Stats are recalculated on every armor change. All vanilla Hytale armors and weapons are pre-registered.
+
+#### Armor Stats by Tier
+
+Armor pieces scale by slot: Chest 100%, Legs 85%, Head 70%, Hands 50%.
+
+| Tier | Materials | Armor (Chest) | Magic Resist (Chest) |
+|------|-----------|:-------------:|:--------------------:|
+| 1 | Cloth (Cotton, Linen, Wool, Silk, Cindercloth), Wood | 4–8 | 10–20 |
+| 2 | Leather Soft/Light, Copper | 10–14 | 8–10 |
+| 3 | Leather Medium/Heavy/Raven, Bronze, Iron | 18–25 | 5–8 |
+| 4 | Steel, Steel Ancient, Cobalt | 30–35 | 5–7 |
+| 5 | Mithril, Thorium | 42–45 | 12–14 |
+| 6 | Adamantite, Onyxium, Prisma | 50–58 | 18–22 |
+
+> **Design:** Cloth/magic armor has low Armor but high Magic Resist. Metal armor has high Armor but low Magic Resist. Higher tiers (Mithril+) balance both.
+
+#### Weapon Stats by Type
+
+| Type | Primary Stat | Secondary Stat | Identity |
+|------|-------------|----------------|----------|
+| Swords | Physical Damage | — | Balanced melee |
+| Longswords | Physical Damage (high) | — | Slow, heavy hits |
+| Axes | Physical Damage | Armor Penetration | Anti-armor melee |
+| Battleaxes | Physical Damage (high) | Armor Penetration (high) | Heavy anti-armor |
+| Clubs / Maces | Physical Damage | — | Blunt melee |
+| Spears | Physical Damage | Magic Penetration | Anti-mage melee |
+| Daggers | Physical Damage (low) | Armor Penetration (very high) | Assassin / shred |
+| Staffs | Magic Damage | — | Mage basic weapon |
+| Spellbooks | Magic Damage (high) | Magic Penetration | Mage burst |
+| Wands | Magic Damage (light) | — | Mage utility |
+| Bows / Crossbows | Physical Damage | — | Ranged physical |
+| Shields | Armor | Shield HP | Defensive |
+| Guns / Bombs | Physical Damage | Armor Penetration | Ranged explosive |
+
+> **Hybrid weapons:** Some special variants (Frost Sword, Void Longsword, Flame Bow, etc.) deal both Physical and Magic damage.
+
+#### Weapon Damage by Tier (Physical weapons example)
+
+| Material | Sword | Longsword | Axe | Battleaxe | Dagger |
+|----------|:-----:|:---------:|:---:|:---------:|:------:|
+| Crude/Wood | 6–8 | 12 | 10 | 14 | 6 |
+| Copper | 14 | 20 | 16 | 22 | 10 |
+| Bronze | 18 | — | — | — | 14 |
+| Iron | 22 | 30 | 24 | 32 | 18 |
+| Steel | 28 | — | — | 34 | — |
+| Cobalt | 30 | 40 | 32 | 42 | 24 |
+| Mithril | 38 | 50 | 40 | 52 | 30 |
+| Thorium | 42 | 55 | 44 | 56 | 34 |
+| Onyxium | 48 | 62 | 50 | 64 | 38 |
+| Adamantite | 50 | 65 | 52 | 68 | 40 |
 
 ### Commands
 
