@@ -6,6 +6,8 @@ import com.hypixel.hytale.server.core.plugin.JavaPluginInit;
 import com.cookie.runecore.commands.RuneStatsCommand;
 import com.cookie.runecore.commands.TestUICommand;
 import com.cookie.runecore.systems.CastListener;
+import com.cookie.runecore.systems.CombatDamageInterceptor;
+import com.cookie.runecore.systems.CombatStatsManager;
 import com.cookie.runecore.systems.EffectTimerListener;
 import com.cookie.runecore.systems.FrozenInteractionListener;
 import com.cookie.runecore.systems.MobDropSystem;
@@ -84,5 +86,7 @@ public class Main extends JavaPlugin {
         new EffectTimerListener(this.getEventRegistry());
         new MagicListener(this.getEventRegistry());
         new FrozenInteractionListener(this.getEventRegistry());
+        new CombatStatsManager(this.getEventRegistry());
+        new CombatDamageInterceptor(this.getEventRegistry());
     }
 }

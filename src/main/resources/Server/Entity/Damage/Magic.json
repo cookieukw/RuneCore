@@ -1,0 +1,7 @@
+{
+  "Parent": "Elemental",
+  "Inherits": "Elemental",
+  "DamageTextColor": "#9B59B6",
+  "DurabilityLoss": false,
+  "StaminaLoss": false
+}
