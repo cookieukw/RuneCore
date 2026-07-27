@@ -3,6 +3,7 @@ package com.cookie.runecore;
 import com.hypixel.hytale.server.core.modules.interaction.interaction.config.Interaction;
 import com.hypixel.hytale.server.core.plugin.JavaPlugin;
 import com.hypixel.hytale.server.core.plugin.JavaPluginInit;
+import com.cookie.runecore.commands.CombatStatsCommand;
 import com.cookie.runecore.commands.RuneStatsCommand;
 import com.cookie.runecore.commands.TestUICommand;
 import com.cookie.runecore.systems.CastListener;
@@ -67,6 +68,7 @@ public class Main extends JavaPlugin {
         RuneCore.get().initDefaults();
 
         this.getCommandRegistry().registerCommand(new RuneStatsCommand());
+        this.getCommandRegistry().registerCommand(new CombatStatsCommand());
         this.getCommandRegistry().registerCommand(new CustomTimeCommand());
         this.getCommandRegistry().registerCommand(new TestUICommand());
         this.getCommandRegistry().registerCommand(new SwitchSpellCommand());
