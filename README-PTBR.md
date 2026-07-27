@@ -136,7 +136,44 @@ Todas as poções são craftadas na **Mesa de Alquimia** usando uma **Garrafa de
 
 ---
 
-## 7. 🎮 Como Testar In-Game & Efeitos de Status Atuais
+## 7. ⚔️ Sistema de Atributos de Combate
+
+O RuneCore inclui um sistema de atributos de combate estilo RPG que funciona em cima do sistema nativo de armadura/dano do Hytale. Os atributos são rastreados **apenas por jogador** (nunca aplicados a todas as entidades).
+
+### Tipos de Atributos
+
+| Categoria | Atributo | Descrição |
+|-----------|----------|-----------|
+| **Ofensivo** | Dano Físico | Reduzido pela Armadura do alvo |
+| **Ofensivo** | Dano Mágico | Reduzido pela Resistência Mágica do alvo |
+| **Ofensivo** | Dano Verdadeiro | Ignora todas as resistências e reduções (apenas bloqueado por escudos) |
+| **Ofensivo** | Penetração de Armadura | Ignora parte da Armadura do alvo |
+| **Ofensivo** | Penetração Mágica | Ignora parte da Resistência Mágica do alvo |
+| **Defensivo** | Armadura | Reduz Dano Físico recebido |
+| **Defensivo** | Resistência Mágica | Reduz Dano Mágico recebido |
+| **Defensivo** | Redução de Dano | Redução % fixa em todo dano (máx 90%) |
+| **Defensivo** | HP de Escudo | HP temporário que absorve dano antes da vida |
+
+### Fórmula de Dano
+
+```
+defesaEfetiva = max(0, defesa - penetração)
+danoReduzido = danoBase × 100 / (100 + defesaEfetiva)
+danoFinal = (fisicoReduzido + magicoReduzido) × (1 - reducaoDano%) + danoVerdadeiro
+→ Escudo absorve primeiro, restante atinge HP
+```
+
+### Integração com Equipamentos
+
+Itens registrados no `CombatStatsRegistry` aplicam automaticamente seus bônus de atributos de combate quando equipados nos slots de armadura. Os atributos são recalculados a cada mudança de armadura.
+
+### Comandos
+
+- `/combatstats` — Ver seus atributos de combate atuais no jogo
+
+---
+
+## 8. 🎮 Como Testar In-Game & Efeitos de Status Atuais
 
 Você pode testar os efeitos de status registrados e o sistema de feitiços usando o comando administrativo integrado:
 
@@ -216,11 +253,11 @@ if (poison != null) {
 
 ---
 
-## 8. 🛠️ Guia para Modders
+## 9. 🛠️ Guia para Modders
 
 Interessado em construir em cima do RuneCore? Confira nosso [**Guia de Uso da API**](API_USAGE.md) para exemplos de código e passos de integração.
 
-## 9. ⚖️ Licença
+## 10. ⚖️ Licença
 
 Este projeto, incluindo seu código-fonte, documentação e **ícones em pixel art** (localizados no diretório `/icons`), está licenciado sob a **Creative Commons Attribution-NonCommercial 4.0 International (CC BY-NC 4.0)**.
 
