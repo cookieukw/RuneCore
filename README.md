@@ -163,6 +163,45 @@ finalDamage = (physReduced + magReduced) × (1 - damageReduction%) + trueDamage
 → Shield absorbs first, remainder hits HP
 ```
 
+### Creature Damage (PvE)
+
+Creatures have pre-registered **damage profiles** in `CreatureCombatRegistry`. When a creature hits a player, RuneCore looks up the creature's profile and applies the correct defense formula with the creature's armor/magic penetration. If a creature is not registered, it falls back to `DamageCause` classification.
+
+| Damage Profile | Formula | Example Creatures |
+|---------------|---------|-------------------|
+| **Physical** | Armor reduces, creature may have armor pen | Trork, Skeleton Fighter, Wolf, Bear |
+| **Magic** | Magic Resist reduces, creature may have magic pen | Skeleton Mage, Wraith, Necromancer, Spirits |
+| **Hybrid** | Split phys/magic by ratio, each reduced separately | Dragon Fire (60% magic), Golem Crystal Flame, Feran Windwalker |
+| **True** | No reduction (only shield absorbs) | — |
+
+After type-specific reduction, **Damage Reduction %** is applied, then **Shield HP** absorbs what remains. If no creature data is found, `DamageCause` is used as fallback:
+
+| Damage Cause | Reduced by |
+|-------------|------------|
+| Physical, Projectile, Bludgeoning, Slashing | **Armor** |
+| Elemental, Fire, Ice, Poison, Magic | **Magic Resist** |
+| True (or BypassResistances) | **Shield only** |
+
+#### Registered Creatures (~200+)
+
+| Faction | Creatures | Typical Profile |
+|---------|-----------|----------------|
+| Trork | Warrior, Brawler, Guard, Hunter, Mauler, Chieftain, Shaman, Doctor Witch | Physical (warriors), Magic (shaman/witch) |
+| Skeleton | Standard, Burnt, Frost, Sand, Incandescent, Pirate (~35 variants) | Physical (melee), Hybrid (elemental), Magic (mages) |
+| Zombie | Regular, Aberrant, Burnt, Frost, Sand, Werewolf | Physical, Hybrid (elemental variants) |
+| Goblin | Scrapper, Thief, Miner, Lobber, Boss, Duke, Ogre | Physical, Hybrid (lobber/duke) |
+| Outlander | Peon, Marauder, Berserker, Brute, Hunter, Cultist, Priest, Sorcerer | Physical (warriors), Magic (casters) |
+| Scarak | Louse, Seeker, Fighter, Defender, Broodmother | Physical, Hybrid (broodmother) |
+| Feran | Burrower, Longtooth, Sharptooth, Windwalker | Physical, Hybrid (windwalker) |
+| Dragons | Fire, Frost, Void | Hybrid (60-70% magic, high pen) |
+| Golems | Crystal Earth/Flame/Frost/Sand/Thunder, Firesteel, Guardian Void | Physical (earth/sand), Hybrid (elemental) |
+| Void | Crawler, Eye, Larva, Necromancer, Spawn, Spectre, Wraith | Magic (high pen) |
+| Bosses | Shadow Knight, Yeti, Werewolf, Emberwulf | Hybrid/Physical (high pen) |
+| Wildlife | Bears, Wolves, Spiders, Snakes, Sharks, Cave creatures | Physical (most), Hybrid (snakes, magma variants) |
+| Spirits | Ember, Frost, Root, Thunder, Spark | Magic |
+
+> **Note:** Creatures are never tracked in the combat stats system — only players. The creature registry is a static lookup, no entity tracking involved.
+
 ### Equipment Integration
 
 Items registered in `CombatStatsRegistry` automatically apply their combat stat bonuses when equipped in armor slots. Stats are recalculated on every armor change. All vanilla Hytale armors and weapons are pre-registered.

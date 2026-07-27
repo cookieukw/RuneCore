@@ -163,6 +163,45 @@ danoFinal = (fisicoReduzido + magicoReduzido) × (1 - reducaoDano%) + danoVerdad
 → Escudo absorve primeiro, restante atinge HP
 ```
 
+### Dano de Criaturas (PvE)
+
+Criaturas possuem **perfis de dano** pré-registrados no `CreatureCombatRegistry`. Quando uma criatura ataca um jogador, o RuneCore consulta o perfil da criatura e aplica a fórmula de defesa correta com a penetração de armadura/magia da criatura. Se a criatura não estiver registrada, o sistema usa a classificação por `DamageCause` como fallback.
+
+| Perfil de Dano | Fórmula | Criaturas Exemplo |
+|----------------|---------|-------------------|
+| **Physical** | Armadura reduz, criatura pode ter armor pen | Trork, Skeleton Fighter, Wolf, Bear |
+| **Magic** | Resistência Mágica reduz, criatura pode ter magic pen | Skeleton Mage, Wraith, Necromancer, Spirits |
+| **Hybrid** | Divide phys/magic por ratio, cada um reduzido separadamente | Dragon Fire (60% magic), Golem Crystal Flame, Feran Windwalker |
+| **True** | Sem redução (apenas escudo absorve) | — |
+
+Após a redução por tipo, a **Redução de Dano %** é aplicada, e depois o **HP de Escudo** absorve o restante. Se não houver dados da criatura, `DamageCause` é usado como fallback:
+
+| Causa do Dano | Reduzido por |
+|---------------|-------------|
+| Physical, Projectile, Bludgeoning, Slashing | **Armadura** |
+| Elemental, Fire, Ice, Poison, Magic | **Resistência Mágica** |
+| True (ou BypassResistances) | **Apenas Escudo** |
+
+#### Criaturas Registradas (~200+)
+
+| Facção | Criaturas | Perfil Típico |
+|--------|-----------|---------------|
+| Trork | Warrior, Brawler, Guard, Hunter, Mauler, Chieftain, Shaman, Doctor Witch | Physical (guerreiros), Magic (xamã/bruxa) |
+| Skeleton | Standard, Burnt, Frost, Sand, Incandescent, Pirate (~35 variantes) | Physical (melee), Hybrid (elementais), Magic (magos) |
+| Zombie | Regular, Aberrant, Burnt, Frost, Sand, Werewolf | Physical, Hybrid (variantes elementais) |
+| Goblin | Scrapper, Thief, Miner, Lobber, Boss, Duke, Ogre | Physical, Hybrid (lobber/duke) |
+| Outlander | Peon, Marauder, Berserker, Brute, Hunter, Cultist, Priest, Sorcerer | Physical (guerreiros), Magic (conjuradores) |
+| Scarak | Louse, Seeker, Fighter, Defender, Broodmother | Physical, Hybrid (broodmother) |
+| Feran | Burrower, Longtooth, Sharptooth, Windwalker | Physical, Hybrid (windwalker) |
+| Dragões | Fire, Frost, Void | Hybrid (60-70% magic, alta pen) |
+| Golems | Crystal Earth/Flame/Frost/Sand/Thunder, Firesteel, Guardian Void | Physical (earth/sand), Hybrid (elementais) |
+| Void | Crawler, Eye, Larva, Necromancer, Spawn, Spectre, Wraith | Magic (alta pen) |
+| Bosses | Shadow Knight, Yeti, Werewolf, Emberwulf | Hybrid/Physical (alta pen) |
+| Vida Selvagem | Bears, Wolves, Spiders, Snakes, Sharks, criaturas de caverna | Physical (maioria), Hybrid (cobras, variantes magma) |
+| Spirits | Ember, Frost, Root, Thunder, Spark | Magic |
+
+> **Nota:** Criaturas nunca são rastreadas no sistema de combat stats — apenas jogadores. O registro de criaturas é uma consulta estática, sem rastreamento de entidades.
+
 ### Integração com Equipamentos
 
 Itens registrados no `CombatStatsRegistry` aplicam automaticamente seus bônus de atributos de combate quando equipados nos slots de armadura. Os atributos são recalculados a cada mudança de armadura. Todas as armaduras e armas vanilla do Hytale já estão pré-registradas.
