@@ -2,16 +2,12 @@ package com.cookie.runecore.commands;
 
 import com.cookie.runecore.api.CombatStats;
 import com.cookie.runecore.systems.CombatStatsManager;
-import com.hypixel.hytale.component.Ref;
-import com.hypixel.hytale.component.Store;
 import com.hypixel.hytale.server.core.Message;
 import com.hypixel.hytale.server.core.command.system.AbstractCommand;
 import com.hypixel.hytale.server.core.command.system.CommandContext;
 import com.hypixel.hytale.server.core.command.system.arguments.system.OptionalArg;
 import com.hypixel.hytale.server.core.command.system.arguments.system.RequiredArg;
 import com.hypixel.hytale.server.core.command.system.arguments.types.ArgTypes;
-import com.hypixel.hytale.server.core.universe.PlayerRef;
-import com.hypixel.hytale.server.core.universe.world.storage.EntityStore;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -36,26 +32,12 @@ public class CombatStatsCommand extends AbstractCommand {
     @Nullable
     @Override
     protected CompletableFuture<Void> execute(@Nonnull CommandContext ctx) {
-        Ref<EntityStore> playerRef;
-        try {
-            playerRef = ctx.senderAsPlayerRef();
-        } catch (Error | Exception e) {
-            ctx.sendMessage(Message.translation("runecore.combat.error.not_player"));
-            return CompletableFuture.completedFuture(null);
-        }
-        if (playerRef == null || !playerRef.isValid()) {
+        if (!ctx.isPlayer()) {
             ctx.sendMessage(Message.translation("runecore.combat.error.not_player"));
             return CompletableFuture.completedFuture(null);
         }
 
-        Store<EntityStore> store = playerRef.getStore();
-        PlayerRef pr = (PlayerRef) store.getComponent(playerRef, PlayerRef.getComponentType());
-        if (pr == null) {
-            ctx.sendMessage(Message.translation("runecore.combat.error.resolve_player"));
-            return CompletableFuture.completedFuture(null);
-        }
-
-        UUID uuid = pr.getUuid();
+        UUID uuid = ctx.sender().getUuid();
         CombatStatsManager manager = CombatStatsManager.get();
         if (manager == null || uuid == null) {
             ctx.sendMessage(Message.translation("runecore.combat.error.not_available"));
