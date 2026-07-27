@@ -136,7 +136,44 @@ All potions are crafted at the **Alchemy Bench** using a **Glass Bottle** (Potio
 
 ---
 
-## 7. 🎮 How to Test In-Game & Current Status Effects
+## 7. ⚔️ Combat Stats System
+
+RuneCore includes an RPG-style combat stats system layered on top of Hytale's native armor/damage. Stats are tracked **per-player only** (never applied to all entities).
+
+### Stat Types
+
+| Category | Stat | Description |
+|----------|------|-------------|
+| **Offensive** | Physical Damage | Reduced by target's Armor |
+| **Offensive** | Magic Damage | Reduced by target's Magic Resist |
+| **Offensive** | True Damage | Bypasses all resistances and reductions (only blocked by shields) |
+| **Offensive** | Armor Penetration | Ignores part of target's Armor |
+| **Offensive** | Magic Penetration | Ignores part of target's Magic Resist |
+| **Defensive** | Armor | Reduces incoming Physical Damage |
+| **Defensive** | Magic Resist | Reduces incoming Magic Damage |
+| **Defensive** | Damage Reduction | Flat % reduction on all damage (capped at 90%) |
+| **Defensive** | Shield HP | Temporary HP that absorbs damage before health |
+
+### Damage Formula
+
+```
+effectiveDefense = max(0, defense - penetration)
+reducedDamage = rawDamage × 100 / (100 + effectiveDefense)
+finalDamage = (physReduced + magReduced) × (1 - damageReduction%) + trueDamage
+→ Shield absorbs first, remainder hits HP
+```
+
+### Equipment Integration
+
+Items registered in `CombatStatsRegistry` automatically apply their combat stat bonuses when equipped in armor slots. Stats are recalculated on every armor change.
+
+### Commands
+
+- `/combatstats` — View your current combat stats in-game
+
+---
+
+## 8. 🎮 How to Test In-Game & Current Status Effects
 
 You can test the registered status effects and spell system using the built-in administrative command:
 
@@ -216,11 +253,11 @@ if (poison != null) {
 
 ---
 
-## 8. 🛠️ Modder's Guide
+## 9. 🛠️ Modder's Guide
 
 Interested in building on top of RuneCore? Check out our [**API Usage Guide**](API_USAGE.md) for code examples and integration steps.
 
-## 9. ⚖️ License
+## 10. ⚖️ License
 
 This project, including its source code, documentation, and **pixel art icons** (located in the `/icons` directory), is licensed under the **Creative Commons Attribution-NonCommercial 4.0 International (CC BY-NC 4.0)**.
 
