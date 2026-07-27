@@ -169,7 +169,27 @@ Itens registrados no `CombatStatsRegistry` aplicam automaticamente seus bônus d
 
 ### Comandos
 
-- `/combatstats` — Ver seus atributos de combate atuais no jogo
+| Comando | Descrição |
+|---------|-----------|
+| `/combatstats view` | Ver todos os seus atributos de combate |
+| `/combatstats set <atributo> <valor>` | Definir o valor base de um atributo |
+| `/combatstats add <atributo> <valor>` | Adicionar um modificador (soma no base) |
+| `/combatstats reset all` | Resetar todos os atributos para 0 |
+| `/combatstats reset <atributo>` | Resetar um atributo específico para 0 |
+| `/combatstats reset modifiers` | Limpar só os modificadores, manter valores base |
+
+**Atributos disponíveis:** `armor`, `magicresist` (mr), `reduction` (dr), `physdmg` (phys), `magdmg` (mag), `truedmg` (true), `armorpen` (apen), `magicpen` (mpen), `shield`
+
+**Exemplos:**
+```
+/combatstats set armor 50
+/combatstats set physdmg 80
+/combatstats add mr 20
+/combatstats set shield 100
+/combatstats set reduction 30     (30% de redução de dano)
+/combatstats view
+/combatstats reset all
+```
 
 ---
 

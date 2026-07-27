@@ -169,7 +169,27 @@ Items registered in `CombatStatsRegistry` automatically apply their combat stat 
 
 ### Commands
 
-- `/combatstats` — View your current combat stats in-game
+| Command | Description |
+|---------|-------------|
+| `/combatstats view` | View all your current combat stats |
+| `/combatstats set <stat> <value>` | Set a stat's base value |
+| `/combatstats add <stat> <value>` | Add a modifier (stacks on top of base) |
+| `/combatstats reset all` | Reset all stats to 0 |
+| `/combatstats reset <stat>` | Reset a specific stat to 0 |
+| `/combatstats reset modifiers` | Clear only modifiers, keep base values |
+
+**Available stats:** `armor`, `magicresist` (mr), `reduction` (dr), `physdmg` (phys), `magdmg` (mag), `truedmg` (true), `armorpen` (apen), `magicpen` (mpen), `shield`
+
+**Examples:**
+```
+/combatstats set armor 50
+/combatstats set physdmg 80
+/combatstats add mr 20
+/combatstats set shield 100
+/combatstats set reduction 30     (30% damage reduction)
+/combatstats view
+/combatstats reset all
+```
 
 ---
 

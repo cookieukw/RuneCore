@@ -1,0 +1,34 @@
+
+combat.error.not_player = You must be a player to use this command.
+combat.error.resolve_player = Could not resolve player.
+combat.error.not_available = Combat stats system not available.
+combat.error.unknown_stat = Unknown stat: {stat}
+combat.error.missing_stat = Missing stat name. Options: armor, magicresist(mr), reduction(dr), physdmg(phys), magdmg(mag), truedmg(true), armorpen(apen), magicpen(mpen), shield
+combat.error.missing_value = Missing value. Provide a number.
+combat.error.invalid_number = Invalid number: {value}
+combat.usage = Usage: /combatstats <view|set|add|reset> [stat] [value]
+combat.stat_list = Stats: armor, magicresist(mr), reduction(dr), physdmg(phys), magdmg(mag), truedmg(true), armorpen(apen), magicpen(mpen), shield
+
+combat.view.header = === Combat Stats ===
+combat.view.offense_header = --- Offense ---
+combat.view.phys_damage = Physical Damage: {value}
+combat.view.magic_damage = Magic Damage: {value}
+combat.view.true_damage = True Damage: {value}
+combat.view.armor_pen = Armor Penetration: {value}
+combat.view.magic_pen = Magic Penetration: {value}
+combat.view.defense_header = --- Defense ---
+combat.view.armor = Armor: {value}
+combat.view.magic_resist = Magic Resist: {value}
+combat.view.damage_reduction = Damage Reduction: {value}%
+combat.view.shield = Shield: {current} / {max}
+combat.view.effective_header = --- Effective ---
+combat.view.effective_phys = 100 physical hit -> {value} taken
+combat.view.effective_mag = 100 magic hit -> {value} taken
+
+combat.set.stat = Set {stat} to {value}
+combat.set.shield = Set Shield HP to {current} / {max}
+combat.add.stat = Added {value} to {stat}
+combat.add.shield = Added {value} shield. Total: {total}
+combat.reset.all = All combat stats reset to 0.
+combat.reset.stat = Reset {stat} to 0.
+combat.reset.modifiers = All modifiers cleared.
