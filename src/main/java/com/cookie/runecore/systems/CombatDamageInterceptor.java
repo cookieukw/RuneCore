@@ -16,12 +16,19 @@ import com.cookie.runecore.systems.CreatureCombatRegistry.CreatureCombatData;
 import com.cookie.runecore.systems.CreatureCombatRegistry.DamageProfile;
 import com.hypixel.hytale.server.core.modules.entity.component.ModelComponent;
 
+import com.hypixel.hytale.component.dependency.Dependency;
+import com.hypixel.hytale.component.dependency.RootDependency;
+
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.Set;
 import java.util.UUID;
+import java.util.logging.Logger;
 
 public class CombatDamageInterceptor extends DamageEventSystem {
+
+    private static final Logger LOG = Logger.getLogger("RuneCore|Combat");
+    private static final boolean DEBUG = true;
 
     private static final Set<String> MAGIC_CAUSES = Set.of(
             "Elemental", "Fire", "Ice", "Poison", "Magic"
@@ -30,6 +37,11 @@ public class CombatDamageInterceptor extends DamageEventSystem {
     private static final Set<String> PHYSICAL_CAUSES = Set.of(
             "Physical", "Projectile", "Bludgeoning", "Slashing"
     );
+
+    @Override
+    public Set<Dependency<EntityStore>> getDependencies() {
+        return RootDependency.firstSet();
+    }
 
     @Nullable
     @Override
@@ -54,8 +66,11 @@ public class CombatDamageInterceptor extends DamageEventSystem {
         DamageCause cause = damage.getCause();
         String causeId = (cause != null && cause.getId() != null) ? cause.getId() : "";
 
+        if (DEBUG) LOG.info("[DMG] Hit on player " + targetUuid + " | raw=" + damage.getAmount() + " | cause=" + causeId);
+
         // True damage: only shield absorbs
         if (causeId.equals("True") || (cause != null && cause.doesBypassResistances())) {
+            if (DEBUG) LOG.info("[DMG] True damage, shield only");
             damage.setAmount(defenderStats.absorbDamage(damage.getAmount()));
             return;
         }
@@ -67,6 +82,7 @@ public class CombatDamageInterceptor extends DamageEventSystem {
             if (sourceUuid != null && manager.hasStats(sourceUuid)) {
                 CombatStats attackerStats = manager.getStats(sourceUuid);
                 float finalDamage = defenderStats.calculateFinalDamage(attackerStats);
+                if (DEBUG) LOG.info("[DMG] PvP | attacker=" + sourceUuid + " | final=" + finalDamage);
                 damage.setAmount(finalDamage);
                 return;
             }
@@ -79,16 +95,22 @@ public class CombatDamageInterceptor extends DamageEventSystem {
         CreatureCombatData creatureData = getCreatureData(source);
         if (creatureData != null) {
             reduced = applyCreatureDamage(raw, defenderStats, creatureData);
+            if (DEBUG) LOG.info("[DMG] PvE creature registry | profile=" + creatureData.profile + " | magicRatio=" + creatureData.magicRatio + " | armorPen=" + creatureData.armorPenetration + " | magicPen=" + creatureData.magicPenetration + " | raw=" + raw + " | reduced=" + reduced);
         } else if (isMagicCause(causeId, cause)) {
             reduced = CombatStats.calcReducedDamage(raw, defenderStats.getMagicResist(), 0);
+            if (DEBUG) LOG.info("[DMG] PvE fallback MAGIC | cause=" + causeId + " | raw=" + raw + " | reduced=" + reduced);
         } else if (isPhysicalCause(causeId)) {
             reduced = CombatStats.calcReducedDamage(raw, defenderStats.getArmor(), 0);
+            if (DEBUG) LOG.info("[DMG] PvE fallback PHYSICAL | cause=" + causeId + " | raw=" + raw + " | reduced=" + reduced);
         } else {
             reduced = raw;
+            if (DEBUG) LOG.info("[DMG] PvE fallback UNTYPED | cause=" + causeId + " | raw=" + raw);
         }
 
         reduced *= (1f - defenderStats.getDamageReduction());
-        damage.setAmount(defenderStats.absorbDamage(reduced));
+        float finalDmg = defenderStats.absorbDamage(reduced);
+        if (DEBUG) LOG.info("[DMG] After DR(" + defenderStats.getDamageReduction() + ") + shield: " + finalDmg);
+        damage.setAmount(finalDmg);
     }
 
     private boolean isMagicCause(String causeId, DamageCause cause) {
@@ -131,7 +153,9 @@ public class CombatDamageInterceptor extends DamageEventSystem {
         if (assetId == null) return null;
         String name = assetId.contains("/") ? assetId.substring(assetId.lastIndexOf('/') + 1) : assetId;
         if (name.contains(":")) name = name.substring(name.indexOf(':') + 1);
-        return registry.getData(name);
+        CreatureCombatData data = registry.getData(name);
+        if (DEBUG) LOG.info("[DMG] Creature lookup | assetId=" + assetId + " | parsed=" + name + " | found=" + (data != null));
+        return data;
     }
 
     private UUID getPlayerUuid(Damage.EntitySource entitySource) {
