@@ -14,6 +14,7 @@ import com.cookie.runecore.systems.CombatStatsRegistry;
 import com.cookie.runecore.systems.CreatureCombatDefaults;
 import com.cookie.runecore.systems.CreatureCombatRegistry;
 import com.cookie.runecore.systems.EquipmentStatsListener;
+import com.cookie.runecore.systems.ItemTooltipInjector;
 import com.cookie.runecore.systems.EffectTimerListener;
 import com.cookie.runecore.systems.FrozenInteractionListener;
 import com.cookie.runecore.systems.MobDropSystem;
@@ -100,5 +101,6 @@ public class Main extends JavaPlugin {
         CreatureCombatDefaults.registerAll(creatureRegistry);
         this.getEntityStoreRegistry().registerSystem(new CombatDamageInterceptor());
         this.getEntityStoreRegistry().registerSystem(new EquipmentStatsListener());
+        this.getEntityStoreRegistry().registerSystem(new ItemTooltipInjector());
     }
 }

@@ -32,3 +32,13 @@ combat.add.shield = Added {value} shield. Total: {total}
 combat.reset.all = All combat stats reset to 0.
 combat.reset.stat = Reset {stat} to 0.
 combat.reset.modifiers = All modifiers cleared.
+
+tooltip.header = \n--- Combat Stats ---
+tooltip.armor = \n+{value} Armor
+tooltip.magic_resist = \n+{value} Magic Resist
+tooltip.damage_reduction = \n+{value}% Damage Reduction
+tooltip.phys_damage = \n+{value} Physical Damage
+tooltip.magic_damage = \n+{value} Magic Damage
+tooltip.true_damage = \n+{value} True Damage
+tooltip.armor_pen = \n+{value} Armor Penetration
+tooltip.magic_pen = \n+{value} Magic Penetration

@@ -32,3 +32,13 @@ combat.add.shield = Adicionado {value} de escudo. Total: {total}
 combat.reset.all = Todos os atributos de combate resetados para 0.
 combat.reset.stat = {stat} resetado para 0.
 combat.reset.modifiers = Todos os modificadores removidos.
+
+tooltip.header = \n--- Atributos de Combate ---
+tooltip.armor = \n+{value} Armadura
+tooltip.magic_resist = \n+{value} Resistência Mágica
+tooltip.damage_reduction = \n+{value}% Redução de Dano
+tooltip.phys_damage = \n+{value} Dano Físico
+tooltip.magic_damage = \n+{value} Dano Mágico
+tooltip.true_damage = \n+{value} Dano Verdadeiro
+tooltip.armor_pen = \n+{value} Penetração de Armadura
+tooltip.magic_pen = \n+{value} Penetração Mágica
