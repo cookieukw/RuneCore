@@ -16,8 +16,11 @@ import com.hypixel.hytale.server.core.universe.world.World;
 import com.hypixel.hytale.server.core.universe.world.storage.EntityStore;
 
 import javax.annotation.Nonnull;
+import java.util.logging.Logger;
 
 public class PotionDrinkInteraction extends SimpleInstantInteraction {
+
+    private static final Logger LOG = Logger.getLogger("RuneCore");
 
     public static final BuilderCodec<PotionDrinkInteraction> CODEC =
             BuilderCodec.builder(
@@ -43,7 +46,7 @@ public class PotionDrinkInteraction extends SimpleInstantInteraction {
             Item itemType = context.getOriginalItemType();
             if (itemType != null) {
                 String itemId = itemType.getId().toString();
-                System.out.println("[RuneCore-PotionDrinkInteraction] Executing potion drink for item: " + itemId);
+                LOG.fine("[RuneCore-PotionDrinkInteraction] Executing potion drink for item: " + itemId);
                 if (itemId.toLowerCase().contains("potion_drinkable_")) {
                     String lowerId = itemId.toLowerCase();
                     int idx = lowerId.indexOf("potion_drinkable_");
@@ -66,9 +69,9 @@ public class PotionDrinkInteraction extends SimpleInstantInteraction {
                                 } else {
                                     RuneCore.get().getEffect(eff).execute(ctx);
                                 }
-                                System.out.println("[RuneCore-PotionDrinkInteraction] Player drank potion, applying effect: " + effectName);
+                                LOG.fine("[RuneCore-PotionDrinkInteraction] Player drank potion, applying effect: " + effectName);
                             } else {
-                                System.err.println("[RuneCore-PotionDrinkInteraction] Effect not found: " + effectName);
+                                LOG.warning("[RuneCore-PotionDrinkInteraction] Effect not found: " + effectName);
                             }
                         }
                     }
