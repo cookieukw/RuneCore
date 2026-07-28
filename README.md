@@ -138,7 +138,11 @@ All potions are crafted at the **Alchemy Bench** using a **Glass Bottle** (Potio
 
 ## 7. ⚔️ Combat Stats System
 
-RuneCore includes an RPG-style combat stats system layered on top of Hytale's native armor/damage. Stats are tracked **per-player only** (never applied to all entities).
+RuneCore includes an RPG-style combat stats system layered on top of Hytale's native armor/damage.
+
+Attributes are **registrable**: the stats below are the ones RuneCore ships with, but any mod can add its own and have it affect damage. See the [API Usage Guide](API_USAGE.md#6-combat-attributes).
+
+Players carry a persistent stat block. Creatures do not — their values come from a static registry lookup, so nothing is tracked per entity.
 
 ### Stat Types
 
@@ -163,9 +167,19 @@ finalDamage = (physReduced + magReduced) × (1 - damageReduction%) + trueDamage
 → Shield absorbs first, remainder hits HP
 ```
 
+Every intercepted hit runs through the **damage pipeline**, so mods can insert their own step
+before or after this calculation — that is how a custom attribute such as crit or lifesteal
+gets to influence the result. See [Damage Pipeline](API_USAGE.md#7-damage-pipeline).
+
+**Offence sources.** A player's offensive stats come from two places: the persistent stat block
+(equipment) and the **weapon currently held**, resolved at the moment of the hit so hotbar swaps
+apply immediately.
+
 ### Creature Damage (PvE)
 
 Creatures have pre-registered **damage profiles** in `CreatureCombatRegistry`. When a creature hits a player, RuneCore looks up the creature's profile and applies the correct defense formula with the creature's armor/magic penetration. If a creature is not registered, it falls back to `DamageCause` classification.
+
+Creatures are also **damage targets**: they carry armor, magic resist and damage reduction, so weapon stats and penetration matter in PvE as well. A creature absent from the registry is left untouched — its damage stays exactly as the engine computed it.
 
 | Damage Profile | Formula | Example Creatures |
 |---------------|---------|-------------------|
@@ -200,11 +214,34 @@ After type-specific reduction, **Damage Reduction %** is applied, then **Shield 
 | Wildlife | Bears, Wolves, Spiders, Snakes, Sharks, Cave creatures | Physical (most), Hybrid (snakes, magma variants) |
 | Spirits | Ember, Frost, Root, Thunder, Spark | Magic |
 
-> **Note:** Creatures are never tracked in the combat stats system — only players. The creature registry is a static lookup, no entity tracking involved.
+#### Creature Defence by Family
+
+Defence is assigned per family. These are a first pass and want in-game balancing; any creature
+can override its family with `withDefense(...)`.
+
+| Family | Armor | Magic Resist | DR | Rationale |
+| :--- | ---: | ---: | ---: | :--- |
+| Wildlife | 2 | 0 | — | critters and cattle, effectively unarmoured |
+| Zombies | 4 | 2 | — | rotten and slow |
+| Spirits | 4 | 32 | — | incorporeal: blades pass through, magic bites |
+| Goblins | 5 | 3 | — | scrappy leather |
+| Trorks | 6 | 0 | — | tribal warriors, no wards |
+| Ferans | 8 | 8 | — | agile beasts, balanced |
+| Misc | 8 | 8 | — | unclassified |
+| Skeletons | 10 | 4 | — | bone turns blades better than magic |
+| Outlanders | 12 | 6 | — | equipped raiders |
+| Void | 12 | 28 | — | inverted: magic is their shield |
+| Scaraks | 18 | 4 | — | chitin: heavy against steel, poor against magic |
+| Dragons | 32 | 28 | — | scaled and ancient |
+| Golems | 34 | 12 | — | the physical wall |
+| Bosses | 40 | 34 | 15% | plus flat damage reduction |
+
+> **Note:** creatures are still not *tracked* — the registry is a static lookup keyed by model
+> asset name, with no per-entity state.
 
 ### Equipment Integration
 
-Items registered in `CombatStatsRegistry` automatically apply their combat stat bonuses when equipped in armor slots. Stats are recalculated on every armor change. All vanilla Hytale armors and weapons are pre-registered.
+Items registered in `CombatStatsRegistry` apply their combat stats in two ways: **armor pieces** contribute while equipped (recalculated on every armor change), and the **held weapon** contributes at the moment of the hit. All vanilla Hytale armors and weapons are pre-registered, and mods can register their own through `RuneAttributes.registerItem(...)`.
 
 #### Armor Stats by Tier
 
@@ -365,6 +402,16 @@ if (poison != null) {
 ## 9. 🛠️ Modder's Guide
 
 Interested in building on top of RuneCore? Check out our [**API Usage Guide**](API_USAGE.md) for code examples and integration steps.
+
+The public entry points are:
+
+| Entry point | Purpose |
+| :--- | :--- |
+| `RuneAttributes` | Read/write attributes, register items and creatures |
+| `AttributeRegistry` + `RuneAttribute` | Declare a new attribute |
+| `DamagePipeline` + `DamageStage` | Make an attribute affect damage |
+| `RuneCore` | Essences, effects, spells |
+| `EffectHelper`, `StatHelper`, `PlayerStats` | Entity stat and movement helpers |
 
 ## 10. ⚖️ License
 
