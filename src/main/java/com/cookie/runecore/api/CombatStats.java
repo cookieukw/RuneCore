@@ -124,18 +124,45 @@ public class CombatStats {
     }
 
     public float calculateFinalDamage(CombatStats attacker) {
-        float physRaw = attacker.getPhysicalDamage();
-        float magRaw = attacker.getMagicDamage();
-        float trueRaw = attacker.getTrueDamage();
+        return calculateFinalDamage(attacker, Offense.NONE);
+    }
 
-        float physFinal = calcReducedDamage(physRaw, getArmor(), attacker.getArmorPenetration());
-        float magFinal = calcReducedDamage(magRaw, getMagicResist(), attacker.getMagicPenetration());
+    /**
+     * Resolves incoming damage against this entity's defences.
+     * <p>
+     * {@code bonus} carries offence that is not part of the attacker's persistent
+     * {@link CombatStats} — in practice the weapon currently held. Without it the attacker's
+     * offence came only from equipped armour, so a player swinging a sword contributed zero
+     * damage.
+     * <p>
+     * <b>Note:</b> this method has a side effect — it drains {@link #getShieldHP()} through
+     * {@link #absorbDamage}. Call it once per hit.
+     */
+    public float calculateFinalDamage(CombatStats attacker, Offense bonus) {
+        float physRaw = attacker.getPhysicalDamage() + bonus.physical();
+        float magRaw = attacker.getMagicDamage() + bonus.magic();
+        float trueRaw = attacker.getTrueDamage() + bonus.trueDamage();
+
+        float physFinal = calcReducedDamage(physRaw, getArmor(),
+                attacker.getArmorPenetration() + bonus.armorPenetration());
+        float magFinal = calcReducedDamage(magRaw, getMagicResist(),
+                attacker.getMagicPenetration() + bonus.magicPenetration());
 
         float subtotal = physFinal + magFinal;
         subtotal *= (1f - getDamageReduction());
 
         float afterShield = absorbDamage(subtotal + trueRaw);
         return Math.max(0, afterShield);
+    }
+
+    /**
+     * Offensive contribution from a transient source (the held weapon, a spell, ...).
+     * Kept in the api package so nothing here depends on the item registry.
+     */
+    public record Offense(float physical, float magic, float trueDamage,
+                          float armorPenetration, float magicPenetration) {
+
+        public static final Offense NONE = new Offense(0f, 0f, 0f, 0f, 0f);
     }
 
     // ── Reset ────────────────────────────────────────────────────────────────
