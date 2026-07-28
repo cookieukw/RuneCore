@@ -55,7 +55,14 @@ public class CombatDamageInterceptor extends DamageEventSystem {
     @Nullable
     @Override
     public Query<EntityStore> getQuery() {
-        return Player.getComponentType();
+        // Was Player only, so combat stats applied exclusively to damage *received by players*.
+        // Creatures are matched through ModelComponent, which is also how they are identified
+        // in CreatureCombatRegistry. Unregistered creatures are ignored further down, so the
+        // effective blast radius stays limited to what CreatureCombatDefaults declares.
+        return Query.or(
+                Player.getComponentType(),
+                ModelComponent.getComponentType()
+        );
     }
 
     @Override
@@ -67,7 +74,10 @@ public class CombatDamageInterceptor extends DamageEventSystem {
         if (manager == null) return;
 
         PlayerRef targetPr = chunk.getComponent(index, PlayerRef.getComponentType());
-        if (targetPr == null) return;
+        if (targetPr == null) {
+            handleCreatureDefender(index, chunk, damage);
+            return;
+        }
         UUID targetUuid = targetPr.getUuid();
         if (targetUuid == null || !manager.hasStats(targetUuid)) return;
 
@@ -128,6 +138,89 @@ public class CombatDamageInterceptor extends DamageEventSystem {
         damage.setAmount(finalDmg);
     }
 
+    /**
+     * Damage taken by a creature. Mirrors the player path: when the attacker is a player, the
+     * final number comes from the attacker's CombatStats plus the held weapon, resolved against
+     * the creature's own armour/resist — the same symmetry PvP already had.
+     * <p>
+     * Creatures absent from {@link CreatureCombatRegistry} are left completely alone, so this
+     * never touches damage the mod has no opinion about.
+     */
+    private void handleCreatureDefender(int index, ArchetypeChunk<EntityStore> chunk, Damage damage) {
+        ModelComponent model = chunk.getComponent(index, ModelComponent.getComponentType());
+        CreatureCombatData defender = lookupCreature(model);
+        if (defender == null) return;
+
+        DamageCause cause = damage.getCause();
+        String causeId = (cause != null && cause.getId() != null) ? cause.getId() : "";
+        float raw = damage.getAmount();
+
+        // True damage ignores creature defences entirely; creatures carry no shield.
+        if (causeId.equals("True") || (cause != null && cause.doesBypassResistances())) {
+            if (DEBUG) LOG.info("[DMG] Creature hit, true damage, untouched | raw=" + raw);
+            return;
+        }
+
+        CombatStats defenderStats = creatureAsDefender(defender);
+        Damage.Source source = damage.getSource();
+        float finalDmg;
+
+        if (source instanceof Damage.EntitySource entitySource
+                && isPlayerSource(entitySource)) {
+            CombatStatsManager manager = CombatStatsManager.get();
+            UUID attackerUuid = getPlayerUuid(entitySource);
+            CombatStats attackerStats = (manager != null && attackerUuid != null)
+                    ? manager.getStats(attackerUuid) : null;
+            if (attackerStats == null) attackerStats = new CombatStats();
+
+            finalDmg = defenderStats.calculateFinalDamage(attackerStats, weaponOffense(entitySource));
+            if (DEBUG) LOG.info("[DMG] Player -> creature | attacker=" + attackerUuid
+                    + " | armor=" + defender.armor + " | mr=" + defender.magicResist
+                    + " | raw=" + raw + " | final=" + finalDmg);
+        } else {
+            // Creature or environment hitting a creature: no offensive stat block exists for
+            // the attacker, so the engine's raw damage stays the base and only mitigation runs.
+            CreatureCombatData attacker = getCreatureData(source);
+            if (attacker != null) {
+                finalDmg = applyCreatureDamage(raw, defenderStats, attacker);
+            } else if (isMagicCause(causeId, cause)) {
+                finalDmg = CombatStats.calcReducedDamage(raw, defenderStats.getMagicResist(), 0);
+            } else if (isPhysicalCause(causeId)) {
+                finalDmg = CombatStats.calcReducedDamage(raw, defenderStats.getArmor(), 0);
+            } else {
+                finalDmg = raw;
+            }
+            finalDmg *= (1f - defenderStats.getDamageReduction());
+            if (DEBUG) LOG.info("[DMG] Non-player -> creature | raw=" + raw + " | final=" + finalDmg);
+        }
+
+        damage.setAmount(Math.max(0f, finalDmg));
+    }
+
+    /** Builds a throwaway CombatStats carrying only this creature's defences. */
+    private CombatStats creatureAsDefender(CreatureCombatData data) {
+        CombatStats stats = new CombatStats();
+        stats.setArmor(data.armor);
+        stats.setMagicResist(data.magicResist);
+        stats.setDamageReduction(data.damageReduction);
+        return stats;
+    }
+
+    private boolean isPlayerSource(Damage.EntitySource entitySource) {
+        return getPlayerUuid(entitySource) != null;
+    }
+
+    /** Registry key for a creature: the model asset's file name, without path or namespace. */
+    private CreatureCombatData lookupCreature(ModelComponent model) {
+        CreatureCombatRegistry registry = CreatureCombatRegistry.get();
+        if (registry == null || model == null || model.getModel() == null) return null;
+        String assetId = model.getModel().getModelAssetId();
+        if (assetId == null) return null;
+        String name = assetId.contains("/") ? assetId.substring(assetId.lastIndexOf('/') + 1) : assetId;
+        if (name.contains(":")) name = name.substring(name.indexOf(':') + 1);
+        return registry.getData(name);
+    }
+
     private boolean isMagicCause(String causeId, DamageCause cause) {
         if (MAGIC_CAUSES.contains(causeId)) return true;
         if (cause == null) return false;
@@ -154,22 +247,16 @@ public class CombatDamageInterceptor extends DamageEventSystem {
         };
     }
 
+    /** Creature data for the <em>attacker</em> behind a damage source. */
     private CreatureCombatData getCreatureData(Damage.Source source) {
         if (!(source instanceof Damage.EntitySource entitySource)) return null;
-        CreatureCombatRegistry registry = CreatureCombatRegistry.get();
-        if (registry == null) return null;
         var ref = entitySource.getRef();
         if (ref == null || !ref.isValid()) return null;
         Store<EntityStore> s = ref.getStore();
         if (s == null) return null;
         ModelComponent model = s.getComponent(ref, ModelComponent.getComponentType());
-        if (model == null || model.getModel() == null) return null;
-        String assetId = model.getModel().getModelAssetId();
-        if (assetId == null) return null;
-        String name = assetId.contains("/") ? assetId.substring(assetId.lastIndexOf('/') + 1) : assetId;
-        if (name.contains(":")) name = name.substring(name.indexOf(':') + 1);
-        CreatureCombatData data = registry.getData(name);
-        if (DEBUG) LOG.info("[DMG] Creature lookup | assetId=" + assetId + " | parsed=" + name + " | found=" + (data != null));
+        CreatureCombatData data = lookupCreature(model);
+        if (DEBUG) LOG.info("[DMG] Creature lookup | found=" + (data != null));
         return data;
     }
 
