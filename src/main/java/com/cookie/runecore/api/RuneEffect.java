@@ -10,8 +10,11 @@ import com.hypixel.hytale.server.core.universe.world.World;
 import com.hypixel.hytale.server.core.universe.world.storage.EntityStore;
 
 import java.util.function.Function;
+import java.util.logging.Logger;
 
 public class RuneEffect {
+
+    private static final Logger LOG = Logger.getLogger("RuneCore");
     private final String id;
     private final int defaultDurationTicks;
     private final boolean isInstant;
@@ -86,14 +89,14 @@ public class RuneEffect {
             ActiveBuff buff = this.buffFactory.apply(ctx);
             if (buff != null) {
                 boolean refValid = (entityRef != null && entityRef.isValid());
-                System.out.println("[RuneCore] Registering buff: " + buff.effectId
+                LOG.fine("[RuneCore] Registering buff: " + buff.effectId
                         + " | player=" + buff.playerId
                         + " | duration=" + buff.remainingTicks
                         + " | interval=" + buff.intervalTicks
                         + " | refValid=" + refValid);
                 EffectTickSystem.getInstance().applyBuff(buff, entityRef);
             } else {
-                System.err.println("[RuneCore] buffFactory returned null for effect: " + id);
+                LOG.warning("[RuneCore] buffFactory returned null for effect: " + id);
             }
         }
 
@@ -131,10 +134,10 @@ public class RuneEffect {
 
             if (nativeEffect != null && index >= 0) {
                 float durationSecs = defaultDurationTicks / 20.0f;
-                System.out.println("[RuneCore] Applying native effect: " + nativeEffectId + " (Index: " + index + ", Duration: " + durationSecs + "s)");
+                LOG.fine("[RuneCore] Applying native effect: " + nativeEffectId + " (Index: " + index + ", Duration: " + durationSecs + "s)");
                 controller.addEffect(entityRef, index, nativeEffect, durationSecs, OverlapBehavior.OVERWRITE, store);
             } else {
-                System.err.println("[RuneCore] Native effect not found (tried bare + runecore: prefix): " + nativeEffectId);
+                LOG.warning("[RuneCore] Native effect not found (tried bare + runecore: prefix): " + nativeEffectId);
             }
         };
 
@@ -144,7 +147,7 @@ public class RuneEffect {
             try {
                 applyTask.run();
             } catch (IllegalStateException e) {
-                System.err.println("[RuneCore] Could not apply native effect immediately due to ECS store lock: " + e.getMessage());
+                LOG.warning("[RuneCore] Could not apply native effect immediately due to ECS store lock: " + e.getMessage());
             }
         }
     }
