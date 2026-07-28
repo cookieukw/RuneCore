@@ -13,12 +13,15 @@ import com.hypixel.hytale.server.core.universe.world.World;
 import com.hypixel.hytale.server.core.universe.world.storage.EntityStore;
 
 import javax.annotation.Nonnull;
+import java.util.logging.Logger;
 
 /**
  * Generic splash potion interaction that dynamically determines the effect
  * from the interaction type ID (e.g. "runecore:potion_splash_speed" -> "speed").
  */
 public class GenericPotionSplashInteraction extends SimpleInstantInteraction {
+
+    private static final Logger LOG = Logger.getLogger("RuneCore");
 
     public static final BuilderCodec<GenericPotionSplashInteraction> CODEC =
             BuilderCodec.builder(
@@ -56,7 +59,7 @@ public class GenericPotionSplashInteraction extends SimpleInstantInteraction {
         }
 
         if (effectName.isEmpty()) {
-            System.err.println("[RuneCore] GenericPotionSplashInteraction could not determine effectName from context!");
+            LOG.warning("[RuneCore] GenericPotionSplashInteraction could not determine effectName from context!");
             return;
         }
 
@@ -64,7 +67,7 @@ public class GenericPotionSplashInteraction extends SimpleInstantInteraction {
         World world = store != null && store.getExternalData() != null ? store.getExternalData().getWorld() : null;
         PlayerRef playerRef = store != null ? store.getComponent(entityRef, PlayerRef.getComponentType()) : null;
 
-        System.out.println("[RuneCore] GenericPotionSplash hit entity: " + entityRef + " for effect: " + effectName);
+        LOG.fine("[RuneCore] GenericPotionSplash hit entity: " + entityRef + " for effect: " + effectName);
 
         CastContext ctx = new CastContext(playerRef, entityRef, world, 1.0);
         ctx.target = entityRef;
@@ -83,7 +86,7 @@ public class GenericPotionSplashInteraction extends SimpleInstantInteraction {
                 effect.execute(ctx);
             }
         } else {
-            System.err.println("[RuneCore] Effect '" + effectName + "' not found in RuneCore registry!");
+            LOG.warning("[RuneCore] Effect '" + effectName + "' not found in RuneCore registry!");
         }
     }
 }
