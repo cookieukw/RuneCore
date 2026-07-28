@@ -1,6 +1,9 @@
 package com.cookie.runecore.systems;
 
 import com.cookie.runecore.api.CombatStats;
+import com.cookie.runecore.systems.CombatStatsRegistry.ItemCombatData;
+import com.hypixel.hytale.server.core.inventory.InventoryComponent;
+import com.hypixel.hytale.server.core.inventory.ItemStack;
 import com.hypixel.hytale.component.ArchetypeChunk;
 import com.hypixel.hytale.component.CommandBuffer;
 import com.hypixel.hytale.component.Store;
@@ -28,7 +31,13 @@ import java.util.logging.Logger;
 public class CombatDamageInterceptor extends DamageEventSystem {
 
     private static final Logger LOG = Logger.getLogger("RuneCore|Combat");
-    private static final boolean DEBUG = true;
+
+    /**
+     * Per-hit combat tracing. Was hardcoded {@code true}, so a shipped build logged up to five
+     * INFO lines for every single damage event of every entity — console flood plus the string
+     * concatenation cost on the hot path. Enable with {@code -Drunecore.combat.debug=true}.
+     */
+    private static final boolean DEBUG = Boolean.getBoolean("runecore.combat.debug");
 
     private static final Set<String> MAGIC_CAUSES = Set.of(
             "Elemental", "Fire", "Ice", "Poison", "Magic"
@@ -81,8 +90,14 @@ public class CombatDamageInterceptor extends DamageEventSystem {
             UUID sourceUuid = getPlayerUuid(entitySource);
             if (sourceUuid != null && manager.hasStats(sourceUuid)) {
                 CombatStats attackerStats = manager.getStats(sourceUuid);
-                float finalDamage = defenderStats.calculateFinalDamage(attackerStats);
-                if (DEBUG) LOG.info("[DMG] PvP | attacker=" + sourceUuid + " | final=" + finalDamage);
+                // EquipmentStatsListener only tracks the ARMOUR container, so the attacker's
+                // CombatStats never carried weapon damage. calculateFinalDamage is driven purely
+                // by attacker offence, which meant an unarmoured player dealt exactly 0 in PvP
+                // no matter what sword they were holding. The held weapon is resolved here, at
+                // hit time, so hotbar swaps are always reflected.
+                CombatStats.Offense weapon = weaponOffense(entitySource);
+                float finalDamage = defenderStats.calculateFinalDamage(attackerStats, weapon);
+                if (DEBUG) LOG.info("[DMG] PvP | attacker=" + sourceUuid + " | weaponPhys=" + weapon.physical() + " | final=" + finalDamage);
                 damage.setAmount(finalDamage);
                 return;
             }
@@ -156,6 +171,24 @@ public class CombatDamageInterceptor extends DamageEventSystem {
         CreatureCombatData data = registry.getData(name);
         if (DEBUG) LOG.info("[DMG] Creature lookup | assetId=" + assetId + " | parsed=" + name + " | found=" + (data != null));
         return data;
+    }
+
+    /** Offensive stats of the weapon the attacker is currently holding, or {@link CombatStats.Offense#NONE}. */
+    private CombatStats.Offense weaponOffense(Damage.EntitySource entitySource) {
+        CombatStatsRegistry registry = CombatStatsRegistry.get();
+        if (registry == null) return CombatStats.Offense.NONE;
+
+        var ref = entitySource.getRef();
+        if (ref == null || !ref.isValid()) return CombatStats.Offense.NONE;
+
+        ItemStack held = InventoryComponent.getItemInHand(ref.getStore(), ref);
+        if (held == null || held.isEmpty()) return CombatStats.Offense.NONE;
+
+        ItemCombatData data = registry.getItemData(held.getItemId());
+        if (data == null) return CombatStats.Offense.NONE;
+
+        return new CombatStats.Offense(data.physicalDamage, data.magicDamage, data.trueDamage,
+                data.armorPenetration, data.magicPenetration);
     }
 
     private UUID getPlayerUuid(Damage.EntitySource entitySource) {
