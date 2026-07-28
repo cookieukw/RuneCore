@@ -63,12 +63,36 @@ public final class DamagePipeline {
      * @return the final amount, never negative
      */
     public static float run(DamageContext context, float startingDamage) {
+        return runRange(context, startingDamage, Integer.MIN_VALUE, Integer.MAX_VALUE);
+    }
+
+    /** Runs only the stages registered before {@code priority} (exclusive). */
+    public static float runBefore(DamageContext context, float startingDamage, int priority) {
+        return runRange(context, startingDamage, Integer.MIN_VALUE, priority - 1);
+    }
+
+    /** Runs only the stages registered at {@code priority} or later. */
+    public static float runFrom(DamageContext context, float startingDamage, int priority) {
+        return runRange(context, startingDamage, priority, Integer.MAX_VALUE);
+    }
+
+    /**
+     * Runs the stages whose priority falls in {@code [from, to]}.
+     * <p>
+     * The slices exist because RuneCore's own armour/resist/shield maths is not expressible as
+     * a stage: it needs the physical/magic split of the attacker's offence, which no single
+     * float carries between steps. The interceptor therefore runs the stages before
+     * {@link #MITIGATION}, does its calculation, then runs the rest.
+     */
+    public static float runRange(DamageContext context, float startingDamage, int from, int to) {
         float damage = startingDamage;
 
         for (Registration registration : STAGES) {
+            if (registration.priority < from || registration.priority > to) continue;
             try {
                 damage = registration.stage.apply(context, damage);
             } catch (RuntimeException e) {
+                // A broken third-party stage must not abort the hit and make players immortal.
                 LOG.warning("damage stage '" + registration.id + "' failed, skipping: " + e);
             }
         }
