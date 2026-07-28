@@ -138,7 +138,11 @@ Todas as poções são craftadas na **Mesa de Alquimia** usando uma **Garrafa de
 
 ## 7. ⚔️ Sistema de Atributos de Combate
 
-O RuneCore inclui um sistema de atributos de combate estilo RPG que funciona em cima do sistema nativo de armadura/dano do Hytale. Os atributos são rastreados **apenas por jogador** (nunca aplicados a todas as entidades).
+O RuneCore inclui um sistema de atributos de combate estilo RPG que funciona em cima do sistema nativo de armadura/dano do Hytale.
+
+Atributos são **registráveis**: os listados abaixo são os que o RuneCore já traz, mas qualquer mod pode adicionar o seu e fazê-lo influenciar o dano. Veja o [Guia da API](API_USAGE-PTBR.md#6-atributos-de-combate).
+
+Jogadores carregam um bloco de atributos persistente. Criaturas não — os valores delas vêm de uma consulta estática ao registry, sem estado por entidade.
 
 ### Tipos de Atributos
 
@@ -163,9 +167,21 @@ danoFinal = (fisicoReduzido + magicoReduzido) × (1 - reducaoDano%) + danoVerdad
 → Escudo absorve primeiro, restante atinge HP
 ```
 
+Todo hit interceptado passa pelo **pipeline de dano**, então mods podem inserir uma etapa própria
+antes ou depois desse cálculo — é assim que um atributo customizado como crítico ou roubo de vida
+consegue influenciar o resultado. Veja [Pipeline de Dano](API_USAGE-PTBR.md#7-pipeline-de-dano).
+
+**Fontes de ofensiva.** Os atributos ofensivos de um jogador vêm de dois lugares: o bloco
+persistente (equipamento) e a **arma empunhada**, resolvida no momento do hit — trocar de slot na
+hotbar vale na hora.
+
 ### Dano de Criaturas (PvE)
 
 Criaturas possuem **perfis de dano** pré-registrados no `CreatureCombatRegistry`. Quando uma criatura ataca um jogador, o RuneCore consulta o perfil da criatura e aplica a fórmula de defesa correta com a penetração de armadura/magia da criatura. Se a criatura não estiver registrada, o sistema usa a classificação por `DamageCause` como fallback.
+
+Criaturas também são **alvos de dano**: elas têm armadura, resistência mágica e redução de dano,
+então atributos de arma e penetração passam a valer em PvE também. Criatura ausente do registry é
+deixada intocada — o dano dela continua exatamente como o engine calculou.
 
 | Perfil de Dano | Fórmula | Criaturas Exemplo |
 |----------------|---------|-------------------|
@@ -200,11 +216,34 @@ Após a redução por tipo, a **Redução de Dano %** é aplicada, e depois o **
 | Vida Selvagem | Bears, Wolves, Spiders, Snakes, Sharks, criaturas de caverna | Physical (maioria), Hybrid (cobras, variantes magma) |
 | Spirits | Ember, Frost, Root, Thunder, Spark | Magic |
 
-> **Nota:** Criaturas nunca são rastreadas no sistema de combat stats — apenas jogadores. O registro de criaturas é uma consulta estática, sem rastreamento de entidades.
+#### Defesa das Criaturas por Família
+
+A defesa é atribuída por família. Estes valores são uma primeira passada e pedem balanceamento
+in-game; qualquer criatura pode sobrescrever a família com `withDefense(...)`.
+
+| Família | Armadura | Resist. Mágica | RD | Racional |
+| :--- | ---: | ---: | ---: | :--- |
+| Wildlife | 2 | 0 | — | bichos e gado, praticamente sem proteção |
+| Zombies | 4 | 2 | — | podres e lentos |
+| Spirits | 4 | 32 | — | incorpóreos: lâmina atravessa, magia machuca |
+| Goblins | 5 | 3 | — | couro improvisado |
+| Trorks | 6 | 0 | — | guerreiros tribais, sem proteção mágica |
+| Ferans | 8 | 8 | — | feras ágeis, equilibradas |
+| Misc | 8 | 8 | — | não classificados |
+| Skeletons | 10 | 4 | — | osso apara lâmina melhor que magia |
+| Outlanders | 12 | 6 | — | saqueadores equipados |
+| Void | 12 | 28 | — | invertido: a magia é o escudo deles |
+| Scaraks | 18 | 4 | — | quitina: dura contra aço, fraca contra magia |
+| Dragons | 32 | 28 | — | escamados e antigos |
+| Golems | 34 | 12 | — | a parede física |
+| Bosses | 40 | 34 | 15% | ainda ganham redução plana |
+
+> **Nota:** criaturas continuam não sendo *rastreadas* — o registry é uma consulta estática
+> pela chave do modelo, sem estado por entidade.
 
 ### Integração com Equipamentos
 
-Itens registrados no `CombatStatsRegistry` aplicam automaticamente seus bônus de atributos de combate quando equipados nos slots de armadura. Os atributos são recalculados a cada mudança de armadura. Todas as armaduras e armas vanilla do Hytale já estão pré-registradas.
+Itens registrados no `CombatStatsRegistry` aplicam seus atributos de combate de duas formas: **peças de armadura** contribuem enquanto equipadas (recalculado a cada mudança de armadura), e a **arma empunhada** contribui no momento do hit. Todas as armaduras e armas vanilla do Hytale já estão pré-registradas, e mods podem registrar as suas via `RuneAttributes.registerItem(...)`.
 
 #### Stats de Armadura por Tier
 
@@ -363,6 +402,16 @@ if (poison != null) {
 ---
 
 ## 9. 🛠️ Guia para Modders
+
+Os pontos de entrada públicos são:
+
+| Ponto de entrada | Para quê |
+| :--- | :--- |
+| `RuneAttributes` | Ler/escrever atributos, registrar itens e criaturas |
+| `AttributeRegistry` + `RuneAttribute` | Declarar um atributo novo |
+| `DamagePipeline` + `DamageStage` | Fazer um atributo afetar o dano |
+| `RuneCore` | Essências, efeitos, feitiços |
+| `EffectHelper`, `StatHelper`, `PlayerStats` | Helpers de atributo e movimento de entidade |
 
 Interessado em construir em cima do RuneCore? Confira nosso [**Guia de Uso da API**](API_USAGE.md) para exemplos de código e passos de integração.
 
