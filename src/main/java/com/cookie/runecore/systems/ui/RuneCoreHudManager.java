@@ -26,8 +26,11 @@ import java.util.concurrent.ConcurrentHashMap;
 import com.cookie.runecore.api.ActiveBuff;
 import com.cookie.runecore.system.RuneCore;
 import com.cookie.runecore.systems.EffectTickSystem;
+import java.util.logging.Logger;
 
 public class RuneCoreHudManager {
+
+    private static final Logger LOG = Logger.getLogger("RuneCore");
 
     private static RuneCoreHudManager instance;
     private final Map<UUID, RuneCoreHud> activeHuds = new ConcurrentHashMap<>();
@@ -68,7 +71,7 @@ public class RuneCoreHudManager {
         if (player == null) return;
 
         // Hide original Hytale HUDs (Keep Health visible since we only implement Mana for now)
-        System.out.println("[RuneCore-HUD] Hiding vanilla components for " + playerRef.getUuid());
+        LOG.fine("[RuneCore-HUD] Hiding vanilla components for " + playerRef.getUuid());
         player.getHudManager().hideHudComponents(playerRef, HudComponent.Mana, HudComponent.StatusIcons);
 
         RuneCoreHud hud = new RuneCoreHud(playerRef);
