@@ -1,84 +1,68 @@
 package com.cookie.runecore.api;
 
-import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
+import com.cookie.runecore.api.attribute.AttributeContainer;
+import com.cookie.runecore.api.attribute.CoreAttributes;
+import com.cookie.runecore.api.attribute.RuneAttribute;
 
+/**
+ * Typed view over an entity's combat attributes.
+ * <p>
+ * The fixed fields and the hand-rolled modifier map are gone: storage is an
+ * {@link AttributeContainer}, so an attribute registered by another mod lives in the same place
+ * as {@code armor}. This class stays as the convenient, discoverable accessor for the built-ins
+ * — its public surface is unchanged.
+ * <p>
+ * Shield remains a plain field. It is consumable hit points rather than a stat, and
+ * {@link #absorbDamage} mutates it.
+ */
 public class CombatStats {
 
-    // Offensive
-    private float physicalDamage = 0f;
-    private float magicDamage = 0f;
-    private float trueDamage = 0f;
-    private float armorPenetration = 0f;
-    private float magicPenetration = 0f;
+    private final AttributeContainer attributes = new AttributeContainer();
 
-    // Defensive
-    private float armor = 0f;
-    private float magicResist = 0f;
-    private float damageReduction = 0f;
     private float shieldHP = 0f;
     private float maxShieldHP = 0f;
 
-    // Modifiers: modifierId -> (stat, value)
-    private final Map<String, StatModEntry> modifiers = new ConcurrentHashMap<>();
-
     public CombatStats() {}
+
+    /** The underlying container, for attributes this class has no typed accessor for. */
+    public AttributeContainer attributes() {
+        return attributes;
+    }
 
     // ── Offensive getters (base + modifiers) ─────────────────────────────────
 
-    public float getPhysicalDamage() {
-        return Math.max(0, physicalDamage + sumModifiers("physicalDamage"));
-    }
-
-    public float getMagicDamage() {
-        return Math.max(0, magicDamage + sumModifiers("magicDamage"));
-    }
-
-    public float getTrueDamage() {
-        return Math.max(0, trueDamage + sumModifiers("trueDamage"));
-    }
-
-    public float getArmorPenetration() {
-        return Math.max(0, armorPenetration + sumModifiers("armorPenetration"));
-    }
-
-    public float getMagicPenetration() {
-        return Math.max(0, magicPenetration + sumModifiers("magicPenetration"));
-    }
+    public float getPhysicalDamage()   { return attributes.get(CoreAttributes.PHYSICAL_DAMAGE); }
+    public float getMagicDamage()      { return attributes.get(CoreAttributes.MAGIC_DAMAGE); }
+    public float getTrueDamage()       { return attributes.get(CoreAttributes.TRUE_DAMAGE); }
+    public float getArmorPenetration() { return attributes.get(CoreAttributes.ARMOR_PENETRATION); }
+    public float getMagicPenetration() { return attributes.get(CoreAttributes.MAGIC_PENETRATION); }
 
     // ── Defensive getters (base + modifiers) ─────────────────────────────────
 
-    public float getArmor() {
-        return Math.max(0, armor + sumModifiers("armor"));
-    }
+    public float getArmor()           { return attributes.get(CoreAttributes.ARMOR); }
+    public float getMagicResist()     { return attributes.get(CoreAttributes.MAGIC_RESIST); }
+    public float getDamageReduction() { return attributes.get(CoreAttributes.DAMAGE_REDUCTION); }
 
-    public float getMagicResist() {
-        return Math.max(0, magicResist + sumModifiers("magicResist"));
-    }
-
-    public float getDamageReduction() {
-        return Math.max(0, Math.min(0.9f, damageReduction + sumModifiers("damageReduction")));
-    }
-
-    public float getShieldHP() { return shieldHP; }
+    public float getShieldHP()    { return shieldHP; }
     public float getMaxShieldHP() { return maxShieldHP; }
 
     // ── Base setters ─────────────────────────────────────────────────────────
 
-    public void setPhysicalDamage(float v) { physicalDamage = v; }
-    public void setMagicDamage(float v) { magicDamage = v; }
-    public void setTrueDamage(float v) { trueDamage = v; }
-    public void setArmorPenetration(float v) { armorPenetration = v; }
-    public void setMagicPenetration(float v) { magicPenetration = v; }
-    public void setArmor(float v) { armor = v; }
-    public void setMagicResist(float v) { magicResist = v; }
-    public void setDamageReduction(float v) { damageReduction = v; }
+    public void setPhysicalDamage(float v)   { attributes.setBase(CoreAttributes.PHYSICAL_DAMAGE, v); }
+    public void setMagicDamage(float v)      { attributes.setBase(CoreAttributes.MAGIC_DAMAGE, v); }
+    public void setTrueDamage(float v)       { attributes.setBase(CoreAttributes.TRUE_DAMAGE, v); }
+    public void setArmorPenetration(float v) { attributes.setBase(CoreAttributes.ARMOR_PENETRATION, v); }
+    public void setMagicPenetration(float v) { attributes.setBase(CoreAttributes.MAGIC_PENETRATION, v); }
+    public void setArmor(float v)            { attributes.setBase(CoreAttributes.ARMOR, v); }
+    public void setMagicResist(float v)      { attributes.setBase(CoreAttributes.MAGIC_RESIST, v); }
+    public void setDamageReduction(float v)  { attributes.setBase(CoreAttributes.DAMAGE_REDUCTION, v); }
 
     public void setShieldHP(float current, float max) {
         this.maxShieldHP = Math.max(0, max);
         this.shieldHP = Math.max(0, Math.min(this.maxShieldHP, current));
     }
 
+    /** Drains the shield by {@code damage}; returns what got through. */
     public float absorbDamage(float damage) {
         if (shieldHP <= 0) return damage;
         if (damage <= shieldHP) {
@@ -92,29 +76,23 @@ public class CombatStats {
 
     // ── Modifier system ──────────────────────────────────────────────────────
 
+    /**
+     * @param stat legacy camelCase name ({@code "magicResist"}) or a full attribute id
+     *             ({@code "mymod:lifesteal"}). Unknown names are ignored — as before, except
+     *             the miss is now at least well-defined.
+     */
     public void addModifier(String id, String stat, float value) {
-        modifiers.put(id, new StatModEntry(stat, value));
+        RuneAttribute attribute = CoreAttributes.resolveLegacy(stat);
+        if (attribute != null) attributes.addModifier(id, attribute, value);
     }
 
-    public void removeModifier(String id) {
-        modifiers.remove(id);
+    public void addModifier(String id, RuneAttribute attribute, float value) {
+        attributes.addModifier(id, attribute, value);
     }
 
-    public boolean hasModifier(String id) {
-        return modifiers.containsKey(id);
-    }
-
-    public void clearModifiers() {
-        modifiers.clear();
-    }
-
-    private float sumModifiers(String stat) {
-        float sum = 0;
-        for (StatModEntry entry : modifiers.values()) {
-            if (entry.stat.equals(stat)) sum += entry.value;
-        }
-        return sum;
-    }
+    public void removeModifier(String id)   { attributes.removeModifier(id); }
+    public boolean hasModifier(String id)   { return attributes.hasModifier(id); }
+    public void clearModifiers()            { attributes.clearModifiers(); }
 
     // ── Damage calculation ───────────────────────────────────────────────────
 
@@ -130,12 +108,10 @@ public class CombatStats {
     /**
      * Resolves incoming damage against this entity's defences.
      * <p>
-     * {@code bonus} carries offence that is not part of the attacker's persistent
-     * {@link CombatStats} — in practice the weapon currently held. Without it the attacker's
-     * offence came only from equipped armour, so a player swinging a sword contributed zero
-     * damage.
+     * {@code bonus} carries offence that is not part of the attacker's persistent stats — in
+     * practice the weapon currently held.
      * <p>
-     * <b>Note:</b> this method has a side effect — it drains {@link #getShieldHP()} through
+     * <b>Note:</b> this has a side effect — it drains {@link #getShieldHP()} through
      * {@link #absorbDamage}. Call it once per hit.
      */
     public float calculateFinalDamage(CombatStats attacker, Offense bonus) {
@@ -155,6 +131,14 @@ public class CombatStats {
         return Math.max(0, afterShield);
     }
 
+    // ── Reset ────────────────────────────────────────────────────────────────
+
+    public void reset() {
+        attributes.reset();
+        shieldHP = 0;
+        maxShieldHP = 0;
+    }
+
     /**
      * Offensive contribution from a transient source (the held weapon, a spell, ...).
      * Kept in the api package so nothing here depends on the item registry.
@@ -163,30 +147,5 @@ public class CombatStats {
                           float armorPenetration, float magicPenetration) {
 
         public static final Offense NONE = new Offense(0f, 0f, 0f, 0f, 0f);
-    }
-
-    // ── Reset ────────────────────────────────────────────────────────────────
-
-    public void reset() {
-        physicalDamage = 0;
-        magicDamage = 0;
-        trueDamage = 0;
-        armorPenetration = 0;
-        magicPenetration = 0;
-        armor = 0;
-        magicResist = 0;
-        damageReduction = 0;
-        shieldHP = 0;
-        maxShieldHP = 0;
-        modifiers.clear();
-    }
-
-    private static class StatModEntry {
-        final String stat;
-        final float value;
-        StatModEntry(String stat, float value) {
-            this.stat = stat;
-            this.value = value;
-        }
     }
 }
