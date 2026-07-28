@@ -18,6 +18,7 @@ import com.hypixel.hytale.server.core.modules.entitystats.modifier.StaticModifie
 import com.hypixel.hytale.server.core.universe.PlayerRef;
 import com.hypixel.hytale.server.core.universe.world.World;
 import com.hypixel.hytale.server.core.universe.world.storage.EntityStore;
+import java.util.logging.Logger;
 
 /**
  * Helpers for gameplay status effects: bleeding, burn, nausea, haste,
@@ -27,6 +28,8 @@ import com.hypixel.hytale.server.core.universe.world.storage.EntityStore;
  * in {@link #withPlayerRef} and {@link #withWorldAndPlayer} to avoid repetition.
  */
 public final class StatusEffectHelper {
+
+    private static final Logger LOG = Logger.getLogger("RuneCore");
 
     private StatusEffectHelper() {}
 
@@ -41,7 +44,7 @@ public final class StatusEffectHelper {
     }
 
     public static void onBleedingTick(Ref<EntityStore> ref) {
-        System.out.println("[RuneCore-Bleed] Ticking bleeding for " + ref);
+        LOG.fine("[RuneCore-Bleed] Ticking bleeding for " + ref);
         // Spawn 2-3 drops of blood at different heights (chest/limbs)
         for (int i = 0; i < 2; i++) {
             double height = 0.8 + (Math.random() * 0.7); // Height between 0.8m and 1.5m (chest area)
@@ -67,12 +70,12 @@ public final class StatusEffectHelper {
     // ── Nausea ────────────────────────────────────────────────────────────────
 
     public static void applyNausea(Ref<EntityStore> ref) {
-        System.out.println("[RuneCore-Nausea] applyNausea called for: " + ref);
+        LOG.fine("[RuneCore-Nausea] applyNausea called for: " + ref);
         EffectHelper.updateHud(ref, hud -> hud.setNausea(true));
     }
 
     public static void revertNausea(Ref<EntityStore> ref) {
-        System.out.println("[RuneCore-Nausea] revertNausea called for: " + ref);
+        LOG.fine("[RuneCore-Nausea] revertNausea called for: " + ref);
         EffectHelper.updateHud(ref, hud -> hud.setNausea(false));
         withPlayerRef(ref, (store, pr) -> {
             ServerCameraSettings reset = new ServerCameraSettings();
@@ -87,13 +90,13 @@ public final class StatusEffectHelper {
                 int idx = EffectHelper.getEffectIndex("Nausea");
                 if (idx >= 0) ctrl.removeEffect(ref, idx, store);
             }
-            System.out.println("[RuneCore-Nausea] Nausea reverted, camera reset packet sent.");
+            LOG.fine("[RuneCore-Nausea] Nausea reverted, camera reset packet sent.");
         });
     }
 
     public static void onNauseaTick(Ref<EntityStore> ref, float time) {
         withPlayerRef(ref, (store, pr) -> {
-            System.out.println("[RuneCore-Nausea] onNauseaTick: sending camera sway at time " + time + " to: " + pr.getUsername());
+            LOG.fine("[RuneCore-Nausea] onNauseaTick: sending camera sway at time " + time + " to: " + pr.getUsername());
 
             ServerCameraSettings settings = new ServerCameraSettings();
             settings.rotation = new Direction((time * 4.0f) % 360.0f,
