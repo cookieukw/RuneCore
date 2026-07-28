@@ -2,7 +2,6 @@ package com.cookie.runecore.commands;
 
 import com.cookie.runecore.api.CombatStats;
 import com.cookie.runecore.systems.CombatStatsManager;
-import com.hypixel.hytale.server.core.Message;
 import com.hypixel.hytale.server.core.command.system.AbstractCommand;
 import com.hypixel.hytale.server.core.command.system.CommandContext;
 import com.hypixel.hytale.server.core.command.system.arguments.system.OptionalArg;
@@ -11,10 +10,20 @@ import com.hypixel.hytale.server.core.command.system.arguments.types.ArgTypes;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
+import java.util.Locale;
 import java.util.UUID;
 import java.util.concurrent.CompletableFuture;
 
+/**
+ * {@code /combatstats <view|set|add|reset> [stat] [value]}.
+ * <p>
+ * Argument wiring and dispatch only: the stat vocabulary lives in {@link CombatStatOption} and
+ * every message in {@link CombatStatsView}. The three handlers below used to repeat the same
+ * nine-stat alias table in three parallel switch statements.
+ */
 public class CombatStatsCommand extends AbstractCommand {
+
+    private static final String SHIELD = "shield";
 
     private final RequiredArg<String> actionArg;
     private final OptionalArg<String> statArg;
@@ -33,261 +42,126 @@ public class CombatStatsCommand extends AbstractCommand {
     @Override
     protected CompletableFuture<Void> execute(@Nonnull CommandContext ctx) {
         if (!ctx.isPlayer()) {
-            ctx.sendMessage(Message.translation("runecore.combat.error.not_player"));
+            CombatStatsView.notPlayer(ctx);
             return CompletableFuture.completedFuture(null);
         }
 
         UUID uuid = ctx.sender().getUuid();
         CombatStatsManager manager = CombatStatsManager.get();
         if (manager == null || uuid == null) {
-            ctx.sendMessage(Message.translation("runecore.combat.error.not_available"));
+            CombatStatsView.notAvailable(ctx);
             return CompletableFuture.completedFuture(null);
         }
 
         CombatStats stats = manager.getOrCreate(uuid);
-        String action = ctx.get(this.actionArg).toLowerCase();
 
-        switch (action) {
-            case "view":
-                showStats(ctx, stats);
-                break;
-            case "set":
-                handleSet(ctx, stats);
-                break;
-            case "add":
-                handleAdd(ctx, stats);
-                break;
-            case "reset":
-                handleReset(ctx, stats);
-                break;
-            default:
-                ctx.sendMessage(Message.translation("runecore.combat.usage"));
-                ctx.sendMessage(Message.translation("runecore.combat.stat_list"));
-                break;
+        switch (ctx.get(this.actionArg).toLowerCase(Locale.ROOT)) {
+            case "view"  -> CombatStatsView.showStats(ctx, stats);
+            case "set"   -> handleSet(ctx, stats);
+            case "add"   -> handleAdd(ctx, stats);
+            case "reset" -> handleReset(ctx, stats);
+            default      -> CombatStatsView.usage(ctx);
         }
 
         return CompletableFuture.completedFuture(null);
     }
 
-    private void showStats(CommandContext ctx, CombatStats s) {
-        ctx.sendMessage(Message.raw("=== Combat Stats ===").color("#FFD700").bold(true));
-        ctx.sendMessage(Message.raw("--- Offense ---").color("#FF9966").bold(true));
-        ctx.sendMessage(statMsg("Physical Damage: ", fmt(s.getPhysicalDamage()), "#FF9966"));
-        ctx.sendMessage(statMsg("Magic Damage: ", fmt(s.getMagicDamage()), "#BB86FC"));
-        ctx.sendMessage(statMsg("True Damage: ", fmt(s.getTrueDamage()), "#FFFFFF"));
-        ctx.sendMessage(statMsg("Armor Penetration: ", fmt(s.getArmorPenetration()), "#FF6E6E"));
-        ctx.sendMessage(statMsg("Magic Penetration: ", fmt(s.getMagicPenetration()), "#FF6E6E"));
-        ctx.sendMessage(Message.raw("--- Defense ---").color("#66FFAA").bold(true));
-        ctx.sendMessage(statMsg("Armor: ", fmt(s.getArmor()), "#FFE066"));
-        ctx.sendMessage(statMsg("Magic Resist: ", fmt(s.getMagicResist()), "#66CCFF"));
-        ctx.sendMessage(statMsg("Damage Reduction: ", fmt(s.getDamageReduction() * 100f) + "%", "#66FFAA"));
-        ctx.sendMessage(statMsg("Shield: ", fmt(s.getShieldHP()) + " / " + fmt(s.getMaxShieldHP()), "#66EEFF"));
-
-        float testPhys = CombatStats.calcReducedDamage(100f, s.getArmor(), 0) * (1f - s.getDamageReduction());
-        float testMag = CombatStats.calcReducedDamage(100f, s.getMagicResist(), 0) * (1f - s.getDamageReduction());
-        ctx.sendMessage(Message.raw("--- Effective ---").color("#CCCCCC").bold(true));
-        ctx.sendMessage(statMsg("100 physical hit -> ", fmt(testPhys) + " taken", "#FF9966"));
-        ctx.sendMessage(statMsg("100 magic hit -> ", fmt(testMag) + " taken", "#BB86FC"));
-    }
-
-    private Message statMsg(String label, String value, String color) {
-        return Message.join(
-                Message.raw(label).color("#AAAAAA"),
-                Message.raw(value).color(color)
-        );
-    }
-
     private void handleSet(CommandContext ctx, CombatStats stats) {
-        String stat = getStatArg(ctx);
-        Float value = getValueArg(ctx);
-        if (stat == null || value == null) return;
+        String statName = statArg(ctx);
+        Float value = valueArg(ctx);
+        if (statName == null || value == null) return;
 
-        switch (stat) {
-            case "armor":
-                stats.setArmor(value);
-                sendSetMsg(ctx, "armor", value);
-                break;
-            case "magicresist":
-            case "mr":
-                stats.setMagicResist(value);
-                sendSetMsg(ctx, "magicresist", value);
-                break;
-            case "reduction":
-            case "dr":
-                stats.setDamageReduction(value / 100f);
-                sendSetMsg(ctx, "reduction", value);
-                break;
-            case "physdmg":
-            case "phys":
-                stats.setPhysicalDamage(value);
-                sendSetMsg(ctx, "physdmg", value);
-                break;
-            case "magdmg":
-            case "mag":
-                stats.setMagicDamage(value);
-                sendSetMsg(ctx, "magdmg", value);
-                break;
-            case "truedmg":
-            case "true":
-                stats.setTrueDamage(value);
-                sendSetMsg(ctx, "truedmg", value);
-                break;
-            case "armorpen":
-            case "apen":
-                stats.setArmorPenetration(value);
-                sendSetMsg(ctx, "armorpen", value);
-                break;
-            case "magicpen":
-            case "mpen":
-                stats.setMagicPenetration(value);
-                sendSetMsg(ctx, "magicpen", value);
-                break;
-            case "shield":
-                stats.setShieldHP(value, value);
-                ctx.sendMessage(Message.translation("runecore.combat.set.shield")
-                        .param("current", fmt(value))
-                        .param("max", fmt(value)));
-                break;
-            default:
-                sendUnknownStat(ctx, stat);
-                break;
-        }
-    }
-
-    private void handleAdd(CommandContext ctx, CombatStats stats) {
-        String stat = getStatArg(ctx);
-        Float value = getValueArg(ctx);
-        if (stat == null || value == null) return;
-
-        String modId = "cmd_" + stat + "_" + System.currentTimeMillis();
-
-        switch (stat) {
-            case "armor":
-                stats.addModifier(modId, "armor", value);
-                sendAddMsg(ctx, "armor", value);
-                break;
-            case "magicresist":
-            case "mr":
-                stats.addModifier(modId, "magicResist", value);
-                sendAddMsg(ctx, "magicresist", value);
-                break;
-            case "reduction":
-            case "dr":
-                stats.addModifier(modId, "damageReduction", value / 100f);
-                sendAddMsg(ctx, "reduction", value);
-                break;
-            case "physdmg":
-            case "phys":
-                stats.addModifier(modId, "physicalDamage", value);
-                sendAddMsg(ctx, "physdmg", value);
-                break;
-            case "magdmg":
-            case "mag":
-                stats.addModifier(modId, "magicDamage", value);
-                sendAddMsg(ctx, "magdmg", value);
-                break;
-            case "truedmg":
-            case "true":
-                stats.addModifier(modId, "trueDamage", value);
-                sendAddMsg(ctx, "truedmg", value);
-                break;
-            case "armorpen":
-            case "apen":
-                stats.addModifier(modId, "armorPenetration", value);
-                sendAddMsg(ctx, "armorpen", value);
-                break;
-            case "magicpen":
-            case "mpen":
-                stats.addModifier(modId, "magicPenetration", value);
-                sendAddMsg(ctx, "magicpen", value);
-                break;
-            case "shield":
-                float newMax = stats.getMaxShieldHP() + value;
-                stats.setShieldHP(newMax, newMax);
-                ctx.sendMessage(Message.translation("runecore.combat.add.shield")
-                        .param("value", fmt(value))
-                        .param("total", fmt(newMax)));
-                break;
-            default:
-                sendUnknownStat(ctx, stat);
-                break;
-        }
-    }
-
-    private void handleReset(CommandContext ctx, CombatStats stats) {
-        String stat = ctx.get(this.statArg);
-
-        if (stat == null || stat.equalsIgnoreCase("all")) {
-            stats.reset();
-            ctx.sendMessage(Message.translation("runecore.combat.reset.all"));
+        if (SHIELD.equals(statName)) {
+            stats.setShieldHP(value, value);
+            CombatStatsView.shieldSet(ctx, value);
             return;
         }
 
-        stat = stat.toLowerCase();
-        switch (stat) {
-            case "armor": stats.setArmor(0); break;
-            case "magicresist": case "mr": stats.setMagicResist(0); break;
-            case "reduction": case "dr": stats.setDamageReduction(0); break;
-            case "physdmg": case "phys": stats.setPhysicalDamage(0); break;
-            case "magdmg": case "mag": stats.setMagicDamage(0); break;
-            case "truedmg": case "true": stats.setTrueDamage(0); break;
-            case "armorpen": case "apen": stats.setArmorPenetration(0); break;
-            case "magicpen": case "mpen": stats.setMagicPenetration(0); break;
-            case "shield": stats.setShieldHP(0, 0); break;
-            case "modifiers":
-                stats.clearModifiers();
-                ctx.sendMessage(Message.translation("runecore.combat.reset.modifiers"));
-                return;
-            default:
-                sendUnknownStat(ctx, stat);
-                return;
+        CombatStatOption option = CombatStatOption.from(statName);
+        if (option == null) {
+            CombatStatsView.unknownStat(ctx, statName);
+            return;
         }
-        ctx.sendMessage(Message.translation("runecore.combat.reset.stat").param("stat", stat));
+        option.set(stats, value);
+        CombatStatsView.statSet(ctx, option.id, value);
     }
 
-    private void sendSetMsg(CommandContext ctx, String stat, float value) {
-        ctx.sendMessage(Message.translation("runecore.combat.set.stat")
-                .param("stat", stat)
-                .param("value", fmt(value)));
+    private void handleAdd(CommandContext ctx, CombatStats stats) {
+        String statName = statArg(ctx);
+        Float value = valueArg(ctx);
+        if (statName == null || value == null) return;
+
+        if (SHIELD.equals(statName)) {
+            float newMax = stats.getMaxShieldHP() + value;
+            stats.setShieldHP(newMax, newMax);
+            CombatStatsView.shieldAdded(ctx, value, newMax);
+            return;
+        }
+
+        CombatStatOption option = CombatStatOption.from(statName);
+        if (option == null) {
+            CombatStatsView.unknownStat(ctx, statName);
+            return;
+        }
+
+        String modifierId = "cmd_" + option.id + "_" + System.currentTimeMillis();
+        stats.addModifier(modifierId, option.modifierKey, option.toStored(value));
+        CombatStatsView.statAdded(ctx, option.id, value);
     }
 
-    private void sendAddMsg(CommandContext ctx, String stat, float value) {
-        ctx.sendMessage(Message.translation("runecore.combat.add.stat")
-                .param("value", fmt(value))
-                .param("stat", stat));
-    }
+    private void handleReset(CommandContext ctx, CombatStats stats) {
+        String raw = ctx.get(this.statArg);
 
-    private void sendUnknownStat(CommandContext ctx, String stat) {
-        ctx.sendMessage(Message.translation("runecore.combat.error.unknown_stat").param("stat", stat));
-        ctx.sendMessage(Message.translation("runecore.combat.stat_list"));
+        if (raw == null || raw.equalsIgnoreCase("all")) {
+            stats.reset();
+            CombatStatsView.allReset(ctx);
+            return;
+        }
+
+        String statName = raw.toLowerCase(Locale.ROOT);
+
+        if ("modifiers".equals(statName)) {
+            stats.clearModifiers();
+            CombatStatsView.modifiersReset(ctx);
+            return;
+        }
+        if (SHIELD.equals(statName)) {
+            stats.setShieldHP(0, 0);
+            CombatStatsView.statReset(ctx, statName);
+            return;
+        }
+
+        CombatStatOption option = CombatStatOption.from(statName);
+        if (option == null) {
+            CombatStatsView.unknownStat(ctx, statName);
+            return;
+        }
+        option.reset(stats);
+        CombatStatsView.statReset(ctx, statName);
     }
 
     @Nullable
-    private String getStatArg(CommandContext ctx) {
+    private String statArg(CommandContext ctx) {
         String stat = ctx.get(this.statArg);
         if (stat == null) {
-            ctx.sendMessage(Message.translation("runecore.combat.error.missing_stat"));
+            CombatStatsView.missingStat(ctx);
             return null;
         }
-        return stat.toLowerCase();
+        return stat.toLowerCase(Locale.ROOT);
     }
 
     @Nullable
-    private Float getValueArg(CommandContext ctx) {
-        String valStr = ctx.get(this.valueArg);
-        if (valStr == null) {
-            ctx.sendMessage(Message.translation("runecore.combat.error.missing_value"));
+    private Float valueArg(CommandContext ctx) {
+        String raw = ctx.get(this.valueArg);
+        if (raw == null) {
+            CombatStatsView.missingValue(ctx);
             return null;
         }
         try {
-            return Float.parseFloat(valStr);
+            return Float.parseFloat(raw);
         } catch (NumberFormatException e) {
-            ctx.sendMessage(Message.translation("runecore.combat.error.invalid_number").param("value", valStr));
+            CombatStatsView.invalidNumber(ctx, raw);
             return null;
         }
-    }
-
-    private String fmt(float v) {
-        return String.format("%.1f", v);
     }
 }
