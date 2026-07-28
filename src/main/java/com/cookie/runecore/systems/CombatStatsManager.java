@@ -8,12 +8,15 @@ import com.hypixel.hytale.server.core.event.events.player.PlayerReadyEvent;
 import java.util.Map;
 import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.logging.Logger;
 
 /**
  * Manages combat stats ONLY for connected players.
  * Stats live in memory — not persisted, not applied to arbitrary entities.
  */
 public class CombatStatsManager {
+
+    private static final Logger LOG = Logger.getLogger("RuneCore");
 
     private static CombatStatsManager instance;
     private final Map<UUID, CombatStats> playerStats = new ConcurrentHashMap<>();
@@ -44,7 +47,7 @@ public class CombatStatsManager {
         UUID uuid = event.getPlayer().getPlayerRef().getUuid();
         if (uuid != null) {
             playerStats.computeIfAbsent(uuid, k -> new CombatStats());
-            System.out.println("[RuneCore-Combat] Initialized combat stats for " + uuid);
+            LOG.fine("[RuneCore-Combat] Initialized combat stats for " + uuid);
         }
     }
 
@@ -52,7 +55,7 @@ public class CombatStatsManager {
         UUID uuid = event.getPlayerRef().getUuid();
         if (uuid != null) {
             playerStats.remove(uuid);
-            System.out.println("[RuneCore-Combat] Cleaned up combat stats for " + uuid);
+            LOG.fine("[RuneCore-Combat] Cleaned up combat stats for " + uuid);
         }
     }
 }
