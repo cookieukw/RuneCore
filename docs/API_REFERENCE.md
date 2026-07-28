@@ -28,6 +28,11 @@ This document covers every public class, method, parameter, and return type of t
 16. [StatHelper](#16-stathelper)
 17. [EffectTickSystem](#17-effectticksystem)
 18. [Event System](#18-event-system)
+19. [RuneAttributes](#19-runeattributes)
+20. [RuneAttribute & AttributeRegistry](#20-runeattribute--attributeregistry)
+21. [AttributeContainer](#21-attributecontainer)
+22. [CombatStats](#22-combatstats)
+23. [DamagePipeline & DamageStage](#23-damagepipeline--damagestage)
 
 ---
 
@@ -733,3 +738,133 @@ core.registerSpell(iceBlast);
 CastContext ctx = new CastContext(player, target, world, 1.0);
 core.castSpell("ice_blast", ctx);
 ```
+
+---
+
+## 19. RuneAttributes
+
+`com.cookie.runecore.api.RuneAttributes` — entry point for combat attributes and content
+registration. Static, null-safe, never throws during a damage event.
+
+| Method | Returns | Notes |
+| :--- | :--- | :--- |
+| `of(UUID playerId)` | `Optional<AttributeContainer>` | created on first access; empty if the combat subsystem is down |
+| `of(Ref<EntityStore>)` | `Optional<AttributeContainer>` | resolves the `PlayerRef` first |
+| `of(PlayerRef)` | `Optional<AttributeContainer>` | |
+| `registerItem(String, ItemCombatData)` | `boolean` | false when the registry is not up yet |
+| `registerCreature(String, CreatureCombatData)` | `boolean` | key = model asset file name, no path/namespace |
+| `itemData(String)` | `Optional<ItemCombatData>` | |
+| `creatureData(String)` | `Optional<CreatureCombatData>` | |
+
+---
+
+## 20. RuneAttribute & AttributeRegistry
+
+`com.cookie.runecore.api.attribute`
+
+### RuneAttribute
+
+A record: `RuneAttribute(String id, float defaultValue, float min, float max)`.
+
+| Member | Notes |
+| :--- | :--- |
+| `positive(String id)` | factory: range `0..∞` |
+| `fraction(String id, float max)` | factory: range `0..max` |
+| `clamp(float)` | holds a value inside the range |
+| `namespace()` | part before `:`, defaults to `runecore` |
+
+Ids are lower-cased on construction. A blank id or `min > max` throws `IllegalArgumentException`.
+
+### AttributeRegistry
+
+| Method | Notes |
+| :--- | :--- |
+| `register(RuneAttribute)` | throws `IllegalStateException` on a conflicting duplicate id |
+| `get(String id)` | null when unknown; case-insensitive |
+| `isRegistered(String id)` | |
+| `all()` | unmodifiable snapshot |
+
+### CoreAttributes
+
+Built-ins, all registered on class load: `PHYSICAL_DAMAGE`, `MAGIC_DAMAGE`, `TRUE_DAMAGE`,
+`ARMOR_PENETRATION`, `MAGIC_PENETRATION`, `ARMOR`, `MAGIC_RESIST`, `DAMAGE_REDUCTION` (capped at
+0.9). `resolveLegacy(String)` maps the old camelCase modifier keys onto them.
+
+---
+
+## 21. AttributeContainer
+
+Per-entity values: `base + sum(modifiers)`, clamped by the attribute definition. Modifier totals
+are maintained incrementally, so reads are a map lookup rather than a scan.
+
+| Method | Notes |
+| :--- | :--- |
+| `get(RuneAttribute)` | resolved and clamped; `0` for a null attribute |
+| `getBase(RuneAttribute)` | ignores modifiers |
+| `setBase(RuneAttribute, float)` | |
+| `addModifier(String id, RuneAttribute, float)` | re-using an id **replaces**, never stacks |
+| `removeModifier(String id)` | subtracts exactly that contribution |
+| `hasModifier(String id)` | |
+| `clearModifiers()` | keeps base values |
+| `reset()` | drops base values and modifiers |
+
+---
+
+## 22. CombatStats
+
+Typed view over an `AttributeContainer` for the built-ins, plus shield state.
+
+| Method | Notes |
+| :--- | :--- |
+| `attributes()` | the underlying container, for non-built-in attributes |
+| `getArmor()` / `setArmor(float)` and friends | one pair per built-in |
+| `setShieldHP(current, max)` / `getShieldHP()` / `getMaxShieldHP()` | |
+| `absorbDamage(float)` | drains the shield, returns what got through |
+| `addModifier(String id, String stat, float)` | legacy camelCase key or a full attribute id |
+| `addModifier(String id, RuneAttribute, float)` | preferred |
+| `calcReducedDamage(raw, defense, penetration)` | static; `raw × 100 / (100 + max(0, defense - pen))` |
+| `calculateFinalDamage(attacker[, Offense])` | **drains the shield** — call once per hit |
+| `reset()` | |
+
+`CombatStats.Offense` is a record carrying transient offence (the held weapon):
+`(physical, magic, trueDamage, armorPenetration, magicPenetration)`, with `Offense.NONE`.
+
+---
+
+## 23. DamagePipeline & DamageStage
+
+`com.cookie.runecore.api.combat`
+
+### DamageStage
+
+`float apply(DamageContext context, float damage)` — one step of the chain.
+
+### DamageContext
+
+Record: `(AttributeContainer attacker, AttributeContainer defender, Ref<EntityStore> attackerRef,
+Ref<EntityStore> defenderRef, DamageKind kind, float rawDamage)`. `attackerRef` is null for
+environmental damage; `hasAttacker()` checks it.
+
+### DamageKind
+
+`PHYSICAL`, `MAGIC`, `HYBRID`, `TRUE`, `UNTYPED`. `bypassesDefenses()` is true only for `TRUE`.
+
+### DamagePipeline
+
+| Member | Notes |
+| :--- | :--- |
+| `BEFORE_MITIGATION` = 100 | before armor/resist |
+| `MITIGATION` = 500 | where RuneCore's own maths runs |
+| `AFTER_MITIGATION` = 700 | multiplicative effects |
+| `FINAL` = 900 | last word |
+| `register(String id, int priority, DamageStage)` | re-using an id replaces the stage |
+| `unregister(String id)` | |
+| `run(ctx, damage)` | whole chain |
+| `runBefore(ctx, damage, priority)` / `runFrom(...)` / `runRange(...)` | slices |
+| `stageIds()` | registered ids in execution order |
+
+A stage that throws is logged and skipped; the result is never negative.
+
+> **Caveat:** in PvP, `BEFORE_MITIGATION` stages have no effect. That path derives damage from
+> the attacker's stats and weapon instead of scaling the engine's amount, so there is nothing
+> for an earlier stage to modify.
