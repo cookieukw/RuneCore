@@ -19,11 +19,15 @@ public class CreatureCombatDefaults {
         registerWildlife(r);
         registerSpirits(r);
         registerMisc(r);
+        // Do not let the last group's tier leak into registrations made by other mods.
+        r.clearGroupDefense();
     }
 
     // ── Trorks: tribal warriors, mostly physical ─────────────────────────────
 
     private static void registerTrorks(CreatureCombatRegistry r) {
+        // Tier: tribal warriors: light hide, no wards
+        r.setGroupDefense(6f, 0f, 0f);
         r.register("Trork",               physical());
         r.register("Trork_Warrior",        physical(5));
         r.register("Trork_Brawler",        physical(8));
@@ -40,6 +44,8 @@ public class CreatureCombatDefaults {
     // ── Skeletons: varied classes ────────────────────────────────────────────
 
     private static void registerSkeletons(CreatureCombatRegistry r) {
+        // Tier: bone plating turns blades better than magic
+        r.setGroupDefense(10f, 4f, 0f);
         // Standard
         r.register("Skeleton",                     physical());
         r.register("Skeleton_Fighter",             physical(4));
@@ -96,6 +102,8 @@ public class CreatureCombatDefaults {
     // ── Zombies ──────────────────────────────────────────────────────────────
 
     private static void registerZombies(CreatureCombatRegistry r) {
+        // Tier: rotten and slow, soaks little
+        r.setGroupDefense(4f, 2f, 0f);
         r.register("Zombie",               physical());
         r.register("Zombie_Aberrant",       physical(4));
         r.register("Zombie_Aberrant_Big",   physical(8));
@@ -109,6 +117,8 @@ public class CreatureCombatDefaults {
     // ── Goblins ──────────────────────────────────────────────────────────────
 
     private static void registerGoblins(CreatureCombatRegistry r) {
+        // Tier: scrappy leather and trinkets
+        r.setGroupDefense(5f, 3f, 0f);
         r.register("Goblin",               physical());
         r.register("Goblin_Scrapper",      physical(3));
         r.register("Goblin_Thief",         physical(8));
@@ -124,6 +134,8 @@ public class CreatureCombatDefaults {
     // ── Outlanders ───────────────────────────────────────────────────────────
 
     private static void registerOutlanders(CreatureCombatRegistry r) {
+        // Tier: equipped raiders, real armour
+        r.setGroupDefense(12f, 6f, 0f);
         r.register("Outlander",            physical(3));
         r.register("Outlander_Peon",       physical(2));
         r.register("Outlander_Marauder",   physical(8));
@@ -139,6 +151,8 @@ public class CreatureCombatDefaults {
     // ── Scaraks: insectoid, physical with some pen ───────────────────────────
 
     private static void registerScaraks(CreatureCombatRegistry r) {
+        // Tier: chitin: heavy against steel, poor against magic
+        r.setGroupDefense(18f, 4f, 0f);
         r.register("Scarak_Louse",                   physical());
         r.register("Scarak_Seeker",                  physical(3));
         r.register("Scarak_Fighter",                 physical(6));
@@ -151,6 +165,8 @@ public class CreatureCombatDefaults {
     // ── Ferans: beast warriors ───────────────────────────────────────────────
 
     private static void registerFerans(CreatureCombatRegistry r) {
+        // Tier: agile beasts, balanced
+        r.setGroupDefense(8f, 8f, 0f);
         r.register("Feran",                physical(3));
         r.register("Feran_Burrower",       physical(5));
         r.register("Feran_Longtooth",      physical(8));
@@ -161,6 +177,8 @@ public class CreatureCombatDefaults {
     // ── Golems: heavy hitters ────────────────────────────────────────────────
 
     private static void registerGolems(CreatureCombatRegistry r) {
+        // Tier: stone constructs: the physical wall
+        r.setGroupDefense(34f, 12f, 0f);
         r.register("Golem_Crystal_Earth",    physical(15));
         r.register("Golem_Crystal_Flame",    hybrid(0.6f, 10, 12));
         r.register("Golem_Crystal_Frost",    hybrid(0.6f, 10, 12));
@@ -173,6 +191,8 @@ public class CreatureCombatDefaults {
     // ── Void creatures: magic-heavy ──────────────────────────────────────────
 
     private static void registerVoidCreatures(CreatureCombatRegistry r) {
+        // Tier: void-touched: inverted, magic is their shield
+        r.setGroupDefense(12f, 28f, 0f);
         r.register("Crawler_Void",          hybrid(0.6f, 5, 8));
         r.register("Eye_Void",             magic(10));
         r.register("Larva_Void",           magic(4));
@@ -186,6 +206,8 @@ public class CreatureCombatDefaults {
     // ── Dragons: boss-tier, hybrid ───────────────────────────────────────────
 
     private static void registerDragons(CreatureCombatRegistry r) {
+        // Tier: scaled and ancient, strong on both axes
+        r.setGroupDefense(32f, 28f, 0f);
         r.register("Dragon_Fire",   hybrid(0.6f, 15, 20));
         r.register("Dragon_Frost",  hybrid(0.6f, 15, 20));
         r.register("Dragon_Void",   hybrid(0.7f, 20, 25));
@@ -194,6 +216,8 @@ public class CreatureCombatDefaults {
     // ── Bosses & elite mobs ──────────────────────────────────────────────────
 
     private static void registerBosses(CreatureCombatRegistry r) {
+        // Tier: encounter bosses also get flat damage reduction
+        r.setGroupDefense(40f, 34f, 0.15f);
         r.register("Shadow_Knight",            hybrid(0.4f, 20, 15));
         r.register("Temple_Mithril_Guard",     physical(18));
         r.register("Yeti",                     hybrid(0.3f, 15, 10));
@@ -206,6 +230,8 @@ public class CreatureCombatDefaults {
     // ── Hostile wildlife ─────────────────────────────────────────────────────
 
     private static void registerWildlife(CreatureCombatRegistry r) {
+        // Tier: critters and cattle: effectively unarmoured
+        r.setGroupDefense(2f, 0f, 0f);
         r.register("Bear_Grizzly",       physical(5));
         r.register("Bear_Polar",         physical(6));
         r.register("Boar",               physical(2));
@@ -263,6 +289,8 @@ public class CreatureCombatDefaults {
     // ── Spirits & elementals ─────────────────────────────────────────────────
 
     private static void registerSpirits(CreatureCombatRegistry r) {
+        // Tier: incorporeal: blades pass through, magic bites
+        r.setGroupDefense(4f, 32f, 0f);
         r.register("Spirit_Ember",     magic(8));
         r.register("Spirit_Frost",     magic(8));
         r.register("Spirit_Root",      magic(6));
@@ -277,6 +305,8 @@ public class CreatureCombatDefaults {
     // ── Misc hostile ─────────────────────────────────────────────────────────
 
     private static void registerMisc(CreatureCombatRegistry r) {
+        // Tier: unclassified: middle of the road
+        r.setGroupDefense(8f, 8f, 0f);
         r.register("Saurian",          physical(4));
         r.register("Saurian_Warrior",  physical(8));
         r.register("Saurian_Hunter",   physical(6));
