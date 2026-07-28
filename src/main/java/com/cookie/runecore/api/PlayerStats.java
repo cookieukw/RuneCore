@@ -53,8 +53,12 @@ public class PlayerStats {
             if (statMap != null) {
                 EntityStatValue statValue = statMap.get(statId);
                 if (statValue != null) {
+                    // Clamp to the stat's declared bounds instead of a blanket 0..1000, which
+                    // was wrong for every stat whose real range differs (and disagreed with
+                    // StatHelper, which capped health at 100).
                     float current = statValue.get();
-                    float newValue = Math.max(0, Math.min(MAX_STAT, current + amount));
+                    float newValue = Math.max(statValue.getMin(),
+                            Math.min(statValue.getMax(), current + amount));
                     statMap.setStatValue(statId, newValue);
                 }
             }
@@ -76,7 +80,10 @@ public class PlayerStats {
         world.execute(() -> {
             EntityStatMap statMap = (EntityStatMap) store.getComponent(playerRef, EntityStatMap.getComponentType());
             if (statMap != null) {
-                float clampedValue = Math.max(0, Math.min(MAX_STAT, value));
+                EntityStatValue statValue = statMap.get(statId);
+                float clampedValue = statValue != null
+                        ? Math.max(statValue.getMin(), Math.min(statValue.getMax(), value))
+                        : Math.max(0, Math.min(MAX_STAT, value));
                 statMap.setStatValue(statId, clampedValue);
             }
         });
