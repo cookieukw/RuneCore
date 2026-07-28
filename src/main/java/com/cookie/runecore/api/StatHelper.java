@@ -42,9 +42,10 @@ public final class StatHelper {
             if (statMap == null) return;
             EntityStatValue hp = statMap.get(DefaultEntityStatTypes.getHealth());
             if (hp == null) return;
-            float newHp = delta > 0
-                    ? Math.min(100f, hp.get() + delta)
-                    : Math.max(0f, hp.get() + delta);
+            // Clamp to the stat's own bounds. The ceiling used to be a hardcoded 100f, which
+            // silently capped healing for any entity with more max HP than that — and it also
+            // disagreed with PlayerStats, which clamped the very same stat to 1000f.
+            float newHp = Math.max(hp.getMin(), Math.min(hp.getMax(), hp.get() + delta));
             statMap.setStatValue(DefaultEntityStatTypes.getHealth(), newHp);
         });
     }
