@@ -4,11 +4,15 @@ Varredura de `src/main/java` (58 arquivos, ~6k linhas). Como o RuneCore é consu
 outros mods (o SimTale usa `EffectHelper` e `StatHelper`), a prioridade foi a superfície
 pública e o pipeline de combate.
 
-Não foi possível compilar aqui (o projeto pede JDK 25 e o ambiente só tem JRE 11). A
-verificação foi estática: balanceamento estrutural de todos os arquivos, checagem de que todo
-`LOG` usado tem declaração, imports sem duplicata, e conferência de assinaturas reais no
-bytecode do `HytaleServer.jar` (`InventoryComponent.getItemInHand`, `EntityStatValue.getMin/getMax`).
-**Compile antes de publicar.**
+A auditoria foi feita sem compilar (o projeto pede JDK 25 e o ambiente da análise só tinha
+JRE 11): balanceamento estrutural de todos os arquivos, checagem de que todo `LOG` usado tem
+declaração, imports sem duplicata, e conferência de assinaturas reais no bytecode do
+`HytaleServer.jar` (`InventoryComponent.getItemInHand`, `EntityStatValue.getMin/getMax`).
+
+**Desde então o projeto ganhou suíte de testes** (JUnit 5, `./gradlew test`): 63 testes sobre a
+lógica pura — atributos, contêiner de modificadores, fórmula de dano, pipeline, tabela de
+apelidos do comando e o DSL de defesa das criaturas. Inclui uma regressão explícita para o bug
+1.1 (dano zero em PvP). Todos passando.
 
 ---
 
