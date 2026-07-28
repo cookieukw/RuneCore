@@ -70,26 +70,31 @@ public class CombatStatsCommand extends AbstractCommand {
     }
 
     private void showStats(CommandContext ctx, CombatStats s) {
-        ctx.sendMessage(Message.translation("runecore.combat.view.header"));
-        ctx.sendMessage(Message.translation("runecore.combat.view.offense_header"));
-        ctx.sendMessage(Message.translation("runecore.combat.view.phys_damage").param("value", fmt(s.getPhysicalDamage())));
-        ctx.sendMessage(Message.translation("runecore.combat.view.magic_damage").param("value", fmt(s.getMagicDamage())));
-        ctx.sendMessage(Message.translation("runecore.combat.view.true_damage").param("value", fmt(s.getTrueDamage())));
-        ctx.sendMessage(Message.translation("runecore.combat.view.armor_pen").param("value", fmt(s.getArmorPenetration())));
-        ctx.sendMessage(Message.translation("runecore.combat.view.magic_pen").param("value", fmt(s.getMagicPenetration())));
-        ctx.sendMessage(Message.translation("runecore.combat.view.defense_header"));
-        ctx.sendMessage(Message.translation("runecore.combat.view.armor").param("value", fmt(s.getArmor())));
-        ctx.sendMessage(Message.translation("runecore.combat.view.magic_resist").param("value", fmt(s.getMagicResist())));
-        ctx.sendMessage(Message.translation("runecore.combat.view.damage_reduction").param("value", fmt(s.getDamageReduction() * 100f)));
-        ctx.sendMessage(Message.translation("runecore.combat.view.shield")
-                .param("current", fmt(s.getShieldHP()))
-                .param("max", fmt(s.getMaxShieldHP())));
+        ctx.sendMessage(Message.raw("=== Combat Stats ===").color("#FFD700").bold(true));
+        ctx.sendMessage(Message.raw("--- Offense ---").color("#FF9966").bold(true));
+        ctx.sendMessage(statMsg("Physical Damage: ", fmt(s.getPhysicalDamage()), "#FF9966"));
+        ctx.sendMessage(statMsg("Magic Damage: ", fmt(s.getMagicDamage()), "#BB86FC"));
+        ctx.sendMessage(statMsg("True Damage: ", fmt(s.getTrueDamage()), "#FFFFFF"));
+        ctx.sendMessage(statMsg("Armor Penetration: ", fmt(s.getArmorPenetration()), "#FF6E6E"));
+        ctx.sendMessage(statMsg("Magic Penetration: ", fmt(s.getMagicPenetration()), "#FF6E6E"));
+        ctx.sendMessage(Message.raw("--- Defense ---").color("#66FFAA").bold(true));
+        ctx.sendMessage(statMsg("Armor: ", fmt(s.getArmor()), "#FFE066"));
+        ctx.sendMessage(statMsg("Magic Resist: ", fmt(s.getMagicResist()), "#66CCFF"));
+        ctx.sendMessage(statMsg("Damage Reduction: ", fmt(s.getDamageReduction() * 100f) + "%", "#66FFAA"));
+        ctx.sendMessage(statMsg("Shield: ", fmt(s.getShieldHP()) + " / " + fmt(s.getMaxShieldHP()), "#66EEFF"));
 
         float testPhys = CombatStats.calcReducedDamage(100f, s.getArmor(), 0) * (1f - s.getDamageReduction());
         float testMag = CombatStats.calcReducedDamage(100f, s.getMagicResist(), 0) * (1f - s.getDamageReduction());
-        ctx.sendMessage(Message.translation("runecore.combat.view.effective_header"));
-        ctx.sendMessage(Message.translation("runecore.combat.view.effective_phys").param("value", fmt(testPhys)));
-        ctx.sendMessage(Message.translation("runecore.combat.view.effective_mag").param("value", fmt(testMag)));
+        ctx.sendMessage(Message.raw("--- Effective ---").color("#CCCCCC").bold(true));
+        ctx.sendMessage(statMsg("100 physical hit -> ", fmt(testPhys) + " taken", "#FF9966"));
+        ctx.sendMessage(statMsg("100 magic hit -> ", fmt(testMag) + " taken", "#BB86FC"));
+    }
+
+    private Message statMsg(String label, String value, String color) {
+        return Message.join(
+                Message.raw(label).color("#AAAAAA"),
+                Message.raw(value).color(color)
+        );
     }
 
     private void handleSet(CommandContext ctx, CombatStats stats) {

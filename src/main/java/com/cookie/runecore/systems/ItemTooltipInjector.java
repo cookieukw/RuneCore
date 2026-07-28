@@ -66,45 +66,44 @@ public class ItemTooltipInjector extends EntityEventSystem<EntityStore, Inventor
         }
     }
 
-    private static final String COLOR_HEADER = "#b7c192ff";
-    private static final String COLOR_PHYS_DMG = "#FF6B4A";
-    private static final String COLOR_MAGIC_DMG = "#4f0af1ff";
+    private static final String COLOR_HEADER = "#FFD700";
+    private static final String COLOR_PHYS_DMG = "#FF9966";
+    private static final String COLOR_MAGIC_DMG = "#BB86FC";
     private static final String COLOR_TRUE_DMG = "#FFFFFF";
-    private static final String COLOR_ARMOR = "#decf4aff";
-    private static final String COLOR_MR = "#004164ff";
-    private static final String COLOR_DR = "#01b673ff";
-    private static final String COLOR_PEN = "#ff0000ff";
+    private static final String COLOR_ARMOR = "#FFE066";
+    private static final String COLOR_MR = "#66CCFF";
+    private static final String COLOR_DR = "#66FFAA";
+    private static final String COLOR_PEN = "#FF6E6E";
 
     private Message buildStatsDescription(ItemCombatData data) {
         List<Message> lines = new ArrayList<>();
 
         if (data.physicalDamage > 0)
-            lines.add(statLine("runecore.tooltip.phys_damage", data.physicalDamage, COLOR_PHYS_DMG));
+            lines.add(statLine("+%.0f Physical Damage", data.physicalDamage, COLOR_PHYS_DMG));
         if (data.magicDamage > 0)
-            lines.add(statLine("runecore.tooltip.magic_damage", data.magicDamage, COLOR_MAGIC_DMG));
+            lines.add(statLine("+%.0f Magic Damage", data.magicDamage, COLOR_MAGIC_DMG));
         if (data.trueDamage > 0)
-            lines.add(statLine("runecore.tooltip.true_damage", data.trueDamage, COLOR_TRUE_DMG));
+            lines.add(statLine("+%.0f True Damage", data.trueDamage, COLOR_TRUE_DMG));
         if (data.armorPenetration > 0)
-            lines.add(statLine("runecore.tooltip.armor_pen", data.armorPenetration, COLOR_PEN));
+            lines.add(statLine("+%.0f Armor Penetration", data.armorPenetration, COLOR_PEN));
         if (data.magicPenetration > 0)
-            lines.add(statLine("runecore.tooltip.magic_pen", data.magicPenetration, COLOR_PEN));
+            lines.add(statLine("+%.0f Magic Penetration", data.magicPenetration, COLOR_PEN));
         if (data.armor > 0)
-            lines.add(statLine("runecore.tooltip.armor", data.armor, COLOR_ARMOR));
+            lines.add(statLine("+%.0f Armor", data.armor, COLOR_ARMOR));
         if (data.magicResist > 0)
-            lines.add(statLine("runecore.tooltip.magic_resist", data.magicResist, COLOR_MR));
+            lines.add(statLine("+%.0f Magic Resist", data.magicResist, COLOR_MR));
         if (data.damageReduction > 0)
-            lines.add(statLine("runecore.tooltip.damage_reduction", data.damageReduction * 100f, COLOR_DR));
+            lines.add(statLine("+%.0f%% Damage Reduction", data.damageReduction * 100f, COLOR_DR));
 
         if (lines.isEmpty()) return null;
 
-        Message result = Message.translation("runecore.tooltip.header").color(COLOR_HEADER).bold(true);
-        for (Message line : lines) {
-            result = result.insert(line);
-        }
-        return result;
+        List<Message> parts = new ArrayList<>();
+        parts.add(Message.raw("\n--- Combat Stats ---").color(COLOR_HEADER).bold(true));
+        parts.addAll(lines);
+        return Message.join(parts.toArray(new Message[0]));
     }
 
-    private Message statLine(String key, float value, String color) {
-        return Message.translation(key).param("value", String.format("%.0f", value)).color(color);
+    private Message statLine(String format, float value, String color) {
+        return Message.raw("\n" + String.format(format, value)).color(color);
     }
 }
