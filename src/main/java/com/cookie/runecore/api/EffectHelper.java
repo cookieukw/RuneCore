@@ -112,26 +112,22 @@ public final class EffectHelper {
         Store<EntityStore> store = ref.getStore();
         if (store == null) return;
 
-        Vector3d pos = null;
-        
+        Vector3d pos;
+
         try {
             // Re-validate inside the try block to avoid race conditions
             if (!ref.isValid()) return;
 
-            // Base transform position
             TransformComponent transform = store.getComponent(ref, TransformComponent.getComponentType());
-            if (transform != null) pos = transform.getPosition();
+            if (transform == null) return;
+            pos = transform.getPosition();
 
-            // Fallback/Validation: If it's a player, MovementManager often has more accurate position
-            Object mm = store.getComponent(ref, MovementManager.getComponentType());
-            if (mm != null) {
-                // We'll trust the transform for now if it exists, otherwise movement
-                if (pos == null || Math.abs(pos.y - 83.0) < 1.0) { // Specific fix for the 83-height bug seen earlier
-                     // If we could access MovementManager position we would here
-                }
-            }
-        } catch (Exception e) {
-            // Silently fail if entity becomes invalid mid-check
+            // Removed here: a leftover MovementManager lookup feeding an empty `if` body that
+            // tested `Math.abs(pos.y - 83.0) < 1.0` — a hardcoded world height from a bug that
+            // was being chased at the time. It did nothing but cost a component lookup per
+            // particle spawn.
+        } catch (RuntimeException e) {
+            // The entity can be invalidated between the check and the read.
             return;
         }
 
