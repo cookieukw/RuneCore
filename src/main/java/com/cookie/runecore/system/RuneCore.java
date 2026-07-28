@@ -8,8 +8,11 @@ import com.cookie.runecore.content.EquipmentRegistry;
 
 import java.util.*;
 import java.util.function.Consumer;
+import java.util.logging.Logger;
 
 public class RuneCore {
+
+    private static final Logger LOG = Logger.getLogger("RuneCore");
     private static final RuneCore INSTANCE = new RuneCore();
 
     private final Map<String, Essence> essenceRegistry = new HashMap<>();
@@ -81,12 +84,12 @@ public class RuneCore {
     public boolean castSpell(String spellId, CastContext ctx) {
         Spell spell = spellRegistry.get(spellId);
         if (spell == null) {
-            System.err.println("Spell not found: " + spellId);
+            LOG.warning("Spell not found: " + spellId);
             return false;
         }
 
         if (!spell.checkConditions(ctx)) {
-            System.out.println("Spell condition failed.");
+            LOG.fine("Spell condition failed.");
             return false;
         }
 
