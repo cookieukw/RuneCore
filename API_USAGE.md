@@ -99,8 +99,119 @@ RuneCore.get().castSpell("fire_blast", ctx);
 
 ---
 
+## 6. Combat Attributes
+
+Combat attributes (armor, penetration, damage, ...) are **registrable data**, not a fixed list.
+RuneCore ships eight of them; your mod can add its own and have it participate in combat.
+
+### Reading and writing
+
+`RuneAttributes` is the entry point. Every method is null-safe and returns `Optional` rather
+than throwing during a damage event.
+
+```java
+// built-ins
+RuneAttributes.of(playerUuid).ifPresent(attrs -> {
+    float armor = attrs.get(CoreAttributes.ARMOR);
+    attrs.setBase(CoreAttributes.MAGIC_RESIST, 25f);
+});
+
+// from an entity ref or a PlayerRef
+RuneAttributes.of(entityRef).ifPresent(attrs -> ...);
+```
+
+### Base values vs modifiers
+
+A resolved attribute is `base + sum(modifiers)`, clamped to the attribute's declared bounds.
+Modifiers are named, so they can be removed exactly — this is how equipment applies and undoes
+its bonuses.
+
+```java
+attrs.setBase(CoreAttributes.ARMOR, 10f);
+attrs.addModifier("mymod:blessing", CoreAttributes.ARMOR, 5f);   // resolves to 15
+attrs.removeModifier("mymod:blessing");                          // back to 10
+```
+
+Registering the same modifier id again **replaces** it rather than stacking, so re-applying on
+every equipment change is safe.
+
+### Declaring your own attribute
+
+```java
+public static final RuneAttribute LIFESTEAL =
+        AttributeRegistry.register(RuneAttribute.fraction("mymod:lifesteal", 1f));
+
+// positive() → 0..∞, fraction(max) → 0..max
+```
+
+Ids are namespaced and lower-cased. Registering an id someone else already took throws
+`IllegalStateException` — silently replacing it would corrupt their damage maths.
+
+---
+
+## 7. Damage Pipeline
+
+RuneCore cannot know what your attribute *means*, so behaviour is contributed rather than
+inferred: register the attribute, then register a stage that reads it.
+
+```java
+DamagePipeline.register("mymod:crit", DamagePipeline.AFTER_MITIGATION, (ctx, damage) ->
+        ThreadLocalRandom.current().nextFloat() < ctx.attacker().get(CRIT_CHANCE)
+                ? damage * 2f
+                : damage);
+```
+
+### Priorities
+
+| Anchor | When it runs |
+| :--- | :--- |
+| `BEFORE_MITIGATION` | before armor/resist — flat changes to the incoming amount |
+| `MITIGATION` | where RuneCore's own armor/resist/shield maths happens |
+| `AFTER_MITIGATION` | multiplicative effects such as crits |
+| `FINAL` | last word on the number |
+
+Lower runs earlier; any `int` works if you need to sit between two anchors.
+
+### Things worth knowing
+
+- **In PvP, `BEFORE_MITIGATION` stages are ignored.** That path derives damage from the
+  attacker's stats and weapon instead of scaling the engine's number, so there is nothing for an
+  earlier stage to modify. Stages at `AFTER_MITIGATION` and later always apply.
+- **A stage that throws is logged and skipped**, never allowed to abort the hit — a broken stage
+  must not make players invulnerable.
+- Stages run on the thread that raised the damage event. Keep them cheap and non-blocking.
+- Registering the same id twice replaces the stage, so reloading your content will not stack it.
+
+---
+
+## 8. Registering Items and Creatures
+
+```java
+// a weapon: contributes while held, at the moment of the hit
+RuneAttributes.registerItem("MyMod_Blade",
+        ItemCombatData.builder().physicalDamage(30f).armorPenetration(5f).build());
+
+// armour: contributes while equipped
+RuneAttributes.registerItem("MyMod_Plate",
+        ItemCombatData.builder().armor(20f).magicResist(8f).build());
+
+// a creature: how it deals damage, and how it takes it
+RuneAttributes.registerCreature("MyBoss",
+        CreatureCombatData.magic(20f).withDefense(35f, 40f, 0.1f));
+```
+
+The creature key is the model asset's file name, without path or namespace — the same thing the
+damage interceptor parses at runtime. A creature that is not registered is left alone entirely.
+
+Both methods return `false` when the registry is not up yet, so you can log or retry instead of
+guessing.
+
+---
+
 ## 🔮 Pro Tips
 
 1.  **Unique IDs:** Always use `playerRef.getUuid().toString()` as the UID for buffs to ensure they are correctly removed when the player disconnects.
 2.  **Stat Reversion:** If you modify a stat (like speed), always specify an `onExpire` callback in your `ActiveBuff` to revert it.
 3.  **Check Context:** Always check if `ctx.source` or `ctx.target` is null before applying effects.
+4.  **Namespace everything:** attribute ids, modifier ids and pipeline stage ids are all global. Prefix them with your mod id (`mymod:`) so you cannot collide with RuneCore or another mod.
+5.  **Modifiers over base values:** if your effect is temporary, use `addModifier`/`removeModifier` rather than writing the base — otherwise you have to remember the previous value to restore it.
