@@ -2,8 +2,11 @@ package com.cookie.runecore.content;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.logging.Logger;
 
 public class EquipmentRegistry {
+
+    private static final Logger LOG = Logger.getLogger("RuneCore");
     private static final Map<String, String> grimoireAssets = new HashMap<>();
     private static final Map<String, String> staffAssets = new HashMap<>();
 
@@ -20,12 +23,12 @@ public class EquipmentRegistry {
 
     private static void registerGrimoire(String id, String assetId, String name) {
         grimoireAssets.put(id, assetId);
-        System.out.println("[RuneCore-Equipment] Registered Grimoire: " + id + " (Asset: " + assetId + ")");
+        LOG.fine("[RuneCore-Equipment] Registered Grimoire: " + id + " (Asset: " + assetId + ")");
     }
 
     private static void registerStaff(String id, String assetId) {
         staffAssets.put(id, assetId);
-        System.out.println("[RuneCore-Equipment] Registered Staff: " + id + " (Asset: " + assetId + ")");
+        LOG.fine("[RuneCore-Equipment] Registered Staff: " + id + " (Asset: " + assetId + ")");
     }
 
     public static String getGrimoireAsset(String id) {
