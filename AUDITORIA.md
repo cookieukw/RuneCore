@@ -76,14 +76,49 @@ biblioteca não deve escrever direto no stdout do servidor que a hospeda.
 
 ## 2. Pendente — não mexi
 
-### 2.1 Stats de combate só valem quando o alvo é um jogador
-`CombatDamageInterceptor.getQuery()` devolve `Player.getComponentType()`, então o sistema só
-intercepta dano **recebido por jogadores**. Dano de jogador → criatura passa intocado: nem
-armadura da criatura, nem penetração, nem dano mágico da arma entram na conta. Metade do
-modelo de combat stats não tem efeito em PvE ofensivo.
+### 2.1 ~~Stats de combate só valem quando o alvo é um jogador~~ — implementado
 
-Não mexi porque pode ser intencional, mas se for, vale documentar na API — hoje `armorPenetration`
-num item sugere um comportamento que só existe em PvP.
+Era: `getQuery()` devolvia `Player.getComponentType()`, então o sistema só interceptava dano
+**recebido por jogadores**, e metade do modelo (penetração, dano mágico da arma) não tinha
+efeito nenhum em PvE.
+
+Estendido para criaturas, com três decisões:
+
+- **Alvos:** `Query.or(Player, ModelComponent)`, mas criatura ausente do
+  `CreatureCombatRegistry` é ignorada — o dano dela continua exatamente como o engine
+  calculou. O alcance efetivo é o que o `CreatureCombatDefaults` declara.
+- **Modelo:** simetria total com PvP. Jogador → criatura agora resolve
+  `defenderStats.calculateFinalDamage(attackerStats, armaEmpunhada)`, descartando o bruto do
+  engine, igual PvP já fazia. Criatura → criatura mantém o bruto como base e só aplica
+  mitigação, porque criatura não tem bloco de stats ofensivos (o registry só descreve perfil
+  e penetração).
+- **Dados:** `CreatureCombatData` ganhou `armor`, `magicResist` e `damageReduction`, que não
+  existiam — o registry só descrevia criaturas como atacantes.
+
+Os valores foram atribuídos **por família**, via um DSL de init (`setGroupDefense`) que evita
+tocar nas 196 linhas de registro. Cada família tem uma linha e uma justificativa:
+
+| Família | Armadura | Resist. mágica | DR | Racional |
+| :--- | ---: | ---: | ---: | :--- |
+| Wildlife | 2 | 0 | — | bichos e gado, praticamente sem proteção |
+| Zombies | 4 | 2 | — | podres e lentos |
+| Goblins | 5 | 3 | — | couro improvisado |
+| Trorks | 6 | 0 | — | guerreiros tribais, sem proteção mágica |
+| Ferans | 8 | 8 | — | feras ágeis, equilibradas |
+| Misc | 8 | 8 | — | não classificados |
+| Skeletons | 10 | 4 | — | osso apara lâmina melhor que magia |
+| Outlanders | 12 | 6 | — | saqueadores equipados |
+| Void | 12 | 28 | — | invertido: a magia é o escudo deles |
+| Scaraks | 18 | 4 | — | quitina: dura contra aço, fraca contra magia |
+| Spirits | 4 | 32 | — | incorpóreos, lâmina atravessa |
+| Dragons | 32 | 28 | — | escamados e antigos |
+| Golems | 34 | 12 | — | a parede física |
+| Bosses | 40 | 34 | 15% | ainda ganham redução plana |
+
+**Isso é chute meu e precisa de balanceamento in-game.** Com a fórmula
+`dano * 100 / (100 + armadura)`, uma Espada de Ferro (22 físico) entrega ~21.6 num bicho e
+~15.7 num boss (13.4 com o DR) — a curva é suave de propósito, para não invalidar arma nenhuma.
+Um `withDefense(...)` explícito em qualquer criatura sobrescreve o tier da família.
 
 ### 2.2 `build.gradle` fixa o caminho da casa do autor
 ```gradle
