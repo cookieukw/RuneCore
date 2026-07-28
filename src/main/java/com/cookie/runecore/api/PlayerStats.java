@@ -1,32 +1,31 @@
 package com.cookie.runecore.api;
 
-
 import java.util.concurrent.CompletableFuture;
 import javax.annotation.Nonnull;
 
 import com.hypixel.hytale.component.Ref;
-import com.hypixel.hytale.component.Store;
-import com.hypixel.hytale.protocol.MovementSettings;
-import com.hypixel.hytale.protocol.packets.player.UpdateMovementSettings;
-import com.hypixel.hytale.server.core.entity.entities.player.movement.MovementManager;
-import com.hypixel.hytale.server.core.io.PacketHandler;
-import com.hypixel.hytale.server.core.modules.entitystats.EntityStatMap;
-import com.hypixel.hytale.server.core.modules.entitystats.EntityStatValue;
 import com.hypixel.hytale.server.core.modules.entitystats.asset.DefaultEntityStatTypes;
 import com.hypixel.hytale.server.core.universe.PlayerRef;
-import com.hypixel.hytale.server.core.universe.world.World;
 import com.hypixel.hytale.server.core.universe.world.storage.EntityStore;
 
+/**
+ * Convenience view over a player's stats.
+ * <p>
+ * This is a facade. It used to also contain the {@link com.hypixel.hytale.server.core.modules.entitystats.EntityStatMap}
+ * plumbing and the movement/packet handling inline — three unrelated jobs in one file, with the
+ * {@code ref → store → externalData → world} guard chain copy-pasted five times. The mechanics
+ * now live in {@code EntityStatAccess}, {@code PlayerMovementStats} and {@code WorldTasks};
+ * the public surface here is unchanged.
+ */
 public class PlayerStats {
+
     private final Ref<EntityStore> playerRef;
 
     private static final float MIN_SPEED = 0.0f;
     private static final float MAX_SPEED = 100.0f;
     private static final float DEFAULT_SPEED = 5.5f;
-    private static final float MAX_STAT = 1000.0f;
 
-
-   public PlayerStats(@Nonnull Ref<EntityStore> playerRef) {
+    public PlayerStats(@Nonnull Ref<EntityStore> playerRef) {
         this.playerRef = playerRef;
         // Manual validation should be done by the caller using playerRef.isValid()
     }
@@ -35,282 +34,88 @@ public class PlayerStats {
         this(playerRef.getReference());
     }
 
-   
-    private void modifyStat(int statId, float amount) {
-        if (playerRef == null || !playerRef.isValid()) return;
-
-        Store<EntityStore> store = playerRef.getStore();
-        if (store == null) return;
-
-        EntityStore entityStore = store.getExternalData();
-        if (entityStore == null) return;
-        
-        World world = entityStore.getWorld();
-        if (world == null) return;
-
-        world.execute(() -> {
-            EntityStatMap statMap = (EntityStatMap) store.getComponent(playerRef, EntityStatMap.getComponentType());
-            if (statMap != null) {
-                EntityStatValue statValue = statMap.get(statId);
-                if (statValue != null) {
-                    // Clamp to the stat's declared bounds instead of a blanket 0..1000, which
-                    // was wrong for every stat whose real range differs (and disagreed with
-                    // StatHelper, which capped health at 100).
-                    float current = statValue.get();
-                    float newValue = Math.max(statValue.getMin(),
-                            Math.min(statValue.getMax(), current + amount));
-                    statMap.setStatValue(statId, newValue);
-                }
-            }
-        });
-    }
-    
-    private void setStat(int statId, float value) {
-        if (playerRef == null || !playerRef.isValid()) return;
-
-        Store<EntityStore> store = playerRef.getStore();
-         if (store == null) return;
-
-        EntityStore entityStore = store.getExternalData();
-        if (entityStore == null) return;
-        
-        World world = entityStore.getWorld();
-         if (world == null) return;
-
-        world.execute(() -> {
-            EntityStatMap statMap = (EntityStatMap) store.getComponent(playerRef, EntityStatMap.getComponentType());
-            if (statMap != null) {
-                EntityStatValue statValue = statMap.get(statId);
-                float clampedValue = statValue != null
-                        ? Math.max(statValue.getMin(), Math.min(statValue.getMax(), value))
-                        : Math.max(0, Math.min(MAX_STAT, value));
-                statMap.setStatValue(statId, clampedValue);
-            }
-        });
-    }
-
-
-    private CompletableFuture<Float> getStat(int statId) {
-        CompletableFuture<Float> future = new CompletableFuture<>();
-        if (playerRef == null || !playerRef.isValid()) {
-            future.complete(-1f);
-            return future;
-        }
-
-        Store<EntityStore> store = playerRef.getStore();
-        if (store == null) {
-            future.complete(-1f);
-            return future;
-        }
-
-        EntityStore entityStore = store.getExternalData();
-        if (entityStore == null) {
-            future.complete(-1f);
-            return future;
-        }
-
-        World world = entityStore.getWorld();
-        if (world == null) {
-            future.complete(-1f);
-            return future;
-        }
-
-        world.execute(() -> {
-            try {
-                EntityStatMap statMap = (EntityStatMap) store.getComponent(playerRef, EntityStatMap.getComponentType());
-                if (statMap != null) {
-                    EntityStatValue statValue = statMap.get(statId);
-                    if (statValue != null) {
-                        future.complete(statValue.get());
-                        return;
-                    }
-                }
-                future.complete(-1f);
-            } catch (Exception e) {
-                future.completeExceptionally(e);
-            }
-        });
-
-        return future;
-    }
+    // ── Reads ────────────────────────────────────────────────────────────────
+    // Each completes with -1f when the stat cannot be read.
 
     public CompletableFuture<Float> getHealth() {
-        return getStat(DefaultEntityStatTypes.getHealth());
+        return EntityStatAccess.read(playerRef, DefaultEntityStatTypes.getHealth());
     }
 
     public CompletableFuture<Float> getMana() {
-        return getStat(DefaultEntityStatTypes.getMana());
-    }
-
-    public CompletableFuture<Float> getMaxMana() {
-        return CompletableFuture.completedFuture(100f); // Default for now
+        return EntityStatAccess.read(playerRef, DefaultEntityStatTypes.getMana());
     }
 
     public CompletableFuture<Float> getStamina() {
-        return getStat(DefaultEntityStatTypes.getStamina());
+        return EntityStatAccess.read(playerRef, DefaultEntityStatTypes.getStamina());
     }
 
-    // Note: DefaultEntityStatTypes doesn't seem to have getMaxMana/Health/Stamina 
-    // We will use 100 as default or implement a way to find them later.
-    
+    /** @deprecated placeholder — always returns 100f, the engine exposes no max-mana stat yet. */
+    @Deprecated
+    public CompletableFuture<Float> getMaxMana() {
+        return CompletableFuture.completedFuture(100f);
+    }
+
+    // ── Health ───────────────────────────────────────────────────────────────
+
     public void addHealth(float amount) {
-        modifyStat(DefaultEntityStatTypes.getHealth(), amount);
-    }
-    
-    public void setHealth(float amount) {
-        setStat(DefaultEntityStatTypes.getHealth(), amount);
-    }
-
-    public void addMana(float amount) {
-        modifyStat(DefaultEntityStatTypes.getMana(), amount);
-    }
-
-    public void setMana(float amount) {
-        setStat(DefaultEntityStatTypes.getMana(), amount);
-    }
-    
-    public void subtractMana(float amount) {
-        modifyStat(DefaultEntityStatTypes.getMana(), -amount);
-    }
-
-    public void addStamina(float amount) {
-        modifyStat(DefaultEntityStatTypes.getStamina(), amount);
-    }
-    
-     public void setStamina(float amount) {
-        setStat(DefaultEntityStatTypes.getStamina(), amount);
-    }
-
-    public void subtractStamina(float amount) {
-        modifyStat(DefaultEntityStatTypes.getStamina(), -amount);
+        EntityStatAccess.modify(playerRef, DefaultEntityStatTypes.getHealth(), amount);
     }
 
     public void subtractHealth(float amount) {
-        modifyStat(DefaultEntityStatTypes.getHealth(), -amount);
+        EntityStatAccess.modify(playerRef, DefaultEntityStatTypes.getHealth(), -amount);
     }
 
-    private void modifySpeed(float amount) {
-        if (playerRef == null || !playerRef.isValid()) return;
-        Store<EntityStore> store = playerRef.getStore();
-        if (store == null) return;
-        EntityStore entityStore = store.getExternalData();
-        if (entityStore == null) return;
-        World world = entityStore.getWorld();
-        if (world == null) return;
-
-        world.execute(() -> {
-            MovementManager moveManager = 
-                (MovementManager) store.getComponent(playerRef, MovementManager.getComponentType());
-            
-            if (moveManager != null) {
-                MovementSettings settings = moveManager.getSettings();
-                if (settings != null) {
-                    float newSpeed = settings.baseSpeed + amount;
-                    float clampedSpeed = Math.max(MIN_SPEED, Math.min(MAX_SPEED, newSpeed));
-                    settings.baseSpeed = clampedSpeed;
-                    
-                    PlayerRef playerRefComp = (PlayerRef) store.getComponent(playerRef, PlayerRef.getComponentType());
-                    if (playerRefComp != null) {
-                        PacketHandler packetHandler = playerRefComp.getPacketHandler();
-                        if (packetHandler != null) {
-                            packetHandler.write(new UpdateMovementSettings(settings));
-                        }
-                    }
-                }
-            }
-        });
+    public void setHealth(float amount) {
+        EntityStatAccess.set(playerRef, DefaultEntityStatTypes.getHealth(), amount);
     }
 
-    private void setSpeedValue(float amount) {
-        if (playerRef == null || !playerRef.isValid()) return;
-        Store<EntityStore> store = playerRef.getStore();
-        if (store == null) return;
-        EntityStore entityStore = store.getExternalData();
-        if (entityStore == null) return;
-        World world = entityStore.getWorld();
-        if (world == null) return;
+    // ── Mana ─────────────────────────────────────────────────────────────────
 
-        world.execute(() -> {
-            MovementManager moveManager = 
-               (MovementManager) store.getComponent(playerRef, MovementManager.getComponentType());
-            
-            if (moveManager != null) {
-                MovementSettings settings = moveManager.getSettings();
-                if (settings != null) {
-                    float clampedSpeed = Math.max(MIN_SPEED, Math.min(MAX_SPEED, amount));
-                    settings.baseSpeed = clampedSpeed;
-
-                    PlayerRef playerRefComp = 
-                        (PlayerRef) store.getComponent(playerRef, PlayerRef.getComponentType());
-                    
-                    if (playerRefComp != null) {
-                        PacketHandler packetHandler = playerRefComp.getPacketHandler();
-                        if (packetHandler != null) {
-                            packetHandler.write(new UpdateMovementSettings(settings));
-                        }
-                    }
-                }
-            }
-        });
+    public void addMana(float amount) {
+        EntityStatAccess.modify(playerRef, DefaultEntityStatTypes.getMana(), amount);
     }
 
+    public void subtractMana(float amount) {
+        EntityStatAccess.modify(playerRef, DefaultEntityStatTypes.getMana(), -amount);
+    }
+
+    public void setMana(float amount) {
+        EntityStatAccess.set(playerRef, DefaultEntityStatTypes.getMana(), amount);
+    }
+
+    // ── Stamina ──────────────────────────────────────────────────────────────
+
+    public void addStamina(float amount) {
+        EntityStatAccess.modify(playerRef, DefaultEntityStatTypes.getStamina(), amount);
+    }
+
+    public void subtractStamina(float amount) {
+        EntityStatAccess.modify(playerRef, DefaultEntityStatTypes.getStamina(), -amount);
+    }
+
+    public void setStamina(float amount) {
+        EntityStatAccess.set(playerRef, DefaultEntityStatTypes.getStamina(), amount);
+    }
+
+    // ── Movement speed ───────────────────────────────────────────────────────
 
     public void addSpeed(float amount) {
-        modifySpeed(amount);
-    }
-
-    public void setSpeed(float amount) {
-        setSpeedValue(amount);
+        PlayerMovementStats.addSpeed(playerRef, amount, MIN_SPEED, MAX_SPEED);
     }
 
     public void subtractSpeed(float amount) {
-        modifySpeed(-amount);
+        PlayerMovementStats.addSpeed(playerRef, -amount, MIN_SPEED, MAX_SPEED);
     }
-    
+
+    public void setSpeed(float amount) {
+        PlayerMovementStats.setSpeed(playerRef, amount, MIN_SPEED, MAX_SPEED);
+    }
+
     public void resetSpeed() {
-        setSpeedValue(DEFAULT_SPEED);
+        PlayerMovementStats.setSpeed(playerRef, DEFAULT_SPEED, MIN_SPEED, MAX_SPEED);
     }
-    
 
     public CompletableFuture<Float> getSpeed() {
-        CompletableFuture<Float> future = new CompletableFuture<>();
-        if (playerRef == null || !playerRef.isValid()) {
-            future.complete(-1f);
-            return future;
-        }
-        
-        Store<EntityStore> store = playerRef.getStore();
-        if (store == null) {
-            future.complete(-1f);
-            return future;
-        }
-        EntityStore entityStore = store.getExternalData();
-        if (entityStore == null) {
-            future.complete(-1f);
-            return future;
-        }
-        World world = entityStore.getWorld();
-        if (world == null) {
-            future.complete(-1f);
-            return future;
-        }
-        
-        world.execute(() -> {
-            try {
-                MovementManager moveManager = (MovementManager) store.getComponent(playerRef, MovementManager.getComponentType());
-                if (moveManager != null) {
-                    MovementSettings settings = moveManager.getSettings();
-                    if (settings != null) {
-                        future.complete(settings.baseSpeed);
-                        return;
-                    }
-                }
-                future.complete(-1f);
-            } catch (Exception e) {
-                future.completeExceptionally(e);
-            }
-        });
-        
-        return future;
+        return PlayerMovementStats.readSpeed(playerRef);
     }
 }
