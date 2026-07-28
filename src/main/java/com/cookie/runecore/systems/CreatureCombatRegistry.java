@@ -16,7 +16,31 @@ public class CreatureCombatRegistry {
         return instance;
     }
 
+    /**
+     * Defence applied to every creature registered from here on, until the next call.
+     * <p>
+     * Init-time DSL: {@link CreatureCombatDefaults} registers 196 creatures grouped by family,
+     * so the tier is declared once per family instead of repeated on every line. Data that
+     * already carries explicit defence (via {@link CreatureCombatData#withDefense}) is never
+     * overwritten.
+     */
+    private CreatureCombatData groupDefense = null;
+
+    /** Sets the default defence for the following registrations. Pass {@code null} to clear. */
+    public void setGroupDefense(float armor, float magicResist, float damageReduction) {
+        this.groupDefense = CreatureCombatData.physical()
+                .withDefense(armor, magicResist, damageReduction);
+    }
+
+    public void clearGroupDefense() {
+        this.groupDefense = null;
+    }
+
     public void register(String entityId, CreatureCombatData data) {
+        if (data != null && !data.hasExplicitDefense && groupDefense != null) {
+            data = data.withDefense(groupDefense.armor, groupDefense.magicResist,
+                    groupDefense.damageReduction);
+        }
         creatureStats.put(entityId, data);
     }
 
@@ -36,16 +60,48 @@ public class CreatureCombatRegistry {
     }
 
     public static class CreatureCombatData {
+        // ── Offence: how this creature deals damage ──────────────────────────
         public final DamageProfile profile;
         public final float magicRatio;
         public final float armorPenetration;
         public final float magicPenetration;
 
+        // ── Defence: how this creature takes damage ──────────────────────────
+        // These did not exist. The registry only described creatures as attackers, so a
+        // creature could never mitigate anything and player weapon stats were meaningless
+        // in PvE.
+        public final float armor;
+        public final float magicResist;
+        public final float damageReduction;
+
+        /** True when defence was set explicitly, so the group tier must not override it. */
+        final boolean hasExplicitDefense;
+
         private CreatureCombatData(DamageProfile profile, float magicRatio, float armorPen, float magicPen) {
+            this(profile, magicRatio, armorPen, magicPen, 0f, 0f, 0f, false);
+        }
+
+        private CreatureCombatData(DamageProfile profile, float magicRatio, float armorPen, float magicPen,
+                                   float armor, float magicResist, float damageReduction,
+                                   boolean hasExplicitDefense) {
             this.profile = profile;
             this.magicRatio = magicRatio;
             this.armorPenetration = armorPen;
             this.magicPenetration = magicPen;
+            this.armor = armor;
+            this.magicResist = magicResist;
+            this.damageReduction = damageReduction;
+            this.hasExplicitDefense = hasExplicitDefense;
+        }
+
+        /** Returns a copy with explicit defence, overriding whatever group tier is active. */
+        public CreatureCombatData withDefense(float armor, float magicResist) {
+            return withDefense(armor, magicResist, 0f);
+        }
+
+        public CreatureCombatData withDefense(float armor, float magicResist, float damageReduction) {
+            return new CreatureCombatData(profile, magicRatio, armorPenetration, magicPenetration,
+                    armor, magicResist, damageReduction, true);
         }
 
         public static CreatureCombatData physical() {
