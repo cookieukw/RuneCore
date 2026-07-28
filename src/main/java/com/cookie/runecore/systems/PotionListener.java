@@ -13,8 +13,11 @@ import com.hypixel.hytale.component.Store;
 import com.hypixel.hytale.server.core.Message;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.UUID;
+import java.util.logging.Logger;
 
 public class PotionListener {
+
+    private static final Logger LOG = Logger.getLogger("RuneCore");
 
     private final ConcurrentHashMap<UUID, String> playerPotions;
 
@@ -22,13 +25,13 @@ public class PotionListener {
         this.playerPotions = playerPotions;
         eventRegistry.registerGlobal(PlayerMouseButtonEvent.class, this::onMouseClick);
         eventRegistry.registerGlobal(PlayerInteractEvent.class, this::onPlayerInteract);
-        System.out.println("[RuneCore-PotionListener] Registered global potion listeners successfully!");
+        LOG.fine("[RuneCore-PotionListener] Registered global potion listeners successfully!");
     }
 
     private void onPlayerInteract(PlayerInteractEvent event) {
         if (event.getItemInHand() == null) return;
         String itemId = event.getItemInHand().getItemId();
-        System.out.println("[RuneCore-PotionListener] onPlayerInteract - Item used: " + itemId);
+        LOG.fine("[RuneCore-PotionListener] onPlayerInteract - Item used: " + itemId);
         
         if (itemId != null && itemId.toLowerCase().contains("weapon_bomb_potion_")) {
             String lowerId = itemId.toLowerCase();
@@ -43,7 +46,7 @@ public class PotionListener {
                     if (playerRef != null) {
                         UUID uuid = playerRef.getUuid();
                         playerPotions.put(uuid, effectName);
-                        System.out.println("[RuneCore-PotionListener] Tracked potion interact: " + uuid + " -> " + effectName);
+                        LOG.fine("[RuneCore-PotionListener] Tracked potion interact: " + uuid + " -> " + effectName);
                     }
                 }
             }
@@ -64,7 +67,7 @@ public class PotionListener {
                         CastContext ctx = new CastContext(null, entityRef, world, 1.0);
                         if (RuneCore.get().getEffect(effectName) != null) {
                             RuneCore.get().getEffect(effectName).execute(ctx);
-                            System.out.println("[RuneCore-PotionListener] Player drank potion, applying effect: " + effectName);
+                            LOG.fine("[RuneCore-PotionListener] Player drank potion, applying effect: " + effectName);
                         }
                     }
                 }
@@ -75,7 +78,7 @@ public class PotionListener {
     private void onMouseClick(PlayerMouseButtonEvent event) {
         if (event.getItemInHand() == null) return;
         String itemId = event.getItemInHand().getId().toString();
-        System.out.println("[RuneCore-PotionListener] onMouseClick - Item used: " + itemId);
+        LOG.fine("[RuneCore-PotionListener] onMouseClick - Item used: " + itemId);
         
         if (itemId.toLowerCase().contains("weapon_bomb_potion_")) {
             String lowerId = itemId.toLowerCase();
@@ -85,7 +88,7 @@ public class PotionListener {
             PlayerRef playerRef = event.getPlayerRefComponent();
             if (playerRef != null) {
                 playerPotions.put(playerRef.getUuid(), effectName);
-                System.out.println("[RuneCore-PotionListener] Tracked potion throw: " + playerRef.getUuid() + " -> " + effectName);
+                LOG.fine("[RuneCore-PotionListener] Tracked potion throw: " + playerRef.getUuid() + " -> " + effectName);
             }
         } else if (itemId.toLowerCase().contains("potion_drinkable_")) {
             String lowerId = itemId.toLowerCase();
@@ -102,7 +105,7 @@ public class PotionListener {
                     CastContext ctx = new CastContext(null, targetRef, world, 1.0);
                     if (RuneCore.get().getEffect(effectName) != null) {
                         RuneCore.get().getEffect(effectName).execute(ctx);
-                        System.out.println("[RuneCore-PotionListener] Player drank potion via click, applying effect: " + effectName);
+                        LOG.fine("[RuneCore-PotionListener] Player drank potion via click, applying effect: " + effectName);
                     }
                 }
             }
