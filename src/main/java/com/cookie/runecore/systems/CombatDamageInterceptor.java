@@ -1,11 +1,16 @@
 package com.cookie.runecore.systems;
 
 import com.cookie.runecore.api.CombatStats;
+import com.cookie.runecore.api.attribute.AttributeContainer;
+import com.cookie.runecore.api.combat.DamageContext;
+import com.cookie.runecore.api.combat.DamageKind;
+import com.cookie.runecore.api.combat.DamagePipeline;
 import com.cookie.runecore.systems.CombatStatsRegistry.ItemCombatData;
 import com.hypixel.hytale.server.core.inventory.InventoryComponent;
 import com.hypixel.hytale.server.core.inventory.ItemStack;
 import com.hypixel.hytale.component.ArchetypeChunk;
 import com.hypixel.hytale.component.CommandBuffer;
+import com.hypixel.hytale.component.Ref;
 import com.hypixel.hytale.component.Store;
 import com.hypixel.hytale.component.query.Query;
 import com.hypixel.hytale.server.core.entity.entities.Player;
@@ -84,58 +89,96 @@ public class CombatDamageInterceptor extends DamageEventSystem {
         CombatStats defenderStats = manager.getStats(targetUuid);
         DamageCause cause = damage.getCause();
         String causeId = (cause != null && cause.getId() != null) ? cause.getId() : "";
+        Damage.Source source = damage.getSource();
+        CreatureCombatData creatureData = getCreatureData(source);
 
         if (DEBUG) LOG.info("[DMG] Hit on player " + targetUuid + " | raw=" + damage.getAmount() + " | cause=" + causeId);
 
-        // True damage: only shield absorbs
-        if (causeId.equals("True") || (cause != null && cause.doesBypassResistances())) {
+        DamageContext ctx = context(source, defenderStats.attributes(), chunk.getReferenceTo(index),
+                classify(causeId, cause, creatureData), damage.getAmount());
+
+        // Stages registered before MITIGATION adjust the engine's raw amount.
+        float working = DamagePipeline.runBefore(ctx, damage.getAmount(), DamagePipeline.MITIGATION);
+
+        float core;
+
+        if (ctx.kind().bypassesDefenses()) {
+            // True damage: only the shield absorbs.
+            core = defenderStats.absorbDamage(working);
             if (DEBUG) LOG.info("[DMG] True damage, shield only");
-            damage.setAmount(defenderStats.absorbDamage(damage.getAmount()));
-            return;
+        } else if (source instanceof Damage.EntitySource entitySource
+                && attackerStatsOf(entitySource, manager) != null) {
+            // PvP: the amount comes from the attacker's stats plus the weapon in hand, which is
+            // why `working` is discarded here — this model replaces the engine's number rather
+            // than scaling it.
+            CombatStats attackerStats = attackerStatsOf(entitySource, manager);
+            CombatStats.Offense weapon = weaponOffense(entitySource);
+            core = defenderStats.calculateFinalDamage(attackerStats, weapon);
+            if (DEBUG) LOG.info("[DMG] PvP | weaponPhys=" + weapon.physical() + " | core=" + core);
+        } else {
+            // PvE: creature or environment hitting a player. Mitigation only.
+            float reduced;
+            if (creatureData != null) {
+                reduced = applyCreatureDamage(working, defenderStats, creatureData);
+            } else if (ctx.kind() == DamageKind.MAGIC) {
+                reduced = CombatStats.calcReducedDamage(working, defenderStats.getMagicResist(), 0);
+            } else if (ctx.kind() == DamageKind.PHYSICAL) {
+                reduced = CombatStats.calcReducedDamage(working, defenderStats.getArmor(), 0);
+            } else {
+                reduced = working;
+            }
+            reduced *= (1f - defenderStats.getDamageReduction());
+            core = defenderStats.absorbDamage(reduced);
+            if (DEBUG) LOG.info("[DMG] PvE | kind=" + ctx.kind() + " | raw=" + working + " | core=" + core);
         }
 
-        // PvP: full combat stats calculation
-        Damage.Source source = damage.getSource();
+        // Stages at MITIGATION or later see the resolved amount: crits, lifesteal, and anything
+        // else driven by an attribute RuneCore does not know about.
+        damage.setAmount(DamagePipeline.runFrom(ctx, core, DamagePipeline.MITIGATION));
+    }
+
+    /** @return the attacker's stats when the source is a player RuneCore tracks, else null. */
+    private CombatStats attackerStatsOf(Damage.EntitySource entitySource, CombatStatsManager manager) {
+        UUID sourceUuid = getPlayerUuid(entitySource);
+        return (sourceUuid != null && manager.hasStats(sourceUuid)) ? manager.getStats(sourceUuid) : null;
+    }
+
+    /** Classifies a hit once, replacing the scattered cause-string comparisons. */
+    private DamageKind classify(String causeId, DamageCause cause, CreatureCombatData creature) {
+        if (causeId.equals("True") || (cause != null && cause.doesBypassResistances())) {
+            return DamageKind.TRUE;
+        }
+        if (creature != null) {
+            return switch (creature.profile) {
+                case PHYSICAL -> DamageKind.PHYSICAL;
+                case MAGIC -> DamageKind.MAGIC;
+                case HYBRID -> DamageKind.HYBRID;
+                case TRUE -> DamageKind.TRUE;
+            };
+        }
+        if (isMagicCause(causeId, cause)) return DamageKind.MAGIC;
+        if (isPhysicalCause(causeId)) return DamageKind.PHYSICAL;
+        return DamageKind.UNTYPED;
+    }
+
+    /** Builds the context stages receive. Attacker attributes are empty for environmental damage. */
+    private DamageContext context(Damage.Source source, AttributeContainer defenderAttributes,
+                                  Ref<EntityStore> defenderRef, DamageKind kind, float raw) {
+        AttributeContainer attackerAttributes = new AttributeContainer();
+        Ref<EntityStore> attackerRef = null;
+
         if (source instanceof Damage.EntitySource entitySource) {
-            UUID sourceUuid = getPlayerUuid(entitySource);
-            if (sourceUuid != null && manager.hasStats(sourceUuid)) {
-                CombatStats attackerStats = manager.getStats(sourceUuid);
-                // EquipmentStatsListener only tracks the ARMOUR container, so the attacker's
-                // CombatStats never carried weapon damage. calculateFinalDamage is driven purely
-                // by attacker offence, which meant an unarmoured player dealt exactly 0 in PvP
-                // no matter what sword they were holding. The held weapon is resolved here, at
-                // hit time, so hotbar swaps are always reflected.
-                CombatStats.Offense weapon = weaponOffense(entitySource);
-                float finalDamage = defenderStats.calculateFinalDamage(attackerStats, weapon);
-                if (DEBUG) LOG.info("[DMG] PvP | attacker=" + sourceUuid + " | weaponPhys=" + weapon.physical() + " | final=" + finalDamage);
-                damage.setAmount(finalDamage);
-                return;
+            attackerRef = entitySource.getRef();
+            CombatStatsManager manager = CombatStatsManager.get();
+            if (manager != null) {
+                UUID uuid = getPlayerUuid(entitySource);
+                if (uuid != null && manager.hasStats(uuid)) {
+                    attackerAttributes = manager.getStats(uuid).attributes();
+                }
             }
         }
 
-        // PvE: creature/environment -> player
-        float raw = damage.getAmount();
-        float reduced;
-
-        CreatureCombatData creatureData = getCreatureData(source);
-        if (creatureData != null) {
-            reduced = applyCreatureDamage(raw, defenderStats, creatureData);
-            if (DEBUG) LOG.info("[DMG] PvE creature registry | profile=" + creatureData.profile + " | magicRatio=" + creatureData.magicRatio + " | armorPen=" + creatureData.armorPenetration + " | magicPen=" + creatureData.magicPenetration + " | raw=" + raw + " | reduced=" + reduced);
-        } else if (isMagicCause(causeId, cause)) {
-            reduced = CombatStats.calcReducedDamage(raw, defenderStats.getMagicResist(), 0);
-            if (DEBUG) LOG.info("[DMG] PvE fallback MAGIC | cause=" + causeId + " | raw=" + raw + " | reduced=" + reduced);
-        } else if (isPhysicalCause(causeId)) {
-            reduced = CombatStats.calcReducedDamage(raw, defenderStats.getArmor(), 0);
-            if (DEBUG) LOG.info("[DMG] PvE fallback PHYSICAL | cause=" + causeId + " | raw=" + raw + " | reduced=" + reduced);
-        } else {
-            reduced = raw;
-            if (DEBUG) LOG.info("[DMG] PvE fallback UNTYPED | cause=" + causeId + " | raw=" + raw);
-        }
-
-        reduced *= (1f - defenderStats.getDamageReduction());
-        float finalDmg = defenderStats.absorbDamage(reduced);
-        if (DEBUG) LOG.info("[DMG] After DR(" + defenderStats.getDamageReduction() + ") + shield: " + finalDmg);
-        damage.setAmount(finalDmg);
+        return new DamageContext(attackerAttributes, defenderAttributes, attackerRef, defenderRef, kind, raw);
     }
 
     /**
@@ -153,48 +196,47 @@ public class CombatDamageInterceptor extends DamageEventSystem {
 
         DamageCause cause = damage.getCause();
         String causeId = (cause != null && cause.getId() != null) ? cause.getId() : "";
-        float raw = damage.getAmount();
-
-        // True damage ignores creature defences entirely; creatures carry no shield.
-        if (causeId.equals("True") || (cause != null && cause.doesBypassResistances())) {
-            if (DEBUG) LOG.info("[DMG] Creature hit, true damage, untouched | raw=" + raw);
-            return;
-        }
+        Damage.Source source = damage.getSource();
 
         CombatStats defenderStats = creatureAsDefender(defender);
-        Damage.Source source = damage.getSource();
-        float finalDmg;
+        DamageKind kind = classify(causeId, cause, null);
+        DamageContext ctx = context(source, defenderStats.attributes(), chunk.getReferenceTo(index),
+                kind, damage.getAmount());
 
-        if (source instanceof Damage.EntitySource entitySource
-                && isPlayerSource(entitySource)) {
+        float working = DamagePipeline.runBefore(ctx, damage.getAmount(), DamagePipeline.MITIGATION);
+        float core;
+
+        if (kind.bypassesDefenses()) {
+            // True damage ignores creature defences entirely; creatures carry no shield.
+            core = working;
+        } else if (source instanceof Damage.EntitySource entitySource && isPlayerSource(entitySource)) {
             CombatStatsManager manager = CombatStatsManager.get();
             UUID attackerUuid = getPlayerUuid(entitySource);
             CombatStats attackerStats = (manager != null && attackerUuid != null)
                     ? manager.getStats(attackerUuid) : null;
             if (attackerStats == null) attackerStats = new CombatStats();
 
-            finalDmg = defenderStats.calculateFinalDamage(attackerStats, weaponOffense(entitySource));
-            if (DEBUG) LOG.info("[DMG] Player -> creature | attacker=" + attackerUuid
-                    + " | armor=" + defender.armor + " | mr=" + defender.magicResist
-                    + " | raw=" + raw + " | final=" + finalDmg);
+            core = defenderStats.calculateFinalDamage(attackerStats, weaponOffense(entitySource));
+            if (DEBUG) LOG.info("[DMG] Player -> creature | armor=" + defender.armor
+                    + " | mr=" + defender.magicResist + " | core=" + core);
         } else {
             // Creature or environment hitting a creature: no offensive stat block exists for
-            // the attacker, so the engine's raw damage stays the base and only mitigation runs.
+            // the attacker, so the engine's amount stays the base and only mitigation runs.
             CreatureCombatData attacker = getCreatureData(source);
             if (attacker != null) {
-                finalDmg = applyCreatureDamage(raw, defenderStats, attacker);
-            } else if (isMagicCause(causeId, cause)) {
-                finalDmg = CombatStats.calcReducedDamage(raw, defenderStats.getMagicResist(), 0);
-            } else if (isPhysicalCause(causeId)) {
-                finalDmg = CombatStats.calcReducedDamage(raw, defenderStats.getArmor(), 0);
+                core = applyCreatureDamage(working, defenderStats, attacker);
+            } else if (kind == DamageKind.MAGIC) {
+                core = CombatStats.calcReducedDamage(working, defenderStats.getMagicResist(), 0);
+            } else if (kind == DamageKind.PHYSICAL) {
+                core = CombatStats.calcReducedDamage(working, defenderStats.getArmor(), 0);
             } else {
-                finalDmg = raw;
+                core = working;
             }
-            finalDmg *= (1f - defenderStats.getDamageReduction());
-            if (DEBUG) LOG.info("[DMG] Non-player -> creature | raw=" + raw + " | final=" + finalDmg);
+            core *= (1f - defenderStats.getDamageReduction());
+            if (DEBUG) LOG.info("[DMG] Non-player -> creature | raw=" + working + " | core=" + core);
         }
 
-        damage.setAmount(Math.max(0f, finalDmg));
+        damage.setAmount(DamagePipeline.runFrom(ctx, core, DamagePipeline.MITIGATION));
     }
 
     /** Builds a throwaway CombatStats carrying only this creature's defences. */
