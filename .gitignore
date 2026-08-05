@@ -53,3 +53,5 @@ hytale-api
 logs
 config.json
 telemetry
+.gitignore
+local.properties

@@ -13,6 +13,15 @@ if (manifestFile.exists()) {
     version = '1.0.0-SNAPSHOT'
 }
 
+// Load local.properties for developer-specific paths
+def localProperties = new Properties()
+def localPropertiesFile = file('local.properties')
+if (localPropertiesFile.exists()) {
+    localPropertiesFile.withReader('UTF-8') { reader ->
+        localProperties.load(reader)
+    }
+}
+
 repositories {
     mavenCentral()
     maven { url 'https://maven.hytale.com/release' }
@@ -43,7 +52,8 @@ tasks.named('test') {
 }
 
 tasks.jar {
-    destinationDirectory = file("/home/cookie/.var/app/com.hypixel.HytaleLauncher/data/Hytale/UserData/Mods/")
+    def modsDest = localProperties.getProperty('hytale.mods.dest') ?: "/home/cookie/.var/app/com.hypixel.HytaleLauncher/data/Hytale/UserData/Mods/"
+    destinationDirectory = file(modsDest)
 }
 
 // Task: Prints the Hytale Server version information
@@ -51,6 +61,7 @@ tasks.register('hytaleVersion', JavaExec) {
     group = 'hytale'
     description = 'Prints the Hytale Server version information'
     
+    executable = '/usr/lib/jvm/java-25-openjdk-amd64/bin/java'
     classpath = files('libs/HytaleServer.jar')
     mainClass = 'com.hypixel.hytale.Main'
     args = ['--version']
@@ -61,13 +72,16 @@ tasks.register('generateSchemas', JavaExec) {
     group = 'hytale'
     description = 'Generates Hytale JSON Schemas'
     
+    executable = '/usr/lib/jvm/java-25-openjdk-amd64/bin/java'
     classpath = files('libs/HytaleServer.jar')
     mainClass = 'com.hypixel.hytale.Main'
     jvmArgs = ['--enable-native-access=ALL-UNNAMED']
+    
+    def assetsZip = localProperties.getProperty('hytale.assets.path') ?: ""
     args = [
         '--generate-asset-schema', 'Schema/Asset',
         '--generate-config-schema', 'Schema/Config',
-        '--assets', '/home/cookie/.var/app/com.hypixel.HytaleLauncher/data/Hytale/install/release/package/game/latest/Assets.zip'
+        '--assets', assetsZip
     ]
     
     doFirst {
@@ -81,14 +95,17 @@ tasks.register('validateAssets', JavaExec) {
     group = 'hytale'
     description = 'Validates mod assets and configs'
     
+    executable = '/usr/lib/jvm/java-25-openjdk-amd64/bin/java'
     classpath = files('libs/HytaleServer.jar')
     mainClass = 'com.hypixel.hytale.Main'
     jvmArgs = ['--enable-native-access=ALL-UNNAMED']
+    
+    def assetsZip = localProperties.getProperty('hytale.assets.path') ?: ""
     args = [
         '--bare',
         '--validate-assets',
         '--shutdown-after-validate',
-        '--assets', '/home/cookie/.var/app/com.hypixel.HytaleLauncher/data/Hytale/install/release/package/game/latest/Assets.zip',
+        '--assets', assetsZip,
         '--mods', '.'
     ]
     

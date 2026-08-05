@@ -399,7 +399,34 @@ if (poison != null) {
 
 ---
 
-## 9. 🛠️ Modder's Guide
+## 9. Build & Development 🛠️
+
+To compile, validate, and develop with RuneCore, you need to configure your local paths.
+
+### 1. Create a `local.properties` file at the root of the project:
+```properties
+# Path to the official Hytale client Assets zip
+hytale.assets.path=/path/to/Hytale/Assets.zip
+
+# Target folder where the built mod JAR will be outputted
+hytale.mods.dest=/path/to/Hytale/Mods/
+```
+
+### 2. Create a `gradle.properties` file (if not present) at the root of the project:
+```properties
+# Path to your local Hytale JDK 21 installation (forces the Gradle daemon to run on a compatible version)
+org.gradle.java.home=/path/to/Hytale/jdk-25
+```
+
+### Useful Gradle Tasks:
+*   **Compile Mod:** `./gradlew jar` (compiles the mod using JDK 25 toolchain and copies the JAR to the target mods folder).
+*   **Check Hytale Version:** `./gradlew hytaleVersion` (displays the current HytaleServer engine version).
+*   **Generate JSON Schemas:** `./gradlew generateSchemas` (extracts assets schema to the local `Schema/` folder).
+*   **Validate Mod Configs:** `./gradlew validateAssets` (tests local mod JSON configurations using Hytale's compiler).
+
+---
+
+## 10. Modder's Guide
 
 Interested in building on top of RuneCore? Check out our [**API Usage Guide**](API_USAGE.md) for code examples and integration steps.
 
@@ -414,7 +441,9 @@ The public entry points are:
 | `RuneCoreItemManager` | Create interactive/clickable items |
 | `EffectHelper`, `StatHelper`, `PlayerStats` | Entity stat and movement helpers |
 
-## 10. ⚖️ License
+---
+
+## 11. ⚖️ License
 
 This project, including its source code, documentation, and **pixel art icons** (located in the `/icons` directory), is licensed under the **Creative Commons Attribution-NonCommercial 4.0 International (CC BY-NC 4.0)**.
 
