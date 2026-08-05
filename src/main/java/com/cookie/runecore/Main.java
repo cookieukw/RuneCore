@@ -6,6 +6,7 @@ import com.hypixel.hytale.server.core.plugin.JavaPluginInit;
 import com.cookie.runecore.commands.CombatStatsCommand;
 import com.cookie.runecore.commands.RuneStatsCommand;
 import com.cookie.runecore.commands.TestUICommand;
+import com.cookie.runecore.api.RuneCoreGenericItemInteraction;
 import com.cookie.runecore.systems.CastListener;
 import com.cookie.runecore.systems.CombatDamageInterceptor;
 import com.cookie.runecore.systems.CombatStatsManager;
@@ -29,6 +30,7 @@ import com.cookie.runecore.commands.CustomTimeCommand;
 import com.cookie.runecore.commands.RuneCommand;
 import com.cookie.runecore.api.PlayerDataComponent;
 import com.cookie.runecore.system.RuneCore;
+import com.cookie.runecore.systems.EffectTickSystemBridge;
 
 import javax.annotation.Nonnull;
 
@@ -41,14 +43,20 @@ public class Main extends JavaPlugin {
     @Override
     protected void setup() {
         // Register custom interaction codecs
-        com.hypixel.hytale.server.core.modules.interaction.interaction.config.Interaction.CODEC.register(
-                "runecore:potion_drink",
+        Interaction.CODEC.register(
+                "RuneCore_GenericItemUse",
+                RuneCoreGenericItemInteraction.class,
+                RuneCoreGenericItemInteraction.CODEC
+        );
+
+        Interaction.CODEC.register(
+                "PotionDrink",
                 PotionDrinkInteraction.class,
                 PotionDrinkInteraction.CODEC
         );
 
         Interaction.CODEC.register(
-                "runecore:potion_splash_generic",
+                "PotionSplashGeneric",
                 GenericPotionSplashInteraction.class,
                 GenericPotionSplashInteraction.CODEC
         );
@@ -61,8 +69,16 @@ public class Main extends JavaPlugin {
             "strength", "weakness", "instant_health", "instant_damage"
         };
         for (String eff : splashEffects) {
+            // Capitalize each part separated by underscores for PascalCase matching (e.g. fire_resistance -> Fire_Resistance)
+            String[] parts = eff.split("_");
+            StringBuilder sb = new StringBuilder();
+            for (String part : parts) {
+                if (!part.isEmpty()) {
+                    sb.append(Character.toUpperCase(part.charAt(0))).append(part.substring(1));
+                }
+            }
             Interaction.CODEC.register(
-                    "runecore:potion_splash_" + eff,
+                    "PotionSplash_" + sb.toString(),
                     GenericPotionSplashInteraction.class,
                     GenericPotionSplashInteraction.CODEC
             );
@@ -87,7 +103,7 @@ public class Main extends JavaPlugin {
         this.getEntityStoreRegistry().registerSystem(new MobDropSystem());
         PotionHitSystem potionHitSystem = new PotionHitSystem();
         this.getEntityStoreRegistry().registerSystem(potionHitSystem);
-        this.getEntityStoreRegistry().registerSystem(new com.cookie.runecore.systems.EffectTickSystemBridge());
+        this.getEntityStoreRegistry().registerSystem(new EffectTickSystemBridge());
         new PotionListener(this.getEventRegistry(), potionHitSystem.getPlayerPotions());
         new RuneCoreHudManager(this.getEventRegistry());
         new CastListener(this.getEventRegistry());

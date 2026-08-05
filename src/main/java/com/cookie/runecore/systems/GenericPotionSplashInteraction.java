@@ -46,8 +46,8 @@ public class GenericPotionSplashInteraction extends SimpleInstantInteraction {
         // Extract effect name from interaction ID or original item
         String interactionId = this.getId() != null ? this.getId() : "";
         String effectName = "";
-        if (interactionId.contains("potion_splash_") && !interactionId.endsWith("potion_splash_generic")) {
-            effectName = interactionId.substring(interactionId.indexOf("potion_splash_") + "potion_splash_".length());
+        if (interactionId.startsWith("PotionSplash_") && !interactionId.equals("PotionSplashGeneric")) {
+            effectName = interactionId.substring("PotionSplash_".length()).toLowerCase();
         }
 
         if (effectName.isEmpty() && context.getOriginalItemType() != null) {
@@ -59,7 +59,7 @@ public class GenericPotionSplashInteraction extends SimpleInstantInteraction {
         }
 
         if (effectName.isEmpty()) {
-            LOG.warning("[RuneCore] GenericPotionSplashInteraction could not determine effectName from context!");
+            LOG.warning("[RuneCore] GenericPotionSplashInteraction could not determine effectName from context! interactionId=" + interactionId);
             return;
         }
 
