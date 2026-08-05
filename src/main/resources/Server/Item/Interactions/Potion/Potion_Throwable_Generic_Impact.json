@@ -15,7 +15,7 @@
   "HitEntity": {
     "Interactions": [
       {
-        "Type": "runecore:potion_splash_generic"
+        "Type": "PotionSplashGeneric"
       }
     ]
   },
