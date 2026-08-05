@@ -45,3 +45,53 @@ tasks.named('test') {
 tasks.jar {
     destinationDirectory = file("/home/cookie/.var/app/com.hypixel.HytaleLauncher/data/Hytale/UserData/Mods/")
 }
+
+// Task: Prints the Hytale Server version information
+tasks.register('hytaleVersion', JavaExec) {
+    group = 'hytale'
+    description = 'Prints the Hytale Server version information'
+    
+    classpath = files('libs/HytaleServer.jar')
+    mainClass = 'com.hypixel.hytale.Main'
+    args = ['--version']
+}
+
+// Task: Generates Hytale JSON Schemas
+tasks.register('generateSchemas', JavaExec) {
+    group = 'hytale'
+    description = 'Generates Hytale JSON Schemas'
+    
+    classpath = files('libs/HytaleServer.jar')
+    mainClass = 'com.hypixel.hytale.Main'
+    jvmArgs = ['--enable-native-access=ALL-UNNAMED']
+    args = [
+        '--generate-asset-schema', 'Schema/Asset',
+        '--generate-config-schema', 'Schema/Config',
+        '--assets', '/home/cookie/.var/app/com.hypixel.HytaleLauncher/data/Hytale/install/release/package/game/latest/Assets.zip'
+    ]
+    
+    doFirst {
+        file('Schema/Asset').mkdirs()
+        file('Schema/Config').mkdirs()
+    }
+}
+
+// Task: Validates mod assets and configs
+tasks.register('validateAssets', JavaExec) {
+    group = 'hytale'
+    description = 'Validates mod assets and configs'
+    
+    classpath = files('libs/HytaleServer.jar')
+    mainClass = 'com.hypixel.hytale.Main'
+    jvmArgs = ['--enable-native-access=ALL-UNNAMED']
+    args = [
+        '--bare',
+        '--validate-assets',
+        '--shutdown-after-validate',
+        '--assets', '/home/cookie/.var/app/com.hypixel.HytaleLauncher/data/Hytale/install/release/package/game/latest/Assets.zip',
+        '--mods', '.'
+    ]
+    
+    // Ignore exit value 6 because of default instances world path warnings on bare run
+    ignoreExitValue = true
+}
