@@ -1,0 +1,40 @@
+{
+  "$id": "MusicContainer.json",
+  "title": "MusicContainer",
+  "anyOf": [
+    {
+      "$ref": "common.json#/definitions/HorizontalMusicContainer"
+    },
+    {
+      "$ref": "common.json#/definitions/RandomMusicContainer"
+    },
+    {
+      "$ref": "common.json#/definitions/SegmentMusicContainer"
+    },
+    {
+      "$ref": "common.json#/definitions/SequenceMusicContainer"
+    },
+    {
+      "$ref": "common.json#/definitions/SingleTrackMusicContainer"
+    }
+  ],
+  "hytaleSchemaTypeField": {
+    "property": "Type",
+    "values": [
+      "Horizontal",
+      "Random",
+      "Segment",
+      "Sequence",
+      "SingleTrack"
+    ],
+    "parentPropertyKey": "Parent"
+  },
+  "hytale": {
+    "internalKeys": [
+      "Empty"
+    ],
+    "path": "Audio/MusicContainers",
+    "extension": ".json",
+    "mergesProperties": true
+  }
+}

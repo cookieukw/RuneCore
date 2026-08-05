@@ -1,0 +1,97 @@
+{
+  "$id": "PropAsset.json",
+  "title": "PropAsset",
+  "anyOf": [
+    {
+      "$ref": "common.json#/definitions/BoxPropAsset"
+    },
+    {
+      "$ref": "common.json#/definitions/ClusterPropAsset"
+    },
+    {
+      "$ref": "common.json#/definitions/ColumnPropAsset"
+    },
+    {
+      "$ref": "common.json#/definitions/CuboidPropAsset"
+    },
+    {
+      "$ref": "common.json#/definitions/DensityPropAsset"
+    },
+    {
+      "$ref": "common.json#/definitions/DensitySelectorPropAsset"
+    },
+    {
+      "$ref": "common.json#/definitions/EmptyPropAsset"
+    },
+    {
+      "$ref": "common.json#/definitions/ImportedPropAsset"
+    },
+    {
+      "$ref": "common.json#/definitions/LocatorPropAsset"
+    },
+    {
+      "$ref": "common.json#/definitions/ManualPropAsset"
+    },
+    {
+      "$ref": "common.json#/definitions/MaskPropAsset"
+    },
+    {
+      "$ref": "common.json#/definitions/OffsetPropAsset"
+    },
+    {
+      "$ref": "common.json#/definitions/OrienterPropAsset"
+    },
+    {
+      "$ref": "common.json#/definitions/PondFillerPropAsset"
+    },
+    {
+      "$ref": "common.json#/definitions/PrefabPropAsset"
+    },
+    {
+      "$ref": "common.json#/definitions/QueuePropAsset"
+    },
+    {
+      "$ref": "common.json#/definitions/RandomRotatorPropAsset"
+    },
+    {
+      "$ref": "common.json#/definitions/StaticRotatorPropAsset"
+    },
+    {
+      "$ref": "common.json#/definitions/UnionPropAsset"
+    },
+    {
+      "$ref": "common.json#/definitions/WeightedPropAsset"
+    }
+  ],
+  "hytaleSchemaTypeField": {
+    "property": "Type",
+    "values": [
+      "Box",
+      "Cluster",
+      "Column",
+      "Cuboid",
+      "Density",
+      "DensitySelector",
+      "Empty",
+      "Imported",
+      "Locator",
+      "Manual",
+      "Mask",
+      "Offset",
+      "Orienter",
+      "PondFiller",
+      "Prefab",
+      "Queue",
+      "RandomRotator",
+      "StaticRotator",
+      "Union",
+      "Weighted"
+    ],
+    "parentPropertyKey": "Parent"
+  },
+  "hytale": {
+    "path": "HytaleGenerator/Props",
+    "extension": ".json",
+    "mergesProperties": true
+  }
+}
