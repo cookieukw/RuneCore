@@ -12,6 +12,9 @@
       "$ref": "common.json#/definitions/ApplyForceInteraction"
     },
     {
+      "$ref": "common.json#/definitions/AugmentConditionInteraction"
+    },
+    {
       "$ref": "common.json#/definitions/BedInteraction"
     },
     {
@@ -34,6 +37,15 @@
     },
     {
       "$ref": "common.json#/definitions/CancelChainInteraction"
+    },
+    {
+      "$ref": "common.json#/definitions/CarryBlockInteraction"
+    },
+    {
+      "$ref": "common.json#/definitions/CarryDroppedBlockInteraction"
+    },
+    {
+      "$ref": "common.json#/definitions/CarryPlaceBlockInteraction"
     },
     {
       "$ref": "common.json#/definitions/ChainFlagInteraction"
@@ -96,6 +108,12 @@
       "$ref": "common.json#/definitions/DoorInteraction"
     },
     {
+      "$ref": "common.json#/definitions/DragEraseBlockInteraction"
+    },
+    {
+      "$ref": "common.json#/definitions/DragPlaceBlockInteraction"
+    },
+    {
       "$ref": "common.json#/definitions/DurabilityConditionInteraction"
     },
     {
@@ -105,16 +123,31 @@
       "$ref": "common.json#/definitions/EquipItemInteraction"
     },
     {
+      "$ref": "common.json#/definitions/EventStartInteraction"
+    },
+    {
+      "$ref": "common.json#/definitions/EventStopInteraction"
+    },
+    {
       "$ref": "common.json#/definitions/ExitInstanceInteraction"
     },
     {
       "$ref": "common.json#/definitions/ExplodeInteraction"
     },
     {
+      "$ref": "common.json#/definitions/ExtrudePlaceBlockInteraction"
+    },
+    {
       "$ref": "common.json#/definitions/FertilizeSoilInteraction"
     },
     {
       "$ref": "common.json#/definitions/FirstClickInteraction"
+    },
+    {
+      "$ref": "common.json#/definitions/GlobalEventStartInteraction"
+    },
+    {
+      "$ref": "common.json#/definitions/GlobalEventStopInteraction"
     },
     {
       "$ref": "common.json#/definitions/HarvestCropInteraction"
@@ -142,6 +175,9 @@
     },
     {
       "$ref": "common.json#/definitions/MemoriesConditionInteraction"
+    },
+    {
+      "$ref": "common.json#/definitions/ModifyIntervalConditionInteraction"
     },
     {
       "$ref": "common.json#/definitions/ModifyInventoryInteraction"
@@ -189,6 +225,9 @@
       "$ref": "common.json#/definitions/PlaceFluidInteraction"
     },
     {
+      "$ref": "common.json#/definitions/PlaceModeSelectInteraction"
+    },
+    {
       "$ref": "common.json#/definitions/PlacementCountConditionInteraction"
     },
     {
@@ -231,6 +270,9 @@
       "$ref": "common.json#/definitions/SelectInteraction"
     },
     {
+      "$ref": "common.json#/definitions/SendBeaconInteraction"
+    },
+    {
       "$ref": "common.json#/definitions/SendMessageInteraction"
     },
     {
@@ -238,6 +280,9 @@
     },
     {
       "$ref": "common.json#/definitions/SetMemoriesCapacityInteraction"
+    },
+    {
+      "$ref": "common.json#/definitions/SignalNearbyVolumesInteraction"
     },
     {
       "$ref": "common.json#/definitions/SimpleInteraction"
@@ -261,6 +306,12 @@
       "$ref": "common.json#/definitions/SpawnPrefabInteraction"
     },
     {
+      "$ref": "common.json#/definitions/SpawnTriggerVolumeInteraction"
+    },
+    {
+      "$ref": "common.json#/definitions/SpectateControlInteraction"
+    },
+    {
       "$ref": "common.json#/definitions/StartObjectiveInteraction"
     },
     {
@@ -268,6 +319,9 @@
     },
     {
       "$ref": "common.json#/definitions/StatsConditionWithModifierInteraction"
+    },
+    {
+      "$ref": "common.json#/definitions/SurfaceDrawPlaceBlockInteraction"
     },
     {
       "$ref": "common.json#/definitions/TeleportConfigInstanceInteraction"
@@ -315,6 +369,7 @@
       "AddItem",
       "ApplyEffect",
       "ApplyForce",
+      "AugmentCondition",
       "Bed",
       "BlockCondition",
       "BreakBlock",
@@ -323,6 +378,9 @@
       "CameraShake",
       "CanBreakRespawnPoint",
       "CancelChain",
+      "CarryBlock",
+      "CarryDroppedBlock",
+      "CarryPlaceBlock",
       "ChainFlag",
       "Chaining",
       "ChangeActiveSlot",
@@ -343,13 +401,20 @@
       "DestroyTaggedVolumes",
       "DestroyTreasureCondition",
       "Door",
+      "DragEraseBlock",
+      "DragPlaceBlock",
       "DurabilityCondition",
       "EffectCondition",
       "EquipItem",
+      "EventStartInteraction",
+      "EventStopInteraction",
       "ExitInstance",
       "Explode",
+      "ExtrudePlaceBlock",
       "FertilizeSoil",
       "FirstClick",
+      "GlobalEventStartInteraction",
+      "GlobalEventStopInteraction",
       "HarvestCrop",
       "HubPortal",
       "IncreaseBackpackCapacity",
@@ -359,6 +424,7 @@
       "LaunchProjectile",
       "LearnRecipe",
       "MemoriesCondition",
+      "ModifyIntervalConditionInteraction",
       "ModifyInventory",
       "Mount",
       "MovementCondition",
@@ -374,6 +440,7 @@
       "PickupItem",
       "PlaceBlock",
       "PlaceFluid",
+      "PlaceModeSelect",
       "PlacementCountCondition",
       "Portal",
       "PortalReturn",
@@ -388,9 +455,11 @@
       "RunRootInteraction",
       "Seating",
       "Selector",
+      "SendBeacon",
       "SendMessage",
       "Serial",
       "SetMemoriesCapacity",
+      "SignalNearbyVolumes",
       "Simple",
       "SpawnDeployableAtHitLocation",
       "SpawnDeployableAtLocation",
@@ -398,9 +467,12 @@
       "SpawnMinecart",
       "SpawnNPC",
       "SpawnPrefab",
+      "SpawnTriggerVolume",
+      "SpectateControl",
       "StartObjective",
       "StatsCondition",
       "StatsConditionWithModifier",
+      "SurfaceDrawPlaceBlock",
       "TeleportConfigInstance",
       "TeleportInstance",
       "Teleporter",

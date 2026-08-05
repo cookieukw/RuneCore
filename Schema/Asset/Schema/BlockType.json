@@ -526,6 +526,9 @@
               "$ref": "common.json#/definitions/ChangeIntoBlockProcedure"
             },
             {
+              "$ref": "common.json#/definitions/PlaceBlockProcedure"
+            },
+            {
               "$ref": "common.json#/definitions/SpreadToProcedure"
             }
           ],
@@ -533,6 +536,7 @@
             "property": "Type",
             "values": [
               "ChangeIntoBlock",
+              "PlaceBlock",
               "SpreadTo"
             ]
           },
@@ -555,6 +559,9 @@
               "$ref": "common.json#/definitions/CustomTemplateConnectedBlockRuleSet"
             },
             {
+              "$ref": "common.json#/definitions/PatternedConnectedBlockRuleSet"
+            },
+            {
               "$ref": "common.json#/definitions/RoofConnectedBlockRuleSet"
             },
             {
@@ -565,6 +572,7 @@
             "property": "Type",
             "values": [
               "CustomTemplate",
+              "Patterned",
               "Roof",
               "Stair"
             ]
@@ -955,36 +963,29 @@
       }
     },
     "MovementSettings": {
-      "anyOf": [
-        {
-          "default": {
-            "IsClimbable": false,
-            "IsBouncy": false,
-            "BounceVelocity": 0.0,
-            "ClimbUpSpeedMultiplier": 1.0,
-            "ClimbDownSpeedMultiplier": 1.0,
-            "ClimbLateralSpeedMultiplier": 1.0,
-            "Drag": 0.8199999928474426,
-            "Friction": 0.18000000715255737,
-            "TerminalVelocityModifier": 1.0,
-            "HorizontalSpeedMultiplier": 1.0,
-            "JumpForceMultiplier": 1.0
-          },
-          "$ref": "common.json#/definitions/BlockMovementSettings",
-          "hytale": {
-            "inheritsProperty": true
-          }
-        },
-        {
-          "type": "null"
-        }
-      ]
+      "default": {
+        "IsClimbable": false,
+        "IsBouncy": false,
+        "BounceVelocity": 0.0,
+        "ClimbUpSpeedMultiplier": 1.0,
+        "ClimbDownSpeedMultiplier": 1.0,
+        "ClimbLateralSpeedMultiplier": 1.0,
+        "Drag": 0.8199999928474426,
+        "Friction": 0.18000000715255737,
+        "TerminalVelocityModifier": 1.0,
+        "HorizontalSpeedMultiplier": 1.0,
+        "JumpForceMultiplier": 1.0,
+        "DisableAutoStep": false
+      },
+      "$ref": "common.json#/definitions/BlockMovementSettings",
+      "hytale": {
+        "inheritsProperty": true
+      }
     },
     "Flags": {
       "anyOf": [
         {
           "default": {
-            "IsUsable": false,
             "IsStackable": true
           },
           "$ref": "common.json#/definitions/BlockFlags",
@@ -1153,6 +1154,8 @@
         "null"
       ],
       "title": "Map of InteractionType",
+      "description": "A null value removes the inherited interaction for that slot, so a block state can drop its parent's interaction entirely (e.g. a one-time switch becoming inert once turned on).",
+      "markdownDescription": "A null value removes the inherited interaction for that slot, so a block state can drop its parent's interaction entirely (e.g. a one-time switch becoming inert once turned on).",
       "hytale": {
         "type": "EnumMap",
         "inheritsProperty": true,
@@ -2873,6 +2876,16 @@
           "type": "null"
         }
       ]
+    },
+    "ExplosionReactionState": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "hytale": {
+        "type": "string",
+        "inheritsProperty": true
+      }
     }
   },
   "additionalProperties": false

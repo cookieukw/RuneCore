@@ -1,0 +1,29 @@
+{
+  "$id": "ContentSupplierAsset.json",
+  "title": "ContentSupplierAsset",
+  "anyOf": [
+    {
+      "$ref": "common.json#/definitions/ConstantContentSupplierAsset"
+    },
+    {
+      "$ref": "common.json#/definitions/ImportedContentSupplierAsset"
+    },
+    {
+      "$ref": "common.json#/definitions/WeightedContentSupplierAsset"
+    }
+  ],
+  "hytaleSchemaTypeField": {
+    "property": "Type",
+    "values": [
+      "Constant",
+      "Imported",
+      "Weighted"
+    ],
+    "parentPropertyKey": "Parent"
+  },
+  "hytale": {
+    "path": "HytaleGenerator/GraphContentSuppliers",
+    "extension": ".json",
+    "mergesProperties": true
+  }
+}

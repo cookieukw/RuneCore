@@ -254,6 +254,18 @@
         "inheritsProperty": true
       },
       "default": false
+    },
+    "CarryInteractionHint": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "description": "The localization key the client shows as an input binding hint on the HUD for whichever input this root interaction is bound to. When unset, no hint is shown.",
+      "markdownDescription": "The localization key the client shows as an input binding hint on the HUD for whichever input this root interaction is bound to. When unset, no hint is shown.",
+      "hytale": {
+        "type": "string",
+        "inheritsProperty": true
+      }
     }
   },
   "additionalProperties": false

@@ -177,6 +177,36 @@
           "type": "null"
         }
       ]
+    },
+    "RotateHitbox": {
+      "type": "boolean",
+      "description": "If the hitbox of the entity should be rotated by the body orientation around the entity position for Hard collision.",
+      "markdownDescription": "If the hitbox of the entity should be rotated by the body orientation around the entity position for Hard collision.",
+      "hytale": {
+        "type": "boolean",
+        "inheritsProperty": true
+      },
+      "default": false
+    },
+    "AllowEntityAnchoring": {
+      "type": "boolean",
+      "description": "If other entities should be allowed to anchor themselves to the entity when standing on it with Hard collision.",
+      "markdownDescription": "If other entities should be allowed to anchor themselves to the entity when standing on it with Hard collision.",
+      "hytale": {
+        "type": "boolean",
+        "inheritsProperty": true
+      },
+      "default": true
+    },
+    "RotateAnchoredEntities": {
+      "type": "boolean",
+      "description": "If anchored entities should have their yaw track with the entity.",
+      "markdownDescription": "If anchored entities should have their yaw track with the entity.",
+      "hytale": {
+        "type": "boolean",
+        "inheritsProperty": true
+      },
+      "default": false
     }
   },
   "additionalProperties": false

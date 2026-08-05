@@ -1,0 +1,41 @@
+{
+  "$id": "GraphPassAsset.json",
+  "title": "GraphPassAsset",
+  "anyOf": [
+    {
+      "$ref": "common.json#/definitions/EdgeActionGraphPassAsset"
+    },
+    {
+      "$ref": "common.json#/definitions/EmptyGraphPassAsset"
+    },
+    {
+      "$ref": "common.json#/definitions/ImportedGraphPassAsset"
+    },
+    {
+      "$ref": "common.json#/definitions/ManualGraphPassAsset"
+    },
+    {
+      "$ref": "common.json#/definitions/NodeActionGraphPassAsset"
+    },
+    {
+      "$ref": "common.json#/definitions/PositionsGraphPassAsset"
+    }
+  ],
+  "hytaleSchemaTypeField": {
+    "property": "Type",
+    "values": [
+      "EdgeAction",
+      "Empty",
+      "Imported",
+      "Manual",
+      "NodeAction",
+      "Positions"
+    ],
+    "parentPropertyKey": "Parent"
+  },
+  "hytale": {
+    "path": "HytaleGenerator/GraphPasses",
+    "extension": ".json",
+    "mergesProperties": true
+  }
+}

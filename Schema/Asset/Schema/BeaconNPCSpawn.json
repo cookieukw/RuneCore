@@ -574,6 +574,16 @@
       "default": "LockedTarget",
       "minLength": 1
     },
+    "Rebind": {
+      "type": "boolean",
+      "description": "Whether the target slot rebinds to the entity, so it survives short reloads or role changes.",
+      "markdownDescription": "Whether the target slot rebinds to the entity, so it survives short reloads or role changes.",
+      "hytale": {
+        "type": "boolean",
+        "inheritsProperty": true
+      },
+      "default": false
+    },
     "SpawnSuppression": {
       "type": [
         "string",

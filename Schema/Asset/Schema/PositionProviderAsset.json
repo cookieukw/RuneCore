@@ -18,10 +18,16 @@
       "$ref": "common.json#/definitions/ClustersPositionProviderAsset"
     },
     {
+      "$ref": "common.json#/definitions/DirectionalJitterPositionProviderAsset"
+    },
+    {
       "$ref": "common.json#/definitions/FieldFunctionPositionProviderAsset"
     },
     {
       "$ref": "common.json#/definitions/FrameworkPositionProviderAsset"
+    },
+    {
+      "$ref": "common.json#/definitions/GraphPositionProviderAsset"
     },
     {
       "$ref": "common.json#/definitions/ImportedPositionProviderAsset"
@@ -64,6 +70,9 @@
     },
     {
       "$ref": "common.json#/definitions/UnionPositionProviderAsset"
+    },
+    {
+      "$ref": "common.json#/definitions/VectorOffsetPositionProviderAsset"
     }
   ],
   "hytaleSchemaTypeField": {
@@ -74,8 +83,10 @@
       "Bound",
       "Cache",
       "Clusters",
+      "DirectionalJitter",
       "FieldFunction",
       "Framework",
+      "Graph",
       "Imported",
       "Jitter2d",
       "Jitter3d",
@@ -89,7 +100,8 @@
       "SquareGrid2d",
       "SquareGrid3d",
       "TriangularGrid2d",
-      "Union"
+      "Union",
+      "VectorOffset"
     ],
     "parentPropertyKey": "Parent"
   },

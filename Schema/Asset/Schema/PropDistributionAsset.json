@@ -3,10 +3,16 @@
   "title": "PropDistributionAsset",
   "anyOf": [
     {
+      "$ref": "common.json#/definitions/AnchorPropDistributionAsset"
+    },
+    {
       "$ref": "common.json#/definitions/AssignedPropDistributionAsset"
     },
     {
       "$ref": "common.json#/definitions/ConstantPropDistributionAsset"
+    },
+    {
+      "$ref": "common.json#/definitions/GraphPropDistributionAsset"
     },
     {
       "$ref": "common.json#/definitions/ImportedPropDistributionAsset"
@@ -24,8 +30,10 @@
   "hytaleSchemaTypeField": {
     "property": "Type",
     "values": [
+      "Anchor",
       "Assigned",
       "Constant",
+      "Graph",
       "Imported",
       "None",
       "Positions",

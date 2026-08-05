@@ -184,6 +184,52 @@
       "items": {
         "$ref": "common.json#/definitions/StateBindingConfig"
       }
+    },
+    "DuckingRules": {
+      "type": [
+        "array",
+        "null"
+      ],
+      "description": "Per-bus default duck rules. When any voice is routed through this category (or any descendant category), each rule attenuates its TargetCategory.",
+      "markdownDescription": "Per-bus default duck rules. When any voice is routed through this category (or any descendant category), each rule attenuates its TargetCategory.",
+      "hytale": {
+        "type": "array"
+      },
+      "items": {
+        "$ref": "common.json#/definitions/AudioCategoryDuckingRuleConfig"
+      }
+    },
+    "MaxDuckingDb": {
+      "description": "Ceiling on how much this category can be ducked.",
+      "markdownDescription": "Ceiling on how much this category can be ducked.",
+      "anyOf": [
+        {
+          "anyOf": [
+            {
+              "type": "number",
+              "hytale": {
+                "type": "number"
+              },
+              "minimum": -100.0,
+              "maximum": 0.0,
+              "default": -100.0
+            },
+            {
+              "type": "string",
+              "hytale": {
+                "type": "string"
+              },
+              "pattern": "^(-?Infinity|NaN)$"
+            }
+          ],
+          "hytale": {
+            "type": "Number"
+          }
+        },
+        {
+          "type": "null"
+        }
+      ]
     }
   },
   "additionalProperties": false

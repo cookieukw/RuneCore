@@ -1,6 +1,6 @@
 {
-  "$id": "NPCRole.json",
-  "title": "NPCRole",
+  "$id": "EncounterManager.json",
+  "title": "EncounterManager",
   "if": {
     "type": "object",
     "required": [
@@ -46,7 +46,7 @@
           }
         },
         "then": {
-          "$ref": "other.json#/definitions/NPC:Variant"
+          "$ref": "other.json#/definitions/NPC:Variant@5"
         },
         "else": false
       },
@@ -70,7 +70,7 @@
           }
         },
         "then": {
-          "$ref": "other.json#/definitions/NPC:Generic"
+          "$ref": "other.json#/definitions/NPC:Generic@5"
         },
         "else": false
       },
@@ -94,7 +94,7 @@
           }
         },
         "then": {
-          "$ref": "other.json#/definitions/NPC:Abstract"
+          "$ref": "other.json#/definitions/NPC:Abstract@5"
         },
         "else": false
       },
@@ -118,7 +118,7 @@
           }
         },
         "then": {
-          "$ref": "other.json#/definitions/NPC:Component@18"
+          "$ref": "other.json#/definitions/NPC:Component@30"
         },
         "else": false
       },
@@ -207,7 +207,7 @@
                         }
                       },
                       "then": {
-                        "$ref": "other.json#/definitions/NPC:Variant@2"
+                        "$ref": "other.json#/definitions/NPC:Variant@6"
                       },
                       "else": false
                     },
@@ -231,7 +231,7 @@
                         }
                       },
                       "then": {
-                        "$ref": "other.json#/definitions/NPC:Generic@2"
+                        "$ref": "other.json#/definitions/NPC:Generic@6"
                       },
                       "else": false
                     },
@@ -255,7 +255,7 @@
                         }
                       },
                       "then": {
-                        "$ref": "other.json#/definitions/NPC:Abstract@2"
+                        "$ref": "other.json#/definitions/NPC:Abstract@6"
                       },
                       "else": false
                     },
@@ -279,7 +279,7 @@
                         }
                       },
                       "then": {
-                        "$ref": "other.json#/definitions/NPC:Component@20"
+                        "$ref": "other.json#/definitions/NPC:Component@31"
                       },
                       "else": false
                     }
@@ -358,14 +358,14 @@
                         }
                       },
                       "then": {
-                        "$ref": "other.json#/definitions/NPC:Component@21"
+                        "$ref": "other.json#/definitions/NPC:Component@32"
                       },
                       "else": false
                     }
                   ]
                 },
                 "else": {
-                  "$ref": "other.json#/definitions/NPC:Class:BuilderTransientPathDefinition@1"
+                  "$ref": "other.json#/definitions/NPC:Class:BuilderTransientPathDefinition@2"
                 },
                 "hytaleSchemaTypeField": {
                   "property": "Type",
@@ -455,7 +455,7 @@
                         }
                       },
                       "then": {
-                        "$ref": "other.json#/definitions/NPC:Path@2"
+                        "$ref": "other.json#/definitions/NPC:Path@4"
                       },
                       "else": false
                     },
@@ -479,7 +479,7 @@
                         }
                       },
                       "then": {
-                        "$ref": "other.json#/definitions/NPC:MaintainDistance@1"
+                        "$ref": "other.json#/definitions/NPC:MaintainDistance@2"
                       },
                       "else": false
                     },
@@ -503,7 +503,7 @@
                         }
                       },
                       "then": {
-                        "$ref": "other.json#/definitions/NPC:WanderInRect@1"
+                        "$ref": "other.json#/definitions/NPC:WanderInRect@2"
                       },
                       "else": false
                     },
@@ -527,7 +527,7 @@
                         }
                       },
                       "then": {
-                        "$ref": "other.json#/definitions/NPC:MatchLook@1"
+                        "$ref": "other.json#/definitions/NPC:MatchLook@2"
                       },
                       "else": false
                     },
@@ -551,7 +551,7 @@
                         }
                       },
                       "then": {
-                        "$ref": "other.json#/definitions/NPC:Flee@1"
+                        "$ref": "other.json#/definitions/NPC:Flee@2"
                       },
                       "else": false
                     },
@@ -575,7 +575,7 @@
                         }
                       },
                       "then": {
-                        "$ref": "other.json#/definitions/NPC:AimCharge@1"
+                        "$ref": "other.json#/definitions/NPC:AimCharge@2"
                       },
                       "else": false
                     },
@@ -599,7 +599,7 @@
                         }
                       },
                       "then": {
-                        "$ref": "other.json#/definitions/NPC:Charge@1"
+                        "$ref": "other.json#/definitions/NPC:Charge@2"
                       },
                       "else": false
                     },
@@ -623,7 +623,7 @@
                         }
                       },
                       "then": {
-                        "$ref": "other.json#/definitions/NPC:Leave@1"
+                        "$ref": "other.json#/definitions/NPC:Leave@2"
                       },
                       "else": false
                     },
@@ -647,7 +647,7 @@
                         }
                       },
                       "then": {
-                        "$ref": "other.json#/definitions/NPC:Sequence@3"
+                        "$ref": "other.json#/definitions/NPC:Sequence@6"
                       },
                       "else": false
                     },
@@ -671,7 +671,7 @@
                         }
                       },
                       "then": {
-                        "$ref": "other.json#/definitions/NPC:TakeOff@1"
+                        "$ref": "other.json#/definitions/NPC:TakeOff@2"
                       },
                       "else": false
                     },
@@ -695,7 +695,7 @@
                         }
                       },
                       "then": {
-                        "$ref": "other.json#/definitions/NPC:Teleport@1"
+                        "$ref": "other.json#/definitions/NPC:Teleport@2"
                       },
                       "else": false
                     },
@@ -719,7 +719,7 @@
                         }
                       },
                       "then": {
-                        "$ref": "other.json#/definitions/NPC:Wander@1"
+                        "$ref": "other.json#/definitions/NPC:Wander@2"
                       },
                       "else": false
                     },
@@ -743,7 +743,7 @@
                         }
                       },
                       "then": {
-                        "$ref": "other.json#/definitions/NPC:Nothing@3"
+                        "$ref": "other.json#/definitions/NPC:Nothing@6"
                       },
                       "else": false
                     },
@@ -767,7 +767,7 @@
                         }
                       },
                       "then": {
-                        "$ref": "other.json#/definitions/NPC:Land@1"
+                        "$ref": "other.json#/definitions/NPC:Land@2"
                       },
                       "else": false
                     },
@@ -791,7 +791,7 @@
                         }
                       },
                       "then": {
-                        "$ref": "other.json#/definitions/NPC:Timer@3"
+                        "$ref": "other.json#/definitions/NPC:Timer@6"
                       },
                       "else": false
                     },
@@ -815,7 +815,7 @@
                         }
                       },
                       "then": {
-                        "$ref": "other.json#/definitions/NPC:WanderInCircle@1"
+                        "$ref": "other.json#/definitions/NPC:WanderInCircle@2"
                       },
                       "else": false
                     },
@@ -839,7 +839,7 @@
                         }
                       },
                       "then": {
-                        "$ref": "other.json#/definitions/NPC:TestProbe@1"
+                        "$ref": "other.json#/definitions/NPC:TestProbe@2"
                       },
                       "else": false
                     },
@@ -863,7 +863,7 @@
                         }
                       },
                       "then": {
-                        "$ref": "other.json#/definitions/NPC:Component@22"
+                        "$ref": "other.json#/definitions/NPC:Component@33"
                       },
                       "else": false
                     },
@@ -887,7 +887,7 @@
                         }
                       },
                       "then": {
-                        "$ref": "other.json#/definitions/NPC:Flock@2"
+                        "$ref": "other.json#/definitions/NPC:Flock@3"
                       },
                       "else": false
                     },
@@ -911,7 +911,7 @@
                         }
                       },
                       "then": {
-                        "$ref": "other.json#/definitions/NPC:Seek@1"
+                        "$ref": "other.json#/definitions/NPC:Seek@2"
                       },
                       "else": false
                     }
@@ -1091,7 +1091,7 @@
                         }
                       },
                       "then": {
-                        "$ref": "other.json#/definitions/NPC:FlockTarget@1"
+                        "$ref": "other.json#/definitions/NPC:FlockTarget@2"
                       },
                       "else": false
                     },
@@ -1115,7 +1115,7 @@
                         }
                       },
                       "then": {
-                        "$ref": "other.json#/definitions/NPC:Notify@1"
+                        "$ref": "other.json#/definitions/NPC:Notify@2"
                       },
                       "else": false
                     },
@@ -1139,7 +1139,7 @@
                         }
                       },
                       "then": {
-                        "$ref": "other.json#/definitions/NPC:ToggleStateEvaluator@1"
+                        "$ref": "other.json#/definitions/NPC:ToggleStateEvaluator@2"
                       },
                       "else": false
                     },
@@ -1163,7 +1163,7 @@
                         }
                       },
                       "then": {
-                        "$ref": "other.json#/definitions/NPC:Mount@1"
+                        "$ref": "other.json#/definitions/NPC:Mount@2"
                       },
                       "else": false
                     },
@@ -1187,7 +1187,7 @@
                         }
                       },
                       "then": {
-                        "$ref": "other.json#/definitions/NPC:ReleaseTarget@1"
+                        "$ref": "other.json#/definitions/NPC:ReleaseTarget@2"
                       },
                       "else": false
                     },
@@ -1211,7 +1211,7 @@
                         }
                       },
                       "then": {
-                        "$ref": "other.json#/definitions/NPC:Remove@1"
+                        "$ref": "other.json#/definitions/NPC:Remove@2"
                       },
                       "else": false
                     },
@@ -1235,7 +1235,7 @@
                         }
                       },
                       "then": {
-                        "$ref": "other.json#/definitions/NPC:TimerStart@1"
+                        "$ref": "other.json#/definitions/NPC:TimerStart@2"
                       },
                       "else": false
                     },
@@ -1259,7 +1259,7 @@
                         }
                       },
                       "then": {
-                        "$ref": "other.json#/definitions/NPC:Nothing@4"
+                        "$ref": "other.json#/definitions/NPC:Nothing@7"
                       },
                       "else": false
                     },
@@ -1283,7 +1283,7 @@
                         }
                       },
                       "then": {
-                        "$ref": "other.json#/definitions/NPC:IgnoreForAvoidance@1"
+                        "$ref": "other.json#/definitions/NPC:IgnoreForAvoidance@2"
                       },
                       "else": false
                     },
@@ -1307,7 +1307,7 @@
                         }
                       },
                       "then": {
-                        "$ref": "other.json#/definitions/NPC:ForEach@1"
+                        "$ref": "other.json#/definitions/NPC:ForEach@2"
                       },
                       "else": false
                     },
@@ -1331,7 +1331,7 @@
                         }
                       },
                       "then": {
-                        "$ref": "other.json#/definitions/NPC:MakePath@1"
+                        "$ref": "other.json#/definitions/NPC:MakePath@2"
                       },
                       "else": false
                     },
@@ -1355,7 +1355,7 @@
                         }
                       },
                       "then": {
-                        "$ref": "other.json#/definitions/NPC:OpenBarterShop@1"
+                        "$ref": "other.json#/definitions/NPC:OpenBarterShop@2"
                       },
                       "else": false
                     },
@@ -1379,7 +1379,7 @@
                         }
                       },
                       "then": {
-                        "$ref": "other.json#/definitions/NPC:Random@3"
+                        "$ref": "other.json#/definitions/NPC:Random@6"
                       },
                       "else": false
                     },
@@ -1403,7 +1403,7 @@
                         }
                       },
                       "then": {
-                        "$ref": "other.json#/definitions/NPC:Crouch@1"
+                        "$ref": "other.json#/definitions/NPC:Crouch@2"
                       },
                       "else": false
                     },
@@ -1427,7 +1427,7 @@
                         }
                       },
                       "then": {
-                        "$ref": "other.json#/definitions/NPC:Test@1"
+                        "$ref": "other.json#/definitions/NPC:Test@2"
                       },
                       "else": false
                     },
@@ -1451,7 +1451,7 @@
                         }
                       },
                       "then": {
-                        "$ref": "other.json#/definitions/NPC:RecomputePath@1"
+                        "$ref": "other.json#/definitions/NPC:RecomputePath@2"
                       },
                       "else": false
                     },
@@ -1475,7 +1475,7 @@
                         }
                       },
                       "then": {
-                        "$ref": "other.json#/definitions/NPC:ApplyEntityEffect@1"
+                        "$ref": "other.json#/definitions/NPC:ApplyEntityEffect@2"
                       },
                       "else": false
                     },
@@ -1499,7 +1499,7 @@
                         }
                       },
                       "then": {
-                        "$ref": "other.json#/definitions/NPC:CombatAbility@1"
+                        "$ref": "other.json#/definitions/NPC:CombatAbility@2"
                       },
                       "else": false
                     },
@@ -1523,7 +1523,7 @@
                         }
                       },
                       "then": {
-                        "$ref": "other.json#/definitions/NPC:Spawn@1"
+                        "$ref": "other.json#/definitions/NPC:Spawn@2"
                       },
                       "else": false
                     },
@@ -1547,7 +1547,7 @@
                         }
                       },
                       "then": {
-                        "$ref": "other.json#/definitions/NPC:SpawnParticles@1"
+                        "$ref": "other.json#/definitions/NPC:SpawnParticles@2"
                       },
                       "else": false
                     },
@@ -1571,7 +1571,7 @@
                         }
                       },
                       "then": {
-                        "$ref": "other.json#/definitions/NPC:LeaveFlock@1"
+                        "$ref": "other.json#/definitions/NPC:LeaveFlock@2"
                       },
                       "else": false
                     },
@@ -1595,7 +1595,7 @@
                         }
                       },
                       "then": {
-                        "$ref": "other.json#/definitions/NPC:SetAlarm@1"
+                        "$ref": "other.json#/definitions/NPC:SetAlarm@2"
                       },
                       "else": false
                     },
@@ -1619,7 +1619,7 @@
                         }
                       },
                       "then": {
-                        "$ref": "other.json#/definitions/NPC:ResetInstructions@1"
+                        "$ref": "other.json#/definitions/NPC:ResetInstructions@2"
                       },
                       "else": false
                     },
@@ -1643,7 +1643,7 @@
                         }
                       },
                       "then": {
-                        "$ref": "other.json#/definitions/NPC:SetTargetNPCInvulnerable@1"
+                        "$ref": "other.json#/definitions/NPC:SetTargetNPCInvulnerable@2"
                       },
                       "else": false
                     },
@@ -1667,7 +1667,7 @@
                         }
                       },
                       "then": {
-                        "$ref": "other.json#/definitions/NPC:AddToHostileTargetMemory@1"
+                        "$ref": "other.json#/definitions/NPC:AddToHostileTargetMemory@2"
                       },
                       "else": false
                     },
@@ -1691,7 +1691,7 @@
                         }
                       },
                       "then": {
-                        "$ref": "other.json#/definitions/NPC:ParentState@1"
+                        "$ref": "other.json#/definitions/NPC:ParentState@2"
                       },
                       "else": false
                     },
@@ -1715,7 +1715,7 @@
                         }
                       },
                       "then": {
-                        "$ref": "other.json#/definitions/NPC:CompleteTask@1"
+                        "$ref": "other.json#/definitions/NPC:CompleteTask@2"
                       },
                       "else": false
                     },
@@ -1739,7 +1739,7 @@
                         }
                       },
                       "then": {
-                        "$ref": "other.json#/definitions/NPC:Log@1"
+                        "$ref": "other.json#/definitions/NPC:Log@2"
                       },
                       "else": false
                     },
@@ -1763,7 +1763,7 @@
                         }
                       },
                       "then": {
-                        "$ref": "other.json#/definitions/NPC:Timeout@1"
+                        "$ref": "other.json#/definitions/NPC:Timeout@2"
                       },
                       "else": false
                     },
@@ -1787,7 +1787,7 @@
                         }
                       },
                       "then": {
-                        "$ref": "other.json#/definitions/NPC:ResetBlockSensors@1"
+                        "$ref": "other.json#/definitions/NPC:ResetBlockSensors@2"
                       },
                       "else": false
                     },
@@ -1811,7 +1811,7 @@
                         }
                       },
                       "then": {
-                        "$ref": "other.json#/definitions/NPC:SetBlockToPlace@1"
+                        "$ref": "other.json#/definitions/NPC:SetBlockToPlace@2"
                       },
                       "else": false
                     },
@@ -1835,7 +1835,7 @@
                         }
                       },
                       "then": {
-                        "$ref": "other.json#/definitions/NPC:Sequence@4"
+                        "$ref": "other.json#/definitions/NPC:Sequence@7"
                       },
                       "else": false
                     },
@@ -1859,7 +1859,7 @@
                         }
                       },
                       "then": {
-                        "$ref": "other.json#/definitions/NPC:TimerPause@1"
+                        "$ref": "other.json#/definitions/NPC:TimerPause@2"
                       },
                       "else": false
                     },
@@ -1883,7 +1883,7 @@
                         }
                       },
                       "then": {
-                        "$ref": "other.json#/definitions/NPC:SetMarkedTarget@1"
+                        "$ref": "other.json#/definitions/NPC:SetMarkedTarget@2"
                       },
                       "else": false
                     },
@@ -1907,7 +1907,7 @@
                         }
                       },
                       "then": {
-                        "$ref": "other.json#/definitions/NPC:SignalTaggedVolumes@1"
+                        "$ref": "other.json#/definitions/NPC:SignalTaggedVolumes@2"
                       },
                       "else": false
                     },
@@ -1931,7 +1931,7 @@
                         }
                       },
                       "then": {
-                        "$ref": "other.json#/definitions/NPC:Role@1"
+                        "$ref": "other.json#/definitions/NPC:Role@2"
                       },
                       "else": false
                     },
@@ -1955,7 +1955,7 @@
                         }
                       },
                       "then": {
-                        "$ref": "other.json#/definitions/NPC:TriggerSpawners@1"
+                        "$ref": "other.json#/definitions/NPC:TriggerSpawners@2"
                       },
                       "else": false
                     },
@@ -1979,7 +1979,7 @@
                         }
                       },
                       "then": {
-                        "$ref": "other.json#/definitions/NPC:StopEncounterMusic@1"
+                        "$ref": "other.json#/definitions/NPC:StopEncounterMusic@2"
                       },
                       "else": false
                     },
@@ -2003,7 +2003,7 @@
                         }
                       },
                       "then": {
-                        "$ref": "other.json#/definitions/NPC:SetLeashPosition@1"
+                        "$ref": "other.json#/definitions/NPC:SetLeashPosition@2"
                       },
                       "else": false
                     },
@@ -2027,7 +2027,7 @@
                         }
                       },
                       "then": {
-                        "$ref": "other.json#/definitions/NPC:ResetSearchRays@1"
+                        "$ref": "other.json#/definitions/NPC:ResetSearchRays@2"
                       },
                       "else": false
                     },
@@ -2051,7 +2051,7 @@
                         }
                       },
                       "then": {
-                        "$ref": "other.json#/definitions/NPC:SetEncounterAudioState@1"
+                        "$ref": "other.json#/definitions/NPC:SetEncounterAudioState@2"
                       },
                       "else": false
                     },
@@ -2075,7 +2075,7 @@
                         }
                       },
                       "then": {
-                        "$ref": "other.json#/definitions/NPC:TriggerSpawnBeacon@1"
+                        "$ref": "other.json#/definitions/NPC:TriggerSpawnBeacon@2"
                       },
                       "else": false
                     },
@@ -2099,7 +2099,7 @@
                         }
                       },
                       "then": {
-                        "$ref": "other.json#/definitions/NPC:State@2"
+                        "$ref": "other.json#/definitions/NPC:State@4"
                       },
                       "else": false
                     },
@@ -2123,7 +2123,7 @@
                         }
                       },
                       "then": {
-                        "$ref": "other.json#/definitions/NPC:Beacon@2"
+                        "$ref": "other.json#/definitions/NPC:Beacon@4"
                       },
                       "else": false
                     },
@@ -2147,7 +2147,7 @@
                         }
                       },
                       "then": {
-                        "$ref": "other.json#/definitions/NPC:EntityHitInteraction@1"
+                        "$ref": "other.json#/definitions/NPC:EntityHitInteraction@2"
                       },
                       "else": false
                     },
@@ -2171,7 +2171,7 @@
                         }
                       },
                       "then": {
-                        "$ref": "other.json#/definitions/NPC:ChangeTargetRole@1"
+                        "$ref": "other.json#/definitions/NPC:ChangeTargetRole@2"
                       },
                       "else": false
                     },
@@ -2195,7 +2195,7 @@
                         }
                       },
                       "then": {
-                        "$ref": "other.json#/definitions/NPC:PlaceBlock@1"
+                        "$ref": "other.json#/definitions/NPC:PlaceBlock@2"
                       },
                       "else": false
                     },
@@ -2219,7 +2219,7 @@
                         }
                       },
                       "then": {
-                        "$ref": "other.json#/definitions/NPC:Inventory@2"
+                        "$ref": "other.json#/definitions/NPC:Inventory@3"
                       },
                       "else": false
                     },
@@ -2243,7 +2243,7 @@
                         }
                       },
                       "then": {
-                        "$ref": "other.json#/definitions/NPC:OverrideAttitude@1"
+                        "$ref": "other.json#/definitions/NPC:OverrideAttitude@2"
                       },
                       "else": false
                     },
@@ -2267,7 +2267,7 @@
                         }
                       },
                       "then": {
-                        "$ref": "other.json#/definitions/NPC:ModelAttachment@1"
+                        "$ref": "other.json#/definitions/NPC:ModelAttachment@2"
                       },
                       "else": false
                     },
@@ -2291,7 +2291,7 @@
                         }
                       },
                       "then": {
-                        "$ref": "other.json#/definitions/NPC:SetStat@1"
+                        "$ref": "other.json#/definitions/NPC:SetStat@2"
                       },
                       "else": false
                     },
@@ -2315,7 +2315,7 @@
                         }
                       },
                       "then": {
-                        "$ref": "other.json#/definitions/NPC:PickUpItem@1"
+                        "$ref": "other.json#/definitions/NPC:PickUpItem@2"
                       },
                       "else": false
                     },
@@ -2339,7 +2339,7 @@
                         }
                       },
                       "then": {
-                        "$ref": "other.json#/definitions/NPC:PlaySound@1"
+                        "$ref": "other.json#/definitions/NPC:PlaySound@2"
                       },
                       "else": false
                     },
@@ -2363,7 +2363,7 @@
                         }
                       },
                       "then": {
-                        "$ref": "other.json#/definitions/NPC:SetInvulnerable@1"
+                        "$ref": "other.json#/definitions/NPC:SetInvulnerable@2"
                       },
                       "else": false
                     },
@@ -2387,7 +2387,7 @@
                         }
                       },
                       "then": {
-                        "$ref": "other.json#/definitions/NPC:OpenShop@1"
+                        "$ref": "other.json#/definitions/NPC:OpenShop@2"
                       },
                       "else": false
                     },
@@ -2411,7 +2411,7 @@
                         }
                       },
                       "then": {
-                        "$ref": "other.json#/definitions/NPC:FlockBeacon@1"
+                        "$ref": "other.json#/definitions/NPC:FlockBeacon@2"
                       },
                       "else": false
                     },
@@ -2435,7 +2435,7 @@
                         }
                       },
                       "then": {
-                        "$ref": "other.json#/definitions/NPC:StartObjective@1"
+                        "$ref": "other.json#/definitions/NPC:StartObjective@2"
                       },
                       "else": false
                     },
@@ -2459,7 +2459,7 @@
                         }
                       },
                       "then": {
-                        "$ref": "other.json#/definitions/NPC:ProjectToGround@2"
+                        "$ref": "other.json#/definitions/NPC:ProjectToGround@4"
                       },
                       "else": false
                     },
@@ -2483,7 +2483,7 @@
                         }
                       },
                       "then": {
-                        "$ref": "other.json#/definitions/NPC:SetInteractable@1"
+                        "$ref": "other.json#/definitions/NPC:SetInteractable@2"
                       },
                       "else": false
                     },
@@ -2507,7 +2507,7 @@
                         }
                       },
                       "then": {
-                        "$ref": "other.json#/definitions/NPC:SetFlag@1"
+                        "$ref": "other.json#/definitions/NPC:SetFlag@2"
                       },
                       "else": false
                     },
@@ -2531,7 +2531,7 @@
                         }
                       },
                       "then": {
-                        "$ref": "other.json#/definitions/NPC:StartEncounterMusic@1"
+                        "$ref": "other.json#/definitions/NPC:StartEncounterMusic@2"
                       },
                       "else": false
                     },
@@ -2555,7 +2555,7 @@
                         }
                       },
                       "then": {
-                        "$ref": "other.json#/definitions/NPC:StorePosition@1"
+                        "$ref": "other.json#/definitions/NPC:StorePosition@2"
                       },
                       "else": false
                     },
@@ -2579,7 +2579,7 @@
                         }
                       },
                       "then": {
-                        "$ref": "other.json#/definitions/NPC:PlayAnimation@1"
+                        "$ref": "other.json#/definitions/NPC:PlayAnimation@2"
                       },
                       "else": false
                     },
@@ -2603,7 +2603,7 @@
                         }
                       },
                       "then": {
-                        "$ref": "other.json#/definitions/NPC:DropItem@1"
+                        "$ref": "other.json#/definitions/NPC:DropItem@2"
                       },
                       "else": false
                     },
@@ -2627,7 +2627,7 @@
                         }
                       },
                       "then": {
-                        "$ref": "other.json#/definitions/NPC:SetHealthRegen@1"
+                        "$ref": "other.json#/definitions/NPC:SetHealthRegen@2"
                       },
                       "else": false
                     },
@@ -2651,7 +2651,7 @@
                         }
                       },
                       "then": {
-                        "$ref": "other.json#/definitions/NPC:AdjustPortalTimer@1"
+                        "$ref": "other.json#/definitions/NPC:AdjustPortalTimer@2"
                       },
                       "else": false
                     },
@@ -2675,7 +2675,7 @@
                         }
                       },
                       "then": {
-                        "$ref": "other.json#/definitions/NPC:SpawnInteraction@1"
+                        "$ref": "other.json#/definitions/NPC:SpawnInteraction@2"
                       },
                       "else": false
                     },
@@ -2699,7 +2699,7 @@
                         }
                       },
                       "then": {
-                        "$ref": "other.json#/definitions/NPC:TimerContinue@1"
+                        "$ref": "other.json#/definitions/NPC:TimerContinue@2"
                       },
                       "else": false
                     },
@@ -2723,7 +2723,7 @@
                         }
                       },
                       "then": {
-                        "$ref": "other.json#/definitions/NPC:DisplayName@1"
+                        "$ref": "other.json#/definitions/NPC:DisplayName@2"
                       },
                       "else": false
                     },
@@ -2747,7 +2747,7 @@
                         }
                       },
                       "then": {
-                        "$ref": "other.json#/definitions/NPC:TimerStop@1"
+                        "$ref": "other.json#/definitions/NPC:TimerStop@2"
                       },
                       "else": false
                     },
@@ -2771,7 +2771,7 @@
                         }
                       },
                       "then": {
-                        "$ref": "other.json#/definitions/NPC:Component@23"
+                        "$ref": "other.json#/definitions/NPC:Component@34"
                       },
                       "else": false
                     },
@@ -2795,7 +2795,7 @@
                         }
                       },
                       "then": {
-                        "$ref": "other.json#/definitions/NPC:FlockState@1"
+                        "$ref": "other.json#/definitions/NPC:FlockState@2"
                       },
                       "else": false
                     },
@@ -2819,7 +2819,7 @@
                         }
                       },
                       "then": {
-                        "$ref": "other.json#/definitions/NPC:SignalWorldEvent@1"
+                        "$ref": "other.json#/definitions/NPC:SignalWorldEvent@2"
                       },
                       "else": false
                     },
@@ -2843,7 +2843,7 @@
                         }
                       },
                       "then": {
-                        "$ref": "other.json#/definitions/NPC:Die@1"
+                        "$ref": "other.json#/definitions/NPC:Die@2"
                       },
                       "else": false
                     },
@@ -2867,7 +2867,7 @@
                         }
                       },
                       "then": {
-                        "$ref": "other.json#/definitions/NPC:BlockHitInteraction@1"
+                        "$ref": "other.json#/definitions/NPC:BlockHitInteraction@2"
                       },
                       "else": false
                     },
@@ -2891,7 +2891,7 @@
                         }
                       },
                       "then": {
-                        "$ref": "other.json#/definitions/NPC:ResetPath@1"
+                        "$ref": "other.json#/definitions/NPC:ResetPath@2"
                       },
                       "else": false
                     },
@@ -2915,7 +2915,7 @@
                         }
                       },
                       "then": {
-                        "$ref": "other.json#/definitions/NPC:TimerModify@1"
+                        "$ref": "other.json#/definitions/NPC:TimerModify@2"
                       },
                       "else": false
                     },
@@ -2939,7 +2939,7 @@
                         }
                       },
                       "then": {
-                        "$ref": "other.json#/definitions/NPC:Attack@1"
+                        "$ref": "other.json#/definitions/NPC:Attack@2"
                       },
                       "else": false
                     },
@@ -2963,7 +2963,7 @@
                         }
                       },
                       "then": {
-                        "$ref": "other.json#/definitions/NPC:Appearance@1"
+                        "$ref": "other.json#/definitions/NPC:Appearance@2"
                       },
                       "else": false
                     },
@@ -2987,7 +2987,7 @@
                         }
                       },
                       "then": {
-                        "$ref": "other.json#/definitions/NPC:LockOnInteractionTarget@1"
+                        "$ref": "other.json#/definitions/NPC:LockOnInteractionTarget@2"
                       },
                       "else": false
                     },
@@ -3011,7 +3011,7 @@
                         }
                       },
                       "then": {
-                        "$ref": "other.json#/definitions/NPC:TimerRestart@1"
+                        "$ref": "other.json#/definitions/NPC:TimerRestart@2"
                       },
                       "else": false
                     },
@@ -3035,7 +3035,7 @@
                         }
                       },
                       "then": {
-                        "$ref": "other.json#/definitions/NPC:Despawn@1"
+                        "$ref": "other.json#/definitions/NPC:Despawn@2"
                       },
                       "else": false
                     },
@@ -3059,7 +3059,7 @@
                         }
                       },
                       "then": {
-                        "$ref": "other.json#/definitions/NPC:AdjustPosition@2"
+                        "$ref": "other.json#/definitions/NPC:AdjustPosition@4"
                       },
                       "else": false
                     },
@@ -3083,7 +3083,7 @@
                         }
                       },
                       "then": {
-                        "$ref": "other.json#/definitions/NPC:OverrideAltitude@1"
+                        "$ref": "other.json#/definitions/NPC:OverrideAltitude@2"
                       },
                       "else": false
                     },
@@ -3107,7 +3107,7 @@
                         }
                       },
                       "then": {
-                        "$ref": "other.json#/definitions/NPC:DelayDespawn@1"
+                        "$ref": "other.json#/definitions/NPC:DelayDespawn@2"
                       },
                       "else": false
                     },
@@ -3131,7 +3131,7 @@
                         }
                       },
                       "then": {
-                        "$ref": "other.json#/definitions/NPC:JoinFlock@1"
+                        "$ref": "other.json#/definitions/NPC:JoinFlock@2"
                       },
                       "else": false
                     }
@@ -3298,7 +3298,7 @@
                         }
                       },
                       "then": {
-                        "$ref": "other.json#/definitions/NPC:Aim@1"
+                        "$ref": "other.json#/definitions/NPC:Aim@2"
                       },
                       "else": false
                     },
@@ -3322,7 +3322,7 @@
                         }
                       },
                       "then": {
-                        "$ref": "other.json#/definitions/NPC:Timer@4"
+                        "$ref": "other.json#/definitions/NPC:Timer@7"
                       },
                       "else": false
                     },
@@ -3346,7 +3346,7 @@
                         }
                       },
                       "then": {
-                        "$ref": "other.json#/definitions/NPC:Observe@1"
+                        "$ref": "other.json#/definitions/NPC:Observe@2"
                       },
                       "else": false
                     },
@@ -3370,7 +3370,7 @@
                         }
                       },
                       "then": {
-                        "$ref": "other.json#/definitions/NPC:Watch@1"
+                        "$ref": "other.json#/definitions/NPC:Watch@2"
                       },
                       "else": false
                     },
@@ -3394,7 +3394,7 @@
                         }
                       },
                       "then": {
-                        "$ref": "other.json#/definitions/NPC:Sequence@5"
+                        "$ref": "other.json#/definitions/NPC:Sequence@8"
                       },
                       "else": false
                     },
@@ -3418,7 +3418,7 @@
                         }
                       },
                       "then": {
-                        "$ref": "other.json#/definitions/NPC:Component@24"
+                        "$ref": "other.json#/definitions/NPC:Component@35"
                       },
                       "else": false
                     },
@@ -3442,7 +3442,7 @@
                         }
                       },
                       "then": {
-                        "$ref": "other.json#/definitions/NPC:Nothing@5"
+                        "$ref": "other.json#/definitions/NPC:Nothing@8"
                       },
                       "else": false
                     }
@@ -3524,14 +3524,14 @@
                         }
                       },
                       "then": {
-                        "$ref": "other.json#/definitions/NPC:Component@25"
+                        "$ref": "other.json#/definitions/NPC:Component@36"
                       },
                       "else": false
                     }
                   ]
                 },
                 "else": {
-                  "$ref": "other.json#/definitions/NPC:Class:BuilderActionList@1"
+                  "$ref": "other.json#/definitions/NPC:Class:BuilderActionList@2"
                 },
                 "hytaleSchemaTypeField": {
                   "property": "Type",
@@ -3605,7 +3605,7 @@
                         }
                       },
                       "then": {
-                        "$ref": "other.json#/definitions/NPC:Variant@3"
+                        "$ref": "other.json#/definitions/NPC:Variant@7"
                       },
                       "else": false
                     },
@@ -3629,7 +3629,7 @@
                         }
                       },
                       "then": {
-                        "$ref": "other.json#/definitions/NPC:Generic@3"
+                        "$ref": "other.json#/definitions/NPC:Generic@7"
                       },
                       "else": false
                     },
@@ -3653,7 +3653,7 @@
                         }
                       },
                       "then": {
-                        "$ref": "other.json#/definitions/NPC:Abstract@3"
+                        "$ref": "other.json#/definitions/NPC:Abstract@7"
                       },
                       "else": false
                     },
@@ -3677,7 +3677,7 @@
                         }
                       },
                       "then": {
-                        "$ref": "other.json#/definitions/NPC:Component@26"
+                        "$ref": "other.json#/definitions/NPC:Component@37"
                       },
                       "else": false
                     }
@@ -3758,7 +3758,7 @@
                         }
                       },
                       "then": {
-                        "$ref": "other.json#/definitions/NPC:Random@4"
+                        "$ref": "other.json#/definitions/NPC:Random@7"
                       },
                       "else": false
                     },
@@ -3782,7 +3782,7 @@
                         }
                       },
                       "then": {
-                        "$ref": "other.json#/definitions/NPC:Reference@1"
+                        "$ref": "other.json#/definitions/NPC:Reference@2"
                       },
                       "else": false
                     },
@@ -3806,14 +3806,14 @@
                         }
                       },
                       "then": {
-                        "$ref": "other.json#/definitions/NPC:Component@28"
+                        "$ref": "other.json#/definitions/NPC:Component@38"
                       },
                       "else": false
                     }
                   ]
                 },
                 "else": {
-                  "$ref": "other.json#/definitions/NPC:Class:BuilderInstruction@1"
+                  "$ref": "other.json#/definitions/NPC:Class:BuilderInstruction@2"
                 },
                 "hytaleSchemaTypeField": {
                   "property": "Type",
@@ -3943,7 +3943,7 @@
                         }
                       },
                       "then": {
-                        "$ref": "other.json#/definitions/NPC:InWater@1"
+                        "$ref": "other.json#/definitions/NPC:InWater@2"
                       },
                       "else": false
                     },
@@ -3967,7 +3967,7 @@
                         }
                       },
                       "then": {
-                        "$ref": "other.json#/definitions/NPC:Nav@1"
+                        "$ref": "other.json#/definitions/NPC:Nav@2"
                       },
                       "else": false
                     },
@@ -3991,7 +3991,7 @@
                         }
                       },
                       "then": {
-                        "$ref": "other.json#/definitions/NPC:Or@2"
+                        "$ref": "other.json#/definitions/NPC:Or@3"
                       },
                       "else": false
                     },
@@ -4015,7 +4015,7 @@
                         }
                       },
                       "then": {
-                        "$ref": "other.json#/definitions/NPC:ChargeEntityCollisions@1"
+                        "$ref": "other.json#/definitions/NPC:ChargeEntityCollisions@2"
                       },
                       "else": false
                     },
@@ -4039,7 +4039,7 @@
                         }
                       },
                       "then": {
-                        "$ref": "other.json#/definitions/NPC:DroppedItem@1"
+                        "$ref": "other.json#/definitions/NPC:DroppedItem@2"
                       },
                       "else": false
                     },
@@ -4063,7 +4063,7 @@
                         }
                       },
                       "then": {
-                        "$ref": "other.json#/definitions/NPC:IsBackingAway@1"
+                        "$ref": "other.json#/definitions/NPC:IsBackingAway@2"
                       },
                       "else": false
                     },
@@ -4087,7 +4087,7 @@
                         }
                       },
                       "then": {
-                        "$ref": "other.json#/definitions/NPC:Count@1"
+                        "$ref": "other.json#/definitions/NPC:Count@2"
                       },
                       "else": false
                     },
@@ -4111,7 +4111,7 @@
                         }
                       },
                       "then": {
-                        "$ref": "other.json#/definitions/NPC:ValueProviderWrapper@1"
+                        "$ref": "other.json#/definitions/NPC:ValueProviderWrapper@2"
                       },
                       "else": false
                     },
@@ -4135,7 +4135,7 @@
                         }
                       },
                       "then": {
-                        "$ref": "other.json#/definitions/NPC:Random@5"
+                        "$ref": "other.json#/definitions/NPC:Random@8"
                       },
                       "else": false
                     },
@@ -4159,7 +4159,7 @@
                         }
                       },
                       "then": {
-                        "$ref": "other.json#/definitions/NPC:Light@1"
+                        "$ref": "other.json#/definitions/NPC:Light@2"
                       },
                       "else": false
                     },
@@ -4183,7 +4183,7 @@
                         }
                       },
                       "then": {
-                        "$ref": "other.json#/definitions/NPC:Damage@1"
+                        "$ref": "other.json#/definitions/NPC:Damage@2"
                       },
                       "else": false
                     },
@@ -4207,7 +4207,7 @@
                         }
                       },
                       "then": {
-                        "$ref": "other.json#/definitions/NPC:Eval@1"
+                        "$ref": "other.json#/definitions/NPC:Eval@2"
                       },
                       "else": false
                     },
@@ -4231,7 +4231,7 @@
                         }
                       },
                       "then": {
-                        "$ref": "other.json#/definitions/NPC:Player@1"
+                        "$ref": "other.json#/definitions/NPC:Player@2"
                       },
                       "else": false
                     },
@@ -4255,7 +4255,7 @@
                         }
                       },
                       "then": {
-                        "$ref": "other.json#/definitions/NPC:InteractionContext@1"
+                        "$ref": "other.json#/definitions/NPC:InteractionContext@2"
                       },
                       "else": false
                     },
@@ -4279,7 +4279,7 @@
                         }
                       },
                       "then": {
-                        "$ref": "other.json#/definitions/NPC:HasHostileTargetMemory@1"
+                        "$ref": "other.json#/definitions/NPC:HasHostileTargetMemory@2"
                       },
                       "else": false
                     },
@@ -4303,7 +4303,7 @@
                         }
                       },
                       "then": {
-                        "$ref": "other.json#/definitions/NPC:CanPlaceBlock@1"
+                        "$ref": "other.json#/definitions/NPC:CanPlaceBlock@2"
                       },
                       "else": false
                     },
@@ -4327,7 +4327,7 @@
                         }
                       },
                       "then": {
-                        "$ref": "other.json#/definitions/NPC:Flag@1"
+                        "$ref": "other.json#/definitions/NPC:Flag@2"
                       },
                       "else": false
                     },
@@ -4351,7 +4351,7 @@
                         }
                       },
                       "then": {
-                        "$ref": "other.json#/definitions/NPC:SearchRay@1"
+                        "$ref": "other.json#/definitions/NPC:SearchRay@2"
                       },
                       "else": false
                     },
@@ -4375,7 +4375,7 @@
                         }
                       },
                       "then": {
-                        "$ref": "other.json#/definitions/NPC:Not@2"
+                        "$ref": "other.json#/definitions/NPC:Not@3"
                       },
                       "else": false
                     },
@@ -4399,7 +4399,7 @@
                         }
                       },
                       "then": {
-                        "$ref": "other.json#/definitions/NPC:Switch@1"
+                        "$ref": "other.json#/definitions/NPC:Switch@2"
                       },
                       "else": false
                     },
@@ -4423,7 +4423,7 @@
                         }
                       },
                       "then": {
-                        "$ref": "other.json#/definitions/NPC:BlockType@1"
+                        "$ref": "other.json#/definitions/NPC:BlockType@2"
                       },
                       "else": false
                     },
@@ -4447,7 +4447,7 @@
                         }
                       },
                       "then": {
-                        "$ref": "other.json#/definitions/NPC:And@2"
+                        "$ref": "other.json#/definitions/NPC:And@3"
                       },
                       "else": false
                     },
@@ -4471,7 +4471,7 @@
                         }
                       },
                       "then": {
-                        "$ref": "other.json#/definitions/NPC:State@3"
+                        "$ref": "other.json#/definitions/NPC:State@5"
                       },
                       "else": false
                     },
@@ -4495,7 +4495,7 @@
                         }
                       },
                       "then": {
-                        "$ref": "other.json#/definitions/NPC:EntityEvent@1"
+                        "$ref": "other.json#/definitions/NPC:EntityEvent@2"
                       },
                       "else": false
                     },
@@ -4519,7 +4519,7 @@
                         }
                       },
                       "then": {
-                        "$ref": "other.json#/definitions/NPC:FlockLeader@1"
+                        "$ref": "other.json#/definitions/NPC:FlockLeader@2"
                       },
                       "else": false
                     },
@@ -4543,7 +4543,7 @@
                         }
                       },
                       "then": {
-                        "$ref": "other.json#/definitions/NPC:Beacon@3"
+                        "$ref": "other.json#/definitions/NPC:Beacon@5"
                       },
                       "else": false
                     },
@@ -4567,7 +4567,7 @@
                         }
                       },
                       "then": {
-                        "$ref": "other.json#/definitions/NPC:Block@1"
+                        "$ref": "other.json#/definitions/NPC:Block@2"
                       },
                       "else": false
                     },
@@ -4591,7 +4591,7 @@
                         }
                       },
                       "then": {
-                        "$ref": "other.json#/definitions/NPC:ChargeState@1"
+                        "$ref": "other.json#/definitions/NPC:ChargeState@2"
                       },
                       "else": false
                     },
@@ -4615,7 +4615,7 @@
                         }
                       },
                       "then": {
-                        "$ref": "other.json#/definitions/NPC:CombatActionEvaluator@1"
+                        "$ref": "other.json#/definitions/NPC:CombatActionEvaluator@2"
                       },
                       "else": false
                     },
@@ -4639,7 +4639,7 @@
                         }
                       },
                       "then": {
-                        "$ref": "other.json#/definitions/NPC:HasInteracted@1"
+                        "$ref": "other.json#/definitions/NPC:HasInteracted@2"
                       },
                       "else": false
                     },
@@ -4663,7 +4663,7 @@
                         }
                       },
                       "then": {
-                        "$ref": "other.json#/definitions/NPC:MotionController@1"
+                        "$ref": "other.json#/definitions/NPC:MotionController@2"
                       },
                       "else": false
                     },
@@ -4687,7 +4687,7 @@
                         }
                       },
                       "then": {
-                        "$ref": "other.json#/definitions/NPC:Time@1"
+                        "$ref": "other.json#/definitions/NPC:Time@2"
                       },
                       "else": false
                     },
@@ -4711,7 +4711,7 @@
                         }
                       },
                       "then": {
-                        "$ref": "other.json#/definitions/NPC:ProjectToGround@3"
+                        "$ref": "other.json#/definitions/NPC:ProjectToGround@5"
                       },
                       "else": false
                     },
@@ -4735,7 +4735,7 @@
                         }
                       },
                       "then": {
-                        "$ref": "other.json#/definitions/NPC:Self@1"
+                        "$ref": "other.json#/definitions/NPC:Self@2"
                       },
                       "else": false
                     },
@@ -4759,7 +4759,7 @@
                         }
                       },
                       "then": {
-                        "$ref": "other.json#/definitions/NPC:Any@1"
+                        "$ref": "other.json#/definitions/NPC:Any@2"
                       },
                       "else": false
                     },
@@ -4783,7 +4783,7 @@
                         }
                       },
                       "then": {
-                        "$ref": "other.json#/definitions/NPC:InflictedDamage@1"
+                        "$ref": "other.json#/definitions/NPC:InflictedDamage@2"
                       },
                       "else": false
                     },
@@ -4807,7 +4807,7 @@
                         }
                       },
                       "then": {
-                        "$ref": "other.json#/definitions/NPC:Target@1"
+                        "$ref": "other.json#/definitions/NPC:Target@2"
                       },
                       "else": false
                     },
@@ -4831,7 +4831,7 @@
                         }
                       },
                       "then": {
-                        "$ref": "other.json#/definitions/NPC:Points@1"
+                        "$ref": "other.json#/definitions/NPC:Points@2"
                       },
                       "else": false
                     },
@@ -4855,7 +4855,7 @@
                         }
                       },
                       "then": {
-                        "$ref": "other.json#/definitions/NPC:BlockChange@1"
+                        "$ref": "other.json#/definitions/NPC:BlockChange@2"
                       },
                       "else": false
                     },
@@ -4879,7 +4879,7 @@
                         }
                       },
                       "then": {
-                        "$ref": "other.json#/definitions/NPC:Component@29"
+                        "$ref": "other.json#/definitions/NPC:Component@39"
                       },
                       "else": false
                     },
@@ -4903,7 +4903,7 @@
                         }
                       },
                       "then": {
-                        "$ref": "other.json#/definitions/NPC:Kill@1"
+                        "$ref": "other.json#/definitions/NPC:Kill@2"
                       },
                       "else": false
                     },
@@ -4927,7 +4927,7 @@
                         }
                       },
                       "then": {
-                        "$ref": "other.json#/definitions/NPC:HasTask@1"
+                        "$ref": "other.json#/definitions/NPC:HasTask@2"
                       },
                       "else": false
                     },
@@ -4951,7 +4951,7 @@
                         }
                       },
                       "then": {
-                        "$ref": "other.json#/definitions/NPC:Age@1"
+                        "$ref": "other.json#/definitions/NPC:Age@2"
                       },
                       "else": false
                     },
@@ -4975,7 +4975,7 @@
                         }
                       },
                       "then": {
-                        "$ref": "other.json#/definitions/NPC:ChargeBlockCollisions@1"
+                        "$ref": "other.json#/definitions/NPC:ChargeBlockCollisions@2"
                       },
                       "else": false
                     },
@@ -4999,7 +4999,7 @@
                         }
                       },
                       "then": {
-                        "$ref": "other.json#/definitions/NPC:Path@3"
+                        "$ref": "other.json#/definitions/NPC:Path@5"
                       },
                       "else": false
                     },
@@ -5023,7 +5023,7 @@
                         }
                       },
                       "then": {
-                        "$ref": "other.json#/definitions/NPC:Mob@1"
+                        "$ref": "other.json#/definitions/NPC:Mob@2"
                       },
                       "else": false
                     },
@@ -5047,7 +5047,7 @@
                         }
                       },
                       "then": {
-                        "$ref": "other.json#/definitions/NPC:ReadPosition@1"
+                        "$ref": "other.json#/definitions/NPC:ReadPosition@2"
                       },
                       "else": false
                     },
@@ -5071,7 +5071,7 @@
                         }
                       },
                       "then": {
-                        "$ref": "other.json#/definitions/NPC:Leash@1"
+                        "$ref": "other.json#/definitions/NPC:Leash@2"
                       },
                       "else": false
                     },
@@ -5095,7 +5095,7 @@
                         }
                       },
                       "then": {
-                        "$ref": "other.json#/definitions/NPC:IsBusy@1"
+                        "$ref": "other.json#/definitions/NPC:IsBusy@2"
                       },
                       "else": false
                     },
@@ -5119,7 +5119,7 @@
                         }
                       },
                       "then": {
-                        "$ref": "other.json#/definitions/NPC:OnGround@1"
+                        "$ref": "other.json#/definitions/NPC:OnGround@2"
                       },
                       "else": false
                     },
@@ -5143,7 +5143,7 @@
                         }
                       },
                       "then": {
-                        "$ref": "other.json#/definitions/NPC:FlockCombatDamage@1"
+                        "$ref": "other.json#/definitions/NPC:FlockCombatDamage@2"
                       },
                       "else": false
                     },
@@ -5167,7 +5167,7 @@
                         }
                       },
                       "then": {
-                        "$ref": "other.json#/definitions/NPC:Weather@1"
+                        "$ref": "other.json#/definitions/NPC:Weather@2"
                       },
                       "else": false
                     },
@@ -5191,7 +5191,7 @@
                         }
                       },
                       "then": {
-                        "$ref": "other.json#/definitions/NPC:InAir@1"
+                        "$ref": "other.json#/definitions/NPC:InAir@2"
                       },
                       "else": false
                     },
@@ -5215,7 +5215,7 @@
                         }
                       },
                       "then": {
-                        "$ref": "other.json#/definitions/NPC:Timer@5"
+                        "$ref": "other.json#/definitions/NPC:Timer@8"
                       },
                       "else": false
                     },
@@ -5239,7 +5239,7 @@
                         }
                       },
                       "then": {
-                        "$ref": "other.json#/definitions/NPC:CanInteract@1"
+                        "$ref": "other.json#/definitions/NPC:CanInteract@2"
                       },
                       "else": false
                     },
@@ -5263,7 +5263,7 @@
                         }
                       },
                       "then": {
-                        "$ref": "other.json#/definitions/NPC:Alarm@1"
+                        "$ref": "other.json#/definitions/NPC:Alarm@2"
                       },
                       "else": false
                     },
@@ -5287,7 +5287,7 @@
                         }
                       },
                       "then": {
-                        "$ref": "other.json#/definitions/NPC:AdjustPosition@3"
+                        "$ref": "other.json#/definitions/NPC:AdjustPosition@5"
                       },
                       "else": false
                     },
@@ -5311,7 +5311,7 @@
                         }
                       },
                       "then": {
-                        "$ref": "other.json#/definitions/NPC:Animation@1"
+                        "$ref": "other.json#/definitions/NPC:Animation@2"
                       },
                       "else": false
                     }
@@ -5401,7 +5401,7 @@
     ]
   },
   "hytale": {
-    "path": "NPC/Roles",
+    "path": "EncounterManager",
     "extension": ".json"
   }
 }

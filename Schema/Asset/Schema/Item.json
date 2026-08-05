@@ -23,6 +23,10 @@
       {
         "textId": "server.assetEditor.buttons.equipItem",
         "buttonId": "EquipItem"
+      },
+      {
+        "textId": "server.assetEditor.buttons.recomputeTextureColor",
+        "buttonId": "RecomputeTextureColor"
       }
     ],
     "uiRebuildCachesForChildProperties": false,
@@ -661,6 +665,21 @@
         }
       ]
     },
+    "Music": {
+      "description": "Music this item plays when placed in a music player block.",
+      "markdownDescription": "Music this item plays when placed in a music player block.",
+      "anyOf": [
+        {
+          "$ref": "common.json#/definitions/ItemMusic",
+          "hytale": {
+            "inheritsProperty": true
+          }
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
     "Utility": {
       "default": {
         "Usable": false,
@@ -1191,6 +1210,647 @@
           }
         ],
         "hytaleAssetRef": "RootInteraction"
+      },
+      "propertyNames": {
+        "hytale": {
+          "type": "string"
+        },
+        "enum": [
+          "Primary",
+          "Secondary",
+          "Ability1",
+          "Ability2",
+          "Ability3",
+          "Use",
+          "Pick",
+          "Pickup",
+          "CollisionEnter",
+          "CollisionLeave",
+          "Collision",
+          "EntityStatEffect",
+          "SwapTo",
+          "SwapFrom",
+          "Death",
+          "Wielding",
+          "ProjectileSpawn",
+          "ProjectileHit",
+          "ProjectileMiss",
+          "ProjectileBounce",
+          "Held",
+          "HeldOffhand",
+          "Equipped",
+          "Dodge",
+          "GameModeSwap"
+        ]
+      }
+    },
+    "CarryInteractions": {
+      "type": [
+        "object",
+        "null"
+      ],
+      "title": "Map of InteractionType",
+      "description": "The map interactions available when carrying the item.",
+      "markdownDescription": "The map interactions available when carrying the item.",
+      "hytale": {
+        "type": "EnumMap",
+        "inheritsProperty": true,
+        "uiSectionStart": "CarryInteractions"
+      },
+      "properties": {
+        "Primary": {
+          "anyOf": [
+            {
+              "type": "string",
+              "title": "Reference to RootInteraction",
+              "hytale": {
+                "type": "string"
+              }
+            },
+            {
+              "$ref": "RootInteraction.json#"
+            }
+          ],
+          "hytaleAssetRef": "RootInteraction"
+        },
+        "Secondary": {
+          "anyOf": [
+            {
+              "type": "string",
+              "title": "Reference to RootInteraction",
+              "hytale": {
+                "type": "string"
+              }
+            },
+            {
+              "$ref": "RootInteraction.json#"
+            }
+          ],
+          "hytaleAssetRef": "RootInteraction"
+        },
+        "Ability1": {
+          "anyOf": [
+            {
+              "type": "string",
+              "title": "Reference to RootInteraction",
+              "hytale": {
+                "type": "string"
+              }
+            },
+            {
+              "$ref": "RootInteraction.json#"
+            }
+          ],
+          "hytaleAssetRef": "RootInteraction"
+        },
+        "Ability2": {
+          "anyOf": [
+            {
+              "type": "string",
+              "title": "Reference to RootInteraction",
+              "hytale": {
+                "type": "string"
+              }
+            },
+            {
+              "$ref": "RootInteraction.json#"
+            }
+          ],
+          "hytaleAssetRef": "RootInteraction"
+        },
+        "Ability3": {
+          "anyOf": [
+            {
+              "type": "string",
+              "title": "Reference to RootInteraction",
+              "hytale": {
+                "type": "string"
+              }
+            },
+            {
+              "$ref": "RootInteraction.json#"
+            }
+          ],
+          "hytaleAssetRef": "RootInteraction"
+        },
+        "Use": {
+          "anyOf": [
+            {
+              "type": "string",
+              "title": "Reference to RootInteraction",
+              "hytale": {
+                "type": "string"
+              }
+            },
+            {
+              "$ref": "RootInteraction.json#"
+            }
+          ],
+          "hytaleAssetRef": "RootInteraction"
+        },
+        "Pick": {
+          "anyOf": [
+            {
+              "type": "string",
+              "title": "Reference to RootInteraction",
+              "hytale": {
+                "type": "string"
+              }
+            },
+            {
+              "$ref": "RootInteraction.json#"
+            }
+          ],
+          "hytaleAssetRef": "RootInteraction"
+        },
+        "Pickup": {
+          "anyOf": [
+            {
+              "type": "string",
+              "title": "Reference to RootInteraction",
+              "hytale": {
+                "type": "string"
+              }
+            },
+            {
+              "$ref": "RootInteraction.json#"
+            }
+          ],
+          "hytaleAssetRef": "RootInteraction"
+        },
+        "CollisionEnter": {
+          "anyOf": [
+            {
+              "type": "string",
+              "title": "Reference to RootInteraction",
+              "hytale": {
+                "type": "string"
+              }
+            },
+            {
+              "$ref": "RootInteraction.json#"
+            }
+          ],
+          "hytaleAssetRef": "RootInteraction"
+        },
+        "CollisionLeave": {
+          "anyOf": [
+            {
+              "type": "string",
+              "title": "Reference to RootInteraction",
+              "hytale": {
+                "type": "string"
+              }
+            },
+            {
+              "$ref": "RootInteraction.json#"
+            }
+          ],
+          "hytaleAssetRef": "RootInteraction"
+        },
+        "Collision": {
+          "anyOf": [
+            {
+              "type": "string",
+              "title": "Reference to RootInteraction",
+              "hytale": {
+                "type": "string"
+              }
+            },
+            {
+              "$ref": "RootInteraction.json#"
+            }
+          ],
+          "hytaleAssetRef": "RootInteraction"
+        },
+        "EntityStatEffect": {
+          "anyOf": [
+            {
+              "type": "string",
+              "title": "Reference to RootInteraction",
+              "hytale": {
+                "type": "string"
+              }
+            },
+            {
+              "$ref": "RootInteraction.json#"
+            }
+          ],
+          "hytaleAssetRef": "RootInteraction"
+        },
+        "SwapTo": {
+          "anyOf": [
+            {
+              "type": "string",
+              "title": "Reference to RootInteraction",
+              "hytale": {
+                "type": "string"
+              }
+            },
+            {
+              "$ref": "RootInteraction.json#"
+            }
+          ],
+          "hytaleAssetRef": "RootInteraction"
+        },
+        "SwapFrom": {
+          "anyOf": [
+            {
+              "type": "string",
+              "title": "Reference to RootInteraction",
+              "hytale": {
+                "type": "string"
+              }
+            },
+            {
+              "$ref": "RootInteraction.json#"
+            }
+          ],
+          "hytaleAssetRef": "RootInteraction"
+        },
+        "Death": {
+          "anyOf": [
+            {
+              "type": "string",
+              "title": "Reference to RootInteraction",
+              "hytale": {
+                "type": "string"
+              }
+            },
+            {
+              "$ref": "RootInteraction.json#"
+            }
+          ],
+          "hytaleAssetRef": "RootInteraction"
+        },
+        "Wielding": {
+          "anyOf": [
+            {
+              "type": "string",
+              "title": "Reference to RootInteraction",
+              "hytale": {
+                "type": "string"
+              }
+            },
+            {
+              "$ref": "RootInteraction.json#"
+            }
+          ],
+          "hytaleAssetRef": "RootInteraction"
+        },
+        "ProjectileSpawn": {
+          "anyOf": [
+            {
+              "type": "string",
+              "title": "Reference to RootInteraction",
+              "hytale": {
+                "type": "string"
+              }
+            },
+            {
+              "$ref": "RootInteraction.json#"
+            }
+          ],
+          "hytaleAssetRef": "RootInteraction"
+        },
+        "ProjectileHit": {
+          "anyOf": [
+            {
+              "type": "string",
+              "title": "Reference to RootInteraction",
+              "hytale": {
+                "type": "string"
+              }
+            },
+            {
+              "$ref": "RootInteraction.json#"
+            }
+          ],
+          "hytaleAssetRef": "RootInteraction"
+        },
+        "ProjectileMiss": {
+          "anyOf": [
+            {
+              "type": "string",
+              "title": "Reference to RootInteraction",
+              "hytale": {
+                "type": "string"
+              }
+            },
+            {
+              "$ref": "RootInteraction.json#"
+            }
+          ],
+          "hytaleAssetRef": "RootInteraction"
+        },
+        "ProjectileBounce": {
+          "anyOf": [
+            {
+              "type": "string",
+              "title": "Reference to RootInteraction",
+              "hytale": {
+                "type": "string"
+              }
+            },
+            {
+              "$ref": "RootInteraction.json#"
+            }
+          ],
+          "hytaleAssetRef": "RootInteraction"
+        },
+        "Held": {
+          "anyOf": [
+            {
+              "type": "string",
+              "title": "Reference to RootInteraction",
+              "hytale": {
+                "type": "string"
+              }
+            },
+            {
+              "$ref": "RootInteraction.json#"
+            }
+          ],
+          "hytaleAssetRef": "RootInteraction"
+        },
+        "HeldOffhand": {
+          "anyOf": [
+            {
+              "type": "string",
+              "title": "Reference to RootInteraction",
+              "hytale": {
+                "type": "string"
+              }
+            },
+            {
+              "$ref": "RootInteraction.json#"
+            }
+          ],
+          "hytaleAssetRef": "RootInteraction"
+        },
+        "Equipped": {
+          "anyOf": [
+            {
+              "type": "string",
+              "title": "Reference to RootInteraction",
+              "hytale": {
+                "type": "string"
+              }
+            },
+            {
+              "$ref": "RootInteraction.json#"
+            }
+          ],
+          "hytaleAssetRef": "RootInteraction"
+        },
+        "Dodge": {
+          "anyOf": [
+            {
+              "type": "string",
+              "title": "Reference to RootInteraction",
+              "hytale": {
+                "type": "string"
+              }
+            },
+            {
+              "$ref": "RootInteraction.json#"
+            }
+          ],
+          "hytaleAssetRef": "RootInteraction"
+        },
+        "GameModeSwap": {
+          "anyOf": [
+            {
+              "type": "string",
+              "title": "Reference to RootInteraction",
+              "hytale": {
+                "type": "string"
+              }
+            },
+            {
+              "$ref": "RootInteraction.json#"
+            }
+          ],
+          "hytaleAssetRef": "RootInteraction"
+        }
+      },
+      "additionalProperties": {
+        "anyOf": [
+          {
+            "type": "string",
+            "title": "Reference to RootInteraction",
+            "hytale": {
+              "type": "string"
+            }
+          },
+          {
+            "$ref": "RootInteraction.json#"
+          }
+        ],
+        "hytaleAssetRef": "RootInteraction"
+      },
+      "propertyNames": {
+        "hytale": {
+          "type": "string"
+        },
+        "enum": [
+          "Primary",
+          "Secondary",
+          "Ability1",
+          "Ability2",
+          "Ability3",
+          "Use",
+          "Pick",
+          "Pickup",
+          "CollisionEnter",
+          "CollisionLeave",
+          "Collision",
+          "EntityStatEffect",
+          "SwapTo",
+          "SwapFrom",
+          "Death",
+          "Wielding",
+          "ProjectileSpawn",
+          "ProjectileHit",
+          "ProjectileMiss",
+          "ProjectileBounce",
+          "Held",
+          "HeldOffhand",
+          "Equipped",
+          "Dodge",
+          "GameModeSwap"
+        ]
+      }
+    },
+    "CarryInteractionHints": {
+      "type": [
+        "object",
+        "null"
+      ],
+      "title": "Map of InteractionType",
+      "description": "Per carry interaction, the localization key the client shows as an input binding hint on the HUD while the item is carried.",
+      "markdownDescription": "Per carry interaction, the localization key the client shows as an input binding hint on the HUD while the item is carried.",
+      "hytale": {
+        "type": "EnumMap",
+        "inheritsProperty": true
+      },
+      "properties": {
+        "Primary": {
+          "type": "string",
+          "hytale": {
+            "type": "string"
+          }
+        },
+        "Secondary": {
+          "type": "string",
+          "hytale": {
+            "type": "string"
+          }
+        },
+        "Ability1": {
+          "type": "string",
+          "hytale": {
+            "type": "string"
+          }
+        },
+        "Ability2": {
+          "type": "string",
+          "hytale": {
+            "type": "string"
+          }
+        },
+        "Ability3": {
+          "type": "string",
+          "hytale": {
+            "type": "string"
+          }
+        },
+        "Use": {
+          "type": "string",
+          "hytale": {
+            "type": "string"
+          }
+        },
+        "Pick": {
+          "type": "string",
+          "hytale": {
+            "type": "string"
+          }
+        },
+        "Pickup": {
+          "type": "string",
+          "hytale": {
+            "type": "string"
+          }
+        },
+        "CollisionEnter": {
+          "type": "string",
+          "hytale": {
+            "type": "string"
+          }
+        },
+        "CollisionLeave": {
+          "type": "string",
+          "hytale": {
+            "type": "string"
+          }
+        },
+        "Collision": {
+          "type": "string",
+          "hytale": {
+            "type": "string"
+          }
+        },
+        "EntityStatEffect": {
+          "type": "string",
+          "hytale": {
+            "type": "string"
+          }
+        },
+        "SwapTo": {
+          "type": "string",
+          "hytale": {
+            "type": "string"
+          }
+        },
+        "SwapFrom": {
+          "type": "string",
+          "hytale": {
+            "type": "string"
+          }
+        },
+        "Death": {
+          "type": "string",
+          "hytale": {
+            "type": "string"
+          }
+        },
+        "Wielding": {
+          "type": "string",
+          "hytale": {
+            "type": "string"
+          }
+        },
+        "ProjectileSpawn": {
+          "type": "string",
+          "hytale": {
+            "type": "string"
+          }
+        },
+        "ProjectileHit": {
+          "type": "string",
+          "hytale": {
+            "type": "string"
+          }
+        },
+        "ProjectileMiss": {
+          "type": "string",
+          "hytale": {
+            "type": "string"
+          }
+        },
+        "ProjectileBounce": {
+          "type": "string",
+          "hytale": {
+            "type": "string"
+          }
+        },
+        "Held": {
+          "type": "string",
+          "hytale": {
+            "type": "string"
+          }
+        },
+        "HeldOffhand": {
+          "type": "string",
+          "hytale": {
+            "type": "string"
+          }
+        },
+        "Equipped": {
+          "type": "string",
+          "hytale": {
+            "type": "string"
+          }
+        },
+        "Dodge": {
+          "type": "string",
+          "hytale": {
+            "type": "string"
+          }
+        },
+        "GameModeSwap": {
+          "type": "string",
+          "hytale": {
+            "type": "string"
+          }
+        }
+      },
+      "additionalProperties": {
+        "type": "string",
+        "hytale": {
+          "type": "string"
+        }
       },
       "propertyNames": {
         "hytale": {

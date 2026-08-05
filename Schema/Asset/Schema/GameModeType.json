@@ -140,12 +140,732 @@
               "$ref": "RootInteraction.json#"
             }
           ],
-          "hytaleAssetRef": "RootInteraction"
+          "hytaleAssetRef": "RootInteraction",
+          "hytale": {
+            "inheritsProperty": true
+          }
         },
         {
           "type": "null"
         }
       ]
+    },
+    "Spectator": {
+      "type": "boolean",
+      "description": "Whether players in this gamemode type are spectators: hidden from non-spectators, ignored by NPCs, unable to pick up items, and able to attach their camera to other players.",
+      "markdownDescription": "Whether players in this gamemode type are spectators: hidden from non-spectators, ignored by NPCs, unable to pick up items, and able to attach their camera to other players.",
+      "hytale": {
+        "type": "boolean",
+        "inheritsProperty": true
+      },
+      "default": false
+    },
+    "MovementConfigId": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "description": "When set, the named MovementConfig is applied as the player's movement settings on enter, including its Fly. On exit the player's default movement settings are restored. When unset the player's movement settings are left unchanged.",
+      "markdownDescription": "When set, the named MovementConfig is applied as the player's movement settings on enter, including its Fly. On exit the player's default movement settings are restored. When unset the player's movement settings are left unchanged.",
+      "hytaleAssetRef": "MovementConfig",
+      "hytale": {
+        "type": "string",
+        "inheritsProperty": true
+      }
+    },
+    "Flying": {
+      "type": "boolean",
+      "description": "When set, forces the player into (or out of) the flying state on enter. When unset the player's flying state is left unchanged.",
+      "markdownDescription": "When set, forces the player into (or out of) the flying state on enter. When unset the player's flying state is left unchanged.",
+      "hytale": {
+        "type": "boolean",
+        "inheritsProperty": true
+      }
+    },
+    "NoClip": {
+      "type": "boolean",
+      "description": "When set, enables or disables no-clip on enter. When unset the player's no-clip state is left unchanged.",
+      "markdownDescription": "When set, enables or disables no-clip on enter. When unset the player's no-clip state is left unchanged.",
+      "hytale": {
+        "type": "boolean",
+        "inheritsProperty": true
+      }
+    },
+    "Invulnerable": {
+      "type": "boolean",
+      "description": "When set, adds or removes the Invulnerable component on enter. When unset the player's invulnerability is left unchanged.",
+      "markdownDescription": "When set, adds or removes the Invulnerable component on enter. When unset the player's invulnerability is left unchanged.",
+      "hytale": {
+        "type": "boolean",
+        "inheritsProperty": true
+      }
+    },
+    "Intangible": {
+      "type": "boolean",
+      "description": "When set, adds or removes the Intangible component on enter. When unset the player's tangibility is left unchanged.",
+      "markdownDescription": "When set, adds or removes the Intangible component on enter. When unset the player's tangibility is left unchanged.",
+      "hytale": {
+        "type": "boolean",
+        "inheritsProperty": true
+      }
+    },
+    "ItemDrops": {
+      "type": "boolean",
+      "description": "When set, allows or blocks the player dropping items while this gamemode type is active. When unset the underlying game mode's behavior applies.",
+      "markdownDescription": "When set, allows or blocks the player dropping items while this gamemode type is active. When unset the underlying game mode's behavior applies.",
+      "hytale": {
+        "type": "boolean",
+        "inheritsProperty": true
+      }
+    },
+    "PreventInventoryAccess": {
+      "type": "boolean",
+      "description": "When set, blocks or allows the player opening and manipulating their inventory on enter. When unset the player's inventory access is left unchanged.",
+      "markdownDescription": "When set, blocks or allows the player opening and manipulating their inventory on enter. When unset the player's inventory access is left unchanged.",
+      "hytale": {
+        "type": "boolean",
+        "inheritsProperty": true
+      }
+    },
+    "PreventEmotes": {
+      "type": "boolean",
+      "description": "When set, blocks or allows the player playing emotes on enter, and entering with it set to true stops an emote in progress. When unset the player's emote access is left unchanged.",
+      "markdownDescription": "When set, blocks or allows the player playing emotes on enter, and entering with it set to true stops an emote in progress. When unset the player's emote access is left unchanged.",
+      "hytale": {
+        "type": "boolean",
+        "inheritsProperty": true
+      }
+    },
+    "TriggerBlocks": {
+      "type": "boolean",
+      "description": "When set, enables or disables the player firing trigger blocks and taking block contact damage on enter. When unset the player's trigger block processing is left unchanged.",
+      "markdownDescription": "When set, enables or disables the player firing trigger blocks and taking block contact damage on enter. When unset the player's trigger block processing is left unchanged.",
+      "hytale": {
+        "type": "boolean",
+        "inheritsProperty": true
+      }
+    },
+    "VoiceChannel": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "description": "When set, assigns the player to the named voice channel on enter: their speech is heard only by members of that channel. When unset the player's voice channel is left unchanged.",
+      "markdownDescription": "When set, assigns the player to the named voice channel on enter: their speech is heard only by members of that channel. When unset the player's voice channel is left unchanged.",
+      "hytale": {
+        "type": "string",
+        "inheritsProperty": true
+      }
+    },
+    "HudComponents": {
+      "type": [
+        "array",
+        "null"
+      ],
+      "description": "When set, replaces the player's visible HUD components on enter. When unset the player's HUD is left unchanged.",
+      "markdownDescription": "When set, replaces the player's visible HUD components on enter. When unset the player's HUD is left unchanged.",
+      "hytale": {
+        "type": "array",
+        "inheritsProperty": true
+      },
+      "items": {
+        "type": "string",
+        "title": "HudComponent",
+        "enumDescriptions": [
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          ""
+        ],
+        "markdownEnumDescriptions": [
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          ""
+        ],
+        "hytale": {
+          "type": "Enum"
+        },
+        "enum": [
+          "Hotbar",
+          "StatusIcons",
+          "Reticle",
+          "Chat",
+          "Requests",
+          "Notifications",
+          "KillFeed",
+          "InputBindings",
+          "PlayerList",
+          "EventTitle",
+          "Compass",
+          "ObjectivePanel",
+          "PortalPanel",
+          "BuilderToolsLegend",
+          "Speedometer",
+          "UtilitySlotSelector",
+          "BlockVariantSelector",
+          "BuilderToolsMaterialSlotSelector",
+          "Stamina",
+          "AmmoIndicator",
+          "Health",
+          "Mana",
+          "Oxygen",
+          "Sleep",
+          "Abilities"
+        ]
+      }
+    },
+    "LockedCameraView": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "title": "ClientCameraView",
+      "description": "When set to FirstPerson or ThirdPerson, locks the player's camera to that view on enter, disabling the camera view toggle, and resets it on exit. When unset the camera is left unchanged.",
+      "markdownDescription": "When set to FirstPerson or ThirdPerson, locks the player's camera to that view on enter, disabling the camera view toggle, and resets it on exit. When unset the camera is left unchanged.",
+      "enumDescriptions": [
+        "",
+        "",
+        ""
+      ],
+      "markdownEnumDescriptions": [
+        "",
+        "",
+        ""
+      ],
+      "allOf": [
+        {
+          "not": {
+            "type": "string",
+            "hytale": {
+              "type": "string"
+            },
+            "const": "Custom"
+          }
+        }
+      ],
+      "hytale": {
+        "type": "Enum",
+        "inheritsProperty": true
+      },
+      "enum": [
+        "FirstPerson",
+        "ThirdPerson",
+        "Custom"
+      ]
+    },
+    "EntityEffectId": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "description": "When set, an entity effect applied to the player on enter and removed on exit, for example a ghostly spectator look. When unset no effect is applied.",
+      "markdownDescription": "When set, an entity effect applied to the player on enter and removed on exit, for example a ghostly spectator look. When unset no effect is applied.",
+      "hytaleAssetRef": "EntityEffect",
+      "hytale": {
+        "type": "string",
+        "inheritsProperty": true
+      }
+    },
+    "DeathScreenMessage": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "description": "When set, the death screen shown on dying into this gamemode type displays this localization key as a note, for example a permadeath notice, with a button that dismisses into the type. The screen appears only for deaths that show a death menu. When unset the type is entered silently.",
+      "markdownDescription": "When set, the death screen shown on dying into this gamemode type displays this localization key as a note, for example a permadeath notice, with a button that dismisses into the type. The screen appears only for deaths that show a death menu. When unset the type is entered silently.",
+      "hytale": {
+        "type": "string",
+        "inheritsProperty": true
+      }
+    },
+    "InteractionOverrides": {
+      "type": [
+        "object",
+        "null"
+      ],
+      "title": "Map of InteractionType",
+      "description": "When set, inline root interactions mapped by interaction type, installed into the player's interaction overrides on enter and removed on exit. Lets a gamemode type rebind clicks, for example spectator camera controls, and gate the rest against the held item. When unset the player's interaction overrides are left unchanged.",
+      "markdownDescription": "When set, inline root interactions mapped by interaction type, installed into the player's interaction overrides on enter and removed on exit. Lets a gamemode type rebind clicks, for example spectator camera controls, and gate the rest against the held item. When unset the player's interaction overrides are left unchanged.",
+      "hytale": {
+        "type": "EnumMap",
+        "inheritsProperty": true
+      },
+      "properties": {
+        "Primary": {
+          "anyOf": [
+            {
+              "type": "string",
+              "title": "Reference to RootInteraction",
+              "hytale": {
+                "type": "string"
+              }
+            },
+            {
+              "$ref": "RootInteraction.json#"
+            }
+          ],
+          "hytaleAssetRef": "RootInteraction"
+        },
+        "Secondary": {
+          "anyOf": [
+            {
+              "type": "string",
+              "title": "Reference to RootInteraction",
+              "hytale": {
+                "type": "string"
+              }
+            },
+            {
+              "$ref": "RootInteraction.json#"
+            }
+          ],
+          "hytaleAssetRef": "RootInteraction"
+        },
+        "Ability1": {
+          "anyOf": [
+            {
+              "type": "string",
+              "title": "Reference to RootInteraction",
+              "hytale": {
+                "type": "string"
+              }
+            },
+            {
+              "$ref": "RootInteraction.json#"
+            }
+          ],
+          "hytaleAssetRef": "RootInteraction"
+        },
+        "Ability2": {
+          "anyOf": [
+            {
+              "type": "string",
+              "title": "Reference to RootInteraction",
+              "hytale": {
+                "type": "string"
+              }
+            },
+            {
+              "$ref": "RootInteraction.json#"
+            }
+          ],
+          "hytaleAssetRef": "RootInteraction"
+        },
+        "Ability3": {
+          "anyOf": [
+            {
+              "type": "string",
+              "title": "Reference to RootInteraction",
+              "hytale": {
+                "type": "string"
+              }
+            },
+            {
+              "$ref": "RootInteraction.json#"
+            }
+          ],
+          "hytaleAssetRef": "RootInteraction"
+        },
+        "Use": {
+          "anyOf": [
+            {
+              "type": "string",
+              "title": "Reference to RootInteraction",
+              "hytale": {
+                "type": "string"
+              }
+            },
+            {
+              "$ref": "RootInteraction.json#"
+            }
+          ],
+          "hytaleAssetRef": "RootInteraction"
+        },
+        "Pick": {
+          "anyOf": [
+            {
+              "type": "string",
+              "title": "Reference to RootInteraction",
+              "hytale": {
+                "type": "string"
+              }
+            },
+            {
+              "$ref": "RootInteraction.json#"
+            }
+          ],
+          "hytaleAssetRef": "RootInteraction"
+        },
+        "Pickup": {
+          "anyOf": [
+            {
+              "type": "string",
+              "title": "Reference to RootInteraction",
+              "hytale": {
+                "type": "string"
+              }
+            },
+            {
+              "$ref": "RootInteraction.json#"
+            }
+          ],
+          "hytaleAssetRef": "RootInteraction"
+        },
+        "CollisionEnter": {
+          "anyOf": [
+            {
+              "type": "string",
+              "title": "Reference to RootInteraction",
+              "hytale": {
+                "type": "string"
+              }
+            },
+            {
+              "$ref": "RootInteraction.json#"
+            }
+          ],
+          "hytaleAssetRef": "RootInteraction"
+        },
+        "CollisionLeave": {
+          "anyOf": [
+            {
+              "type": "string",
+              "title": "Reference to RootInteraction",
+              "hytale": {
+                "type": "string"
+              }
+            },
+            {
+              "$ref": "RootInteraction.json#"
+            }
+          ],
+          "hytaleAssetRef": "RootInteraction"
+        },
+        "Collision": {
+          "anyOf": [
+            {
+              "type": "string",
+              "title": "Reference to RootInteraction",
+              "hytale": {
+                "type": "string"
+              }
+            },
+            {
+              "$ref": "RootInteraction.json#"
+            }
+          ],
+          "hytaleAssetRef": "RootInteraction"
+        },
+        "EntityStatEffect": {
+          "anyOf": [
+            {
+              "type": "string",
+              "title": "Reference to RootInteraction",
+              "hytale": {
+                "type": "string"
+              }
+            },
+            {
+              "$ref": "RootInteraction.json#"
+            }
+          ],
+          "hytaleAssetRef": "RootInteraction"
+        },
+        "SwapTo": {
+          "anyOf": [
+            {
+              "type": "string",
+              "title": "Reference to RootInteraction",
+              "hytale": {
+                "type": "string"
+              }
+            },
+            {
+              "$ref": "RootInteraction.json#"
+            }
+          ],
+          "hytaleAssetRef": "RootInteraction"
+        },
+        "SwapFrom": {
+          "anyOf": [
+            {
+              "type": "string",
+              "title": "Reference to RootInteraction",
+              "hytale": {
+                "type": "string"
+              }
+            },
+            {
+              "$ref": "RootInteraction.json#"
+            }
+          ],
+          "hytaleAssetRef": "RootInteraction"
+        },
+        "Death": {
+          "anyOf": [
+            {
+              "type": "string",
+              "title": "Reference to RootInteraction",
+              "hytale": {
+                "type": "string"
+              }
+            },
+            {
+              "$ref": "RootInteraction.json#"
+            }
+          ],
+          "hytaleAssetRef": "RootInteraction"
+        },
+        "Wielding": {
+          "anyOf": [
+            {
+              "type": "string",
+              "title": "Reference to RootInteraction",
+              "hytale": {
+                "type": "string"
+              }
+            },
+            {
+              "$ref": "RootInteraction.json#"
+            }
+          ],
+          "hytaleAssetRef": "RootInteraction"
+        },
+        "ProjectileSpawn": {
+          "anyOf": [
+            {
+              "type": "string",
+              "title": "Reference to RootInteraction",
+              "hytale": {
+                "type": "string"
+              }
+            },
+            {
+              "$ref": "RootInteraction.json#"
+            }
+          ],
+          "hytaleAssetRef": "RootInteraction"
+        },
+        "ProjectileHit": {
+          "anyOf": [
+            {
+              "type": "string",
+              "title": "Reference to RootInteraction",
+              "hytale": {
+                "type": "string"
+              }
+            },
+            {
+              "$ref": "RootInteraction.json#"
+            }
+          ],
+          "hytaleAssetRef": "RootInteraction"
+        },
+        "ProjectileMiss": {
+          "anyOf": [
+            {
+              "type": "string",
+              "title": "Reference to RootInteraction",
+              "hytale": {
+                "type": "string"
+              }
+            },
+            {
+              "$ref": "RootInteraction.json#"
+            }
+          ],
+          "hytaleAssetRef": "RootInteraction"
+        },
+        "ProjectileBounce": {
+          "anyOf": [
+            {
+              "type": "string",
+              "title": "Reference to RootInteraction",
+              "hytale": {
+                "type": "string"
+              }
+            },
+            {
+              "$ref": "RootInteraction.json#"
+            }
+          ],
+          "hytaleAssetRef": "RootInteraction"
+        },
+        "Held": {
+          "anyOf": [
+            {
+              "type": "string",
+              "title": "Reference to RootInteraction",
+              "hytale": {
+                "type": "string"
+              }
+            },
+            {
+              "$ref": "RootInteraction.json#"
+            }
+          ],
+          "hytaleAssetRef": "RootInteraction"
+        },
+        "HeldOffhand": {
+          "anyOf": [
+            {
+              "type": "string",
+              "title": "Reference to RootInteraction",
+              "hytale": {
+                "type": "string"
+              }
+            },
+            {
+              "$ref": "RootInteraction.json#"
+            }
+          ],
+          "hytaleAssetRef": "RootInteraction"
+        },
+        "Equipped": {
+          "anyOf": [
+            {
+              "type": "string",
+              "title": "Reference to RootInteraction",
+              "hytale": {
+                "type": "string"
+              }
+            },
+            {
+              "$ref": "RootInteraction.json#"
+            }
+          ],
+          "hytaleAssetRef": "RootInteraction"
+        },
+        "Dodge": {
+          "anyOf": [
+            {
+              "type": "string",
+              "title": "Reference to RootInteraction",
+              "hytale": {
+                "type": "string"
+              }
+            },
+            {
+              "$ref": "RootInteraction.json#"
+            }
+          ],
+          "hytaleAssetRef": "RootInteraction"
+        },
+        "GameModeSwap": {
+          "anyOf": [
+            {
+              "type": "string",
+              "title": "Reference to RootInteraction",
+              "hytale": {
+                "type": "string"
+              }
+            },
+            {
+              "$ref": "RootInteraction.json#"
+            }
+          ],
+          "hytaleAssetRef": "RootInteraction"
+        }
+      },
+      "additionalProperties": {
+        "anyOf": [
+          {
+            "type": "string",
+            "title": "Reference to RootInteraction",
+            "hytale": {
+              "type": "string"
+            }
+          },
+          {
+            "$ref": "RootInteraction.json#"
+          }
+        ],
+        "hytaleAssetRef": "RootInteraction"
+      },
+      "propertyNames": {
+        "hytale": {
+          "type": "string"
+        },
+        "enum": [
+          "Primary",
+          "Secondary",
+          "Ability1",
+          "Ability2",
+          "Ability3",
+          "Use",
+          "Pick",
+          "Pickup",
+          "CollisionEnter",
+          "CollisionLeave",
+          "Collision",
+          "EntityStatEffect",
+          "SwapTo",
+          "SwapFrom",
+          "Death",
+          "Wielding",
+          "ProjectileSpawn",
+          "ProjectileHit",
+          "ProjectileMiss",
+          "ProjectileBounce",
+          "Held",
+          "HeldOffhand",
+          "Equipped",
+          "Dodge",
+          "GameModeSwap"
+        ]
+      }
+    },
+    "OverrideAllInteractions": {
+      "type": "boolean",
+      "description": "When true, interaction types the InteractionOverrides map does not bind resolve to no interaction rather than falling through to the held item, so a click can only run an interaction the map declares. When unset the unmapped types fall through as normal.",
+      "markdownDescription": "When true, interaction types the InteractionOverrides map does not bind resolve to no interaction rather than falling through to the held item, so a click can only run an interaction the map declares. When unset the unmapped types fall through as normal.",
+      "hytale": {
+        "type": "boolean",
+        "inheritsProperty": true
+      }
     }
   },
   "additionalProperties": false

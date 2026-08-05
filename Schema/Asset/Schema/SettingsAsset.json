@@ -140,13 +140,29 @@
         }
       }
     },
-    "CustomConcurrency": {
+    "LowPriorityConcurrency": {
       "type": "integer",
       "hytale": {
         "type": "integer"
       },
       "exclusiveMinimum": -2,
-      "default": -1
+      "default": 0
+    },
+    "NormalPriorityConcurrency": {
+      "type": "integer",
+      "hytale": {
+        "type": "integer"
+      },
+      "exclusiveMinimum": -2,
+      "default": 0
+    },
+    "HighPriorityConcurrency": {
+      "type": "integer",
+      "hytale": {
+        "type": "integer"
+      },
+      "exclusiveMinimum": -2,
+      "default": 0
     },
     "BufferCapacityFactor": {
       "type": "number",

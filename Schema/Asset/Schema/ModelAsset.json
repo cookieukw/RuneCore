@@ -436,7 +436,7 @@
       "hytale": {
         "type": "array",
         "inheritsProperty": true,
-        "uiSectionStart": "Physics",
+        "uiSectionStart": "Particles",
         "uiCollapsedByDefault": false
       },
       "items": {

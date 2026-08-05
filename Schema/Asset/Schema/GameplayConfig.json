@@ -151,7 +151,7 @@
             "AllowBlockPlacement": true,
             "BlockPlacementFragilityTimer": 0.0,
             "DaytimeDurationSeconds": 1728,
-            "NighttimeDurationSeconds": 1728,
+            "NighttimeDurationSeconds": 1151,
             "TotalMoonPhases": 5,
             "Sleep": {
               "WakeUpHour": 5.5,
@@ -1204,6 +1204,304 @@
             }
           },
           "additionalProperties": false
+        },
+        "Wilderness": {
+          "type": "object",
+          "title": "WildernessConfig",
+          "description": "Configuration for wilderness tracking.",
+          "markdownDescription": "Configuration for wilderness tracking.",
+          "hytale": {
+            "type": "object",
+            "mergesProperties": true
+          },
+          "properties": {
+            "$Title": {
+              "description": "Comments don't have any function other than allowing users to add certain internal comments or notes to an asset",
+              "doNotSuggest": true,
+              "hytale": {
+                "uiDisplayMode": "Hidden",
+                "uiPropertyTitle": "Comment"
+              }
+            },
+            "$Comment": {
+              "description": "Comments don't have any function other than allowing users to add certain internal comments or notes to an asset",
+              "doNotSuggest": true,
+              "hytale": {
+                "uiDisplayMode": "Hidden",
+                "uiPropertyTitle": "Comment"
+              }
+            },
+            "$Author": {
+              "description": "Comments don't have any function other than allowing users to add certain internal comments or notes to an asset",
+              "doNotSuggest": true,
+              "hytale": {
+                "uiDisplayMode": "Hidden",
+                "uiPropertyTitle": "Comment"
+              }
+            },
+            "$TODO": {
+              "description": "Comments don't have any function other than allowing users to add certain internal comments or notes to an asset",
+              "doNotSuggest": true,
+              "hytale": {
+                "uiDisplayMode": "Hidden",
+                "uiPropertyTitle": "Comment"
+              }
+            },
+            "$Position": {
+              "description": "Comments don't have any function other than allowing users to add certain internal comments or notes to an asset",
+              "doNotSuggest": true,
+              "hytale": {
+                "uiDisplayMode": "Hidden",
+                "uiPropertyTitle": "Comment"
+              }
+            },
+            "$FloatingFunctionNodes": {
+              "description": "Comments don't have any function other than allowing users to add certain internal comments or notes to an asset",
+              "doNotSuggest": true,
+              "hytale": {
+                "uiDisplayMode": "Hidden",
+                "uiPropertyTitle": "Comment"
+              }
+            },
+            "$Groups": {
+              "description": "Comments don't have any function other than allowing users to add certain internal comments or notes to an asset",
+              "doNotSuggest": true,
+              "hytale": {
+                "uiDisplayMode": "Hidden",
+                "uiPropertyTitle": "Comment"
+              }
+            },
+            "$WorkspaceID": {
+              "description": "Comments don't have any function other than allowing users to add certain internal comments or notes to an asset",
+              "doNotSuggest": true,
+              "hytale": {
+                "uiDisplayMode": "Hidden",
+                "uiPropertyTitle": "Comment"
+              }
+            },
+            "$NodeId": {
+              "description": "Comments don't have any function other than allowing users to add certain internal comments or notes to an asset",
+              "doNotSuggest": true,
+              "hytale": {
+                "uiDisplayMode": "Hidden",
+                "uiPropertyTitle": "Comment"
+              }
+            },
+            "$NodeEditorMetadata": {
+              "description": "Comments don't have any function other than allowing users to add certain internal comments or notes to an asset",
+              "doNotSuggest": true,
+              "hytale": {
+                "uiDisplayMode": "Hidden",
+                "uiPropertyTitle": "Comment"
+              }
+            },
+            "Enabled": {
+              "type": "boolean",
+              "description": "Enable wilderness tracking in a world.",
+              "markdownDescription": "Enable wilderness tracking in a world.",
+              "hytale": {
+                "type": "boolean",
+                "inheritsProperty": true
+              },
+              "default": false
+            },
+            "OwnedHomeChunkRadius": {
+              "type": "integer",
+              "description": "The horizontal chunk radius around an owned player home marker. Set to -1 to disable the radius.",
+              "markdownDescription": "The horizontal chunk radius around an owned player home marker. Set to -1 to disable the radius.",
+              "hytale": {
+                "type": "integer",
+                "inheritsProperty": true
+              },
+              "minimum": -1,
+              "default": 8
+            },
+            "OwnedHomeChunkRadiusY": {
+              "type": "integer",
+              "description": "The vertical chunk radius around an owned player home marker. Set to -1 to disable the radius.",
+              "markdownDescription": "The vertical chunk radius around an owned player home marker. Set to -1 to disable the radius.",
+              "hytale": {
+                "type": "integer",
+                "inheritsProperty": true
+              },
+              "minimum": -1,
+              "default": 2
+            },
+            "UnownedHomeChunkRadius": {
+              "type": "integer",
+              "description": "The horizontal chunk radius around an unowned player home marker. Set to -1 to disable the radius.",
+              "markdownDescription": "The horizontal chunk radius around an unowned player home marker. Set to -1 to disable the radius.",
+              "hytale": {
+                "type": "integer",
+                "inheritsProperty": true
+              },
+              "minimum": -1,
+              "default": 2
+            },
+            "UnownedHomeChunkRadiusY": {
+              "type": "integer",
+              "description": "The vertical chunk radius around an unowned player home marker. Set to -1 to disable the radius.",
+              "markdownDescription": "The vertical chunk radius around an unowned player home marker. Set to -1 to disable the radius.",
+              "hytale": {
+                "type": "integer",
+                "inheritsProperty": true
+              },
+              "minimum": -1,
+              "default": 1
+            },
+            "PlayerTrackerChunkRadius": {
+              "type": "integer",
+              "description": "The horizontal chunk radius around a player to track wilderness in.",
+              "markdownDescription": "The horizontal chunk radius around a player to track wilderness in.",
+              "hytale": {
+                "type": "integer",
+                "inheritsProperty": true
+              },
+              "minimum": 0,
+              "default": 2
+            },
+            "PlayerTrackerChunkRadiusY": {
+              "type": "integer",
+              "description": "The horizontal chunk radius around a player to track wilderness in.",
+              "markdownDescription": "The horizontal chunk radius around a player to track wilderness in.",
+              "hytale": {
+                "type": "integer",
+                "inheritsProperty": true
+              },
+              "minimum": 0,
+              "default": 1
+            }
+          },
+          "additionalProperties": false
+        },
+        "WorldEvents": {
+          "type": "object",
+          "title": "WorldEventsConfig",
+          "hytale": {
+            "type": "object",
+            "mergesProperties": true
+          },
+          "properties": {
+            "$Title": {
+              "description": "Comments don't have any function other than allowing users to add certain internal comments or notes to an asset",
+              "doNotSuggest": true,
+              "hytale": {
+                "uiDisplayMode": "Hidden",
+                "uiPropertyTitle": "Comment"
+              }
+            },
+            "$Comment": {
+              "description": "Comments don't have any function other than allowing users to add certain internal comments or notes to an asset",
+              "doNotSuggest": true,
+              "hytale": {
+                "uiDisplayMode": "Hidden",
+                "uiPropertyTitle": "Comment"
+              }
+            },
+            "$Author": {
+              "description": "Comments don't have any function other than allowing users to add certain internal comments or notes to an asset",
+              "doNotSuggest": true,
+              "hytale": {
+                "uiDisplayMode": "Hidden",
+                "uiPropertyTitle": "Comment"
+              }
+            },
+            "$TODO": {
+              "description": "Comments don't have any function other than allowing users to add certain internal comments or notes to an asset",
+              "doNotSuggest": true,
+              "hytale": {
+                "uiDisplayMode": "Hidden",
+                "uiPropertyTitle": "Comment"
+              }
+            },
+            "$Position": {
+              "description": "Comments don't have any function other than allowing users to add certain internal comments or notes to an asset",
+              "doNotSuggest": true,
+              "hytale": {
+                "uiDisplayMode": "Hidden",
+                "uiPropertyTitle": "Comment"
+              }
+            },
+            "$FloatingFunctionNodes": {
+              "description": "Comments don't have any function other than allowing users to add certain internal comments or notes to an asset",
+              "doNotSuggest": true,
+              "hytale": {
+                "uiDisplayMode": "Hidden",
+                "uiPropertyTitle": "Comment"
+              }
+            },
+            "$Groups": {
+              "description": "Comments don't have any function other than allowing users to add certain internal comments or notes to an asset",
+              "doNotSuggest": true,
+              "hytale": {
+                "uiDisplayMode": "Hidden",
+                "uiPropertyTitle": "Comment"
+              }
+            },
+            "$WorkspaceID": {
+              "description": "Comments don't have any function other than allowing users to add certain internal comments or notes to an asset",
+              "doNotSuggest": true,
+              "hytale": {
+                "uiDisplayMode": "Hidden",
+                "uiPropertyTitle": "Comment"
+              }
+            },
+            "$NodeId": {
+              "description": "Comments don't have any function other than allowing users to add certain internal comments or notes to an asset",
+              "doNotSuggest": true,
+              "hytale": {
+                "uiDisplayMode": "Hidden",
+                "uiPropertyTitle": "Comment"
+              }
+            },
+            "$NodeEditorMetadata": {
+              "description": "Comments don't have any function other than allowing users to add certain internal comments or notes to an asset",
+              "doNotSuggest": true,
+              "hytale": {
+                "uiDisplayMode": "Hidden",
+                "uiPropertyTitle": "Comment"
+              }
+            },
+            "ExclusionRadius": {
+              "type": "integer",
+              "description": "The minimum distance that a world-event location must be from other world-event locations. Set to 0 to disable proximity filtering.",
+              "markdownDescription": "The minimum distance that a world-event location must be from other world-event locations. Set to 0 to disable proximity filtering.",
+              "hytale": {
+                "type": "integer"
+              },
+              "minimum": 0,
+              "default": 512
+            },
+            "Events": {
+              "type": [
+                "array",
+                "null"
+              ],
+              "description": "List of world events to run when the world loads.",
+              "markdownDescription": "List of world events to run when the world loads.",
+              "hytale": {
+                "type": "array"
+              },
+              "items": {
+                "$ref": "common.json#/definitions/WorldEventRecord"
+              }
+            },
+            "GlobalEvents": {
+              "type": [
+                "array",
+                "null"
+              ],
+              "description": "List of global world events to run when triggered by an action in-game such as an interaction.",
+              "markdownDescription": "List of global world events to run when triggered by an action in-game such as an interaction.",
+              "hytale": {
+                "type": "array"
+              },
+              "items": {
+                "$ref": "common.json#/definitions/WorldEventRecord"
+              }
+            }
+          },
+          "additionalProperties": false
         }
       },
       "additionalProperties": false
@@ -1249,6 +1547,33 @@
             }
           ],
           "hytaleAssetRef": "SoundSet",
+          "hytale": {
+            "inheritsProperty": true
+          }
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "CreativeEraserInteraction": {
+      "description": "The root interaction run for Primary while a Creative player has the eraser enabled, regardless of the held item. Unset disables the eraser toggle.",
+      "markdownDescription": "The root interaction run for Primary while a Creative player has the eraser enabled, regardless of the held item. Unset disables the eraser toggle.",
+      "anyOf": [
+        {
+          "anyOf": [
+            {
+              "type": "string",
+              "title": "Reference to RootInteraction",
+              "hytale": {
+                "type": "string"
+              }
+            },
+            {
+              "$ref": "RootInteraction.json#"
+            }
+          ],
+          "hytaleAssetRef": "RootInteraction",
           "hytale": {
             "inheritsProperty": true
           }

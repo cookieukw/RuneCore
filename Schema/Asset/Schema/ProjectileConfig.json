@@ -158,6 +158,16 @@
         "inheritsProperty": true
       }
     },
+    "UseModelScale": {
+      "type": "boolean",
+      "description": "Whether the projectile's scale is derived from the model asset's MinScale/MaxScale range. When false (the default), the projectile always spawns at scale 1.0 regardless of the model's configured range.",
+      "markdownDescription": "Whether the projectile's scale is derived from the model asset's MinScale/MaxScale range. When false (the default), the projectile always spawns at scale 1.0 regardless of the model's configured range.",
+      "hytale": {
+        "type": "boolean",
+        "inheritsProperty": true
+      },
+      "default": false
+    },
     "LaunchForce": {
       "type": "number",
       "hytale": {
@@ -187,6 +197,26 @@
       "hytale": {
         "inheritsProperty": true
       }
+    },
+    "RotateSpawnOffsetByPitch": {
+      "type": "boolean",
+      "description": "Whether SpawnOffset should be rotated by the entity's pitch.",
+      "markdownDescription": "Whether SpawnOffset should be rotated by the entity's pitch.",
+      "hytale": {
+        "type": "boolean",
+        "inheritsProperty": true
+      },
+      "default": true
+    },
+    "RotateSpawnOffsetByYaw": {
+      "type": "boolean",
+      "description": "Whether SpawnOffset should be rotated by the entity's yaw.",
+      "markdownDescription": "Whether SpawnOffset should be rotated by the entity's yaw.",
+      "hytale": {
+        "type": "boolean",
+        "inheritsProperty": true
+      },
+      "default": true
     },
     "Interactions": {
       "type": "object",

@@ -66,6 +66,9 @@
       "$ref": "common.json#/definitions/DistanceToBiomeEdgeDensityAsset"
     },
     {
+      "$ref": "common.json#/definitions/DistanceToGraphEdgeDensityAsset"
+    },
+    {
       "$ref": "common.json#/definitions/EllipsoidDensityAsset"
     },
     {
@@ -82,6 +85,9 @@
     },
     {
       "$ref": "common.json#/definitions/GradientWarpDensityAsset"
+    },
+    {
+      "$ref": "common.json#/definitions/GraphDensityAsset"
     },
     {
       "$ref": "common.json#/definitions/ImportedDensityAsset"
@@ -186,6 +192,9 @@
       "$ref": "common.json#/definitions/VectorWarpDensityAsset"
     },
     {
+      "$ref": "common.json#/definitions/WhiteNoiseDensityAsset"
+    },
+    {
       "$ref": "common.json#/definitions/XOverrideDensityAsset"
     },
     {
@@ -231,12 +240,14 @@
       "Cylinder",
       "Distance",
       "DistanceToBiomeEdge",
+      "DistanceToGraphEdge",
       "Ellipsoid",
       "Exported",
       "FastGradientWarp",
       "Floor",
       "Gradient",
       "GradientWarp",
+      "Graph",
       "Imported",
       "Inverter",
       "Max",
@@ -271,6 +282,7 @@
       "SwitchState",
       "Terrain",
       "VectorWarp",
+      "WhiteNoise",
       "XOverride",
       "XValue",
       "YOverride",

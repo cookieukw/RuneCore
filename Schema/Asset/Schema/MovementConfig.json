@@ -853,6 +853,34 @@
         }
       ]
     },
+    "Fly": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "title": "FlyMode",
+      "description": "When set, controls fly capability whenever this config is applied to a player: Disabled revokes it, Allowed grants a toggleable fly, Forced keeps the player flying with the fly toggle disabled. When unset the capability derives from the player's game mode, or stays unchanged when the config is applied through a GameModeType.",
+      "markdownDescription": "When set, controls fly capability whenever this config is applied to a player: Disabled revokes it, Allowed grants a toggleable fly, Forced keeps the player flying with the fly toggle disabled. When unset the capability derives from the player's game mode, or stays unchanged when the config is applied through a GameModeType.",
+      "enumDescriptions": [
+        "",
+        "",
+        ""
+      ],
+      "markdownEnumDescriptions": [
+        "",
+        "",
+        ""
+      ],
+      "hytale": {
+        "type": "Enum",
+        "inheritsProperty": true
+      },
+      "enum": [
+        "Disabled",
+        "Allowed",
+        "Forced"
+      ]
+    },
     "HorizontalFlySpeed": {
       "anyOf": [
         {
@@ -1906,6 +1934,68 @@
       ]
     },
     "RollTimeToComplete": {
+      "anyOf": [
+        {
+          "anyOf": [
+            {
+              "type": "number",
+              "hytale": {
+                "type": "number"
+              },
+              "default": 0.0
+            },
+            {
+              "type": "string",
+              "hytale": {
+                "type": "string"
+              },
+              "pattern": "^(-?Infinity|NaN)$"
+            }
+          ],
+          "hytale": {
+            "type": "Number",
+            "inheritsProperty": true
+          }
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "MaxSlopeAngleDegrees": {
+      "description": "The maximum angle, in degrees, a surface can be tilted from facing vertical to be considered safe to stand on",
+      "markdownDescription": "The maximum angle, in degrees, a surface can be tilted from facing vertical to be considered safe to stand on",
+      "anyOf": [
+        {
+          "anyOf": [
+            {
+              "type": "number",
+              "hytale": {
+                "type": "number"
+              },
+              "default": 0.0
+            },
+            {
+              "type": "string",
+              "hytale": {
+                "type": "string"
+              },
+              "pattern": "^(-?Infinity|NaN)$"
+            }
+          ],
+          "hytale": {
+            "type": "Number",
+            "inheritsProperty": true
+          }
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "MaxWallAngleDegrees": {
+      "description": "The maximum angle, in degrees, a surface can be tilted from facing horizontally to be considered a wall that can be stepped up",
+      "markdownDescription": "The maximum angle, in degrees, a surface can be tilted from facing horizontally to be considered a wall that can be stepped up",
       "anyOf": [
         {
           "anyOf": [

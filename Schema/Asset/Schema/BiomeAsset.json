@@ -190,6 +190,9 @@
               "$ref": "common.json#/definitions/FieldFunctionMaterialProviderAsset"
             },
             {
+              "$ref": "common.json#/definitions/GraphMaterialProviderAsset"
+            },
+            {
               "$ref": "common.json#/definitions/ImportedMaterialProviderAsset"
             },
             {
@@ -211,6 +214,9 @@
               "$ref": "common.json#/definitions/TerrainDensityMaterialProviderAsset"
             },
             {
+              "$ref": "common.json#/definitions/TransparentMaterialProviderAsset"
+            },
+            {
               "$ref": "common.json#/definitions/UpwardDepthMaterialProviderAsset"
             },
             {
@@ -227,6 +233,7 @@
               "DownwardDepth",
               "DownwardSpace",
               "FieldFunction",
+              "Graph",
               "Imported",
               "Queue",
               "SimpleHorizontal",
@@ -234,6 +241,7 @@
               "SpaceAndDepth",
               "Striped",
               "TerrainDensity",
+              "Transparent",
               "UpwardDepth",
               "UpwardSpace",
               "Weighted"
@@ -300,13 +308,17 @@
             },
             {
               "$ref": "common.json#/definitions/DensityDelimitedTintProviderAsset"
+            },
+            {
+              "$ref": "common.json#/definitions/MixTintProviderAsset"
             }
           ],
           "hytaleSchemaTypeField": {
             "property": "Type",
             "values": [
               "Constant",
-              "DensityDelimited"
+              "DensityDelimited",
+              "Mix"
             ],
             "parentPropertyKey": "Parent"
           },

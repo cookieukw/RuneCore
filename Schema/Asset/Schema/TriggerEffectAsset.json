@@ -143,6 +143,9 @@
             "$ref": "common.json#/definitions/CooldownCondition"
           },
           {
+            "$ref": "common.json#/definitions/EntityCountCondition"
+          },
+          {
             "$ref": "common.json#/definitions/GameModeCondition"
           },
           {
@@ -159,6 +162,9 @@
           },
           {
             "$ref": "common.json#/definitions/TagCondition"
+          },
+          {
+            "$ref": "common.json#/definitions/TimeOfDayCondition@1"
           }
         ],
         "hytaleSchemaTypeField": {
@@ -166,12 +172,14 @@
           "values": [
             "BlockTypeCondition",
             "CooldownCondition",
+            "EntityCountCondition",
             "GameModeCondition",
             "ItemCondition",
             "PermissionCondition",
             "PlayerCountCondition",
             "RandomChanceCondition",
-            "TagCondition"
+            "TagCondition",
+            "TimeOfDay"
           ]
         },
         "hytale": {
@@ -190,6 +198,9 @@
       "items": {
         "title": "Type Selector",
         "anyOf": [
+          {
+            "$ref": "common.json#/definitions/CancelParticlesEffect"
+          },
           {
             "$ref": "common.json#/definitions/ControlDoorsEffect"
           },
@@ -212,6 +223,9 @@
             "$ref": "common.json#/definitions/GiveItemEffect"
           },
           {
+            "$ref": "common.json#/definitions/ModifyRulesEffect"
+          },
+          {
             "$ref": "common.json#/definitions/ModifyTagsEffect"
           },
           {
@@ -221,10 +235,16 @@
             "$ref": "common.json#/definitions/PlaceBlockEffect"
           },
           {
+            "$ref": "common.json#/definitions/PlayAnimationEffect"
+          },
+          {
             "$ref": "common.json#/definitions/PlaySoundEffect"
           },
           {
             "$ref": "common.json#/definitions/PlayVfxEffect"
+          },
+          {
+            "$ref": "common.json#/definitions/RemoveEntitiesEffect"
           },
           {
             "$ref": "common.json#/definitions/ReplaceBlockTypeEffect"
@@ -234,6 +254,9 @@
           },
           {
             "$ref": "common.json#/definitions/SendMessageEffect"
+          },
+          {
+            "$ref": "common.json#/definitions/SendSignalEffect"
           },
           {
             "$ref": "common.json#/definitions/SetGameModeEffect"
@@ -251,7 +274,13 @@
             "$ref": "common.json#/definitions/ShowEventTitleEffect"
           },
           {
+            "$ref": "common.json#/definitions/SpawnNpcEffect"
+          },
+          {
             "$ref": "common.json#/definitions/TeleportEffect"
+          },
+          {
+            "$ref": "common.json#/definitions/TimeEffect"
           },
           {
             "$ref": "common.json#/definitions/TriggerNpcMarkersEffect"
@@ -260,6 +289,7 @@
         "hytaleSchemaTypeField": {
           "property": "Type",
           "values": [
+            "CancelParticles",
             "ControlDoors",
             "DamageEntity",
             "DeleteVolume",
@@ -267,20 +297,26 @@
             "EnableVolume",
             "EntityEffect",
             "GiveItem",
+            "ModifyRules",
             "ModifyTags",
             "PastePrefab",
             "PlaceBlock",
+            "PlayAnimation",
             "PlaySound",
             "PlayVfx",
+            "RemoveEntities",
             "ReplaceBlockType",
             "RunRootInteraction",
             "SendMessage",
+            "SendSignal",
             "SetGameMode",
             "SetMusic",
             "SetVelocity",
             "SetWeather",
             "ShowEventTitle",
+            "SpawnNpc",
             "Teleport",
+            "Time",
             "TriggerNpcMarkers"
           ]
         },
@@ -301,6 +337,9 @@
         "title": "Type Selector",
         "anyOf": [
           {
+            "$ref": "common.json#/definitions/CancelParticlesEffect"
+          },
+          {
             "$ref": "common.json#/definitions/ControlDoorsEffect"
           },
           {
@@ -322,6 +361,9 @@
             "$ref": "common.json#/definitions/GiveItemEffect"
           },
           {
+            "$ref": "common.json#/definitions/ModifyRulesEffect"
+          },
+          {
             "$ref": "common.json#/definitions/ModifyTagsEffect"
           },
           {
@@ -331,10 +373,16 @@
             "$ref": "common.json#/definitions/PlaceBlockEffect"
           },
           {
+            "$ref": "common.json#/definitions/PlayAnimationEffect"
+          },
+          {
             "$ref": "common.json#/definitions/PlaySoundEffect"
           },
           {
             "$ref": "common.json#/definitions/PlayVfxEffect"
+          },
+          {
+            "$ref": "common.json#/definitions/RemoveEntitiesEffect"
           },
           {
             "$ref": "common.json#/definitions/ReplaceBlockTypeEffect"
@@ -344,6 +392,9 @@
           },
           {
             "$ref": "common.json#/definitions/SendMessageEffect"
+          },
+          {
+            "$ref": "common.json#/definitions/SendSignalEffect"
           },
           {
             "$ref": "common.json#/definitions/SetGameModeEffect"
@@ -361,7 +412,13 @@
             "$ref": "common.json#/definitions/ShowEventTitleEffect"
           },
           {
+            "$ref": "common.json#/definitions/SpawnNpcEffect"
+          },
+          {
             "$ref": "common.json#/definitions/TeleportEffect"
+          },
+          {
+            "$ref": "common.json#/definitions/TimeEffect"
           },
           {
             "$ref": "common.json#/definitions/TriggerNpcMarkersEffect"
@@ -370,6 +427,7 @@
         "hytaleSchemaTypeField": {
           "property": "Type",
           "values": [
+            "CancelParticles",
             "ControlDoors",
             "DamageEntity",
             "DeleteVolume",
@@ -377,21 +435,93 @@
             "EnableVolume",
             "EntityEffect",
             "GiveItem",
+            "ModifyRules",
             "ModifyTags",
             "PastePrefab",
             "PlaceBlock",
+            "PlayAnimation",
             "PlaySound",
             "PlayVfx",
+            "RemoveEntities",
             "ReplaceBlockType",
             "RunRootInteraction",
             "SendMessage",
+            "SendSignal",
             "SetGameMode",
             "SetMusic",
             "SetVelocity",
             "SetWeather",
             "ShowEventTitle",
+            "SpawnNpc",
             "Teleport",
+            "Time",
             "TriggerNpcMarkers"
+          ]
+        },
+        "hytale": {
+          "mergesProperties": true
+        }
+      }
+    },
+    "Rules": {
+      "type": [
+        "array",
+        "null"
+      ],
+      "hytale": {
+        "type": "array"
+      },
+      "items": {
+        "title": "Type Selector",
+        "anyOf": [
+          {
+            "$ref": "common.json#/definitions/CreativePlacementRule"
+          },
+          {
+            "$ref": "common.json#/definitions/DamageMultiplierRule"
+          },
+          {
+            "$ref": "common.json#/definitions/FlyRule"
+          },
+          {
+            "$ref": "common.json#/definitions/NoBuildRule"
+          },
+          {
+            "$ref": "common.json#/definitions/NoDamageRule"
+          },
+          {
+            "$ref": "common.json#/definitions/NoDestroyRule"
+          },
+          {
+            "$ref": "common.json#/definitions/NoDoorOpenRule"
+          },
+          {
+            "$ref": "common.json#/definitions/NoHarvestRule"
+          },
+          {
+            "$ref": "common.json#/definitions/NoHealRule"
+          },
+          {
+            "$ref": "common.json#/definitions/NoTickRule"
+          },
+          {
+            "$ref": "common.json#/definitions/NoUseRule"
+          }
+        ],
+        "hytaleSchemaTypeField": {
+          "property": "Type",
+          "values": [
+            "CreativePlacement",
+            "DamageMultiplier",
+            "Fly",
+            "NoBuild",
+            "NoDamage",
+            "NoDestroy",
+            "NoDoorOpen",
+            "NoHarvest",
+            "NoHeal",
+            "NoTick",
+            "NoUse"
           ]
         },
         "hytale": {
@@ -453,6 +583,166 @@
           "ItemDrop",
           "Projectile"
         ]
+      }
+    },
+    "IncludeVolumeSettings": {
+      "type": "boolean",
+      "hytale": {
+        "type": "boolean"
+      }
+    },
+    "VolumeTags": {
+      "type": [
+        "object",
+        "null"
+      ],
+      "title": "Map",
+      "hytale": {
+        "type": "object"
+      },
+      "additionalProperties": {
+        "type": "string",
+        "hytale": {
+          "type": "string"
+        }
+      }
+    },
+    "RejectionDelayMode": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "title": "RejectionDelayMode",
+      "enumDescriptions": [
+        "",
+        ""
+      ],
+      "markdownEnumDescriptions": [
+        "",
+        ""
+      ],
+      "hytale": {
+        "type": "Enum"
+      },
+      "enum": [
+        "Immediate",
+        "UseVolumeDelay"
+      ]
+    },
+    "Cooldown": {
+      "anyOf": [
+        {
+          "anyOf": [
+            {
+              "type": "number",
+              "hytale": {
+                "type": "number"
+              }
+            },
+            {
+              "type": "string",
+              "hytale": {
+                "type": "string"
+              },
+              "pattern": "^(-?Infinity|NaN)$"
+            }
+          ],
+          "hytale": {
+            "type": "Number"
+          }
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "CooldownMode": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "title": "CooldownMode",
+      "enumDescriptions": [
+        "",
+        ""
+      ],
+      "markdownEnumDescriptions": [
+        "",
+        ""
+      ],
+      "hytale": {
+        "type": "Enum"
+      },
+      "enum": [
+        "PerEntity",
+        "Total"
+      ]
+    },
+    "ActivationDelay": {
+      "anyOf": [
+        {
+          "anyOf": [
+            {
+              "type": "number",
+              "hytale": {
+                "type": "number"
+              }
+            },
+            {
+              "type": "string",
+              "hytale": {
+                "type": "string"
+              },
+              "pattern": "^(-?Infinity|NaN)$"
+            }
+          ],
+          "hytale": {
+            "type": "Number"
+          }
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "ProjectileSource": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "title": "ProjectileSource",
+      "enumDescriptions": [
+        "",
+        ""
+      ],
+      "markdownEnumDescriptions": [
+        "",
+        ""
+      ],
+      "hytale": {
+        "type": "Enum"
+      },
+      "enum": [
+        "Shooter",
+        "Projectile"
+      ]
+    },
+    "KeepLoaded": {
+      "type": "boolean",
+      "hytale": {
+        "type": "boolean"
+      }
+    },
+    "RotateEffectsOnPaste": {
+      "type": "boolean",
+      "hytale": {
+        "type": "boolean"
+      }
+    },
+    "CancelDelayedOnExit": {
+      "type": "boolean",
+      "hytale": {
+        "type": "boolean"
       }
     }
   },

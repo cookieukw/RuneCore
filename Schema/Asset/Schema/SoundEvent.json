@@ -198,72 +198,6 @@
         }
       ]
     },
-    "MusicDuckingVolume": {
-      "description": "Amount to duck music volume when playing in decibels.",
-      "markdownDescription": "Amount to duck music volume when playing in decibels.",
-      "anyOf": [
-        {
-          "anyOf": [
-            {
-              "type": "number",
-              "hytale": {
-                "type": "number"
-              },
-              "minimum": -100.0,
-              "maximum": 0.0,
-              "default": 0.0
-            },
-            {
-              "type": "string",
-              "hytale": {
-                "type": "string"
-              },
-              "pattern": "^(-?Infinity|NaN)$"
-            }
-          ],
-          "hytale": {
-            "type": "Number",
-            "inheritsProperty": true
-          }
-        },
-        {
-          "type": "null"
-        }
-      ]
-    },
-    "AmbientDuckingVolume": {
-      "description": "Amount to duck ambient sounds when playing in decibels.",
-      "markdownDescription": "Amount to duck ambient sounds when playing in decibels.",
-      "anyOf": [
-        {
-          "anyOf": [
-            {
-              "type": "number",
-              "hytale": {
-                "type": "number"
-              },
-              "minimum": -100.0,
-              "maximum": 0.0,
-              "default": 0.0
-            },
-            {
-              "type": "string",
-              "hytale": {
-                "type": "string"
-              },
-              "pattern": "^(-?Infinity|NaN)$"
-            }
-          ],
-          "hytale": {
-            "type": "Number",
-            "inheritsProperty": true
-          }
-        },
-        {
-          "type": "null"
-        }
-      ]
-    },
     "StartAttenuationDistance": {
       "description": "Distance at which to begin attenuation in blocks.",
       "markdownDescription": "Distance at which to begin attenuation in blocks.",
@@ -421,6 +355,29 @@
       "items": {
         "$ref": "common.json#/definitions/StateBindingConfig"
       }
+    },
+    "DuckingRules": {
+      "type": [
+        "array",
+        "null"
+      ],
+      "description": "While any layer of this SoundEvent is playing, each rule attenuates its TargetCategory.",
+      "markdownDescription": "While any layer of this SoundEvent is playing, each rule attenuates its TargetCategory.",
+      "hytale": {
+        "type": "array"
+      },
+      "items": {
+        "$ref": "common.json#/definitions/AudioCategoryDuckingRuleConfig"
+      }
+    },
+    "BypassDucking": {
+      "type": "boolean",
+      "description": "When true, this SoundEvent's voices ignore the ducking contribution of their routing category.",
+      "markdownDescription": "When true, this SoundEvent's voices ignore the ducking contribution of their routing category.",
+      "hytale": {
+        "type": "boolean"
+      },
+      "default": false
     }
   },
   "additionalProperties": false

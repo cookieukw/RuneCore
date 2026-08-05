@@ -157,7 +157,7 @@
       "hytale": {
         "type": "string"
       },
-      "pattern": "^server.*"
+      "pattern": "^server\\."
     },
     "Parameters": {
       "type": [
