@@ -208,6 +208,35 @@ de novo em vez de adivinhar.
 
 ---
 
+## 9. Gerenciador de Itens Interativos (ItemManager)
+
+O RuneCore fornece uma API genérica e unificada para você adicionar itens clicáveis (interativos) no seu mod, sem precisar escrever codecs repetitivos ou criar centenas de arquivos `RootInteractions` em JSON.
+
+### Como usar no Hytale:
+Basta criar o JSON do seu item (`Items/MeuItem.json`) e referenciar a interação genérica do RuneCore:
+```json
+{
+  "DisplayName": "Livro Mágico",
+  "Model": "Items/Consumables/Potions/ItemMagicBook.blockymodel",
+  "MaxStackSize": 1,
+  "Interactions": {
+    "Secondary": "RuneCore_GenericItemUse"
+  }
+}
+```
+
+### Como registrar no código:
+No `onEnable()` ou `init()` do seu plugin/mod, chame o `RuneCoreItemManager`:
+```java
+RuneCoreItemManager.register("MeuItem", (player, playerRef) -> {
+    playerRef.sendMessage(Message.raw("Você clicou no meu item customizado!"));
+    // Aqui você pode abrir UIs, gastar o item do inventário, etc.
+});
+```
+O gerenciador detecta qual item está na mão do jogador (lendo o sulfixo da ID) e executa o bloco de código correspondente automaticamente!
+
+---
+
 ## 🔮 Dicas de Especialista
 
 1.  **IDs Únicos:** Sempre use `playerRef.getUuid().toString()` como UID para buffs para garantir que eles sejam removidos corretamente quando o jogador desconectar.

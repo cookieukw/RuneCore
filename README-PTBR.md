@@ -411,6 +411,7 @@ Os pontos de entrada públicos são:
 | `AttributeRegistry` + `RuneAttribute` | Declarar um atributo novo |
 | `DamagePipeline` + `DamageStage` | Fazer um atributo afetar o dano |
 | `RuneCore` | Essências, efeitos, feitiços |
+| `RuneCoreItemManager` | Criar itens interativos/clicáveis |
 | `EffectHelper`, `StatHelper`, `PlayerStats` | Helpers de atributo e movimento de entidade |
 
 Interessado em construir em cima do RuneCore? Confira nosso [**Guia de Uso da API**](API_USAGE.md) para exemplos de código e passos de integração.

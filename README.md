@@ -411,6 +411,7 @@ The public entry points are:
 | `AttributeRegistry` + `RuneAttribute` | Declare a new attribute |
 | `DamagePipeline` + `DamageStage` | Make an attribute affect damage |
 | `RuneCore` | Essences, effects, spells |
+| `RuneCoreItemManager` | Create interactive/clickable items |
 | `EffectHelper`, `StatHelper`, `PlayerStats` | Entity stat and movement helpers |
 
 ## 10. ⚖️ License
