@@ -51,3 +51,5 @@ particles.particles
 libs/HytaleServer.jar
 hytale-api
 Schema
+logs
+config.json
