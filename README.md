@@ -423,6 +423,8 @@ org.gradle.java.home=/path/to/Hytale/jdk-25
 *   **Check Hytale Version:** `./gradlew hytaleVersion` (displays the current HytaleServer engine version).
 *   **Generate JSON Schemas:** `./gradlew generateSchemas` (extracts assets schema to the local `Schema/` folder).
 *   **Validate Mod Configs:** `./gradlew validateAssets` (tests local mod JSON configurations using Hytale's compiler).
+*   **Validate Prefabs:** `./gradlew validatePrefabs` (checks Hytale prefab templates integrity).
+*   **Verify Worlds:** `./gradlew verifyWorlds` (checks saving and loading integrity of universe worlds).
 
 ---
 

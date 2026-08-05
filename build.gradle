@@ -56,12 +56,18 @@ tasks.jar {
     destinationDirectory = file(modsDest)
 }
 
+// Use Gradle JavaToolchainService to dynamically resolve Java 25 launcher on any OS
+def javaToolchains = project.extensions.getByType(JavaToolchainService)
+def java25Launcher = javaToolchains.launcherFor {
+    languageVersion = JavaLanguageVersion.of(25)
+}
+
 // Task: Prints the Hytale Server version information
 tasks.register('hytaleVersion', JavaExec) {
     group = 'hytale'
     description = 'Prints the Hytale Server version information'
     
-    executable = '/usr/lib/jvm/java-25-openjdk-amd64/bin/java'
+    javaLauncher = java25Launcher
     classpath = files('libs/HytaleServer.jar')
     mainClass = 'com.hypixel.hytale.Main'
     args = ['--version']
@@ -72,7 +78,7 @@ tasks.register('generateSchemas', JavaExec) {
     group = 'hytale'
     description = 'Generates Hytale JSON Schemas'
     
-    executable = '/usr/lib/jvm/java-25-openjdk-amd64/bin/java'
+    javaLauncher = java25Launcher
     classpath = files('libs/HytaleServer.jar')
     mainClass = 'com.hypixel.hytale.Main'
     jvmArgs = ['--enable-native-access=ALL-UNNAMED']
@@ -95,7 +101,7 @@ tasks.register('validateAssets', JavaExec) {
     group = 'hytale'
     description = 'Validates mod assets and configs'
     
-    executable = '/usr/lib/jvm/java-25-openjdk-amd64/bin/java'
+    javaLauncher = java25Launcher
     classpath = files('libs/HytaleServer.jar')
     mainClass = 'com.hypixel.hytale.Main'
     jvmArgs = ['--enable-native-access=ALL-UNNAMED']
@@ -111,4 +117,40 @@ tasks.register('validateAssets', JavaExec) {
     
     // Ignore exit value 6 because of default instances world path warnings on bare run
     ignoreExitValue = true
+}
+
+// Task: Validates Hytale structures / prefabs
+tasks.register('validatePrefabs', JavaExec) {
+    group = 'hytale'
+    description = 'Validates Hytale prefab assets (.prefab)'
+    
+    javaLauncher = java25Launcher
+    classpath = files('libs/HytaleServer.jar')
+    mainClass = 'com.hypixel.hytale.Main'
+    jvmArgs = ['--enable-native-access=ALL-UNNAMED']
+    
+    def assetsZip = localProperties.getProperty('hytale.assets.path') ?: ""
+    args = [
+        '--bare',
+        '--validate-prefabs',
+        '--shutdown-after-validate',
+        '--assets', assetsZip
+    ]
+}
+
+// Task: Verifies integrity of worlds in universe directory
+tasks.register('verifyWorlds', JavaExec) {
+    group = 'hytale'
+    description = 'Verifies integrity of all worlds'
+    
+    javaLauncher = java25Launcher
+    classpath = files('libs/HytaleServer.jar')
+    mainClass = 'com.hypixel.hytale.Main'
+    jvmArgs = ['--enable-native-access=ALL-UNNAMED']
+    
+    def assetsZip = localProperties.getProperty('hytale.assets.path') ?: ""
+    args = [
+        '--verify-worlds',
+        '--assets', assetsZip
+    ]
 }
