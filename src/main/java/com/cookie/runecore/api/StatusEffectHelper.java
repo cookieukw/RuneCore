@@ -2,6 +2,7 @@ package com.cookie.runecore.api;
 
 import java.util.UUID;
 
+import com.cookie.runecore.systems.InvisibilityManager;
 import com.hypixel.hytale.component.Ref;
 import com.hypixel.hytale.component.Store;
 import com.hypixel.hytale.protocol.ApplyLookType;
@@ -183,24 +184,29 @@ public final class StatusEffectHelper {
 
     // ── Invisibility ──────────────────────────────────────────────────────────
 
+    /**
+     * Hides the player from every <b>other</b> player.
+     * <p>
+     * Delegates to {@link InvisibilityManager}, which owns the state. The previous version
+     * looped over {@code world.getPlayerRefs()} and hid the target from every observer
+     * including the target itself — that is what made the character fall through the ground,
+     * because a client that is no longer tracking its own entity has nothing to stand on. It
+     * also never reached players who joined afterwards, and never got undone on disconnect.
+     */
     public static void applyInvisibility(Ref<EntityStore> ref) {
-        withWorldAndPlayer(ref, (world, uuid) ->
-            world.execute(() -> {
-                for (PlayerRef observer : world.getPlayerRefs()) {
-                    observer.getHiddenPlayersManager().hidePlayer(uuid);
-                }
-            })
-        );
+        withWorldAndPlayer(ref, (world, uuid) -> {
+            InvisibilityManager manager = InvisibilityManager.get();
+            if (manager == null) return;
+            world.execute(() -> manager.hide(uuid));
+        });
     }
 
     public static void revertInvisibility(Ref<EntityStore> ref) {
-        withWorldAndPlayer(ref, (world, uuid) ->
-            world.execute(() -> {
-                for (PlayerRef observer : world.getPlayerRefs()) {
-                    observer.getHiddenPlayersManager().showPlayer(uuid);
-                }
-            })
-        );
+        withWorldAndPlayer(ref, (world, uuid) -> {
+            InvisibilityManager manager = InvisibilityManager.get();
+            if (manager == null) return;
+            world.execute(() -> manager.show(uuid));
+        });
     }
 
     // ── Internal: Boilerplate reducers ───────────────────────────────────────
