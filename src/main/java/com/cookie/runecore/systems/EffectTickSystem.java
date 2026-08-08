@@ -15,6 +15,9 @@ import java.util.stream.Collectors;
 
 public class EffectTickSystem {
 
+    private static final java.util.logging.Logger LOG =
+            java.util.logging.Logger.getLogger("RuneCore");
+
     private static final EffectTickSystem INSTANCE = new EffectTickSystem();
 
     private final Map<String, ActiveBuff> activeBuffs = new ConcurrentHashMap<>();
@@ -41,8 +44,18 @@ public class EffectTickSystem {
     }
 
     public void cancelAllBuffs(String playerId) {
-        activeBuffs.entrySet().removeIf(e -> e.getKey().startsWith(playerId + "|"));
-        entityRefs.entrySet().removeIf(e -> e.getKey().startsWith(playerId + "|"));
+        String prefix = playerId + "|";
+        for (Map.Entry<String, ActiveBuff> entry : activeBuffs.entrySet()) {
+            if (!entry.getKey().startsWith(prefix)) continue;
+            try {
+                // Cancelling must revert, not just forget.
+                entry.getValue().expire(entityRefs.get(entry.getKey()));
+            } catch (RuntimeException e) {
+                LOG.warning("expiry callback failed while cancelling '" + entry.getKey() + "': " + e);
+            }
+        }
+        activeBuffs.entrySet().removeIf(e -> e.getKey().startsWith(prefix));
+        entityRefs.entrySet().removeIf(e -> e.getKey().startsWith(prefix));
     }
 
     public boolean hasBuff(String playerId, String effectId) {
@@ -70,6 +83,11 @@ public class EffectTickSystem {
             Ref<EntityStore> ref = entityRefs.get(key);
 
             if (ref == null || !ref.isValid()) {
+                // The entity is gone (death, disconnect, chunk unload). Still run the expiry
+                // callback: cleanup keyed on the player UUID rather than the ref — invisibility
+                // being the obvious case — would otherwise never happen, leaving global state
+                // behind for the rest of the session.
+                buff.expire(ref);
                 it.remove();
                 entityRefs.remove(key);
                 continue;
@@ -86,7 +104,13 @@ public class EffectTickSystem {
             try {
                 alive = buff.tick(ref);
             } catch (IllegalStateException ex) {
-                // Entity invalidated mid-tick (shutdown race condition) — discard buff cleanly
+                // Entity invalidated mid-tick (shutdown race condition) — discard the buff, but
+                // still let it clean up after itself.
+                try {
+                    buff.expire(ref);
+                } catch (RuntimeException cleanupFailure) {
+                    LOG.warning("expiry callback failed for buff '" + key + "': " + cleanupFailure);
+                }
                 it.remove();
                 entityRefs.remove(key);
                 continue;
