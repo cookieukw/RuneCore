@@ -15,6 +15,7 @@ import com.cookie.runecore.systems.CombatStatsRegistry;
 import com.cookie.runecore.systems.CreatureCombatDefaults;
 import com.cookie.runecore.systems.CreatureCombatRegistry;
 import com.cookie.runecore.systems.EquipmentStatsListener;
+import com.cookie.runecore.systems.InvisibilityManager;
 import com.cookie.runecore.systems.ItemTooltipInjector;
 import com.cookie.runecore.systems.EffectTimerListener;
 import com.cookie.runecore.systems.FrozenInteractionListener;
@@ -111,6 +112,9 @@ public class Main extends JavaPlugin {
         new MagicListener(this.getEventRegistry());
         new FrozenInteractionListener(this.getEventRegistry());
         new CombatStatsManager(this.getEventRegistry());
+        // Owns invisibility state: catches up players who join mid-effect and guarantees the
+        // hidden flag is cleared on disconnect.
+        new InvisibilityManager(this.getEventRegistry());
         CombatStatsRegistry combatRegistry = new CombatStatsRegistry();
         CombatStatsDefaults.registerAll(combatRegistry);
         CreatureCombatRegistry creatureRegistry = new CreatureCombatRegistry();
