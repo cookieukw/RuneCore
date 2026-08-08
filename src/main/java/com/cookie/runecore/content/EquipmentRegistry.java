@@ -1,14 +1,16 @@
 package com.cookie.runecore.content;
 
-import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.logging.Logger;
 
 public class EquipmentRegistry {
 
     private static final Logger LOG = Logger.getLogger("RuneCore");
-    private static final Map<String, String> grimoireAssets = new HashMap<>();
-    private static final Map<String, String> staffAssets = new HashMap<>();
+    // Concurrent: written on the setup thread, read from interaction/tick threads. A plain
+    // HashMap published across threads without a barrier can be observed half-built.
+    private static final Map<String, String> grimoireAssets = new ConcurrentHashMap<>();
+    private static final Map<String, String> staffAssets = new ConcurrentHashMap<>();
 
     public static void init() {
         registerGrimoire("grimoire_purple", "hytale:weapon_spellbook_grimoire_purple", "Purple");
