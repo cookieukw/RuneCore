@@ -52,8 +52,14 @@ tasks.named('test') {
 }
 
 tasks.jar {
-    def modsDest = localProperties.getProperty('hytale.mods.dest') ?: "/home/cookie/.var/app/com.hypixel.HytaleLauncher/data/Hytale/UserData/Mods/"
-    destinationDirectory = file(modsDest)
+    // Set `hytale.mods.dest` in local.properties to drop the jar straight into a Hytale install.
+    // Without it the jar stays in build/libs — the fallback used to be an absolute path under one
+    // developer's home directory, which meant every other contributor (and CI) wrote the artifact
+    // somewhere that does not exist on their machine.
+    def modsDest = localProperties.getProperty('hytale.mods.dest')
+    if (modsDest) {
+        destinationDirectory = file(modsDest)
+    }
 }
 
 // Use Gradle JavaToolchainService to dynamically resolve Java 25 launcher on any OS
