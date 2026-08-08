@@ -5,9 +5,6 @@ import com.cookie.runecore.api.attribute.AttributeContainer;
 import com.cookie.runecore.api.combat.DamageContext;
 import com.cookie.runecore.api.combat.DamageKind;
 import com.cookie.runecore.api.combat.DamagePipeline;
-import com.cookie.runecore.systems.CombatStatsRegistry.ItemCombatData;
-import com.hypixel.hytale.server.core.inventory.InventoryComponent;
-import com.hypixel.hytale.server.core.inventory.ItemStack;
 import com.hypixel.hytale.component.ArchetypeChunk;
 import com.hypixel.hytale.component.CommandBuffer;
 import com.hypixel.hytale.component.Ref;
@@ -21,6 +18,8 @@ import com.hypixel.hytale.server.core.universe.PlayerRef;
 import com.hypixel.hytale.server.core.universe.world.storage.EntityStore;
 
 import com.cookie.runecore.systems.CreatureCombatRegistry.CreatureCombatData;
+import com.cookie.runecore.systems.combat.CombatParticipants;
+import com.cookie.runecore.systems.combat.DamageClassifier;
 import com.cookie.runecore.systems.CreatureCombatRegistry.DamageProfile;
 import com.hypixel.hytale.server.core.modules.entity.component.ModelComponent;
 
@@ -44,13 +43,7 @@ public class CombatDamageInterceptor extends DamageEventSystem {
      */
     private static final boolean DEBUG = Boolean.getBoolean("runecore.combat.debug");
 
-    private static final Set<String> MAGIC_CAUSES = Set.of(
-            "Elemental", "Fire", "Ice", "Poison", "Magic"
-    );
 
-    private static final Set<String> PHYSICAL_CAUSES = Set.of(
-            "Physical", "Projectile", "Bludgeoning", "Slashing"
-    );
 
     @Override
     public Set<Dependency<EntityStore>> getDependencies() {
@@ -90,12 +83,12 @@ public class CombatDamageInterceptor extends DamageEventSystem {
         DamageCause cause = damage.getCause();
         String causeId = (cause != null && cause.getId() != null) ? cause.getId() : "";
         Damage.Source source = damage.getSource();
-        CreatureCombatData creatureData = getCreatureData(source);
+        CreatureCombatData creatureData = CombatParticipants.creatureBehind(source);
 
         if (DEBUG) LOG.info("[DMG] Hit on player " + targetUuid + " | raw=" + damage.getAmount() + " | cause=" + causeId);
 
         DamageContext ctx = context(source, defenderStats.attributes(), chunk.getReferenceTo(index),
-                classify(causeId, cause, creatureData), damage.getAmount());
+                DamageClassifier.classify(causeId, cause, creatureData), damage.getAmount());
 
         // Stages registered before MITIGATION adjust the engine's raw amount.
         float working = DamagePipeline.runBefore(ctx, damage.getAmount(), DamagePipeline.MITIGATION);
@@ -107,12 +100,12 @@ public class CombatDamageInterceptor extends DamageEventSystem {
             core = defenderStats.absorbDamage(working);
             if (DEBUG) LOG.info("[DMG] True damage, shield only");
         } else if (source instanceof Damage.EntitySource entitySource
-                && attackerStatsOf(entitySource, manager) != null) {
+                && CombatParticipants.attackerStats(entitySource, manager) != null) {
             // PvP: the amount comes from the attacker's stats plus the weapon in hand, which is
             // why `working` is discarded here — this model replaces the engine's number rather
             // than scaling it.
-            CombatStats attackerStats = attackerStatsOf(entitySource, manager);
-            CombatStats.Offense weapon = weaponOffense(entitySource);
+            CombatStats attackerStats = CombatParticipants.attackerStats(entitySource, manager);
+            CombatStats.Offense weapon = CombatParticipants.weaponOffense(entitySource);
             core = defenderStats.calculateFinalDamage(attackerStats, weapon);
             if (DEBUG) LOG.info("[DMG] PvP | weaponPhys=" + weapon.physical() + " | core=" + core);
         } else {
@@ -137,29 +130,7 @@ public class CombatDamageInterceptor extends DamageEventSystem {
         damage.setAmount(DamagePipeline.runFrom(ctx, core, DamagePipeline.MITIGATION));
     }
 
-    /** @return the attacker's stats when the source is a player RuneCore tracks, else null. */
-    private CombatStats attackerStatsOf(Damage.EntitySource entitySource, CombatStatsManager manager) {
-        UUID sourceUuid = getPlayerUuid(entitySource);
-        return (sourceUuid != null && manager.hasStats(sourceUuid)) ? manager.getStats(sourceUuid) : null;
-    }
 
-    /** Classifies a hit once, replacing the scattered cause-string comparisons. */
-    private DamageKind classify(String causeId, DamageCause cause, CreatureCombatData creature) {
-        if (causeId.equals("True") || (cause != null && cause.doesBypassResistances())) {
-            return DamageKind.TRUE;
-        }
-        if (creature != null) {
-            return switch (creature.profile) {
-                case PHYSICAL -> DamageKind.PHYSICAL;
-                case MAGIC -> DamageKind.MAGIC;
-                case HYBRID -> DamageKind.HYBRID;
-                case TRUE -> DamageKind.TRUE;
-            };
-        }
-        if (isMagicCause(causeId, cause)) return DamageKind.MAGIC;
-        if (isPhysicalCause(causeId)) return DamageKind.PHYSICAL;
-        return DamageKind.UNTYPED;
-    }
 
     /** Builds the context stages receive. Attacker attributes are empty for environmental damage. */
     private DamageContext context(Damage.Source source, AttributeContainer defenderAttributes,
@@ -171,7 +142,7 @@ public class CombatDamageInterceptor extends DamageEventSystem {
             attackerRef = entitySource.getRef();
             CombatStatsManager manager = CombatStatsManager.get();
             if (manager != null) {
-                UUID uuid = getPlayerUuid(entitySource);
+                UUID uuid = CombatParticipants.playerUuid(entitySource);
                 if (uuid != null && manager.hasStats(uuid)) {
                     attackerAttributes = manager.getStats(uuid).attributes();
                 }
@@ -191,7 +162,7 @@ public class CombatDamageInterceptor extends DamageEventSystem {
      */
     private void handleCreatureDefender(int index, ArchetypeChunk<EntityStore> chunk, Damage damage) {
         ModelComponent model = chunk.getComponent(index, ModelComponent.getComponentType());
-        CreatureCombatData defender = lookupCreature(model);
+        CreatureCombatData defender = CombatParticipants.creatureFor(model);
         if (defender == null) return;
 
         DamageCause cause = damage.getCause();
@@ -199,7 +170,7 @@ public class CombatDamageInterceptor extends DamageEventSystem {
         Damage.Source source = damage.getSource();
 
         CombatStats defenderStats = creatureAsDefender(defender);
-        DamageKind kind = classify(causeId, cause, null);
+        DamageKind kind = DamageClassifier.classify(causeId, cause, null);
         DamageContext ctx = context(source, defenderStats.attributes(), chunk.getReferenceTo(index),
                 kind, damage.getAmount());
 
@@ -209,20 +180,20 @@ public class CombatDamageInterceptor extends DamageEventSystem {
         if (kind.bypassesDefenses()) {
             // True damage ignores creature defences entirely; creatures carry no shield.
             core = working;
-        } else if (source instanceof Damage.EntitySource entitySource && isPlayerSource(entitySource)) {
+        } else if (source instanceof Damage.EntitySource entitySource && CombatParticipants.playerUuid(entitySource) != null) {
             CombatStatsManager manager = CombatStatsManager.get();
-            UUID attackerUuid = getPlayerUuid(entitySource);
+            UUID attackerUuid = CombatParticipants.playerUuid(entitySource);
             CombatStats attackerStats = (manager != null && attackerUuid != null)
                     ? manager.getStats(attackerUuid) : null;
             if (attackerStats == null) attackerStats = new CombatStats();
 
-            core = defenderStats.calculateFinalDamage(attackerStats, weaponOffense(entitySource));
+            core = defenderStats.calculateFinalDamage(attackerStats, CombatParticipants.weaponOffense(entitySource));
             if (DEBUG) LOG.info("[DMG] Player -> creature | armor=" + defender.armor
                     + " | mr=" + defender.magicResist + " | core=" + core);
         } else {
             // Creature or environment hitting a creature: no offensive stat block exists for
             // the attacker, so the engine's amount stays the base and only mitigation runs.
-            CreatureCombatData attacker = getCreatureData(source);
+            CreatureCombatData attacker = CombatParticipants.creatureBehind(source);
             if (attacker != null) {
                 core = applyCreatureDamage(working, defenderStats, attacker);
             } else if (kind == DamageKind.MAGIC) {
@@ -248,31 +219,9 @@ public class CombatDamageInterceptor extends DamageEventSystem {
         return stats;
     }
 
-    private boolean isPlayerSource(Damage.EntitySource entitySource) {
-        return getPlayerUuid(entitySource) != null;
-    }
 
-    /** Registry key for a creature: the model asset's file name, without path or namespace. */
-    private CreatureCombatData lookupCreature(ModelComponent model) {
-        CreatureCombatRegistry registry = CreatureCombatRegistry.get();
-        if (registry == null || model == null || model.getModel() == null) return null;
-        String assetId = model.getModel().getModelAssetId();
-        if (assetId == null) return null;
-        String name = assetId.contains("/") ? assetId.substring(assetId.lastIndexOf('/') + 1) : assetId;
-        if (name.contains(":")) name = name.substring(name.indexOf(':') + 1);
-        return registry.getData(name);
-    }
 
-    private boolean isMagicCause(String causeId, DamageCause cause) {
-        if (MAGIC_CAUSES.contains(causeId)) return true;
-        if (cause == null) return false;
-        String inherits = cause.getInherits();
-        return inherits != null && MAGIC_CAUSES.contains(inherits);
-    }
 
-    private boolean isPhysicalCause(String causeId) {
-        return PHYSICAL_CAUSES.contains(causeId);
-    }
 
     private float applyCreatureDamage(float raw, CombatStats defender, CreatureCombatData creature) {
         return switch (creature.profile) {
@@ -289,43 +238,6 @@ public class CombatDamageInterceptor extends DamageEventSystem {
         };
     }
 
-    /** Creature data for the <em>attacker</em> behind a damage source. */
-    private CreatureCombatData getCreatureData(Damage.Source source) {
-        if (!(source instanceof Damage.EntitySource entitySource)) return null;
-        var ref = entitySource.getRef();
-        if (ref == null || !ref.isValid()) return null;
-        Store<EntityStore> s = ref.getStore();
-        if (s == null) return null;
-        ModelComponent model = s.getComponent(ref, ModelComponent.getComponentType());
-        CreatureCombatData data = lookupCreature(model);
-        if (DEBUG) LOG.info("[DMG] Creature lookup | found=" + (data != null));
-        return data;
-    }
 
-    /** Offensive stats of the weapon the attacker is currently holding, or {@link CombatStats.Offense#NONE}. */
-    private CombatStats.Offense weaponOffense(Damage.EntitySource entitySource) {
-        CombatStatsRegistry registry = CombatStatsRegistry.get();
-        if (registry == null) return CombatStats.Offense.NONE;
 
-        var ref = entitySource.getRef();
-        if (ref == null || !ref.isValid()) return CombatStats.Offense.NONE;
-
-        ItemStack held = InventoryComponent.getItemInHand(ref.getStore(), ref);
-        if (held == null || held.isEmpty()) return CombatStats.Offense.NONE;
-
-        ItemCombatData data = registry.getItemData(held.getItemId());
-        if (data == null) return CombatStats.Offense.NONE;
-
-        return new CombatStats.Offense(data.physicalDamage, data.magicDamage, data.trueDamage,
-                data.armorPenetration, data.magicPenetration);
-    }
-
-    private UUID getPlayerUuid(Damage.EntitySource entitySource) {
-        var ref = entitySource.getRef();
-        if (ref == null || !ref.isValid()) return null;
-        Store<EntityStore> store = ref.getStore();
-        if (store == null) return null;
-        PlayerRef pr = (PlayerRef) store.getComponent(ref, PlayerRef.getComponentType());
-        return (pr != null) ? pr.getUuid() : null;
-    }
 }
