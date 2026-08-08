@@ -171,3 +171,40 @@ consumir a API.
   o mesmo `CODEC` já registrado como `runecore:potion_splash_generic`.
 - Os registries do `RuneCore` (singleton) são `HashMap` comum. Só é seguro porque tudo é
   registrado no `setup()`; qualquer `registerEffect`/`on()` em runtime é uma corrida.
+
+---
+
+## 3. Invisibilidade
+
+Três bugs distintos, todos corrigidos. Ver `scripts/create-issues.sh` para as issues.
+
+### 3.1 O jogador era ocultado do próprio cliente
+`applyInvisibility` percorria `world.getPlayerRefs()` e chamava `hidePlayer(uuid)` em **todo**
+observador — inclusive no próprio alvo. Como o `HiddenPlayersManager` é por observador (campo
+`playerRef` = quem olha, mais um `Set<UUID>`), isso mandava o cliente do jogador parar de
+rastrear a própria entidade.
+
+Daí os dois sintomas: não se ver, e **cair pelo chão e morrer** — cliente sem a própria entidade
+não tem no que colidir. O laço agora pula o alvo.
+
+### 3.2 Quem entrava no meio do efeito enxergava normalmente
+O hide era um disparo único para quem estava online. Sem hook de entrada, ao contrário do
+`RuneCoreHudManager` e do `CombatStatsManager`. O novo `InvisibilityManager` mantém o conjunto
+autoritativo e atualiza quem chega.
+
+### 3.3 Morrer ou deslogar deixava invisível para sempre
+O revert só existia no `onExpire` do buff, e duas coisas o impediam de rodar: o
+`EffectTickSystem` descartava buff com ref inválida sem chamar `onExpire`, e o `ActiveBuff`
+ainda protegia a chamada atrás de `ref.isValid()`.
+
+Corrigido na raiz — `ActiveBuff.expire` roda sempre, o `EffectTickSystem` o invoca nos caminhos
+de órfão e de cancelamento, e o revert da invisibilidade passou a ser chaveado pelo UUID em vez
+do ref. **Isso vale para todos os efeitos**, não só invisibilidade: qualquer buff que precisasse
+reverter algo ao morrer agora reverte.
+
+### 3.4 Translúcido só para si — não é possível
+Pedido levantado e investigado: `HiddenPlayersManager` é binário e `protocol.Opacity` é
+iluminação de bloco/fluido. Não há canal por observador para alterar renderização de entidade.
+
+Alternativa viável: um `EntityEffect` visual preso na própria entidade seria naturalmente
+só-seu, já que todos os outros têm o jogador oculto. Falta decidir o asset.
