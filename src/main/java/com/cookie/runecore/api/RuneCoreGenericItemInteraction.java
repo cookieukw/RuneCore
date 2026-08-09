@@ -65,7 +65,12 @@ public class RuneCoreGenericItemInteraction extends SimpleInstantInteraction {
         if (handled) {
             context.getState().state = InteractionState.Finished;
         } else {
-            context.getState().state = InteractionState.Failed;
+            // Previously set InteractionState.Failed here, which terminates the shared
+            // interaction pipeline outright — any other mod's handler for the same held item
+            // (block placement, a custom right-click action, etc.) never got a chance to run.
+            // An item RuneCore doesn't recognize just means RuneCore has nothing to do with it,
+            // not that the interaction itself failed — leave the state alone so whatever else is
+            // registered downstream still gets to process it.
             LOGGER.atInfo().log("RuneCore Debug: No handler registered for item: " + heldItem.getItemId());
         }
     }
