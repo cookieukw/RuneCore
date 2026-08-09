@@ -109,16 +109,6 @@ asset — `Glowing` exists but "shining" reads as the opposite of invisible.'
 # Open items carried over from the audit
 # ─────────────────────────────────────────────────────────────────────────────
 
-issue open "build.gradle hardcodes the author's home directory" "build" \
-'```gradle
-destinationDirectory = file("/home/cookie/.var/app/com.hypixel.HytaleLauncher/.../Mods/")
-```
-
-In a library this breaks the build for anyone else and for CI. Should be a relative path with an
-optional override via a Gradle property.
-
-AUDITORIA.md § 2.2'
-
 issue open "Singletons are published through constructor side effects" "tech-debt" \
 '`CombatStatsRegistry`, `CreatureCombatRegistry`, `CombatStatsManager` and `RuneCoreHudManager`
 all do `instance = this` in their constructor, with a non-volatile `static` field.
@@ -141,13 +131,6 @@ execution the future never completes at all — anything calling `.join()` hangs
 
 AUDITORIA.md § 2.6'
 
-issue open "StatusEffectHelper mixes seven unrelated effect families in one class" "tech-debt" \
-'242 lines, 22 public static methods covering bleeding, burn, nausea, haste, mining fatigue,
-strength/weakness/resistance and invisibility — no shared behaviour between them.
-
-Since the class is public API, the split should keep it as a thin facade delegating to
-per-family classes.'
-
 issue open "calculateFinalDamage has a side effect" "tech-debt,combat" \
 'It drains `shieldHP` through `absorbDamage`. The name reads as a pure calculation, so calling it
 twice to "preview" damage really spends the shield.
@@ -156,6 +139,78 @@ The behaviour is documented in the Javadoc and pinned by a unit test, but calcul
 application should be separated.
 
 AUDITORIA.md § 2.3'
+
+# ─────────────────────────────────────────────────────────────────────────────
+# Second sweep: bugs, redundancy and oversized files
+# ─────────────────────────────────────────────────────────────────────────────
+
+issue fixed "RuneCoreItemManager picks a handler non-deterministically" "bug" \
+'Handlers are keyed by item id suffix and matched with `itemId.endsWith(key)` while iterating a
+`HashMap`, returning on the first hit.
+
+With both `Staff` and `MagicStaff` registered, which one claims `Weapon_MagicStaff` depends on
+hash order — it can differ between runs and between JVM versions.
+
+The map was also a plain `HashMap` written on the setup thread and read from the interaction
+thread, with no memory barrier.
+
+**Fix:** `ConcurrentHashMap`, and the longest matching suffix wins (most specific handler).
+Added `unregister` and `hasHandler`.'"'"''
+
+issue fixed "EquipmentRegistry publishes its maps unsafely across threads" "bug" \
+'`grimoireAssets` and `staffAssets` are static `HashMap`s populated during `init()` on the setup
+thread and read later from interaction threads. Publishing a `HashMap` that way has no happens-
+before edge; a reader can observe it half-built.
+
+**Fix:** `ConcurrentHashMap`.'
+
+issue fixed "Bleeding tick burns two Math.random() calls and does nothing" "bug,effects" \
+'`onBleedingTick` ran a two-iteration loop computing a random height and horizontal spread — and
+the only statement consuming them, the particle spawn, was commented out.
+
+Cost: two `Math.random()` calls per tick, per bleeding entity, for no effect.
+
+**Fix:** the loop is gone; the entry point stays so particles can be re-enabled without touching
+the effect definition.'
+
+issue fixed "Water breathing refills oxygen to a hardcoded 100" "bug,effects" \
+'`onWaterBreathingTick` called `setStatValue(getOxygen(), 100f)`. Same class of bug as the health
+cap fixed earlier: an entity whose oxygen ceiling is not 100 gets the wrong value.
+
+**Fix:** refills to `EntityStatValue.getMax()`.'
+
+issue fixed "CombatDamageInterceptor mixes five responsibilities in one file" "tech-debt,combat" \
+'331 lines covering the damage flow, cause classification, creature identification, weapon lookup
+and player resolution — the lookups were roughly half the file and buried the actual flow.
+
+**Fix:** split into `systems/combat/DamageClassifier` (cause → `DamageKind`) and
+`systems/combat/CombatParticipants` (attacker, held weapon, creature data). The interceptor is
+down to 247 lines of damage flow.'
+
+issue fixed "StatusEffectHelper holds ten unrelated effect families" "tech-debt,effects" \
+'251 lines, 22 public static methods spanning HUD flags, camera packets, stat modifiers,
+environment and visibility — nothing shared between them.
+
+**Fix:** split into `DamageOverTimeEffects`, `NauseaEffect`, `StatModifierEffects`,
+`EnvironmentEffects` and `EffectTargets`, all package-private. `StatusEffectHelper` stays as the
+public facade with an unchanged surface.'
+
+issue fixed "build.gradle falls back to a developer's absolute mods path" "build" \
+'`local.properties`/`hytale.mods.dest` was already wired up, but the fallback when it is absent
+was still `/home/cookie/.var/app/.../Mods/` — so any other contributor, and CI, wrote the jar to
+a path that does not exist on their machine.
+
+**Fix:** without the property the jar stays in `build/libs`, as Gradle intends.'
+
+issue open "RuneCoreGenericItemInteraction logs at INFO on every interaction" "tech-debt" \
+'Three `LOGGER.atInfo()` calls fire on every use of the interaction, including
+`"RuneCoreGenericItemInteraction firstRun executed!"` and the item id of whatever is held.
+
+Left alone because the file is uncommitted work in progress — these look like debug lines from an
+active session. Drop them or move to `atFine()` before shipping.
+
+Same pattern as the `DEBUG = true` flood already fixed in `CombatDamageInterceptor`.'
+
 
 echo
 echo "Done. Re-run with DRY_RUN=1 to preview without touching GitHub."
