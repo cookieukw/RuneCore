@@ -1,185 +1,110 @@
 package com.cookie.runecore.api;
 
-import java.util.UUID;
-
 import com.cookie.runecore.systems.InvisibilityManager;
 import com.hypixel.hytale.component.Ref;
-import com.hypixel.hytale.component.Store;
-import com.hypixel.hytale.protocol.ApplyLookType;
-import com.hypixel.hytale.protocol.AttachedToType;
-import com.hypixel.hytale.protocol.ClientCameraView;
-import com.hypixel.hytale.protocol.Direction;
-import com.hypixel.hytale.protocol.RotationType;
-import com.hypixel.hytale.protocol.ServerCameraSettings;
-import com.hypixel.hytale.protocol.packets.camera.SetServerCamera;
-import com.hypixel.hytale.server.core.entity.effect.EffectControllerComponent;
-import com.hypixel.hytale.server.core.modules.entitystats.EntityStatMap;
-import com.hypixel.hytale.server.core.modules.entitystats.asset.DefaultEntityStatTypes;
-import com.hypixel.hytale.server.core.modules.entitystats.modifier.StaticModifier;
-import com.hypixel.hytale.server.core.universe.PlayerRef;
-import com.hypixel.hytale.server.core.universe.world.World;
 import com.hypixel.hytale.server.core.universe.world.storage.EntityStore;
-import java.util.logging.Logger;
 
 /**
- * Helpers for gameplay status effects: bleeding, burn, nausea, haste,
- * mining fatigue, and invisibility.
+ * Entry point for gameplay status effects.
  * <p>
- * Boilerplate for "get store → get PlayerRef → do something" is encapsulated
- * in {@link #withPlayerRef} and {@link #withWorldAndPlayer} to avoid repetition.
+ * This is a facade. It used to hold all ten effect families inline — HUD flags, camera packets,
+ * stat modifiers and visibility, 251 lines with nothing in common between them. The behaviour
+ * now lives in focused classes ({@code DamageOverTimeEffects}, {@code NauseaEffect},
+ * {@code StatModifierEffects}, {@code EnvironmentEffects}, {@code InvisibilityManager}) while
+ * this public surface stays exactly as it was.
  */
 public final class StatusEffectHelper {
-
-    private static final Logger LOG = Logger.getLogger("RuneCore");
 
     private StatusEffectHelper() {}
 
     // ── Bleeding ──────────────────────────────────────────────────────────────
 
     public static void applyBleeding(Ref<EntityStore> ref) {
-        EffectHelper.updateHud(ref, hud -> hud.setBleeding(true));
+        DamageOverTimeEffects.applyBleeding(ref);
     }
 
     public static void revertBleeding(Ref<EntityStore> ref) {
-        EffectHelper.updateHud(ref, hud -> hud.setBleeding(false));
+        DamageOverTimeEffects.revertBleeding(ref);
     }
 
     public static void onBleedingTick(Ref<EntityStore> ref) {
-        LOG.fine("[RuneCore-Bleed] Ticking bleeding for " + ref);
-        // Spawn 2-3 drops of blood at different heights (chest/limbs)
-        for (int i = 0; i < 2; i++) {
-            double height = 0.8 + (Math.random() * 0.7); // Height between 0.8m and 1.5m (chest area)
-            double spread = (Math.random() - 0.5) * 0.3; // Small horizontal spread
-            // EffectHelper.spawnParticleEffect(ref, "runecore:Blood_Drop", spread, height, spread);
-        }
+        DamageOverTimeEffects.onBleedingTick(ref);
     }
 
     // ── Burn ──────────────────────────────────────────────────────────────────
 
     public static void applyBurn(Ref<EntityStore> ref) {
-        EffectHelper.updateHud(ref, hud -> hud.setBurning(true));
+        DamageOverTimeEffects.applyBurn(ref);
     }
 
     public static void revertBurn(Ref<EntityStore> ref) {
-        EffectHelper.updateHud(ref, hud -> hud.setBurning(false));
+        DamageOverTimeEffects.revertBurn(ref);
     }
 
     public static void onBurnTick(Ref<EntityStore> ref) {
-        // Particles and visuals are handled by the native Burn.json entity effect
+        DamageOverTimeEffects.onBurnTick(ref);
     }
 
     // ── Nausea ────────────────────────────────────────────────────────────────
 
     public static void applyNausea(Ref<EntityStore> ref) {
-        LOG.fine("[RuneCore-Nausea] applyNausea called for: " + ref);
-        EffectHelper.updateHud(ref, hud -> hud.setNausea(true));
+        NauseaEffect.apply(ref);
     }
 
     public static void revertNausea(Ref<EntityStore> ref) {
-        LOG.fine("[RuneCore-Nausea] revertNausea called for: " + ref);
-        EffectHelper.updateHud(ref, hud -> hud.setNausea(false));
-        withPlayerRef(ref, (store, pr) -> {
-            ServerCameraSettings reset = new ServerCameraSettings();
-            reset.attachedToType = AttachedToType.LocalPlayer;
-            reset.eyeOffset = true;
-            reset.isFirstPerson = true;
-            pr.getPacketHandler().write(new SetServerCamera(ClientCameraView.FirstPerson, false, reset));
-
-            EffectControllerComponent ctrl = store.getComponent(ref,
-                    EffectControllerComponent.getComponentType());
-            if (ctrl != null) {
-                int idx = EffectHelper.getEffectIndex("Nausea");
-                if (idx >= 0) ctrl.removeEffect(ref, idx, store);
-            }
-            LOG.fine("[RuneCore-Nausea] Nausea reverted, camera reset packet sent.");
-        });
+        NauseaEffect.revert(ref);
     }
 
     public static void onNauseaTick(Ref<EntityStore> ref, float time) {
-        withPlayerRef(ref, (store, pr) -> {
-            LOG.fine("[RuneCore-Nausea] onNauseaTick: sending camera sway at time " + time + " to: " + pr.getUsername());
-
-            ServerCameraSettings settings = new ServerCameraSettings();
-            settings.rotation = new Direction((time * 4.0f) % 360.0f,
-                    (float) Math.sin(time * 0.15f) * 20.0f, 0.0f);
-            settings.rotationType = RotationType.Custom;
-            settings.applyLookType = ApplyLookType.LocalPlayerLookOrientation;
-            settings.rotationLerpSpeed = 0.8f;
-            settings.attachedToType = AttachedToType.LocalPlayer;
-            settings.eyeOffset = true;
-            settings.isFirstPerson = true;
-            pr.getPacketHandler().write(new SetServerCamera(ClientCameraView.Custom, true, settings));
-        });
+        NauseaEffect.onTick(ref, time);
     }
 
-    // ── Haste ─────────────────────────────────────────────────────────────────
+    // ── Stat modifiers ────────────────────────────────────────────────────────
 
     public static void applyHaste(Ref<EntityStore> ref) {
-        EffectHelper.updateHud(ref, hud -> hud.setHaste(true));
-        StatHelper.applyStatModifier(ref, "Stamina", "Haste", 1.5f,
-                StaticModifier.CalculationType.MULTIPLICATIVE);
+        StatModifierEffects.applyHaste(ref);
     }
 
     public static void revertHaste(Ref<EntityStore> ref) {
-        EffectHelper.updateHud(ref, hud -> hud.setHaste(false));
-        StatHelper.removeStatModifier(ref, "Stamina", "Haste");
+        StatModifierEffects.revertHaste(ref);
     }
 
-    // ── Mining Fatigue ────────────────────────────────────────────────────────
-
     public static void applyMiningFatigue(Ref<EntityStore> ref) {
-        EffectHelper.updateHud(ref, hud -> hud.setMiningFatigue(true));
-        StatHelper.applyStatModifier(ref, "Stamina", "Mining_Fatigue", 0.3f,
-                StaticModifier.CalculationType.MULTIPLICATIVE);
+        StatModifierEffects.applyMiningFatigue(ref);
     }
 
     public static void revertMiningFatigue(Ref<EntityStore> ref) {
-        EffectHelper.updateHud(ref, hud -> hud.setMiningFatigue(false));
-        StatHelper.removeStatModifier(ref, "Stamina", "Mining_Fatigue");
+        StatModifierEffects.revertMiningFatigue(ref);
     }
-
-    // ── Water Breathing ───────────────────────────────────────────────────────
-
-    public static void onWaterBreathingTick(Ref<EntityStore> ref) {
-        if (ref == null || !ref.isValid()) return;
-        Store<EntityStore> store = ref.getStore();
-        if (store == null) return;
-        EntityStatMap statMap = (EntityStatMap) store.getComponent(ref, EntityStatMap.getComponentType());
-        if (statMap == null) return;
-        statMap.setStatValue(DefaultEntityStatTypes.getOxygen(), 100f);
-    }
-
-    // ── Strength ─────────────────────────────────────────────────────────────
 
     public static void applyStrength(Ref<EntityStore> ref) {
-        StatHelper.applyStatModifier(ref, "Health", "Strength",
-                20f, StaticModifier.CalculationType.ADDITIVE);
+        StatModifierEffects.applyStrength(ref);
     }
 
     public static void revertStrength(Ref<EntityStore> ref) {
-        StatHelper.removeStatModifier(ref, "Health", "Strength");
+        StatModifierEffects.revertStrength(ref);
     }
 
-    // ── Weakness ─────────────────────────────────────────────────────────────
-
     public static void applyWeakness(Ref<EntityStore> ref) {
-        StatHelper.applyStatModifier(ref, "Health", "Weakness",
-                -20f, StaticModifier.CalculationType.ADDITIVE);
+        StatModifierEffects.applyWeakness(ref);
     }
 
     public static void revertWeakness(Ref<EntityStore> ref) {
-        StatHelper.removeStatModifier(ref, "Health", "Weakness");
+        StatModifierEffects.revertWeakness(ref);
     }
 
-    // ── Resistance ───────────────────────────────────────────────────────────
-
     public static void applyResistance(Ref<EntityStore> ref) {
-        StatHelper.applyStatModifier(ref, "Health", "Resistance",
-                1.2f, StaticModifier.CalculationType.MULTIPLICATIVE);
+        StatModifierEffects.applyResistance(ref);
     }
 
     public static void revertResistance(Ref<EntityStore> ref) {
-        StatHelper.removeStatModifier(ref, "Health", "Resistance");
+        StatModifierEffects.revertResistance(ref);
+    }
+
+    // ── Environment ───────────────────────────────────────────────────────────
+
+    public static void onWaterBreathingTick(Ref<EntityStore> ref) {
+        EnvironmentEffects.onWaterBreathingTick(ref);
     }
 
     // ── Invisibility ──────────────────────────────────────────────────────────
@@ -187,14 +112,11 @@ public final class StatusEffectHelper {
     /**
      * Hides the player from every <b>other</b> player.
      * <p>
-     * Delegates to {@link InvisibilityManager}, which owns the state. The previous version
-     * looped over {@code world.getPlayerRefs()} and hid the target from every observer
-     * including the target itself — that is what made the character fall through the ground,
-     * because a client that is no longer tracking its own entity has nothing to stand on. It
-     * also never reached players who joined afterwards, and never got undone on disconnect.
+     * State is owned by {@link InvisibilityManager}, which also catches up players who join
+     * mid-effect and clears the flag on disconnect.
      */
     public static void applyInvisibility(Ref<EntityStore> ref) {
-        withWorldAndPlayer(ref, (world, uuid) -> {
+        EffectTargets.withWorldAndPlayer(ref, (world, uuid) -> {
             InvisibilityManager manager = InvisibilityManager.get();
             if (manager == null) return;
             world.execute(() -> manager.hide(uuid));
@@ -202,50 +124,10 @@ public final class StatusEffectHelper {
     }
 
     public static void revertInvisibility(Ref<EntityStore> ref) {
-        withWorldAndPlayer(ref, (world, uuid) -> {
+        EffectTargets.withWorldAndPlayer(ref, (world, uuid) -> {
             InvisibilityManager manager = InvisibilityManager.get();
             if (manager == null) return;
             world.execute(() -> manager.show(uuid));
         });
-    }
-
-    // ── Internal: Boilerplate reducers ───────────────────────────────────────
-
-    @FunctionalInterface
-    private interface StoreAction {
-        void accept(Store<EntityStore> store);
-    }
-
-    @FunctionalInterface
-    private interface PlayerRefAction {
-        void accept(Store<EntityStore> store, PlayerRef pr);
-    }
-
-    @FunctionalInterface
-    private interface WorldPlayerAction {
-        void accept(World world, UUID uuid);
-    }
-
-    private static void withStore(Ref<EntityStore> ref, StoreAction action) {
-        Store<EntityStore> store = ref.getStore();
-        if (store != null) action.accept(store);
-    }
-
-    private static void withPlayerRef(Ref<EntityStore> ref, PlayerRefAction action) {
-        Store<EntityStore> store = ref.getStore();
-        if (store == null) return;
-        PlayerRef pr = (PlayerRef) store.getComponent(ref, PlayerRef.getComponentType());
-        if (pr != null && pr.getPacketHandler() != null) action.accept(store, pr);
-    }
-
-    private static void withWorldAndPlayer(Ref<EntityStore> ref, WorldPlayerAction action) {
-        if (ref == null || !ref.isValid()) return;
-        Store<EntityStore> store = ref.getStore();
-        if (store == null) return;
-        World world = store.getExternalData().getWorld();
-        if (world == null) return;
-        PlayerRef pr = (PlayerRef) store.getComponent(ref, PlayerRef.getComponentType());
-        if (pr == null) return;
-        action.accept(world, pr.getUuid());
     }
 }
