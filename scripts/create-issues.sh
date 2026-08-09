@@ -9,30 +9,71 @@
 #
 # Requires: gh (authenticated).  Dry run:  DRY_RUN=1 ./scripts/create-issues.sh
 #
-set -euo pipefail
+# Deliberately NOT `set -e`: one issue failing must not abandon the run half-done, leaving some
+# filed and the rest missing with no clue where it stopped. Failures are counted and reported at
+# the end instead.
+set -uo pipefail
 
 DRY_RUN="${DRY_RUN:-0}"
 
-if [[ "$DRY_RUN" != "1" ]] && ! command -v gh >/dev/null 2>&1; then
-    echo "gh not found. Install https://cli.github.com/ or run with DRY_RUN=1" >&2
-    exit 1
+CREATED=0
+SKIPPED=0
+FAILED=0
+
+if [[ "$DRY_RUN" != "1" ]]; then
+    if ! command -v gh >/dev/null 2>&1; then
+        echo "gh not found. Install https://cli.github.com/ or run with DRY_RUN=1" >&2
+        exit 1
+    fi
+    if ! gh auth status >/dev/null 2>&1; then
+        echo "gh is not authenticated. Run: gh auth login" >&2
+        exit 1
+    fi
+    # Issue creation needs the 'repo' scope. Checking once up front beats watching every single
+    # create fail for the same reason.
+    if ! gh auth status 2>&1 | grep -q "'repo'"; then
+        echo "The gh token is missing the 'repo' scope. Run: gh auth refresh -s repo" >&2
+        exit 1
+    fi
+fi
+
+# Titles already on the tracker, so re-running after a partial failure does not duplicate them.
+EXISTING=""
+if [[ "$DRY_RUN" != "1" ]]; then
+    EXISTING=$(gh issue list --state all --limit 200 --json title --jq '.[].title' 2>/dev/null || true)
 fi
 
 issue() {
     local state="$1" title="$2" labels="$3" body="$4"
+
     if [[ "$DRY_RUN" == "1" ]]; then
         printf '\n=== [%s] %s\n    labels: %s\n%s\n' "$state" "$title" "$labels" "$body"
-        return
+        return 0
+    fi
+
+    if grep -Fxq "$title" <<<"$EXISTING"; then
+        echo "skip (already filed): $title"
+        SKIPPED=$((SKIPPED + 1))
+        return 0
     fi
 
     local url
-    url=$(gh issue create --title "$title" --label "$labels" --body "$body")
+    if ! url=$(gh issue create --title "$title" --label "$labels" --body "$body" 2>&1); then
+        echo "FAILED: $title" >&2
+        echo "        $url" >&2
+        FAILED=$((FAILED + 1))
+        return 0
+    fi
     echo "created: $url"
+    CREATED=$((CREATED + 1))
 
     # Problems already fixed are filed for the record, then closed immediately.
     if [[ "$state" == "fixed" ]]; then
-        gh issue close "$url" --comment "Fixed. See AUDITORIA.md for the analysis and the commits on this branch."
-        echo "  closed (already fixed)"
+        if gh issue close "$url" --comment "Fixed. See AUDITORIA.md for the analysis and the commits on this branch." >/dev/null 2>&1; then
+            echo "  closed (already fixed)"
+        else
+            echo "  WARNING: created but could not close: $url" >&2
+        fi
     fi
 }
 
@@ -213,4 +254,12 @@ Same pattern as the `DEBUG = true` flood already fixed in `CombatDamageIntercept
 
 
 echo
-echo "Done. Re-run with DRY_RUN=1 to preview without touching GitHub."
+if [[ "$DRY_RUN" == "1" ]]; then
+    echo "Dry run only. Drop DRY_RUN=1 to file these for real."
+else
+    echo "created: $CREATED   skipped (already filed): $SKIPPED   failed: $FAILED"
+    if [[ "$FAILED" -gt 0 ]]; then
+        echo "Re-running is safe: anything already filed is skipped by title." >&2
+        exit 1
+    fi
+fi
