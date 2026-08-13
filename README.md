@@ -1,41 +1,40 @@
-# 🔮 RuneCore: Magic Engine for Hytale
+# RuneCore
+
+Extensible magic system engine and framework for Hytale mods.
 
 [Leia em português](README-PTBR.md) | [API Guide](API_USAGE.md) | [API Reference](docs/API_REFERENCE.md) | [Technical Docs](docs/ELEMENTS.md) | [Manual](RuneCore_Manual.md)
 
 <p align="center">
   <img src="icons/logo/runecore-logo.png" alt="RuneCore Logo" height="180">
   &nbsp;&nbsp;&nbsp;&nbsp;
-  <img src="icons/logo/runecore-logo-construction.png" alt="RuneCore Logo — Layers and traces" height="180">
+  <img src="icons/logo/runecore-logo-construction.png" alt="RuneCore Layered Logo" height="180">
 </p>
 
-> [!IMPORTANT]
-> **Project Status: Under Development**
+> **Project Status: In Development**
 >
-> - 🛠️ **In Progress:** Developing new potions and crafting recipes to utilize the new status effects.
-> - ✅ **Functional:** Core commands, player status management, and essence drop system.
-> - 🧪 **API:** The API is currently in the testing phase.
-> - 🎨 **Visuals:** Custom logo and high-quality essence icons. 3D models for essences are now implemented using recycled game assets.
-> - 🚀 **Next Steps:** Implementing the full **RuneAlchemy** system and complex potion brewing.
+> - **In Progress:** Potions and crafting recipes for custom status effects.
+> - **Functional:** Core commands, player status management, and essence drop system.
+> - **API:** Testing phase.
+> - **Visuals:** Custom logo and essence icons. 3D models use recycled game assets.
+> - **Next Steps:** Full **RuneAlchemy** system and potion brewing pipeline.
 
 ---
 
-## 1. Vision & Origin 🤔
+## 1. Overview
 
-RuneCore was born from the desire to bring a deep, meaningful magic system to Hytale. While the native system provides a basic foundation, RuneCore expands it into a fully-fledged engine that modders can use to create complex elemental interactions, persistent status effects, and rich magical progression.
+RuneCore expands Hytale's native foundation into a modular engine for elemental interactions, status effects, custom RPG attributes, and alchemy recipes. The mod offers both ready-to-use mechanics and an extensible API for integration with other mods.
 
-Our goal is not just to provide a mod, but an **extensible API** that serves as the backbone for the Hytale magic community.
+## 2. Architecture
 
-## 2. What is RuneCore? 📘
+RuneCore is split into three main modules:
 
-RuneCore is a modular magic system engine. It is divided into interdependent modules:
+* **RuneCore (Core):** Manages essences, mana, combat attributes, and player progression. Exposes the core API.
+* **RuneMagic:** Spells, runes (passive effects), artifacts, and grimoires.
+* **RuneAlchemy:** Brewing system for potions, reagents, and item enchantments using essences.
 
-*   **🔹 RuneCore (Core):** Manages essences, mana, and player progress. Provides the API for other modders.
-*   **⚔️ RuneMagic:** Focused on spells, runes (passive effects), artifacts, and grimoires.
-*   **⚗️ RuneAlchemy:** A chemical and alchemical system for creating potions and enchanting items using essences.
+## 3. Elemental Essences
 
-## 3. Elemental Essences 🔮
-
-RuneCore features 20 distinct elements, each with its own essence used for crafting and spellcasting. Below are the high-quality essence icons currently implemented:
+RuneCore defines 20 distinct elements, each mapped to an essence item used in crafting and spellcasting.
 
 ### Basic Tier
 | Icon | Element | Tier | Icon | Element | Tier |
@@ -61,11 +60,11 @@ RuneCore features 20 distinct elements, each with its own essence used for craft
 
 ---
 
-## 4. Mob Drops & Essence Loot Tables 🦅
+## 4. Loot Tables & Drop Rates
 
-Every creature in Hytale has a chance to drop elemental essences when defeated by a player. The current base drop rate is **25%**.
+Creatures drop elemental essences when defeated by a player (default base drop rate: **25%**).
 
-| Essence | Dropped by (Common Mobs) |
+| Essence | Source Mobs |
 | :--- | :--- |
 | **Fire** | Emberwulf, Fire Dragon, Magma/Flame creatures |
 | **Earth** | Trork, Earth Golem, Bison, Tortoise, Molerat |
@@ -88,20 +87,20 @@ Every creature in Hytale has a chance to drop elemental essences when defeated b
 
 ---
 
-## 5. Core Features ✨
+## 5. Key Features
 
-*   **20 Elements:** Divided into Basic, Advanced, Unstable, and Chemical tiers.
-*   **Modular API:** Easily register custom essences, spells, and status effects.
-*   **Persistent Status Effects:** A robust system for ticking buffs/debuffs (e.g., Poison, Regeneration, Frozen) with world-aware logic.
-*   **Resource Management:** Custom mana, stamina, and biological resource tracking.
+- **20 Elements:** Categorized into Basic, Advanced, Unstable, and Chemical tiers.
+- **Modular API:** Direct registration for custom essences, spells, and status effects.
+- **Persistent Status Effects:** Ticking buff/debuff system (Poison, Regeneration, Frozen, Bleeding, etc.) supporting custom world logic.
+- **Resource Management:** Player stat trackers for mana, stamina, and custom attributes.
 
-For a full breakdown of all 20 elements and their mechanics, see our [**Technical Documentation**](docs/ELEMENTS.md).
+For element details and design notes, refer to [**ELEMENTS.md**](docs/ELEMENTS.md).
 
 ---
 
-## 6. ⚗️ Potion Crafting Recipes
+## 6. Potion Recipes
 
-All potions are crafted at the **Alchemy Bench** using a **Glass Bottle** (Potion_Empty) + an **Elemental Essence** + a **Secondary Material**. Crafting time: **4 seconds**.
+Potions are crafted at the **Alchemy Bench** using **Glass Bottle** (`Potion_Empty`) + **Elemental Essence** + **Secondary Material** (base craft time: 4 seconds).
 
 | Potion | Essence | Qty | Secondary Material | Qty |
 | :--- | :--- | :---: | :--- | :---: |
@@ -132,325 +131,198 @@ All potions are crafted at the **Alchemy Bench** using a **Glass Bottle** (Potio
 | **Strength** | Blood Essence | 2 | Crystal (Red) | 2 |
 | **Weakness** | Death Essence | 1 | Grey Flower | 2 |
 
-> **Note:** More powerful effects (Levitation, Invisibility, Resistance, Strength, Fire Resistance, Regeneration) require **2 essences** instead of 1.
+*Note: Advanced effects require 2 essences.*
 
 ---
 
-## 7. ⚔️ Combat Stats System
+## 7. Combat Stats System
 
-RuneCore includes an RPG-style combat stats system layered on top of Hytale's native armor/damage.
+RuneCore implements an RPG damage pipeline on top of native combat calculations.
 
-Attributes are **registrable**: the stats below are the ones RuneCore ships with, but any mod can add its own and have it affect damage. See the [API Usage Guide](API_USAGE.md#6-combat-attributes).
-
-Players carry a persistent stat block. Creatures do not — their values come from a static registry lookup, so nothing is tracked per entity.
+Custom attributes are registrable. Players carry persistent stat blocks, while creatures pull stats from static registry lookups.
 
 ### Stat Types
 
 | Category | Stat | Description |
 |----------|------|-------------|
-| **Offensive** | Physical Damage | Reduced by target's Armor |
-| **Offensive** | Magic Damage | Reduced by target's Magic Resist |
-| **Offensive** | True Damage | Bypasses all resistances and reductions (only blocked by shields) |
-| **Offensive** | Armor Penetration | Ignores part of target's Armor |
-| **Offensive** | Magic Penetration | Ignores part of target's Magic Resist |
+| **Offensive** | Physical Damage | Reduced by target Armor |
+| **Offensive** | Magic Damage | Reduced by target Magic Resist |
+| **Offensive** | True Damage | Ignores reductions (blocked by shields) |
+| **Offensive** | Armor Penetration | Ignores a portion of target Armor |
+| **Offensive** | Magic Penetration | Ignores a portion of target Magic Resist |
 | **Defensive** | Armor | Reduces incoming Physical Damage |
 | **Defensive** | Magic Resist | Reduces incoming Magic Damage |
-| **Defensive** | Damage Reduction | Flat % reduction on all damage (capped at 90%) |
-| **Defensive** | Shield HP | Temporary HP that absorbs damage before health |
+| **Defensive** | Damage Reduction | Flat % reduction on incoming damage (capped at 90%) |
+| **Defensive** | Shield HP | Temporary hit points consumed before base health |
 
 ### Damage Formula
 
-```
+```text
 effectiveDefense = max(0, defense - penetration)
 reducedDamage = rawDamage × 100 / (100 + effectiveDefense)
 finalDamage = (physReduced + magReduced) × (1 - damageReduction%) + trueDamage
-→ Shield absorbs first, remainder hits HP
 ```
 
-Every intercepted hit runs through the **damage pipeline**, so mods can insert their own step
-before or after this calculation — that is how a custom attribute such as crit or lifesteal
-gets to influence the result. See [Damage Pipeline](API_USAGE.md#7-damage-pipeline).
-
-**Offence sources.** A player's offensive stats come from two places: the persistent stat block
-(equipment) and the **weapon currently held**, resolved at the moment of the hit so hotbar swaps
-apply immediately.
+Hits run through the `DamagePipeline`, allowing external mods to insert custom modifiers (e.g. crit, lifesteal).
 
 ### Creature Damage (PvE)
 
-Creatures have pre-registered **damage profiles** in `CreatureCombatRegistry`. When a creature hits a player, RuneCore looks up the creature's profile and applies the correct defense formula with the creature's armor/magic penetration. If a creature is not registered, it falls back to `DamageCause` classification.
+Creatures pull profiles from `CreatureCombatRegistry` when attacking or taking damage. Unregistered creatures fall back to standard `DamageCause` checks.
 
-Creatures are also **damage targets**: they carry armor, magic resist and damage reduction, so weapon stats and penetration matter in PvE as well. A creature absent from the registry is left untouched — its damage stays exactly as the engine computed it.
+| Damage Profile | Formula | Examples |
+|---------------|---------|----------|
+| **Physical** | Reduced by Armor; may use Armor Pen | Trork, Skeleton Fighter, Wolf, Bear |
+| **Magic** | Reduced by Magic Resist; may use Magic Pen | Skeleton Mage, Wraith, Necromancer |
+| **Hybrid** | Split physical/magic ratio, calculated separately | Fire Dragon, Golem Crystal Flame |
+| **True** | Bypasses armor/resistances (absorbed by shields) | — |
 
-| Damage Profile | Formula | Example Creatures |
-|---------------|---------|-------------------|
-| **Physical** | Armor reduces, creature may have armor pen | Trork, Skeleton Fighter, Wolf, Bear |
-| **Magic** | Magic Resist reduces, creature may have magic pen | Skeleton Mage, Wraith, Necromancer, Spirits |
-| **Hybrid** | Split phys/magic by ratio, each reduced separately | Dragon Fire (60% magic), Golem Crystal Flame, Feran Windwalker |
-| **True** | No reduction (only shield absorbs) | — |
+#### Creature Defenses by Family
 
-After type-specific reduction, **Damage Reduction %** is applied, then **Shield HP** absorbs what remains. If no creature data is found, `DamageCause` is used as fallback:
-
-| Damage Cause | Reduced by |
-|-------------|------------|
-| Physical, Projectile, Bludgeoning, Slashing | **Armor** |
-| Elemental, Fire, Ice, Poison, Magic | **Magic Resist** |
-| True (or BypassResistances) | **Shield only** |
-
-#### Registered Creatures (~200+)
-
-| Faction | Creatures | Typical Profile |
-|---------|-----------|----------------|
-| Trork | Warrior, Brawler, Guard, Hunter, Mauler, Chieftain, Shaman, Doctor Witch | Physical (warriors), Magic (shaman/witch) |
-| Skeleton | Standard, Burnt, Frost, Sand, Incandescent, Pirate (~35 variants) | Physical (melee), Hybrid (elemental), Magic (mages) |
-| Zombie | Regular, Aberrant, Burnt, Frost, Sand, Werewolf | Physical, Hybrid (elemental variants) |
-| Goblin | Scrapper, Thief, Miner, Lobber, Boss, Duke, Ogre | Physical, Hybrid (lobber/duke) |
-| Outlander | Peon, Marauder, Berserker, Brute, Hunter, Cultist, Priest, Sorcerer | Physical (warriors), Magic (casters) |
-| Scarak | Louse, Seeker, Fighter, Defender, Broodmother | Physical, Hybrid (broodmother) |
-| Feran | Burrower, Longtooth, Sharptooth, Windwalker | Physical, Hybrid (windwalker) |
-| Dragons | Fire, Frost, Void | Hybrid (60-70% magic, high pen) |
-| Golems | Crystal Earth/Flame/Frost/Sand/Thunder, Firesteel, Guardian Void | Physical (earth/sand), Hybrid (elemental) |
-| Void | Crawler, Eye, Larva, Necromancer, Spawn, Spectre, Wraith | Magic (high pen) |
-| Bosses | Shadow Knight, Yeti, Werewolf, Emberwulf | Hybrid/Physical (high pen) |
-| Wildlife | Bears, Wolves, Spiders, Snakes, Sharks, Cave creatures | Physical (most), Hybrid (snakes, magma variants) |
-| Spirits | Ember, Frost, Root, Thunder, Spark | Magic |
-
-#### Creature Defence by Family
-
-Defence is assigned per family. These are a first pass and want in-game balancing; any creature
-can override its family with `withDefense(...)`.
-
-| Family | Armor | Magic Resist | DR | Rationale |
+| Family | Armor | Magic Resist | DR | Notes |
 | :--- | ---: | ---: | ---: | :--- |
-| Wildlife | 2 | 0 | — | critters and cattle, effectively unarmoured |
-| Zombies | 4 | 2 | — | rotten and slow |
-| Spirits | 4 | 32 | — | incorporeal: blades pass through, magic bites |
-| Goblins | 5 | 3 | — | scrappy leather |
-| Trorks | 6 | 0 | — | tribal warriors, no wards |
-| Ferans | 8 | 8 | — | agile beasts, balanced |
-| Misc | 8 | 8 | — | unclassified |
-| Skeletons | 10 | 4 | — | bone turns blades better than magic |
-| Outlanders | 12 | 6 | — | equipped raiders |
-| Void | 12 | 28 | — | inverted: magic is their shield |
-| Scaraks | 18 | 4 | — | chitin: heavy against steel, poor against magic |
-| Dragons | 32 | 28 | — | scaled and ancient |
-| Golems | 34 | 12 | — | the physical wall |
-| Bosses | 40 | 34 | 15% | plus flat damage reduction |
-
-> **Note:** creatures are still not *tracked* — the registry is a static lookup keyed by model
-> asset name, with no per-entity state.
+| Wildlife | 2 | 0 | — | Unarmored base creatures |
+| Zombies | 4 | 2 | — | Low physical/magic resistance |
+| Spirits | 4 | 32 | — | Incorporeal (high magic resist) |
+| Goblins | 5 | 3 | — | Light leather armor |
+| Trorks | 6 | 0 | — | Physical melee focus |
+| Ferans | 8 | 8 | — | Balanced stats |
+| Skeletons | 10 | 4 | — | Moderate armor |
+| Outlanders | 12 | 6 | — | Geared raiders |
+| Void | 12 | 28 | — | High magic resistance |
+| Scaraks | 18 | 4 | — | Chitin plating (high armor, low magic resist) |
+| Dragons | 32 | 28 | — | High resistance base |
+| Golems | 34 | 12 | — | High armor base |
+| Bosses | 40 | 34 | 15% | High defenses + flat % reduction |
 
 ### Equipment Integration
 
-Items registered in `CombatStatsRegistry` apply their combat stats in two ways: **armor pieces** contribute while equipped (recalculated on every armor change), and the **held weapon** contributes at the moment of the hit. All vanilla Hytale armors and weapons are pre-registered, and mods can register their own through `RuneAttributes.registerItem(...)`.
+Armors apply stats while equipped (scaled by slot: Chest 100%, Legs 85%, Head 70%, Hands 50%). Weapons apply offensive stats on hit.
 
-#### Armor Stats by Tier
-
-Armor pieces scale by slot: Chest 100%, Legs 85%, Head 70%, Hands 50%.
+#### Armor Scaling by Tier
 
 | Tier | Materials | Armor (Chest) | Magic Resist (Chest) |
 |------|-----------|:-------------:|:--------------------:|
-| 1 | Cloth (Cotton, Linen, Wool, Silk, Cindercloth), Wood | 4–8 | 10–20 |
-| 2 | Leather Soft/Light, Copper | 10–14 | 8–10 |
-| 3 | Leather Medium/Heavy/Raven, Bronze, Iron | 18–25 | 5–8 |
-| 4 | Steel, Steel Ancient, Cobalt | 30–35 | 5–7 |
+| 1 | Cloth, Wood | 4–8 | 10–20 |
+| 2 | Light Leather, Copper | 10–14 | 8–10 |
+| 3 | Heavy Leather, Bronze, Iron | 18–25 | 5–8 |
+| 4 | Steel, Cobalt | 30–35 | 5–7 |
 | 5 | Mithril, Thorium | 42–45 | 12–14 |
 | 6 | Adamantite, Onyxium, Prisma | 50–58 | 18–22 |
 
-> **Design:** Cloth/magic armor has low Armor but high Magic Resist. Metal armor has high Armor but low Magic Resist. Higher tiers (Mithril+) balance both.
-
-#### Weapon Stats by Type
-
-| Type | Primary Stat | Secondary Stat | Identity |
-|------|-------------|----------------|----------|
-| Swords | Physical Damage | — | Balanced melee |
-| Longswords | Physical Damage (high) | — | Slow, heavy hits |
-| Axes | Physical Damage | Armor Penetration | Anti-armor melee |
-| Battleaxes | Physical Damage (high) | Armor Penetration (high) | Heavy anti-armor |
-| Clubs / Maces | Physical Damage | — | Blunt melee |
-| Spears | Physical Damage | Magic Penetration | Anti-mage melee |
-| Daggers | Physical Damage (low) | Armor Penetration (very high) | Assassin / shred |
-| Staffs | Magic Damage | — | Mage basic weapon |
-| Spellbooks | Magic Damage (high) | Magic Penetration | Mage burst |
-| Wands | Magic Damage (light) | — | Mage utility |
-| Bows / Crossbows | Physical Damage | — | Ranged physical |
-| Shields | Armor | Shield HP | Defensive |
-| Guns / Bombs | Physical Damage | Armor Penetration | Ranged explosive |
-
-> **Hybrid weapons:** Some special variants (Frost Sword, Void Longsword, Flame Bow, etc.) deal both Physical and Magic damage.
-
-#### Weapon Damage by Tier (Physical weapons example)
+#### Weapon Damage by Tier (Physical Sample)
 
 | Material | Sword | Longsword | Axe | Battleaxe | Dagger |
 |----------|:-----:|:---------:|:---:|:---------:|:------:|
-| Crude/Wood | 6–8 | 12 | 10 | 14 | 6 |
+| Wood | 6–8 | 12 | 10 | 14 | 6 |
 | Copper | 14 | 20 | 16 | 22 | 10 |
-| Bronze | 18 | — | — | — | 14 |
 | Iron | 22 | 30 | 24 | 32 | 18 |
 | Steel | 28 | — | — | 34 | — |
-| Cobalt | 30 | 40 | 32 | 42 | 24 |
 | Mithril | 38 | 50 | 40 | 52 | 30 |
-| Thorium | 42 | 55 | 44 | 56 | 34 |
-| Onyxium | 48 | 62 | 50 | 64 | 38 |
 | Adamantite | 50 | 65 | 52 | 68 | 40 |
 
-### Commands
+### Admin Commands
 
-| Command | Description |
-|---------|-------------|
-| `/combatstats view` | View all your current combat stats |
-| `/combatstats set <stat> <value>` | Set a stat's base value |
-| `/combatstats add <stat> <value>` | Add a modifier (stacks on top of base) |
-| `/combatstats reset all` | Reset all stats to 0 |
-| `/combatstats reset <stat>` | Reset a specific stat to 0 |
-| `/combatstats reset modifiers` | Clear only modifiers, keep base values |
-
-**Available stats:** `armor`, `magicresist` (mr), `reduction` (dr), `physdmg` (phys), `magdmg` (mag), `truedmg` (true), `armorpen` (apen), `magicpen` (mpen), `shield`
-
-**Examples:**
-```
-/combatstats set armor 50
-/combatstats set physdmg 80
-/combatstats add mr 20
-/combatstats set shield 100
-/combatstats set reduction 30     (30% damage reduction)
+```text
 /combatstats view
-/combatstats reset all
+/combatstats set <stat> <value>
+/combatstats add <stat> <value>
+/combatstats reset [all|modifiers|<stat>]
 ```
+
+Supported identifiers: `armor`, `magicresist` (`mr`), `reduction` (`dr`), `physdmg` (`phys`), `magdmg` (`mag`), `truedmg` (`true`), `armorpen` (`apen`), `magicpen` (`mpen`), `shield`.
 
 ---
 
-## 8. 🎮 How to Test In-Game & Current Status Effects
+## 8. Status Effects & Testing
 
-You can test the registered status effects and spell system using the built-in administrative command:
+In-game testing command:
 
 ```text
 /rune effect <id>
 ```
 
-Below is the complete table of effects currently registered in the `RuneCore` engine, their development states, and the expected behavior of each:
-
-| Icon | Status | Effect ID | Has Native/JSON Visual? | What it should do |
+| Icon | Status | Effect ID | Native Visual | Description |
 | :---: | :---: | :--- | :--- | :--- |
-| <img src="icons/128x/speed.png" height="32"> | [x] | `speed` | Speed | Gives movement speed buff. |
-| <img src="icons/128x/slowness.png" height="32"> | [x] | `slowness` | Slowness | Slows down the entity. |
-| <img src="icons/128x/haste.png" height="32"> | [ ] | `haste` | Haste | Modifies Attack Speed and Mining Speed (+50%) and shows UI. (Attack/Mining Speed pending) |
-| <img src="icons/128x/mining_fatigue.png" height="32"> | [ ] | `mining_fatigue`| Mining_Fatigue | Modifies Attack Speed and Mining Speed (-70%) and shows UI. (Attack/Mining Speed pending) |
-| <img src="icons/128x/jump_boost.png" height="32"> | [x] | `jump_boost` | Jump_Boost | Jump higher. |
-| <img src="icons/128x/high_jump.png" height="32"> | [x] | `high_jump` | High_Jump | Jump much higher. |
-| <img src="icons/128x/slow_falling.png" height="32"> | [x] | `slow_falling` | Slow_Falling | Slow falling. |
-| <img src="icons/128x/levitation.png" height="32"> | [x] | `levitation` | Levitation | Causes the entity to float upwards. |
-| <img src="icons/128x/regeneration.png" height="32"> | [x] | `regeneration` | Regeneration | Heals +1 health every 50 ticks. |
-| <img src="icons/128x/poison.png" height="32"> | [x] | `poison` | Poison | Deals 1 health damage every 25 ticks. |
-| <img src="icons/128x/decay.png" height="32"> | [x] | `decay` | Decay | Deals 1 health damage every 40 ticks. |
-| <img src="icons/128x/darkness.png" height="32"> | [x] | `darkness` | Darkness | Reduces vision brightness significantly. |
-| <img src="icons/128x/electrified.png" height="32"> | [x] | `electrified` | Electrified | Deals electric damage and shows sparkles. |
-| <img src="icons/128x/burn.png" height="32"> | [x] | `burn` | Burn | Deals 1 health damage every 20 ticks + UI. |
-| <img src="icons/128x/nausea.png" height="32"> | [x] | `nausea` | Nausea | Rotates the camera (NauseaTick) + UI. |
-| <img src="icons/128x/bleeding.png" height="32"> | [x] | `bleeding` | Bleeding | Deals 1 health damage every 20 ticks + UI + Custom blood particles. |
-| <img src="icons/128x/frozen.png" height="32"> | [x] | `frozen` | Frozen | Prevents movement temporarily. |
-| | [x] | `instant_health`| (none) | Instant healing (4.0 * power). |
-| | [x] | `instant_damage`| InstantDamage | Instant damage (6.0 * power). |
-| | [ ] | `damage_fire_instant`| DamageFireInstant | Instant fire damage (10.0 * power). |
-| <img src="icons/128x/invisibility.png" height="32"> | [x] | `invisibility` | Invisibility | Hides the player from others. (Fine-tuning of own visibility pending) |
-| <img src="icons/128x/glowing.png" height="32"> | [ ] | `glowing` | Glowing | Adds dynamic light (DynamicLight) + UI. (Does not persist through logout/relog) |
-| <img src="icons/128x/blindness.png" height="32"> | [x] | `blindness` | Blindness | Modifies vision (VisualEffectHelper) + UI. |
-| <img src="icons/128x/night_vision.png" height="32"> | [x] | `night_vision` | NightVision | White dynamic light around the player + UI. |
-| <img src="icons/128x/water_breathing.png" height="32"> | [ ] | `water_breathing`| WaterBreathing | Allows native underwater breathing. (Simply does not work) |
-| <img src="icons/128x/fire_resistance.png" height="32"> | [x] | `fire_resistance`| FireResistance | Native fire resistance. |
-| <img src="icons/128x/resistance.png" height="32"> | [ ] | `resistance` | Resistance | Native resistance. (Does not work, needs improvements) |
-| <img src="icons/128x/strength.png" height="32"> | [ ] | `strength` | Strength | Native strength. (Does not work, needs improvements) |
-| <img src="icons/128x/weakness.png" height="32"> | [ ] | `weakness` | Weakness | Native weakness. (Does not work, needs improvements) |
+| <img src="icons/128x/speed.png" height="32"> | [x] | `speed` | Speed | Movement speed boost. |
+| <img src="icons/128x/slowness.png" height="32"> | [x] | `slowness` | Slowness | Reduces movement speed. |
+| <img src="icons/128x/haste.png" height="32"> | [ ] | `haste` | Haste | Attack/Mining speed modifier (+50%). |
+| <img src="icons/128x/mining_fatigue.png" height="32"> | [ ] | `mining_fatigue`| Mining_Fatigue | Attack/Mining speed reduction (-70%). |
+| <img src="icons/128x/jump_boost.png" height="32"> | [x] | `jump_boost` | Jump_Boost | Increases jump height. |
+| <img src="icons/128x/high_jump.png" height="32"> | [x] | `high_jump` | High_Jump | Significantly increases jump height. |
+| <img src="icons/128x/slow_falling.png" height="32"> | [x] | `slow_falling` | Slow_Falling | Decreases fall velocity. |
+| <img src="icons/128x/levitation.png" height="32"> | [x] | `levitation` | Levitation | Causes upward float. |
+| <img src="icons/128x/regeneration.png" height="32"> | [x] | `regeneration` | Regeneration | Heals 1 HP every 50 ticks. |
+| <img src="icons/128x/poison.png" height="32"> | [x] | `poison` | Poison | Deals 1 HP damage every 25 ticks. |
+| <img src="icons/128x/decay.png" height="32"> | [x] | `decay` | Decay | Deals 1 HP damage every 40 ticks. |
+| <img src="icons/128x/darkness.png" height="32"> | [x] | `darkness` | Darkness | Reduces vision range/brightness. |
+| <img src="icons/128x/electrified.png" height="32"> | [x] | `electrified` | Electrified | Periodic electric damage and visual particles. |
+| <img src="icons/128x/burn.png" height="32"> | [x] | `burn` | Burn | Deals 1 HP damage every 20 ticks. |
+| <img src="icons/128x/nausea.png" height="32"> | [x] | `nausea` | Nausea | Applies screen rotation effect. |
+| <img src="icons/128x/bleeding.png" height="32"> | [x] | `bleeding` | Bleeding | Deals 1 HP damage every 20 ticks + blood particles. |
+| <img src="icons/128x/frozen.png" height="32"> | [x] | `frozen` | Frozen | Prevents movement for duration. |
+| | [x] | `instant_health`| (none) | Instant heal (`4.0 * power`). |
+| | [x] | `instant_damage`| InstantDamage | Instant damage (`6.0 * power`). |
+| <img src="icons/128x/invisibility.png" height="32"> | [x] | `invisibility` | Invisibility | Conceals entity visual model. |
+| <img src="icons/128x/blindness.png" height="32"> | [x] | `blindness` | Blindness | Restricts camera vision overlay. |
+| <img src="icons/128x/night_vision.png" height="32"> | [x] | `night_vision` | NightVision | Applies night vision visual light. |
+| <img src="icons/128x/fire_resistance.png" height="32"> | [x] | `fire_resistance`| FireResistance | Prevents fire damage. |
 
-### Implementation Note
-To enable all systems during development, ensure they are registered in your entry point:
-```java
-// In your plugin class
-eventRegistry.registerGlobal(EffectTimerListener.class);
-eventRegistry.registerGlobal(CastListener.class);
-```
-
-### 🧠 How and Where to Use Effects (Examples)
-
-Modders can apply these effects dynamically in the world using the `RuneCore` API. Here are some examples of programmatic implementation:
+### API Usage Example
 
 ```java
-// Apply an effect directly to an entity (e.g., player or mob)
 RuneCore core = RuneCore.getInstance();
 RuneEffect poison = core.getEffect("poison");
 
 if (poison != null) {
-    // Create context with source and target
     CastContext ctx = new CastContext(sourceEntity, targetEntity);
     poison.execute(ctx);
 }
 ```
 
-#### 🛡️ Recommended Use Cases:
-
-*   **🧪 Alchemy and Potions:** Consume items that give buffs like `speed`, `jump_boost`, or heals like `regeneration` and `instant_health`.
-*   **⚔️ Weapon and Arrow Enchantments:** Add poison (`poison`), bleeding (`bleeding`), or slowness (`slowness`) when hitting targets with specific weapons.
-*   **👹 Boss / Mob Mechanics:**
-    *   An ice boss that freezes (`frozen`) the player in a charged attack.
-    *   A dark attack that inflicts blindness (`blindness`) in the area around the boss.
-    *   A fire monster that burns (`burn`) on contact.
-*   **🌍 Environmental Traps:**
-    *   Spikes on the ground that cause `bleeding`.
-    *   Falling into toxic swamps that apply `decay`.
-
 ---
 
-## 9. Build & Development 🛠️
+## 9. Build Setup & Tooling
 
-To compile, validate, and develop with RuneCore, you need to configure your local paths.
+Set up project paths before compiling:
 
-### 1. Create a `local.properties` file at the root of the project:
+### `local.properties`
 ```properties
-# Path to the official Hytale client Assets zip
 hytale.assets.path=/path/to/Hytale/Assets.zip
-
-# Target folder where the built mod JAR will be outputted
 hytale.mods.dest=/path/to/Hytale/Mods/
 ```
 
-### 2. Create a `gradle.properties` file (if not present) at the root of the project:
+### `gradle.properties`
 ```properties
-# Path to your local Hytale JDK 21 installation (forces the Gradle daemon to run on a compatible version)
 org.gradle.java.home=/path/to/Hytale/jdk-25
 ```
 
-### Useful Gradle Tasks:
-*   **Compile Mod:** `./gradlew jar` (compiles the mod using JDK 25 toolchain and copies the JAR to the target mods folder).
-*   **Check Hytale Version:** `./gradlew hytaleVersion` (displays the current HytaleServer engine version).
-*   **Generate JSON Schemas:** `./gradlew generateSchemas` (extracts assets schema to the local `Schema/` folder).
-*   **Validate Mod Configs:** `./gradlew validateAssets` (tests local mod JSON configurations using Hytale's compiler).
-*   **Validate Prefabs:** `./gradlew validatePrefabs` (checks Hytale prefab templates integrity).
-*   **Verify Worlds:** `./gradlew verifyWorlds` (checks saving and loading integrity of universe worlds).
+### Build Commands
+- **Build Jar:** `./gradlew jar`
+- **Engine Version:** `./gradlew hytaleVersion`
+- **Extract Schemas:** `./gradlew generateSchemas`
+- **Validate Assets:** `./gradlew validateAssets`
+- **Validate Prefabs:** `./gradlew validatePrefabs`
 
 ---
 
-## 10. Modder's Guide
+## 10. Developer Guide & Entry Points
 
-Interested in building on top of RuneCore? Check out our [**API Usage Guide**](API_USAGE.md) for code examples and integration steps.
+Main classes for API integration:
 
-The public entry points are:
-
-| Entry point | Purpose |
+| Entry Point | Usage |
 | :--- | :--- |
 | `RuneAttributes` | Read/write attributes, register items and creatures |
-| `AttributeRegistry` + `RuneAttribute` | Declare a new attribute |
-| `DamagePipeline` + `DamageStage` | Make an attribute affect damage |
-| `RuneCore` | Essences, effects, spells |
-| `RuneCoreItemManager` | Create interactive/clickable items |
-| `EffectHelper`, `StatHelper`, `PlayerStats` | Entity stat and movement helpers |
+| `AttributeRegistry` + `RuneAttribute` | Declare custom stats |
+| `DamagePipeline` + `DamageStage` | Custom damage calculation steps |
+| `RuneCore` | Access core elements, spells, and status effects |
+| `RuneCoreItemManager` | Clickable/interactive item registration |
+
+Refer to [**API_USAGE.md**](API_USAGE.md) for step-by-step examples.
 
 ---
 
-## 11. ⚖️ License
+## 11. License
 
-This project, including its source code, documentation, and **pixel art icons** (located in the `/icons` directory), is licensed under the **Creative Commons Attribution-NonCommercial 4.0 International (CC BY-NC 4.0)**.
+Licensed under [Creative Commons Attribution-NonCommercial 4.0 International (CC BY-NC 4.0)](https://creativecommons.org/licenses/by-nc/4.0/).
+Icons located under `/icons` follow the same license terms.
 
-- **Attribution (BY):** You must give appropriate credit to the original author.
-- **NonCommercial (NC):** You may not use the material for commercial purposes.
-- **Derivative works:** You may remix and build upon this work under a different license, as long as you respect the conditions above.
-
-For more details, see the [LICENSE](LICENSE) file or visit [Creative Commons](https://creativecommons.org/licenses/by-nc/4.0/).
