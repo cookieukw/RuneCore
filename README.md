@@ -42,7 +42,17 @@ RuneCore is split into three main modules:
 | <img src="icons/essences/Ingredient_Mind_Essence.png" height="48"> | <img src="icons/essences/Ingredient_Blood_Essence.png" height="48"> | <img src="icons/essences/Ingredient_Chaos_Essence.png" height="48"> | <img src="icons/essences/Ingredient_Aether_Essence.png" height="48"> | <img src="icons/essences/Ingredient_Void_Essence.png" height="48"> |
 | <img src="icons/essences/Ingredient_Time_Essence.png" height="48"> | <img src="icons/essences/Ingredient_Metal_Essence.png" height="48"> | <img src="icons/essences/Ingredient_Crystal_Essence.png" height="48"> | <img src="icons/essences/Ingredient_Poison_Essence.png" height="48"> | <img src="icons/essences/Ingredient_Acid_Essence.png" height="48"> |
 
-### Potions & Effects
+### Potions
+| | | | | |
+| :---: | :---: | :---: | :---: | :---: |
+| <img src="icons/potions/Potion_Drinkable_Speed.png" height="48"> | <img src="icons/potions/Potion_Drinkable_Slowness.png" height="48"> | <img src="icons/potions/Potion_Drinkable_Haste.png" height="48"> | <img src="icons/potions/Potion_Drinkable_Mining_Fatigue.png" height="48"> | <img src="icons/potions/Potion_Drinkable_Jump_Boost.png" height="48"> |
+| <img src="icons/potions/Potion_Drinkable_High_Jump.png" height="48"> | <img src="icons/potions/Potion_Drinkable_Slow_Falling.png" height="48"> | <img src="icons/potions/Potion_Drinkable_Levitation.png" height="48"> | <img src="icons/potions/Potion_Drinkable_Regeneration.png" height="48"> | <img src="icons/potions/Potion_Drinkable_Poison.png" height="48"> |
+| <img src="icons/potions/Potion_Drinkable_Decay.png" height="48"> | <img src="icons/potions/Potion_Drinkable_Burn.png" height="48"> | <img src="icons/potions/Potion_Drinkable_Nausea.png" height="48"> | <img src="icons/potions/Potion_Drinkable_Bleeding.png" height="48"> | <img src="icons/potions/Potion_Drinkable_Frozen.png" height="48"> |
+| <img src="icons/potions/Potion_Drinkable_Instant_Health.png" height="48"> | <img src="icons/potions/Potion_Drinkable_Instant_Damage.png" height="48"> | <img src="icons/potions/Potion_Drinkable_Invisibility.png" height="48"> | <img src="icons/potions/Potion_Drinkable_Glowing.png" height="48"> | <img src="icons/potions/Potion_Drinkable_Blindness.png" height="48"> |
+| <img src="icons/potions/Potion_Drinkable_Night_Vision.png" height="48"> | <img src="icons/potions/Potion_Drinkable_Water_Breathing.png" height="48"> | <img src="icons/potions/Potion_Drinkable_Fire_Resistance.png" height="48"> | <img src="icons/potions/Potion_Drinkable_Resistance.png" height="48"> | <img src="icons/potions/Potion_Drinkable_Strength.png" height="48"> |
+| <img src="icons/potions/Potion_Drinkable_Weakness.png" height="48"> | | | | |
+
+### Status Effects
 | | | | | |
 | :---: | :---: | :---: | :---: | :---: |
 | <img src="icons/128x/speed.png" height="48"> | <img src="icons/128x/slowness.png" height="48"> | <img src="icons/128x/haste.png" height="48"> | <img src="icons/128x/mining_fatigue.png" height="48"> | <img src="icons/128x/jump_boost.png" height="48"> |
