@@ -32,31 +32,25 @@ O RuneCore é dividido em três módulos principais:
 * **RuneMagic:** Feitiços, runas (efeitos passivos), artefatos e grimórios.
 * **RuneAlchemy:** Sistema de criação de poções, reagentes e encantamento de itens.
 
-## 3. Essências Elementais
+## 3. Galeria Visual
 
-O RuneCore define 20 elementos distintos, cada um associado a um item de essência usado em receitas e magias.
+### Essências Elementais
+| | | | | |
+| :---: | :---: | :---: | :---: | :---: |
+| <img src="icons/essences/Ingredient_Fire_Essence.png" height="48"> | <img src="icons/essences/Ingredient_Water_Essence.png" height="48"> | <img src="icons/essences/Ingredient_Earth_Essence.png" height="48"> | <img src="icons/essences/Ingredient_Wind_Essence.png" height="48"> | <img src="icons/essences/Ingredient_Ice_Essence.png" height="48"> |
+| <img src="icons/essences/Ingredient_Lightning_Essence.png" height="48"> | <img src="icons/essences/Ingredient_Life_Essence.png" height="48"> | <img src="icons/essences/Ingredient_Death_Essence.png" height="48"> | <img src="icons/essences/Ingredient_Light_Essence.png" height="48"> | <img src="icons/essences/Ingredient_Shadow_Essence.png" height="48"> |
+| <img src="icons/essences/Ingredient_Mind_Essence.png" height="48"> | <img src="icons/essences/Ingredient_Blood_Essence.png" height="48"> | <img src="icons/essences/Ingredient_Chaos_Essence.png" height="48"> | <img src="icons/essences/Ingredient_Aether_Essence.png" height="48"> | <img src="icons/essences/Ingredient_Void_Essence.png" height="48"> |
+| <img src="icons/essences/Ingredient_Time_Essence.png" height="48"> | <img src="icons/essences/Ingredient_Metal_Essence.png" height="48"> | <img src="icons/essences/Ingredient_Crystal_Essence.png" height="48"> | <img src="icons/essences/Ingredient_Poison_Essence.png" height="48"> | <img src="icons/essences/Ingredient_Acid_Essence.png" height="48"> |
 
-### Nível Básico
-| Ícone | Elemento | Nível | Ícone | Elemento | Nível |
-| :---: | :--- | :--- | :---: | :--- | :--- |
-| <img src="icons/essences/Ingredient_Fire_Essence.png" height="48"> | **Fogo** | Básico | <img src="icons/essences/Ingredient_Water_Essence.png" height="48"> | **Água** | Básico |
-| <img src="icons/essences/Ingredient_Earth_Essence.png" height="48"> | **Terra** | Básico | <img src="icons/essences/Ingredient_Wind_Essence.png" height="48"> | **Vento** | Básico |
-| <img src="icons/essences/Ingredient_Ice_Essence.png" height="48"> | **Gelo** | Básico | <img src="icons/essences/Ingredient_Lightning_Essence.png" height="48"> | **Trovão** | Básico |
-
-### Nível Avançado
-| Ícone | Elemento | Nível | Ícone | Elemento | Nível |
-| :---: | :--- | :--- | :---: | :--- | :--- |
-| <img src="icons/essences/Ingredient_Life_Essence.png" height="48"> | **Vida** | Avançado | <img src="icons/essences/Ingredient_Death_Essence.png" height="48"> | **Morte** | Avançado |
-| <img src="icons/essences/Ingredient_Light_Essence.png" height="48"> | **Luz** | Avançado | <img src="icons/essences/Ingredient_Shadow_Essence.png" height="48"> | **Sombras** | Avançado |
-| <img src="icons/essences/Ingredient_Mind_Essence.png" height="48"> | **Mente** | Avançado | <img src="icons/essences/Ingredient_Blood_Essence.png" height="48"> | **Sangue** | Avançado |
-
-### Níveis Instável e Químico
-| Ícone | Elemento | Nível | Ícone | Elemento | Nível |
-| :---: | :--- | :--- | :---: | :--- | :--- |
-| <img src="icons/essences/Ingredient_Chaos_Essence.png" height="48"> | **Caos** | Instável | <img src="icons/essences/Ingredient_Aether_Essence.png" height="48"> | **Éter** | Instável |
-| <img src="icons/essences/Ingredient_Void_Essence.png" height="48"> | **Vazio** | Instável | <img src="icons/essences/Ingredient_Time_Essence.png" height="48"> | **Tempo** | Instável |
-| <img src="icons/essences/Ingredient_Metal_Essence.png" height="48"> | **Metal** | Químico | <img src="icons/essences/Ingredient_Crystal_Essence.png" height="48"> | **Cristal** | Químico |
-| <img src="icons/essences/Ingredient_Poison_Essence.png" height="48"> | **Veneno** | Químico | <img src="icons/essences/Ingredient_Acid_Essence.png" height="48"> | **Ácido** | Químico |
+### Poções e Efeitos
+| | | | | |
+| :---: | :---: | :---: | :---: | :---: |
+| <img src="icons/128x/speed.png" height="48"> | <img src="icons/128x/slowness.png" height="48"> | <img src="icons/128x/haste.png" height="48"> | <img src="icons/128x/mining_fatigue.png" height="48"> | <img src="icons/128x/jump_boost.png" height="48"> |
+| <img src="icons/128x/high_jump.png" height="48"> | <img src="icons/128x/slow_falling.png" height="48"> | <img src="icons/128x/levitation.png" height="48"> | <img src="icons/128x/regeneration.png" height="48"> | <img src="icons/128x/poison.png" height="48"> |
+| <img src="icons/128x/decay.png" height="48"> | <img src="icons/128x/burn.png" height="48"> | <img src="icons/128x/nausea.png" height="48"> | <img src="icons/128x/bleeding.png" height="48"> | <img src="icons/128x/frozen.png" height="48"> |
+| <img src="icons/128x/invisibility.png" height="48"> | <img src="icons/128x/glowing.png" height="48"> | <img src="icons/128x/blindness.png" height="48"> | <img src="icons/128x/night_vision.png" height="48"> | <img src="icons/128x/water_breathing.png" height="48"> |
+| <img src="icons/128x/fire_resistance.png" height="48"> | <img src="icons/128x/resistance.png" height="48"> | <img src="icons/128x/strength.png" height="48"> | <img src="icons/128x/weakness.png" height="48"> | <img src="icons/128x/darkness.png" height="48"> |
+| <img src="icons/128x/electrified.png" height="48"> | | | | |
 
 ---
 
@@ -64,26 +58,26 @@ O RuneCore define 20 elementos distintos, cada um associado a um item de essênc
 
 Criaturas possuem chance de dropar essências ao serem derrotadas por jogadores (taxa base: **25%**).
 
-| Essência | Mobs Origem |
-| :--- | :--- |
-| **Fogo** | Emberwulf, Dragão de Fogo, Criaturas de Magma/Chama |
-| **Terra** | Trork, Golem de Terra, Bisão, Tartaruga, Toupeira |
-| **Vento** | Pássaros (Falcão, Coruja, Corvo, etc.), Feran Windwalker |
-| **Água** | Peixes (Tubarão, Piranha, etc.), Caranguejo, Sapo, Baleia |
-| **Gelo** | Urso Polar, Dragão de Gelo, Yeti, Esqueleto de Gelo |
-| **Trovão** | Golem de Trovão, Espírito do Trovão, Faísca Viva |
-| **Luz** | Espírito de Raiz, Kweebec de Natal |
-| **Sombras** | Cavaleiro das Sombras, Wraith, Skrill |
-| **Vida** | Animais (Vaca, Porco, Ovelha, Cervo), Kweebec |
-| **Morte** | Esqueleto, Zumbi, Ghoul |
-| **Mente** | Slothian, Feiticeiro Outlander |
-| **Sangue** | Morcego, Mosquito |
-| **Caos** | Berserker Outlander, Chefe Trork |
-| **Éter** | Espírito de Brasa |
-| **Vazio** | Criaturas corrompidas pelo Vazio |
-| **Metal** | Golem de Aço, Tanque, Torreta |
-| **Cristal** | Golem de Cristal, Scarak |
-| **Veneno** | Cobra, Aranha, Escorpião |
+| Ícone | Essência | Mobs Origem |
+| :---: | :--- | :--- |
+| <img src="icons/essences/Ingredient_Fire_Essence.png" height="32"> | **Fogo** | Emberwulf, Dragão de Fogo, Criaturas de Magma/Chama |
+| <img src="icons/essences/Ingredient_Earth_Essence.png" height="32"> | **Terra** | Trork, Golem de Terra, Bisão, Tartaruga, Toupeira |
+| <img src="icons/essences/Ingredient_Wind_Essence.png" height="32"> | **Vento** | Pássaros (Falcão, Coruja, Corvo, etc.), Feran Windwalker |
+| <img src="icons/essences/Ingredient_Water_Essence.png" height="32"> | **Água** | Peixes (Tubarão, Piranha, etc.), Caranguejo, Sapo, Baleia |
+| <img src="icons/essences/Ingredient_Ice_Essence.png" height="32"> | **Gelo** | Urso Polar, Dragão de Gelo, Yeti, Esqueleto de Gelo |
+| <img src="icons/essences/Ingredient_Lightning_Essence.png" height="32"> | **Trovão** | Golem de Trovão, Espírito do Trovão, Faísca Viva |
+| <img src="icons/essences/Ingredient_Light_Essence.png" height="32"> | **Luz** | Espírito de Raiz, Kweebec de Natal |
+| <img src="icons/essences/Ingredient_Shadow_Essence.png" height="32"> | **Sombras** | Cavaleiro das Sombras, Wraith, Skrill |
+| <img src="icons/essences/Ingredient_Life_Essence.png" height="32"> | **Vida** | Animais (Vaca, Porco, Ovelha, Cervo), Kweebec |
+| <img src="icons/essences/Ingredient_Death_Essence.png" height="32"> | **Morte** | Esqueleto, Zumbi, Ghoul |
+| <img src="icons/essences/Ingredient_Mind_Essence.png" height="32"> | **Mente** | Slothian, Feiticeiro Outlander |
+| <img src="icons/essences/Ingredient_Blood_Essence.png" height="32"> | **Sangue** | Morcego, Mosquito |
+| <img src="icons/essences/Ingredient_Chaos_Essence.png" height="32"> | **Caos** | Berserker Outlander, Chefe Trork |
+| <img src="icons/essences/Ingredient_Aether_Essence.png" height="32"> | **Éter** | Espírito de Brasa |
+| <img src="icons/essences/Ingredient_Void_Essence.png" height="32"> | **Vazio** | Criaturas corrompidas pelo Vazio |
+| <img src="icons/essences/Ingredient_Metal_Essence.png" height="32"> | **Metal** | Golem de Aço, Tanque, Torreta |
+| <img src="icons/essences/Ingredient_Crystal_Essence.png" height="32"> | **Cristal** | Golem de Cristal, Scarak |
+| <img src="icons/essences/Ingredient_Poison_Essence.png" height="32"> | **Veneno** | Cobra, Aranha, Escorpião |
 
 ---
 

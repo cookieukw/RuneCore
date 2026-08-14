@@ -32,31 +32,25 @@ RuneCore is split into three main modules:
 * **RuneMagic:** Spells, runes (passive effects), artifacts, and grimoires.
 * **RuneAlchemy:** Brewing system for potions, reagents, and item enchantments using essences.
 
-## 3. Elemental Essences
+## 3. Visual Gallery
 
-RuneCore defines 20 distinct elements, each mapped to an essence item used in crafting and spellcasting.
+### Elemental Essences
+| | | | | |
+| :---: | :---: | :---: | :---: | :---: |
+| <img src="icons/essences/Ingredient_Fire_Essence.png" height="48"> | <img src="icons/essences/Ingredient_Water_Essence.png" height="48"> | <img src="icons/essences/Ingredient_Earth_Essence.png" height="48"> | <img src="icons/essences/Ingredient_Wind_Essence.png" height="48"> | <img src="icons/essences/Ingredient_Ice_Essence.png" height="48"> |
+| <img src="icons/essences/Ingredient_Lightning_Essence.png" height="48"> | <img src="icons/essences/Ingredient_Life_Essence.png" height="48"> | <img src="icons/essences/Ingredient_Death_Essence.png" height="48"> | <img src="icons/essences/Ingredient_Light_Essence.png" height="48"> | <img src="icons/essences/Ingredient_Shadow_Essence.png" height="48"> |
+| <img src="icons/essences/Ingredient_Mind_Essence.png" height="48"> | <img src="icons/essences/Ingredient_Blood_Essence.png" height="48"> | <img src="icons/essences/Ingredient_Chaos_Essence.png" height="48"> | <img src="icons/essences/Ingredient_Aether_Essence.png" height="48"> | <img src="icons/essences/Ingredient_Void_Essence.png" height="48"> |
+| <img src="icons/essences/Ingredient_Time_Essence.png" height="48"> | <img src="icons/essences/Ingredient_Metal_Essence.png" height="48"> | <img src="icons/essences/Ingredient_Crystal_Essence.png" height="48"> | <img src="icons/essences/Ingredient_Poison_Essence.png" height="48"> | <img src="icons/essences/Ingredient_Acid_Essence.png" height="48"> |
 
-### Basic Tier
-| Icon | Element | Tier | Icon | Element | Tier |
-| :---: | :--- | :--- | :---: | :--- | :--- |
-| <img src="icons/essences/Ingredient_Fire_Essence.png" height="48"> | **Fire** | Basic | <img src="icons/essences/Ingredient_Water_Essence.png" height="48"> | **Water** | Basic |
-| <img src="icons/essences/Ingredient_Earth_Essence.png" height="48"> | **Earth** | Basic | <img src="icons/essences/Ingredient_Wind_Essence.png" height="48"> | **Wind** | Basic |
-| <img src="icons/essences/Ingredient_Ice_Essence.png" height="48"> | **Ice** | Basic | <img src="icons/essences/Ingredient_Lightning_Essence.png" height="48"> | **Lightning** | Basic |
-
-### Advanced Tier
-| Icon | Element | Tier | Icon | Element | Tier |
-| :---: | :--- | :--- | :---: | :--- | :--- |
-| <img src="icons/essences/Ingredient_Life_Essence.png" height="48"> | **Life** | Advanced | <img src="icons/essences/Ingredient_Death_Essence.png" height="48"> | **Death** | Advanced |
-| <img src="icons/essences/Ingredient_Light_Essence.png" height="48"> | **Light** | Advanced | <img src="icons/essences/Ingredient_Shadow_Essence.png" height="48"> | **Shadow** | Advanced |
-| <img src="icons/essences/Ingredient_Mind_Essence.png" height="48"> | **Mind** | Advanced | <img src="icons/essences/Ingredient_Blood_Essence.png" height="48"> | **Blood** | Advanced |
-
-### Unstable & Chemical Tiers
-| Icon | Element | Tier | Icon | Element | Tier |
-| :---: | :--- | :--- | :---: | :--- | :--- |
-| <img src="icons/essences/Ingredient_Chaos_Essence.png" height="48"> | **Chaos** | Unstable | <img src="icons/essences/Ingredient_Aether_Essence.png" height="48"> | **Aether** | Unstable |
-| <img src="icons/essences/Ingredient_Void_Essence.png" height="48"> | **Void** | Unstable | <img src="icons/essences/Ingredient_Time_Essence.png" height="48"> | **Time** | Unstable |
-| <img src="icons/essences/Ingredient_Metal_Essence.png" height="48"> | **Metal** | Chemical | <img src="icons/essences/Ingredient_Crystal_Essence.png" height="48"> | **Crystal** | Chemical |
-| <img src="icons/essences/Ingredient_Poison_Essence.png" height="48"> | **Poison** | Chemical | <img src="icons/essences/Ingredient_Acid_Essence.png" height="48"> | **Acid** | Chemical |
+### Potions & Effects
+| | | | | |
+| :---: | :---: | :---: | :---: | :---: |
+| <img src="icons/128x/speed.png" height="48"> | <img src="icons/128x/slowness.png" height="48"> | <img src="icons/128x/haste.png" height="48"> | <img src="icons/128x/mining_fatigue.png" height="48"> | <img src="icons/128x/jump_boost.png" height="48"> |
+| <img src="icons/128x/high_jump.png" height="48"> | <img src="icons/128x/slow_falling.png" height="48"> | <img src="icons/128x/levitation.png" height="48"> | <img src="icons/128x/regeneration.png" height="48"> | <img src="icons/128x/poison.png" height="48"> |
+| <img src="icons/128x/decay.png" height="48"> | <img src="icons/128x/burn.png" height="48"> | <img src="icons/128x/nausea.png" height="48"> | <img src="icons/128x/bleeding.png" height="48"> | <img src="icons/128x/frozen.png" height="48"> |
+| <img src="icons/128x/invisibility.png" height="48"> | <img src="icons/128x/glowing.png" height="48"> | <img src="icons/128x/blindness.png" height="48"> | <img src="icons/128x/night_vision.png" height="48"> | <img src="icons/128x/water_breathing.png" height="48"> |
+| <img src="icons/128x/fire_resistance.png" height="48"> | <img src="icons/128x/resistance.png" height="48"> | <img src="icons/128x/strength.png" height="48"> | <img src="icons/128x/weakness.png" height="48"> | <img src="icons/128x/darkness.png" height="48"> |
+| <img src="icons/128x/electrified.png" height="48"> | | | | |
 
 ---
 
@@ -64,26 +58,26 @@ RuneCore defines 20 distinct elements, each mapped to an essence item used in cr
 
 Creatures drop elemental essences when defeated by a player (default base drop rate: **25%**).
 
-| Essence | Source Mobs |
-| :--- | :--- |
-| **Fire** | Emberwulf, Fire Dragon, Magma/Flame creatures |
-| **Earth** | Trork, Earth Golem, Bison, Tortoise, Molerat |
-| **Wind** | Birds (Hawk, Owl, Crow, etc.), Feran Windwalker |
-| **Water** | Fish (Shark, Piranha, etc.), Crab, Frog, Whale |
-| **Ice** | Polar Bear, Frost Dragon, Yeti, Frost Skeleton |
-| **Lightning** | Thunder Golem, Thunder Spirit, Living Spark |
-| **Light** | Spirit Root, Christmas Kweebec |
-| **Shadow** | Shadow Knight, Wraith, Skrill |
-| **Life** | Animals (Cow, Pig, Sheep, Deer), Kweebec |
-| **Death** | Skeleton, Zombie, Ghoul |
-| **Mind** | Slothian, Outlander Sorcerer |
-| **Blood** | Bat, Mosquito |
-| **Chaos** | Outlander Berserker, Trork Chieftain |
-| **Aether** | Ember Spirit |
-| **Void** | Void-corrupted creatures |
-| **Metal** | Firesteel Golem, Tank, Turret |
-| **Crystal** | Crystal Golem, Scarak |
-| **Poison** | Snake, Spider, Scorpion |
+| Icon | Essence | Source Mobs |
+| :---: | :--- | :--- |
+| <img src="icons/essences/Ingredient_Fire_Essence.png" height="32"> | **Fire** | Emberwulf, Fire Dragon, Magma/Flame creatures |
+| <img src="icons/essences/Ingredient_Earth_Essence.png" height="32"> | **Earth** | Trork, Earth Golem, Bison, Tortoise, Molerat |
+| <img src="icons/essences/Ingredient_Wind_Essence.png" height="32"> | **Wind** | Birds (Hawk, Owl, Crow, etc.), Feran Windwalker |
+| <img src="icons/essences/Ingredient_Water_Essence.png" height="32"> | **Water** | Fish (Shark, Piranha, etc.), Crab, Frog, Whale |
+| <img src="icons/essences/Ingredient_Ice_Essence.png" height="32"> | **Ice** | Polar Bear, Frost Dragon, Yeti, Frost Skeleton |
+| <img src="icons/essences/Ingredient_Lightning_Essence.png" height="32"> | **Lightning** | Thunder Golem, Thunder Spirit, Living Spark |
+| <img src="icons/essences/Ingredient_Light_Essence.png" height="32"> | **Light** | Spirit Root, Christmas Kweebec |
+| <img src="icons/essences/Ingredient_Shadow_Essence.png" height="32"> | **Shadow** | Shadow Knight, Wraith, Skrill |
+| <img src="icons/essences/Ingredient_Life_Essence.png" height="32"> | **Life** | Animals (Cow, Pig, Sheep, Deer), Kweebec |
+| <img src="icons/essences/Ingredient_Death_Essence.png" height="32"> | **Death** | Skeleton, Zombie, Ghoul |
+| <img src="icons/essences/Ingredient_Mind_Essence.png" height="32"> | **Mind** | Slothian, Outlander Sorcerer |
+| <img src="icons/essences/Ingredient_Blood_Essence.png" height="32"> | **Blood** | Bat, Mosquito |
+| <img src="icons/essences/Ingredient_Chaos_Essence.png" height="32"> | **Chaos** | Outlander Berserker, Trork Chieftain |
+| <img src="icons/essences/Ingredient_Aether_Essence.png" height="32"> | **Aether** | Ember Spirit |
+| <img src="icons/essences/Ingredient_Void_Essence.png" height="32"> | **Void** | Void-corrupted creatures |
+| <img src="icons/essences/Ingredient_Metal_Essence.png" height="32"> | **Metal** | Firesteel Golem, Tank, Turret |
+| <img src="icons/essences/Ingredient_Crystal_Essence.png" height="32"> | **Crystal** | Crystal Golem, Scarak |
+| <img src="icons/essences/Ingredient_Poison_Essence.png" height="32"> | **Poison** | Snake, Spider, Scorpion |
 
 ---
 
