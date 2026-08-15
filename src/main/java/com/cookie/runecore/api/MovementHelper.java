@@ -71,9 +71,6 @@ public final class MovementHelper {
     public static void applyLevitation(Ref<EntityStore> ref) {
         EffectHelper.modifyMovement(ref, s -> {
             s.invertedGravity = true;
-            s.mass = 0.05f;
-            s.airDragMax = 3.5f;
-            s.airDragMaxSpeed = 0.1f;
         });
         onLevitationTick(ref);
     }
