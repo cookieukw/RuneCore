@@ -9,6 +9,8 @@ import com.hypixel.hytale.protocol.RotationType;
 import com.hypixel.hytale.protocol.ServerCameraSettings;
 import com.hypixel.hytale.protocol.packets.camera.SetServerCamera;
 import com.hypixel.hytale.server.core.entity.effect.EffectControllerComponent;
+import com.hypixel.hytale.server.core.modules.physics.component.Velocity;
+import com.hypixel.hytale.server.core.universe.PlayerRef;
 import com.hypixel.hytale.server.core.universe.world.storage.EntityStore;
 
 /**
@@ -71,10 +73,10 @@ final class NauseaEffect {
         // For mobs/NPCs (non-player entities), apply periodic stagger velocity to simulate nausea/stumbling
         if (ref != null && ref.isValid()) {
             var store = ref.getStore();
-            if (store != null && store.getComponent(ref, com.hypixel.hytale.server.core.universe.PlayerRef.getComponentType()) == null) {
+            if (store != null && store.getComponent(ref, PlayerRef.getComponentType()) == null) {
                 EffectHelper.worldExecute(ref, () -> {
-                    com.hypixel.hytale.server.core.modules.physics.component.Velocity vc =
-                            store.getComponent(ref, com.hypixel.hytale.server.core.modules.physics.component.Velocity.getComponentType());
+                    Velocity vc =
+                            store.getComponent(ref, Velocity.getComponentType());
                     if (vc != null) {
                         double pushX = Math.sin(time * 2.0) * 1.5;
                         double pushZ = Math.cos(time * 2.0) * 1.5;
