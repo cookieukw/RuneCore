@@ -111,9 +111,20 @@ public final class MovementHelper {
     // ── Frozen ────────────────────────────────────────────────────────────────
 
     public static void applyFrozen(Ref<EntityStore> ref) {
+        if (ref == null) return;
         Store<EntityStore> store = ref.getStore();
         if (store == null) return;
 
+        // Apply speed zero to MovementSettings for entities with MovementManager
+        EffectHelper.modifyMovement(ref, s -> s.baseSpeed = 0.0f);
+
+        // Zero out current velocity
+        EffectHelper.worldExecute(ref, () -> {
+            Velocity vc = store.getComponent(ref, Velocity.getComponentType());
+            if (vc != null) vc.setZero();
+        });
+
+        // Player specific handling (rotation lock, camera packet, HUD)
         PlayerDataComponent data = store.getComponent(ref, PlayerDataComponent.TYPE);
         if (data != null) {
             data.setFrozen(true);
@@ -133,8 +144,12 @@ public final class MovementHelper {
     }
 
     public static void revertFrozen(Ref<EntityStore> ref) {
+        if (ref == null) return;
         Store<EntityStore> store = ref.getStore();
         if (store == null) return;
+
+        // Restore default speed
+        EffectHelper.modifyMovement(ref, s -> s.baseSpeed = EffectHelper.DEFAULT_SPEED);
 
         PlayerDataComponent data = store.getComponent(ref, PlayerDataComponent.TYPE);
         if (data != null) data.setFrozen(false);
@@ -146,8 +161,13 @@ public final class MovementHelper {
     }
 
     public static void onFrozenTick(Ref<EntityStore> ref) {
+        if (ref == null) return;
         Store<EntityStore> store = ref.getStore();
         if (store == null) return;
+
+        // Continuously zero velocity for all entities (mobs & players) while frozen
+        Velocity vc = store.getComponent(ref, Velocity.getComponentType());
+        if (vc != null) vc.setZero();
 
         PlayerDataComponent data = store.getComponent(ref, PlayerDataComponent.TYPE);
         if (data != null && data.isFrozen()) {
