@@ -2,12 +2,10 @@
   "StatusEffectIcon": "UI/StatusEffects/Frozen.png",
   "ApplicationEffects": {
     "ModelVFXId": "Freeze",
+    "HorizontalSpeedMultiplier": 0.0,
     "Particles": [
       {
         "SystemId": "Erosion_Status_Effect"
-      },
-      {
-        "SystemId": "Potion_Morph_Burst"
       }
     ],
     "FirstPersonParticles": [

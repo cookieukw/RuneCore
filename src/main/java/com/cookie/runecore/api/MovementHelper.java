@@ -131,14 +131,7 @@ public final class MovementHelper {
         Store<EntityStore> store = ref.getStore();
         if (store == null) return;
 
-        // Apply speed zero to MovementSettings for entities with MovementManager
-        EffectHelper.modifyMovement(ref, s -> s.baseSpeed = 0.0f);
-
-        // Apply negative stat modifier to speed on EntityStatMap (affects mob pathfinding speed)
-        StatHelper.applyStatModifier(ref, "WalkSpeed", "Frozen", 0.0f,
-                com.hypixel.hytale.server.core.modules.entitystats.modifier.StaticModifier.CalculationType.MULTIPLICATIVE);
-
-        // Zero out current velocity
+        // Zero out current physical velocity immediately
         EffectHelper.worldExecute(ref, () -> {
             Velocity vc = store.getComponent(ref, Velocity.getComponentType());
             if (vc != null) vc.setZero();
@@ -168,10 +161,6 @@ public final class MovementHelper {
         Store<EntityStore> store = ref.getStore();
         if (store == null) return;
 
-        // Restore default speed and remove stat modifier
-        EffectHelper.modifyMovement(ref, s -> s.baseSpeed = EffectHelper.DEFAULT_SPEED);
-        StatHelper.removeStatModifier(ref, "WalkSpeed", "Frozen");
-
         PlayerDataComponent data = store.getComponent(ref, PlayerDataComponent.TYPE);
         if (data != null) data.setFrozen(false);
 
@@ -186,10 +175,12 @@ public final class MovementHelper {
         Store<EntityStore> store = ref.getStore();
         if (store == null) return;
 
-        // Continuously zero velocity for all entities (mobs & players) on EVERY tick while frozen
+        // Keep physical horizontal velocity zero on each tick while frozen
         EffectHelper.worldExecute(ref, () -> {
             Velocity vc = store.getComponent(ref, Velocity.getComponentType());
-            if (vc != null) vc.setZero();
+            if (vc != null) {
+                vc.set(0.0, vc.getVelocity().y, 0.0);
+            }
         });
 
         PlayerDataComponent data = store.getComponent(ref, PlayerDataComponent.TYPE);
