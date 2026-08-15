@@ -152,6 +152,8 @@ public class CoreEffects {
             .withBuff(ctx -> {
                 String uid = getPlayerUuid(ctx);
                 return ActiveBuff.builder(uid, "levitation", 60)
+                    .interval(5)
+                    .onTick(ref -> MovementHelper.onLevitationTick(ref))
                     .onExpire(ref -> MovementHelper.revertLevitation(ref))
                     .build();
             })

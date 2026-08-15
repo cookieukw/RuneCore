@@ -75,9 +75,25 @@ public final class MovementHelper {
             s.airDragMax = 3.5f;
             s.airDragMaxSpeed = 0.1f;
         });
+        onLevitationTick(ref);
+    }
+
+    public static void onLevitationTick(Ref<EntityStore> ref) {
+        if (ref == null || !ref.isValid()) return;
+        Store<EntityStore> store = ref.getStore();
+        if (store == null) return;
+
+        // Apply a gentle upward velocity push for all entities (mobs & players)
+        EffectHelper.worldExecute(ref, () -> {
+            Velocity vc = store.getComponent(ref, Velocity.getComponentType());
+            if (vc != null) {
+                vc.set(vc.getVelocity().x, 3.5, vc.getVelocity().z);
+            }
+        });
     }
 
     public static void revertLevitation(Ref<EntityStore> ref) {
+        if (ref == null || !ref.isValid()) return;
         Store<EntityStore> store = ref.getStore();
         if (store == null) return;
 
