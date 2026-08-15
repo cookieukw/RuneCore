@@ -267,7 +267,7 @@ public class CoreEffects {
             .withBuff(ctx -> {
                 String uid = getPlayerUuid(ctx);
                 return ActiveBuff.builder(uid, "frozen", 600)
-                    .interval(10)
+                    .interval(1)
                     .onTick(ref -> MovementHelper.onFrozenTick(ref))
                     .onExpire(ref -> MovementHelper.revertFrozen(ref))
                     .build();
