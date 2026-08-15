@@ -17,9 +17,6 @@ import java.util.UUID;
 public class CoreEffects {
 
     public static String getPlayerUuid(CastContext ctx) {
-        if (ctx.source != null && ctx.source.getUuid() != null) {
-            return ctx.source.getUuid().toString();
-        }
         if (ctx.target instanceof Ref<?> raw && raw.isValid()) {
             @SuppressWarnings("unchecked") Ref<EntityStore> ref = (Ref<EntityStore>) raw;
             var store = ref.getStore();
@@ -29,8 +26,12 @@ public class CoreEffects {
                     return pRef.getUuid().toString();
                 }
             }
+            return "entity_" + System.identityHashCode(raw);
         }
-        return ctx.target != null ? ctx.target.toString() : "unknown";
+        if (ctx.source != null && ctx.source.getUuid() != null) {
+            return ctx.source.getUuid().toString();
+        }
+        return ctx.target != null ? ctx.target.toString() : UUID.randomUUID().toString();
     }
 
     public static void init() {
