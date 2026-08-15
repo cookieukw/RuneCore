@@ -83,11 +83,11 @@ public final class MovementHelper {
         Store<EntityStore> store = ref.getStore();
         if (store == null) return;
 
-        // Apply a gentle upward velocity push for all entities (mobs & players)
+        // Force upward velocity push for all entities (mobs & players) on every tick
         EffectHelper.worldExecute(ref, () -> {
             Velocity vc = store.getComponent(ref, Velocity.getComponentType());
             if (vc != null) {
-                vc.set(vc.getVelocity().x, 3.5, vc.getVelocity().z);
+                vc.set(vc.getVelocity().x, 4.5, vc.getVelocity().z);
             }
         });
     }

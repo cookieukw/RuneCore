@@ -68,12 +68,16 @@ public final class VisualEffectHelper {
         EffectHelper.worldExecute(ref, () -> {
             LOG.fine("[RuneCore] Applying blindness visual to " + ref);
             setHudAndData(ref, true, hud -> hud.setBlinded(true), data -> data.setBlinded(true));
+            // Slow down non-player entities when blinded to simulate confusion/loss of sight
+            StatHelper.applyStatModifier(ref, "WalkSpeed", "Blindness", 0.4f,
+                    com.hypixel.hytale.server.core.modules.entitystats.modifier.StaticModifier.CalculationType.MULTIPLICATIVE);
         });
     }
 
     public static void revertBlindness(Ref<EntityStore> ref) {
         EffectHelper.worldExecute(ref, () -> {
             setHudAndData(ref, true, hud -> hud.setBlinded(false), data -> data.setBlinded(false));
+            StatHelper.removeStatModifier(ref, "WalkSpeed", "Blindness");
             removeNativeEffect(ref.getStore(), ref, "Blindness");
         });
     }
