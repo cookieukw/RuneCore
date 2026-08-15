@@ -67,5 +67,21 @@ final class NauseaEffect {
             playerRef.getPacketHandler().write(
                     new SetServerCamera(ClientCameraView.Custom, true, settings));
         });
+
+        // For mobs/NPCs (non-player entities), apply periodic stagger velocity to simulate nausea/stumbling
+        if (ref != null && ref.isValid()) {
+            var store = ref.getStore();
+            if (store != null && store.getComponent(ref, com.hypixel.hytale.server.core.universe.PlayerRef.getComponentType()) == null) {
+                EffectHelper.worldExecute(ref, () -> {
+                    com.hypixel.hytale.server.core.modules.physics.component.Velocity vc =
+                            store.getComponent(ref, com.hypixel.hytale.server.core.modules.physics.component.Velocity.getComponentType());
+                    if (vc != null) {
+                        double pushX = Math.sin(time * 2.0) * 1.5;
+                        double pushZ = Math.cos(time * 2.0) * 1.5;
+                        vc.set(pushX, vc.getVelocity().y, pushZ);
+                    }
+                });
+            }
+        }
     }
 }
