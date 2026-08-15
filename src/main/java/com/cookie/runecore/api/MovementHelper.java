@@ -7,6 +7,7 @@ import com.hypixel.hytale.protocol.MovementSettings;
 import com.hypixel.hytale.protocol.MovementStates;
 import com.hypixel.hytale.server.core.entity.entities.player.movement.MovementManager;
 import com.hypixel.hytale.server.core.entity.movement.MovementStatesComponent;
+import org.joml.Vector3d;
 import com.hypixel.hytale.server.core.modules.entity.component.TransformComponent;
 import com.hypixel.hytale.server.core.modules.physics.component.Velocity;
 import com.hypixel.hytale.server.core.universe.PlayerRef;
@@ -80,11 +81,18 @@ public final class MovementHelper {
         Store<EntityStore> store = ref.getStore();
         if (store == null) return;
 
-        // Force upward velocity push for all entities (mobs & players) on every tick
+        // Elevate position directly for all entities (mobs & players) on every tick
         EffectHelper.worldExecute(ref, () -> {
+            TransformComponent transform = store.getComponent(ref, TransformComponent.getComponentType());
+            if (transform != null) {
+                Vector3d pos = transform.getPosition();
+                if (pos != null) {
+                    transform.setPosition(new Vector3d(pos.x, pos.y + 0.15, pos.z));
+                }
+            }
             Velocity vc = store.getComponent(ref, Velocity.getComponentType());
             if (vc != null) {
-                vc.set(vc.getVelocity().x, 4.5, vc.getVelocity().z);
+                vc.set(vc.getVelocity().x, 3.0, vc.getVelocity().z);
             }
         });
     }
