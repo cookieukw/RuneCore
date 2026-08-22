@@ -28,15 +28,7 @@ Motor e framework extensível de sistemas de magia para mods de Hytale.
 
 O RuneCore expande a base nativa do Hytale em um motor modular para interações elementais, efeitos de status, atributos customizados de RPG e receitas de alquimia. O mod oferece tanto mecânicas diretas quanto uma API extensível para integração de outros mods.
 
-## 2. Arquitetura
-
-O RuneCore é dividido em três módulos principais:
-
-* **RuneCore (Núcleo):** Gerencia essências, mana, atributos de combate e progressão do jogador. Expõe a API base.
-* **RuneMagic:** Feitiços, runas (efeitos passivos), artefatos e grimórios.
-* **RuneAlchemy:** Sistema de criação de poções, reagentes e encantamento de itens.
-
-## 3. Galeria Visual
+## 2. Galeria Visual
 
 ### Essências Elementais
 | | | | | |
@@ -65,6 +57,16 @@ O RuneCore é dividido em três módulos principais:
 | <img src="icons/128x/invisibility.png" height="48"> | <img src="icons/128x/glowing.png" height="48"> | <img src="icons/128x/blindness.png" height="48"> | <img src="icons/128x/night_vision.png" height="48"> | <img src="icons/128x/water_breathing.png" height="48"> |
 | <img src="icons/128x/fire_resistance.png" height="48"> | <img src="icons/128x/resistance.png" height="48"> | <img src="icons/128x/strength.png" height="48"> | <img src="icons/128x/weakness.png" height="48"> | <img src="icons/128x/darkness.png" height="48"> |
 | <img src="icons/128x/electrified.png" height="48"> | | | | |
+
+---
+
+## 3. Arquitetura
+
+O RuneCore é dividido em três módulos principais:
+
+* **RuneCore (Núcleo):** Gerencia essências, mana, atributos de combate e progressão do jogador. Expõe a API base.
+* **RuneMagic:** Feitiços, runas (efeitos passivos), artefatos e grimórios.
+* **RuneAlchemy:** Sistema de criação de poções, reagentes e encantamento de itens.
 
 ---
 
