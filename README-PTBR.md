@@ -5,6 +5,10 @@ Motor e framework extensível de sistemas de magia para mods de Hytale.
 [Read in English](README.md) | [Guia da API](API_USAGE-PTBR.md) | [Referência da API](docs/API_REFERENCE.md) | [Docs Técnicos](docs/ELEMENTS-PTBR.md) | [Manual](RuneCore_Manual-PTBR.md)
 
 <p align="center">
+  <img src="docs/assets/banner.png" alt="Banner do RuneCore" width="100%">
+</p>
+
+<p align="center">
   <img src="icons/logo/runecore-logo.png" alt="Logo do RuneCore" height="180">
   &nbsp;&nbsp;&nbsp;&nbsp;
   <img src="icons/logo/runecore-logo-construction.png" alt="Logo do RuneCore em camadas" height="180">

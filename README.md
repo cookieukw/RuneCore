@@ -5,6 +5,10 @@ Extensible magic system engine and framework for Hytale mods.
 [Leia em português](README-PTBR.md) | [API Guide](API_USAGE.md) | [API Reference](docs/API_REFERENCE.md) | [Technical Docs](docs/ELEMENTS.md) | [Manual](RuneCore_Manual.md)
 
 <p align="center">
+  <img src="docs/assets/banner.png" alt="RuneCore Banner" width="100%">
+</p>
+
+<p align="center">
   <img src="icons/logo/runecore-logo.png" alt="RuneCore Logo" height="180">
   &nbsp;&nbsp;&nbsp;&nbsp;
   <img src="icons/logo/runecore-logo-construction.png" alt="RuneCore Layered Logo" height="180">
