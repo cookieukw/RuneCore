@@ -133,7 +133,11 @@ public final class EffectHelper {
 
         if (pos != null) {
             Vector3d finalPos = new Vector3d(pos.x + offsetX, pos.y + offsetY, pos.z + offsetZ);
-            ParticleUtil.spawnParticleEffect(particleId, finalPos, store);
+            try {
+                ParticleUtil.spawnParticleEffect(particleId, finalPos, store);
+            } catch (Throwable ignored) {
+                // Ignore API signature mismatch on particle utility
+            }
         }
     }
 
