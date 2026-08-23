@@ -202,6 +202,19 @@ class CombatStatsTest {
         }
 
         @Test
+        @DisplayName("previewFinalDamage is a pure function and does not drain the shield")
+        void previewIsPure() {
+            CombatStats attacker = new CombatStats();
+            CombatStats defender = new CombatStats();
+            defender.setShieldHP(100f, 100f);
+
+            CombatStats.Offense hit = new CombatStats.Offense(30f, 0f, 0f, 0f, 0f);
+            assertEquals(0f, defender.previewFinalDamage(attacker, hit), EPS);
+            assertEquals(100f, defender.getShieldHP(), EPS, "shield remains intact after preview");
+            assertEquals(0f, defender.previewFinalDamage(attacker, hit), EPS, "can be called repeatedly");
+        }
+
+        @Test
         @DisplayName("calculateFinalDamage drains the shield, so it is not idempotent")
         void notIdempotent() {
             // Documented side effect. Pinned so nobody 'optimises' by calling it twice.
