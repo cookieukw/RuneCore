@@ -1,12 +1,12 @@
-# 🌎 RuneCore: Elements & Magical Systems
+# RuneCore: Elements & Magical Systems
 
-This document provides the technical details of the 20 magical elements planned for RuneCore, including their concepts, functional definitions, advantages, disadvantages, and system behaviors.
+Technical specification of the 20 magical elements in RuneCore, including their concepts, functional definitions, advantages, disadvantages, and system behaviors.
 
 ---
 
-## 4. Elements Overview
+## 1. Elements Overview
 
-RuneCore features 20 distinct elements, categorized into four tiers:
+RuneCore features 20 distinct elements divided into four tiers:
 
 | Basic Level  | Advanced Level | Unstable Elements | Chemical Elements |
 | :----------: | :------------: | :---------------: | :---------------: |
@@ -19,719 +19,534 @@ RuneCore features 20 distinct elements, categorized into four tiers:
 
 ---
 
-## 5. Detailed Element Specifications
+## 2. Detailed Element Specifications
 
-### 🔥 Fire
+### Fire
 
-**Concept:** Continuous damage and spatial control (environmental alteration) element.
+**Concept:** Continuous damage and spatial control (environmental alteration).
 
-> **Functional Definition:** It acts by altering environmental and target conditions, reducing direct aggressiveness and preparing reactions with other elements.
+**Functional Definition:** Alters environmental and target conditions, reducing direct physical aggressiveness while setting up reactions with other elements.
 
 **Damage Type:**
-- Continuous damage (DoT) applied over time.
-- Area of Effect (AoE) damage with terrain persistence.
-- Part of the damage ignores physical mitigation (burn penetration).
+- Continuous damage over time (DoT).
+- Area of effect (AoE) with terrain persistence.
+- Ignores part of physical mitigation (burn penetration).
 
-**Scaling:** Scales better with effect duration than with raw power (burst).
-**Playstyle:** Doesn't focus on immediate explosion, but on damage accumulation and area denial.
+**Scaling:** Scales with effect duration rather than raw burst.  
+**Playstyle:** Focused on damage accumulation, area denial, and environmental manipulation.
 
-#### ✅ Advantages
-- High efficiency against groups.
-- Maintains damage even without continuous player action.
-- Reduces enemy mobility by altering terrain.
-- Direct synergy with flammable effects (oil, wood, gases).
-- Forces the enemy to reposition.
+#### Advantages
+- High efficiency against grouped targets.
+- Maintains tick damage without continuous player action.
+- Limits enemy mobility by altering terrain.
+- Direct synergy with flammable compounds (oil, wood, gas).
+- Forces target repositioning.
 
-#### ❌ Disadvantages
+#### Disadvantages
 - Low efficiency against high-resistance single targets.
-- Heavily reduced by water, ice, and thermal resistance.
-- High resource consumption when maintaining active effects.
-- Can cause environmental side effects (NPCs, structures, drops).
-- Difficult control in closed areas.
+- Mitigated by water, ice, and thermal resistance.
+- High resource consumption when maintaining active surfaces.
+- Risk of collateral environmental damage (NPCs, structures, loot).
+- Difficult to control in confined areas.
 
-#### 🪄 Ways to Use
-- **Direct Application:** Incendiary projectiles, Continuous fire beams.
-- **Persistent Area:** Burning surfaces, Intense heat zones, Fields that apply burn through residency.
-- **Environmental Interaction:** Igniting flammable structures, Reaction with liquids and organic materials, Permanent or temporary terrain alteration.
-- **Alchemical Use:** Incendiary bombs, Reagent for elemental fusions, Energy source for alchemical machines.
+#### Applications
+- **Direct Application:** Incendiary projectiles, continuous fire beams.
+- **Persistent Area:** Burning surfaces, heat zones, residency burn fields.
+- **Environmental Interaction:** Igniting structures, reacting with organic materials/liquids, terrain modification.
+- **Alchemical Use:** Incendiary bombs, elemental fusion reagent, heat source for alchemical apparatuses.
 
-#### 😵 Associated Status Effects
+#### Associated Status Effects
 - **Burn:** Accumulative periodic damage.
-- **Thermal Exhaustion:** Reduction of stamina or speed.
-- **Disorientation:** In fragile creatures.
-- **Thermal Residue:** On the ground, affecting future interactions.
+- **Thermal Exhaustion:** Reduces stamina recovery or speed.
+- **Disorientation:** Applies to fragile targets.
+- **Thermal Residue:** Surface modifier affecting future interactions.
 
-#### 🔥 Fire Essence
+#### Fire Essence
 - **Obtain Methods:**
-  - **Environmental:** High-temperature biomes, Solidified lava, Thermal vents, Extreme weather events.
-  - **Creatures:** Elemental entities, Mobs exposed to extreme heat for a long time, Igneous bosses.
-  - **Structures:** Ancient furnaces, Abandoned industrial complexes, Burnt ruins.
-  - **Alchemy:** Distillation of flammable compounds, Controlled combustion processes, Thermal fermentation with risk of failure.
-- **Essence Classification:**
-  - **Unstable:** Easy to obtain, unpredictable effects.
-  - **Refined:** Standard use in spells.
-  - **Living:** Reacts with the environment and other elements.
+  - **Environmental:** High-temperature biomes, lava, thermal vents, extreme heat events.
+  - **Creatures:** Fire elementals, mobs exposed to heat, igneous bosses.
+  - **Structures:** Ancient furnaces, industrial complexes, burnt ruins.
+  - **Alchemy:** Distillation of flammable compounds, controlled combustion, thermal fermentation.
+- **Classification:**
+  - **Unstable:** Common, unpredictable reactions.
+  - **Refined:** Standard spellcraft resource.
+  - **Living:** High environmental and cross-element reactivity.
 - **Systemic Behavior:**
-  - Excessive use increases local temperature.
-  - High temperature alters spawn, weather, and biome.
-  - Affected regions tend to generate igneous entities.
+  - High usage increases local temperature.
+  - Saturated areas alter spawn rates and biome properties.
+  - Attracts igneous entities.
 
 ---
 
-### 🪨 Earth
+### Earth
 
-**Concept:** Structural control, damage mitigation, and physical space modification element.
+**Concept:** Structural control, damage mitigation, and terrain modification.
 
-> **Functional Definition:** It acts by creating, displaced, or reinforcing solid matter to influence combat flow and world progression.
+**Functional Definition:** Creates, displaces, or reinforces solid matter to influence combat flow and terrain.
 
 **Effect Type:**
 - Physical and elemental damage mitigation.
-- Area control by obstruction.
-- Direct terrain and structure alteration.
-- Impact-based damage and pressure (non-continuous).
+- Obstruction and area control.
+- Direct terrain and structure modification.
+- Impact damage (non-continuous).
 
-#### ✅ Advantages
-- High defensive efficiency.
-- Scales well with preparation and positioning.
-- Strong against direct contact enemies.
-- Creates real and permanent cover.
-- Synergy with construction systems and worldgen.
+#### Advantages
+- High defensive capability.
+- Scales with preparation and positioning.
+- Effective against direct-contact melee enemies.
+- Creates physical cover.
+- Direct integration with building and terrain systems.
 
-#### ❌ Disadvantages
+#### Disadvantages
 - Low mobility.
-- Slow execution.
-- Little efficiency against aerial targets.
-- Weak against water (erosion) and explosions.
-- Consumes space and can hinder allies.
+- Slow cast/execution time.
+- Limited effectiveness against airborne targets.
+- Susceptible to water (erosion) and explosive damage.
+- Obstructs movement for allies if misplaced.
 
-#### 🪄 Ways to Use
-- **Structural Creation:** Walls, Columns, Domes, Directional barriers.
-- **Terrain Control:** Ground elevation or depression, Obstacle creation, Passage closing, Enemy movement channeling.
-- **Physical Attack:** Stone spikes, Massive projectiles, Seismic waves, Block drops.
-- **Alchemical Use:** Equipment reinforcement, Defensive enchantments, Containment ritual components, Permanent alchemical structures.
+#### Applications
+- **Structural Creation:** Walls, pillars, domes, directional barriers.
+- **Terrain Control:** Ground elevation/depression, blocking paths, channeling enemy paths.
+- **Physical Attack:** Stone spikes, heavy projectiles, seismic waves.
+- **Alchemical Use:** Armor reinforcement, defensive enchantments, containment rituals.
 
-#### 🪨 Earth Essence
+#### Earth Essence
 - **Obtain Methods:**
-  - **Environmental:** Mineral veins, Deep caves, Rocky biomes, Tectonically unstable areas.
-  - **Creatures:** Stone elementals, Underground creatures, Fossilized or crystallized mobs.
-  - **Structures:** Abandoned mines, Ancient fortifications, Buried ruins.
-  - **Alchemy:** Compaction of minerals, Sediment distillation, Pressure crystallization. (Risk: Failure leads to collapse or burying).
-- **Essence Classification:**
-  - **Fragmented:** Weak, easy to obtain.
-  - **Condensed:** Standard use.
+  - **Environmental:** Mineral veins, deep caves, rocky biomes, tectonic fault lines.
+  - **Creatures:** Stone elementals, subterranean mobs, fossilized entities.
+  - **Structures:** Abandoned mines, fortifications, subterranean ruins.
+  - **Alchemy:** Mineral compaction, sediment distillation, pressure crystallization.
+- **Classification:**
+  - **Fragmented:** Common, low potency.
+  - **Condensed:** Standard crafting grade.
   - **Geological Core:** Rare, high stability.
 - **Systemic Behavior:**
-  - Continuous use alters local topography.
-  - Excess leads to landslides, collapses, or caves.
-  - Created structures may persist in the world.
-  - Saturated regions attract underground creatures.
+  - Frequent usage modifies local topography.
+  - Excess energy triggers landslides or cave collapse.
+  - Saturated regions attract subterranean mobs.
 
 ---
 
-### 💨 Wind
+### Wind
 
-**Concept:** Vector force, kinetic control, and trajectory manipulation element.
+**Concept:** Vector force, kinetic control, and trajectory manipulation.
 
-> **Functional Definition:** It acts by applying acceleration, deceleration, and redirection to entities, projectiles, and environmental effects.
+**Functional Definition:** Applies acceleration, deceleration, and redirection to entities, projectiles, and environmental hazards.
 
 **Effect Type:**
-- Forced displacement (knockback / pull / lift).
-- Speed and direction alteration.
-- Projectile control.
-- Interference with incantations and movements.
+- Forced displacement (knockback, pull, lift).
+- Velocity and direction alteration.
+- Projectile deflection and acceleration.
+- Interruption of casts and movement.
 
-#### ✅ Advantages
-- High control without depending on direct damage.
-- Effective against multiple targets.
-- Neutralizes physical and magical projectiles.
-- Strong synergy with other elements.
+#### Advantages
+- High utility and spatial control without relying on high base damage.
+- Multi-target crowd control.
+- Deflects incoming physical and magic projectiles.
+- Strong cross-element synergy.
 - Scales with positioning and timing.
 
-#### ❌ Disadvantages
-- Low base damage.
-- Little effect on very heavy targets.
-- Requires reading the space.
-- Lower impact in closed areas.
-- Can hinder allies and setups.
+#### Disadvantages
+- Low base damage output.
+- Reduced impact against heavy entities.
+- Requires precise spatial positioning.
+- Less effective in narrow spaces.
+- Can displace targets out of friendly damage zones.
 
-#### 🪄 Ways to Use
-- **Movement Manipulation:** Pushing or pulling enemies, Launching targets into the air, Redirecting falls, Briefly suspending entities.
-- **Projectile Control:** Deflecting arrows and magic, Accelerating allied projectiles, Creating turbulence zones, Curving trajectories.
-- **Mobility:** Assisted jumps, Rapid displacement, Gliding, Fall cancellation.
-- **Environmental Interaction:** Spreading fire, poisons, and gases, Dissipating fog and smoke, Activating pressure-based mechanisms, Temporarily altering local weather.
+#### Applications
+- **Movement Control:** Pushing/pulling targets, airborne suspension, fall redirection.
+- **Projectile Control:** Deflecting arrows/spells, accelerating allied projectiles, creating turbulence fields.
+- **Mobility:** Assisted jumps, speed bursts, gliding, fall damage cancellation.
+- **Environmental Interaction:** Spreading fire/gas/poison, clearing fog/smoke, pressure mechanism activation.
 
-#### 😵 Associated Status Effects
-- **Disequilibrium:** Reduces precision and control.
-- **Exposure:** Removes cover.
-- **Disarm:** Chance of dropping light items.
-- **Forced Fall.**
+#### Associated Status Effects
+- **Disequilibrium:** Reduces accuracy and control.
+- **Exposure:** Strips target cover.
+- **Disarm:** Chance to drop lightweight items.
+- **Forced Fall:** Cancels airborne stability.
 
-#### 💨 Wind Essence
+#### Wind Essence
 - **Obtain Methods:**
-  - **Environmental:** High peaks, Gorges, Open plains, Storms and cold fronts.
-  - **Creatures:** Aerial elementals, Flying creatures, Extreme weather entities.
-  - **Structures:** Ancient towers, Windmills, Weather observatories, Ruins in high regions.
-  - **Alchemy:** Air compression in sealed chambers, Distillation of atmospheric currents. (Risk: Failed use leads to pressure explosion).
-- **Essence Classification:**
-  - **Dispersed:** Weak, difficult to store.
-  - **Condensed:** Standard use.
-  - **Cyclonic:** Rare, highly reactive.
+  - **Environmental:** Mountain peaks, canyons, open plains, storm fronts.
+  - **Creatures:** Air elementals, flying beasts, storm entities.
+  - **Structures:** High towers, windmills, weather observatories.
+  - **Alchemy:** Gas compression, atmospheric distillation.
+- **Classification:**
+  - **Dispersed:** Low stability.
+  - **Condensed:** Standard grade.
+  - **Cyclonic:** Highly reactive.
 - **Systemic Behavior:**
-  - Continuous use alters weather patterns.
-  - Can increase spawn of aerial creatures.
-  - Zonas saturadas geram rajadas aleatórias.
-  - Interferes with other active elements.
+  - Prolonged use influences weather conditions.
+  - Increases aerial creature spawn rates.
+  - Disturbs active gas and fire fields.
 
 ---
 
-### 💧 Water
+### Water
 
-**Concept:** State control, thermal mitigation, and chemical interaction element.
+**Concept:** Fluid control, thermal mitigation, and chemical interaction.
 
-> **Functional Definition:** It acts by altering environmental and target conditions, reducing direct aggressiveness and preparing reactions with other elements.
+**Functional Definition:** Alters environmental and target states, reducing heat/fire effects and facilitating chemical or electrical reactions.
 
 **Effect Type:**
 - Fluid area control.
-- Physical state alteration (wet, soaked).
-- Reduction and neutralization of thermal effects.
-- Indirect damage by drowning, pressure, or reaction.
+- State application (wet, soaked).
+- Heat neutralization.
+- Indirect damage (pressure, drowning, elemental combos).
 
-#### ✅ Advantages
-- Strong against fire and heat.
-- Excellent in prolonged control.
-- Facilitates elemental reactions.
-- Affects multiple targets consistently.
-- Low environmental risk compared to fire.
+#### Advantages
+- Counteracts fire and heat effects.
+- Strong crowd control when combined with ice/lightning.
+- Facilitates elemental chain reactions.
+- Consistent multi-target application.
 
-#### ❌ Disadvantages
+#### Disadvantages
 - Low direct damage.
-- Dependent on terrain and volume.
-- Can favor aquatic enemies.
-- Slow execution in dry areas.
-- Little immediate effect without combination.
+- Dependent on environmental water volume.
+- Can buff aquatic enemies.
+- Slow execution in dry biomes.
 
-#### 🪄 Ways to Use
-- **Area Control:** Slippery surfaces, Flooding fields, Directional currents, Hydraulic pressure zones.
-- **State Alteration:** "Wet" application, Burn suppression, Electric conduction increase, Friction reduction.
-- **Indirect Attack:** High-pressure jets, Hydraulic crushing, Progressive drowning, Instability-induced fall.
-- **Alchemical Use:** Base for potions and solvents, Extraction and dilution of essences, Controlled chemical reactions, Volatile compound stabilization.
+#### Applications
+- **Area Control:** Slippery surfaces, localized flooding, directional currents, hydraulic pressure.
+- **State Alteration:** Applying wet state, extinguishing fires, increasing electrical conductivity.
+- **Indirect Attack:** High-pressure jets, hydraulic crushing, drowning mechanics.
+- **Alchemical Use:** Solvent base for potions, essence extraction, reaction stabilization.
 
-#### 😵 Associated Status Effects
-- **Wet:** Reduces lightning resistance, increases effective weight.
-- **Drag:** Speed reduction.
-- **Disorientation:** In terrestrial creatures.
-- **Asphyxia:** In prolonged submersion.
+#### Associated Status Effects
+- **Wet:** Decreases lightning resistance, increases target weight.
+- **Drag:** Movement slowdown.
+- **Asphyxia:** Submersion damage over time.
 
 ---
 
-### ❄️ Ice
+### Ice
 
-**Concept:** Thermal reduction, movement restriction, and structural weakening element.
+**Concept:** Thermal reduction, movement restriction, and structural weakening.
 
-> **Functional Definition:** It acts by decreasing targets' kinetic energy and transforming water and surfaces into unstable solid states.
+**Functional Definition:** Lowers kinetic energy, freezing water and surfaces into solid states.
 
 **Effect Type:**
-- Progressive speed reduction.
-- Temporary immobilization.
+- Progressive slowdown.
+- Immobilization.
 - Thermal fracture damage.
-- Physical terrain modification.
+- Surface modification.
 
-#### ✅ Advantages
-- Strong crowd control.
+#### Advantages
+- Excellent crowd control (root/freeze).
 - Direct synergy with water.
-- Neutralizes fire and thermal effects.
-- Creates defensive and offensive surfaces.
-- Excellent setup for burst from other elements.
+- Counters fire/heat effects.
+- Creates temporary solid structures and hazard zones.
+- Prepares targets for physical or magical shatter damage.
 
-#### ❌ Disadvantages
-- Low direct damage.
-- Cold-resistant targets greatly reduce impact.
-- Breakable effects.
-- Dependent on positioning.
-- Loses efficiency in hot environments.
+#### Disadvantages
+- Low direct base damage.
+- Ineffective against cold-immune targets.
+- Freeze effects can be broken by physical impacts.
+- Reduced efficiency in high-temperature environments.
 
-#### 🪄 Ways to Use
-- **Movement Control:** Gradual Freezing, Ice Rooting, Crystalline Prisons, Slippery surfaces.
-- **Environmental Alteration:** Freezing water and mud, Creating temporary bridges, Sealing passages, Reinforcing structures for a short period.
-- **Structural Attack:** Ice blades, Emerging spikes, Thermal expansion explosion, Fracture of frozen targets.
-- **Alchemical Use:** Reagent preservation, Potion stabilization, Thermal shock reactions, Containment of unstable essences.
+#### Applications
+- **Control:** Slowing, rooting, freezing prisons, ice surfaces.
+- **Environmental:** Freezing liquids, creating temporary bridges, sealing passages.
+- **Structural Attack:** Ice blades, emerging spikes, thermal shock fracturing.
+- **Alchemical Use:** Reagent preservation, thermal shock stabilization.
 
-#### 😵 Associated Status Effects
-- **Cold:** Speed and attack reduction.
-- **Frozen:** Total immobilization.
-- **Brittleness:** Increase in received damage.
-- **Hypothermia:** Progressive loss of resources.
+#### Associated Status Effects
+- **Cold:** Reduces movement and attack speed.
+- **Frozen:** Complete immobilization.
+- **Brittleness:** Increases incoming physical damage.
+- **Hypothermia:** Resource depletion over time.
 
-#### ❄️ Ice Essence
+#### Ice Essence
 - **Obtain Methods:**
-  - **Environmental:** Glacial biomes, Frozen peaks, Ice caves, Snowstorms.
-  - **Creatures:** Ice elementals, Arctic predators, Crystallized entities.
-  - **Structures:** Ruins buried in ice, Ancient frozen temples, Preservation laboratories.
-  - **Alchemy:** Controlled crystallization, Residual cold extraction, Freezing under pressure. (Risk: Failure leads to violent shattering).
-- **Essence Classification:**
+  - **Environmental:** Glaciers, frozen peaks, ice caves, blizzards.
+  - **Creatures:** Ice elementals, arctic mobs.
+  - **Structures:** Frozen ruins, preservation vaults.
+  - **Alchemy:** Pressurized freezing, cold extraction.
+- **Classification:**
   - **Fragile:** Short duration.
-  - **Stable:** Standard use.
-  - **Eternal:** Rare, does not melt easily.
+  - **Stable:** Standard grade.
+  - **Eternal:** Non-melting.
 - **Systemic Behavior:**
-  - Prolonged use reduces local temperature.
-  - Can freeze entire bodies of water.
-  - Increases spawn of cold creatures.
-  - Creates risk of environmental fractures.
+  - Lowers local ambient temperature.
+  - Freezes standing water bodies.
+  - Increases cold-adapted mob spawns.
 
 ---
 
-### ⚡ Lightning
+### Lightning
 
-**Concept:** Electric discharge, chain propagation, and energetic interference element.
+**Concept:** Electrical discharge, chain conduction, and systemic interruption.
 
-> **Functional Definition:** It acts by applying instantaneous damage, jumping between conductors, and affecting active systems and altered states.
+**Functional Definition:** Applies fast damage bursts, jumping between conductive targets and interrupting channels.
 
 **Effect Type:**
-- Instantaneous damage (burst).
-- Propagation between nearby targets.
-- Interruption of actions and incantations.
-- Activation or overload of systems.
+- Instantaneous burst damage.
+- Chain propagation across nearby targets.
+- Spell and action interruption.
+- Mechanism activation or overload.
 
-#### ✅ Advantages
-- High immediate damage.
-- Scales very well with grouped targets.
-- Strong against wet or metallic enemies.
-- Can interrupt attacks and spells.
-- Little dependent on terrain.
+#### Advantages
+- High burst damage.
+- Multi-target propagation when enemies are grouped.
+- Increased damage against wet or armored targets.
+- Interrupts enemy spellcasting and attacks.
 
-#### ❌ Disadvantages
-- Limited range without conductors.
-- Inefficient against isolated targets.
-- High resource consumption per use.
-- Little prolonged effect.
-- Risk of electric feedback to the user.
+#### Disadvantages
+- Decreased range without conductive targets.
+- Low efficiency against single isolated enemies.
+- High mana/resource cost.
+- Short duration / minimal persistent field effect.
 
-#### 🪄 Ways to Use
-- **Direct Discharge:** Instant lightning, Electric projectiles, Short-range pulses.
-- **Propagation:** Electric chain currents, Conduction fields, Jumps between nearby targets.
-- **Interference:** Interrupting incantation, Deactivating mechanisms, Causing failures in artificial creatures, Overloading equipment.
-- **Alchemical Use:** Energy source, Reactor activation, Catalyst for fast reactions, Item charging.
+#### Applications
+- **Direct Discharge:** Lightning bolts, electric arcs, shock pulses.
+- **Chain Mechanics:** Arcing between wet/metal targets, conduction zones.
+- **Interruption:** Canceling casts, disrupting mechanism functions.
+- **Alchemical Use:** Energy source, catalyst for rapid reactions, item charging.
 
-#### 😵 Associated Status Effects
-- **Electrocuted:** Additional immediate damage.
-- **Stun:** Temporary loss of action.
-- **Overload:** Active effects are interrupted.
-- **Conduction:** Increases chance of electric jump.
+#### Associated Status Effects
+- **Electrocuted:** Immediate shock damage.
+- **Stun:** Short duration action loss.
+- **Overload:** Interrupts ongoing channeled effects.
+- **Conduction:** Increases arcing range to nearby targets.
 
-#### ⚡ Lightning Essence
+#### Lightning Essence
 - **Obtain Methods:**
-  - **Environmental:** Electric storms, High peaks, Natural towers, Unstable weather regions.
-  - **Creatures:** Electric elementals, Energized creatures, Artificial entities.
-  - **Structures:** Ancient lightning rods, Abandoned generators, Arcane laboratories.
-  - **Alchemy:** Capturing discharges, Storage in conductive crystals, Energetic compression. (Risk: Failure leads to electric explosion).
-- **Essence Classification:**
-  - **Unstable:** Difficult to contain.
-  - **Condensed:** Standard use.
-  - **Ionized:** Rare, high propagation.
+  - **Environmental:** Thunderstorms, high mountain spires.
+  - **Creatures:** Lightning elementals, energized beasts.
+  - **Structures:** Ancient lightning rods, generators.
+  - **Alchemy:** Arc storage in crystals, energy condensation.
+- **Classification:**
+  - **Unstable:** High discharge risk.
+  - **Condensed:** Standard grade.
+  - **Ionized:** High chain range.
 - **Systemic Behavior:**
-  - Frequent use ionizes the area.
-  - Increases chance of electric events.
-  - Potentiates effects of water and metal.
-  - Can activate dormant entities.
+  - Ionizes local area, increasing storm frequency.
+  - Synergizes with metal and water hazards.
 
 ---
 
-### ☀️ Light
+### Light
 
-**Concept:** Energetic radiation element, information revelation, and anomalous state neutralization.
+**Concept:** Radiation, entity revelation, and anomalous state purging.
 
-> **Functional Definition:** It acts by reducing local entropy, exposing hidden entities, and interfering with shadow-based effects, corruption, or illusion.
+**Functional Definition:** Reduces local entropy, reveals concealed entities, and purges shadow or corruption effects.
 
 **Effect Type:**
-- Direct energy damage.
-- Revelation and detection.
+- Direct radiant energy damage.
+- Stealth and trap revelation.
 - Negative effect suppression.
-- Interference in hidden states.
+- Anti-shadow interaction.
 
-#### ✅ Advantages
-- Strong against shadow, illusion, and corruption.
-- Reveals invisible or camouflaged enemies.
-- Cleans or reduces debuffs.
-- Acts from a distance with high precision.
-- Low destructive environmental impact.
+#### Advantages
+- Counters shadow, illusion, and corruption mechanics.
+- Reveals invisible or camouflaged entities.
+- Cleanses debuffs from allies.
+- Precise long-range application.
 
-#### ❌ Disadvantages
-- Reduced efficiency against neutral targets.
-- Little terrain alteration.
-- High consumption of refined essence.
-- Little synergy with physical effects.
-- Weak in light-saturated environments.
+#### Disadvantages
+- Lower damage output against non-corrupted targets.
+- Minimal physical terrain modification.
+- High refined essence cost.
+- Ineffective in high ambient light environments.
 
-#### 🪄 Ways to Use
-- **Energetic Damage:** Concentrated beams, Radiant pulses, Photonic projectiles.
-- **Revelation:** Exposing hidden entities, Marking targets, Lighting up corrupted areas, Detecting traps and illusions.
-- **Suppression:** Removing debuffs, Reducing corruption, Weakening shadowy entities, Stabilizing unstable areas.
-- **Alchemical Use:** Purifying reagents, Catalyst for cleansing rituals, Creating radiant crystals, Stabilizing dangerous essences.
+#### Applications
+- **Radiant Damage:** Focused beams, light pulses, photonic projectiles.
+- **Detection:** Revealing hidden units, illuminating dark areas, dispelling illusions.
+- **Purification:** Debuff removal, corruption suppression.
+- **Alchemical Use:** Reagent purification, cleansing ritual catalyst, radiant crystals.
 
-#### 😵 Associated Status Effects
-- **Illuminated:** Visible, without concealment bonus.
-- **Purified:** Negative effect reduction.
-- **Exposed:** Briefly loses defensive bonuses.
-- **Radiation:** Light continuous damage in sensitive entities.
-
-#### ☀️ Light Essence
-- **Obtain Methods:**
-  - **Environmental:** High solar exposure regions, Rare luminous phenomena, High peaks at dawn.
-  - **Creatures:** Radiant entities, Ancient guardians, Luminous plane creatures.
-  - **Structures:** Solar temples, Ancient observatories, Luminous focus artifacts.
-  - **Alchemy:** Light concentration in crystals, Refraction purification, Radiant energy distillation. (Risk: Failure leads to blindness or overload).
-- **Essence Classification:**
-  - **Diffuse:** Common, low potency.
-  - **Focused:** Standard use.
-  - **Radiant:** Rare, high purity.
-- **Systemic Behavior:**
-  - Continuous use reduces local corruption.
-  - Can stabilize chaotic regions.
-  - Decreases spawn of shadowy entities.
-  - Interferes with active shadow effects.
+#### Associated Status Effects
+- **Illuminated:** Reveals target location and cancels stealth.
+- **Purified:** Reduces negative status durations.
+- **Exposed:** Briefly lowers defensive resistances.
 
 ---
 
-### 🌑 Shadow
+### Shadow
 
-**Concept:** Concealment, entropic drainage, and perception manipulation element.
+**Concept:** Concealment, entropic drainage, and sensory disruption.
 
-> **Functional Definition:** It acts by reducing available information, degrading energy, and exploring states of fear, illusion, and vulnerability.
+**Functional Definition:** Suppresses light, drains target vitality, and alters perception.
 
 **Effect Type:**
 - Concealment and partial invisibility.
-- Drainage damage.
-- Sensory interference.
-- Psychological and energetic debuffs.
+- Resource drainage.
+- Perception and sensory debuffs.
+- Anti-light interaction.
 
-#### ✅ Advantages
-- Strong in indirect control.
-- Effective against isolated targets.
-- Synergy with dark environments.
-- Allows real stealthy approach.
-- Scales with duration and positioning.
+#### Advantages
+- Strong utility for stealth and indirect combat.
+- High efficiency in unlit environments.
+- Drains health/mana over time.
+- Synergizes with night cycles and deep caves.
 
-#### ❌ Disadvantages
-- Weak under intense light.
-- Little structural impact.
-- Limited direct damage.
-- High maintenance cost.
-- Requires preparation and a favorable environment.
+#### Disadvantages
+- Cancelled or suppressed by strong light sources.
+- Low direct physical damage.
+- Minimal structural impact.
+- High essence maintenance cost.
 
-#### 🪄 Ways to Use
-- **Concealment:** Conditional invisibility, Dynamic camouflage, Enemy detection reduction, Illumination suppression.
-- **Drainage:** Stealing life or energy, Progressive weakening, Erosion of active buffs, Mental exhaustion.
-- **Sensory Manipulation:** Movement illusions, Sound distortion, Target confusion, Fear induction.
-- **Alchemical Use:** Catalyst for forbidden rituals, Creating entropic poisons, Corruption storage, Stabilizing chaotic elements.
+#### Applications
+- **Stealth:** Conditional invisibility, light suppression, detection reduction.
+- **Drainage:** Stealing health/mana, decaying target buffs.
+- **Disruption:** Vision loss, confusion, fear induction.
+- **Alchemical Use:** Entropic poisons, ritual catalysts, shadow storage.
 
-#### 😵 Associated Status Effects
-- **Hidden:** Reduces detection chance.
+#### Associated Status Effects
+- **Hidden:** Reduces detection radius.
 - **Drained:** Continuous resource loss.
-- **Terrified:** Precision and control reduction.
-- **Corrupted:** Increase in received damage from light.
-
-#### 🌑 Shadow Essence
-- **Obtain Methods:**
-  - **Environmental:** Deep caves, Unlit ruins, High entropy biomes, Eclipse events.
-  - **Creatures:** Shadowy entities, Nocturnal creatures, Corrupted mobs.
-  - **Structures:** Forgotten sanctuaries, Ancient prisons, Inverted temples.
-  - **Alchemy:** Condensation of luminous absence, Entropic extraction, Energetic sacrifice. (Risk: Failure leads to uncontrolled corruption).
-- **Essence Classification:**
-  - **Thin:** Weak, unstable.
-  - **Dense:** Standard use.
-  - **Abyssal:** Rare, highly corrosive.
-- **Systemic Behavior:**
-  - Prolonged use darkens the region.
-  - Reduces local global illumination.
-  - Increases spawn of shadowy creatures.
-  - Weakens active light effects.
+- **Terrified:** Causes target hesitation or flight.
 
 ---
 
-### 🌿 Life
+### Life
 
-**Concept:** Biological regeneration element, organic adaptation, and directed growth.
+**Concept:** Biological growth, regeneration, and organic adaptation.
 
-> **Functional Definition:** It acts by restoring, modifying, and expanding living structures, with the cost and risk of uncontrolled growth.
+**Functional Definition:** Restores and expands organic structures, promoting health recovery and plant growth.
 
 **Effect Type:**
-- Progressive regeneration.
-- Attribute increase and modification.
-- Creation and control of organic matter.
-- Vitality transfer.
+- Health regeneration.
+- Attribute fortification.
+- Organic structure generation (vines, roots).
+- Summons and flora enhancement.
 
-#### ✅ Advantages
-- Prolonged sustain.
-- Strong synergy with allies and summons.
-- Can permanently alter entities.
-- Scales with time and investment.
-- Strong outside immediate combat.
+#### Advantages
+- High sustain and healing capacity.
+- Strong synergy with organic summons and plants.
+- Modifies entity stats positively.
 
-#### ❌ Disadvantages
-- Slow response in intense combat.
-- Can generate unwanted mutations.
-- Inefficient against massive damage.
-- Strong counter by death and corruption.
-- Requires constant management.
+#### Disadvantages
+- Low immediate burst damage.
+- Vulnerable to fire, decay, and necrotic effects.
+- Slow combat ramp-up.
 
-#### 🪄 Ways to Use
-- **Regeneration:** Gradual healing, Limb regeneration, Stamina recovery, Removal of degenerative effects.
-- **Organic Growth:** Vines, roots, carapaces; Living barriers; Bridges and organic structures; Temporary biological armor.
-- **Adaptation:** Progressive resistance to received damage, Adjustment to hostile biomes, Tolerance to poisons and diseases, Evolution of summons.
-- **Alchemical Use:** Creating organic elixirs, Living fermentation, Catalyst for mutations, Revitalization rituals.
+#### Applications
+- **Healing:** Regeneration over time, stamina recovery, debuff removal.
+- **Growth:** Spawning vines, roots, or wooden barriers.
+- **Alchemical Use:** Health elixirs, organic growth catalysts, bio-fertilizers.
 
-#### 😵 Associated Status Effects
-- **Regenerating:** Continuous recovery.
-- **Rooted:** Reduced mobility, higher defense.
-- **Mutation:** Gain with side effect.
-- **Vital Excess:** Harmful growth.
-
-#### 🌿 Life Essence
-- **Obtain Methods:**
-  - **Environmental:** Dense forests, Untouched regions, Ancient trees, Fertile biomes.
-  - **Creatures:** Natural entities, Forest guardians, Regenerative creatures.
-  - **Structures:** Natural sanctuaries, Living altars, Ancient gardens.
-  - **Alchemy:** Vital sap extraction, Controlled cultivation, Alchemical symbiosis. (Risk: Failure leads to hostile proliferation).
-- **Essence Classification:**
-  - **Latent:** Weak, common.
-  - **Vigorous:** Standard use.
-  - **Primordial:** Rare, highly reactive.
-- **Systemic Behavior:**
-  - Continuous use increases local fertility.
-  - Can generate excessive growth.
-  - Attracts organic creatures.
-  - Can conflict with artificial structures.
+#### Associated Status Effects
+- **Regenerating:** Continuous HP restoration.
+- **Rooted:** Anchors entity to location, increasing defense.
 
 ---
 
-### ☠️ Death
+### Death
 
-**Concept:** Vital degradation element, interruption of regeneration, and reuse of organic waste.
+**Concept:** Vital degradation, healing suppression, and necrotic decay.
 
-> **Functional Definition:** It acts by ending life processes, accelerating decomposition, and converting vitality into entropic energy.
+**Functional Definition:** Degrades biological tissue, prevents health recovery, and utilizes organic remains.
 
 **Effect Type:**
-- Degenerative damage.
-- Suppression of healing and regeneration.
-- Progressive decomposition.
-- Life-to-resource conversion.
+- Degenerative decay damage.
+- Healing and regeneration suppression.
+- Necrotic rot.
+- Corpse utilization.
 
-#### ✅ Advantages
-- Strong against targets with high regeneration.
-- Neutralizes Life effects.
-- Consistent damage over time.
-- Synergy with corpses and death areas.
-- Scales well in long combats.
+#### Advantages
+- Counters healing and life-based effects.
+- High damage over time against living targets.
+- Synergizes with undead and corpse mechanics.
 
-#### ❌ Disadvantages
-- Little burst.
-- Low efficiency against constructs and machines.
-- Requires maintenance of effects.
-- Can generate environmental consequences.
-- Hostility from NPCs and factions.
+#### Disadvantages
+- Ineffective against non-living constructs/automations.
+- Low immediate burst.
+- Causes negative NPC reactions.
 
-#### 🪄 Ways to Use
-- **Degeneration:** Progressive rot, Localized necrosis, Vital drainage, Erosion of biological buffs.
-- **Suppression:** Healing block, Regeneration reduction, Cancellation of Life effects, Prolonged weakening.
-- **Reuse:** Animation of corpses, Extractions of residual vital energy, Creating death zones, Feeding rituals.
-- **Alchemical Use:** Necrotic poison, Corpse conservation, Catalyst for funeral rituals, Stabilization of organic corruption.
+#### Applications
+- **Degeneration:** Life decay, necrosis, healing block.
+- **Reuse:** Corpse reanimation, draining residual energy.
+- **Alchemical Use:** Necrotic poisons, preservation agents, funeral catalysts.
 
-#### 😵 Associated Status Effects
-- **Necrosis:** Continuous damage + healing reduction.
-- **Exhausted:** Loss of maximum stamina.
-- **Marked for Death:** Increases received damage.
-- **Putrefaction:** Effects spread after death.
-
-#### ☠️ Death Essence
-- **Obtain Methods:**
-  - **Environmental:** Ancient battlefields, Cemeteries and crypts, Sterile biomes, Extinction zones.
-  - **Creatures:** Undead, Necromantic entities, Corrupted creatures.
-  - **Structures:** Catacombs, Mausoleums, Funeral altars.
-  - **Alchemy:** Distillation of vital residues, Controlled decomposition, Organic sacrifice. (Risk: Failure leads to plague or contamination).
-- **Essence Classification:**
-  - **Residual:** Weak, unstable.
-  - **Condensed:** Standard use.
-  - **Terminal:** Rare, extremely corrosive.
-- **Systemic Behavior:**
-  - Continuous use sterilizes the environment.
-  - Reduces organic growth.
-  - Increases spawn of undead.
-  - Directly conflicts with Life and Light.
+#### Associated Status Effects
+- **Necrosis:** Damage over time + healing reduction.
+- **Exhausted:** Reduces maximum stamina pool.
 
 ---
 
-### 🧠 Mind
+### Mind
 
-**Concept:** Cognitive processing element, perception manipulation, and behavioral interference.
+**Concept:** Cognitive processing, perception manipulation, and control interference.
 
-> **Functional Definition:** It acts directly on decision-making, focus, memory, and action control.
+**Functional Definition:** Alters decision-making, focus, perception, and target behavior.
 
 **Effect Type:**
-- Partial or total control of entities.
-- Alteration of perception and priority.
-- Cognitive interruption.
-- Psychic damage (non-physical).
+- Entity control (charm, fear, taunt).
+- Illusion generation.
+- Cast interruption.
+- Direct psychic damage (bypasses physical armor).
 
-#### ✅ Advantages
-- Ignores physical armor.
-- Extremely strong against intelligent targets.
-- Allows control without direct damage.
-- Synergy with stealth and preparation.
-- Can end combat without killing.
+#### Advantages
+- Ignores physical armor and physical resistances.
+- Neutralizes targets without killing them.
+- High utility in group control.
 
-#### ❌ Disadvantages
-- Weak against simple creatures or automatons.
-- High essence cost.
-- Limited duration.
-- Strong counter by mental resistance.
-- Can generate severe narrative consequences.
+#### Disadvantages
+- Ineffective against mind-less constructs or simple automatons.
+- High mana cost.
+- Mitigated by mental resistance attributes.
 
-#### 🪄 Ways to Use
-- **Behavioral Control:** Charm, Taunt, Force flight or hesitation, Redirect aggressiveness.
-- **Perceptual Manipulation:** Visual and auditory illusions, Cognitive invisibility, Distortion of perceived space, False targets.
-- **Mental Interference:** Incantation interruption, Command confusion, Sensory overload, Direct psychic damage.
-- **Alchemical Use:** Elixirs of focus or delirium, Psychic drugs, Catalysts for mental rituals, Storage of residual thoughts.
-
-#### 😵 Associated Status Effects
-- **Confused:** Erratic commands.
-- **Dominated:** Temporary control.
-- **Terrified:** Flight or paralysis.
-- **Mental Depletion:** Action cost increase.
-
-#### 🧠 Mind Essence
-- **Obtain Methods:**
-  - **Environmental:** Locations of high psychic activity, Knowledge ruins, Dream or delirium zones.
-  - **Creatures:** Intelligent entities, Natural psychics, Oneiric creatures.
-  - **Structures:** Ancient libraries, Mental observatories, Control laboratories.
-  - **Alchemy:** Memory distillation, Residual thought extraction, Focus condensation. (Risk: Failure leads to temporary insanity).
-- **Essence Classification:**
-  - **Diffuse:** Weak, unstable.
-  - **Clear:** Standard use.
-  - **Synaptic:** Rare, high precision.
-- **Systemic Behavior:**
-  - Excessive use affects nearby NPCs.
-  - Can alter faction behavior.
-  - Generates accumulative mental resistance.
-  - Abuse results in psychic instability.
+#### Associated Status Effects
+- **Confused:** Randomizes target movement or attacks.
+- **Dominated:** Temporarily turns target into an ally.
+- **Terrified:** Forces target to flee.
 
 ---
 
-### 🩸 Blood
+### Blood
 
-**Concept:** Sacrifice element, vital bond, and direct amplification.
+**Concept:** Vital sacrifice, health-to-power conversion, and biological bonding.
 
-> **Functional Definition:** It converts current or potential life into immediate power, creating strong effects with measurable and irreversible short-term cost.
+**Functional Definition:** Consumes user health or target vitality to amplify spell power and trigger rituals.
 
 **Effect Type:**
-- Damage and effect amplification.
-- Ritual activation.
-- Bond between entities.
-- Direct vitality transfer.
+- Self-harm for resource gain.
+- Life drain and health linking.
+- Damage amplification.
 
-#### ✅ Advantages
-- Scales directly with assumed risk.
-- High immediate impact.
-- Ignores traditional mana limitations.
-- Strong synergy with Life and Death.
-- Allows effects above the system's "normal."
+#### Advantages
+- Allows high burst output by sacrificing health.
+- Ignores standard mana constraints.
+- Synergizes with Life and Death mechanics.
 
-#### ❌ Disadvantages
-- Direct cost in HP or vital resources.
-- Real risk of user death.
-- Accumulative penalties.
-- Low sustainability.
-- Social and narrative hostility.
+#### Disadvantages
+- Directly consumes user health pool.
+- High risk of self-elimination.
+- Increases vulnerability to execution damage.
 
-#### 🪄 Ways to Use
-- **Sacrifice:** Converting HP into power, Activating spells above limit, Reducing cooldowns, Forcing instant incantation.
-- **Bond:** Sharing damage between entities, Draining life from marked targets, Creating temporary pacts, Controlling summons by blood.
-- **Amplification:** Increasing elemental damage, Extending effect duration, Ignoring resistances, Reinforcing complex rituals.
-- **Alchemical Use:** Ritual catalyst, Sacrifice potions, Blood seals, Unstable vital storage.
-
-#### 😵 Associated Status Effects
-- **Bleeding:** Continuous HP loss.
-- **Exhausted:** Temporary maximum life reduction.
-- **Marked:** Traceable target.
-- **Blood Bond:** Shared damage.
-
-#### 🩸 Blood Essence
-- **Obtain Methods:**
-  - **Environmental:** Recent battlefields, Sacrificial altars, Massacre events.
-  - **Creatures:** Organic enemies, Living bosses, Rare creatures (higher purity).
-  - **Structures:** Profane temples, Ritual arenas, Forbidden laboratories.
-  - **Alchemy:** Fresh blood distillation, Controlled coagulation, Mixing with vital catalysts. (Risk: Failure leads to hemorrhage or corruption).
-- **Essence Classification:**
-  - **Diluted:** Common, weak.
-  - **Vital:** Standard use.
-  - **Ancestral:** Rare, extreme power.
-- **Systemic Behavior:**
-  - Frequent use reduces maximum life.
-  - Attracts predatory entities.
-  - Can generate persistent curses.
-  - Dangerous synergy with Death and Chaos.
+#### Associated Status Effects
+- **Bleeding:** Periodic physical health loss.
+- **Blood Bound:** Links damage taken between targets.
 
 ---
 
-## 6. Unstable Elements 🌀
+## 3. Unstable Elements
 
-### 🌀 Chaos
+### Chaos
+Entropy and unpredictability. Alters spell mechanics, introducing random variations, critical shifts, or wild magic outcomes.
 
-**Concept:** Active entropy, systemic instability, and local rule-breaking element.
+### Ether
+Dimensional displacement and spatial transit. Enables teleportation, phased movement, and inter-planar buffering.
 
-> **Functional Definition:** It doesn't create specific effects; it alters how effects work, introducing variation, error, and mutation.
+### Void
+Annihilation and suppression. Erases active effects, silences magic casting, and strips magical fields.
 
-#### ✅ Advantages
-- Potential for above-normal power.
-- Breaks predictable combat patterns.
-- Synergy with any element.
-- Allows emergent solutions.
-
-#### ❌ Disadvantages
-- Unpredictable outcome.
-- High risk to the user.
-- Difficult to balance.
-- Frequent side effects.
+### Time
+Flow control and temporal manipulation. Alters action speed, cooldown rates, and effect duration.
 
 ---
 
-### ✨ Ether
+## 4. Chemical Elements
 
-**Concept:** Spatial transition, dimensional displacement, and inter-planar mediation element.
+### Metal
+Conductivity, structural hardness, and physical reflection. Enhances armor, weapon stats, and electrical arcing.
 
-> **Functional Definition:** It doesn't cause direct damage by default; it alters where and how entities and effects exist.
+### Crystal
+Refraction, energy storage, and amplification. Used for spell focusing, mana storage, and radiant amplification.
 
----
+### Poison
+Biological toxicity and gradual stat degradation. Applies stacking damage over time and stat penalties.
 
-### 🕳️ Void
-
-**Concept:** Annullation, removal of existence, and systemic silence element.
-
-> **Functional Definition:** It doesn't cause traditional damage; it interrupts, erases, or invalidates entities, effects, and local rules.
-
----
-
-### ⏳ Time
-
-**Concept:** Flow control, event ordering, and causal restriction element.
-
-> **Functional Definition:** It doesn't create new states; it alters the speed, order, or persistence of what already exists.
-
----
-
-## 7. Chemical Elements 🧪
-
-### ⚙️ Metal
-
-**Concept:** Conductivity, structural amplification, and physical response element.
-
----
-
-### 💎 Crystal
-
-**Concept:** Focus, stabilization, and storage element.
-
----
-
-### 🧪 Poison
-
-**Concept:** Progressive degradation and biological interference element.
+### Acid
+Corrosion and armor degradation. Strips target armor values and damages structural blocks.

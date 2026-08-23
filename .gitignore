@@ -50,3 +50,8 @@ effects_roadmap.md
 particles.particles
 libs/HytaleServer.jar
 hytale-api
+logs
+config.json
+telemetry
+.gitignore
+local.properties

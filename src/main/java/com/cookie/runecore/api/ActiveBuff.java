@@ -38,12 +38,28 @@ public class ActiveBuff {
         }
 
         if (remainingTicks <= 0) {
-            if (onExpire != null && (ref == null || ref.isValid())) {
-                onExpire.accept(ref);
-            }
+            expire(ref);
             return false;
         }
         return true;
+    }
+
+    /**
+     * Runs the expiry callback, <b>even if the entity is already gone</b>.
+     * <p>
+     * The guard used to be {@code onExpire != null && (ref == null || ref.isValid())}, which
+     * meant an effect whose entity had been invalidated — a player who died or disconnected —
+     * never got cleaned up. Invisibility was the visible symptom: the revert never ran, so the
+     * player stayed hidden in every observer's list.
+     * <p>
+     * Callbacks that genuinely need the entity already no-op on an invalid ref (the helpers
+     * check before touching anything), so running them unconditionally is safe and lets
+     * cleanup keyed on the player UUID rather than the ref do its job.
+     */
+    public void expire(Ref<EntityStore> ref) {
+        if (onExpire != null) {
+            onExpire.accept(ref);
+        }
     }
 
     public static Builder builder(String playerId, String effectId, int durationTicks) {

@@ -23,8 +23,11 @@ import java.util.UUID;
 
 import com.hypixel.hytale.server.core.Message;
 import com.hypixel.hytale.server.core.event.events.player.PlayerInteractEvent;
+import java.util.logging.Logger;
 
 public class PotionHitSystem extends DamageEventSystem {
+
+    private static final Logger LOG = Logger.getLogger("RuneCore");
 
     private final ConcurrentHashMap<UUID, String> playerPotions = new ConcurrentHashMap<>();
 
@@ -54,7 +57,7 @@ public class PotionHitSystem extends DamageEventSystem {
         Damage.Source source = damage.getSource();
         if (source == null) return;
         
-        System.out.println("[PotionHitSystem] handle() damage event detected! Source class: " + source.getClass().getName() + " amount: " + damage.getAmount());
+        LOG.fine("[PotionHitSystem] handle() damage event detected! Source class: " + source.getClass().getName() + " amount: " + damage.getAmount());
         
         if (source instanceof Damage.ProjectileSource projSource) {
             Ref<EntityStore> attackerRef = projSource.getRef();
@@ -75,9 +78,9 @@ public class PotionHitSystem extends DamageEventSystem {
                 
                 if (RuneCore.get().getEffect(effectName) != null) {
                     RuneCore.get().getEffect(effectName).execute(ctx);
-                    System.out.println("[PotionHitSystem] Applying tracked effect: " + effectName + " to target!");
+                    LOG.fine("[PotionHitSystem] Applying tracked effect: " + effectName + " to target!");
                 } else {
-                    System.err.println("[PotionHitSystem] Tracked effect not found: " + effectName);
+                    LOG.warning("[PotionHitSystem] Tracked effect not found: " + effectName);
                 }
             }
         }

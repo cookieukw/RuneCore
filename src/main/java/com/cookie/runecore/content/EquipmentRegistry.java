@@ -1,11 +1,16 @@
 package com.cookie.runecore.content;
 
-import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.logging.Logger;
 
 public class EquipmentRegistry {
-    private static final Map<String, String> grimoireAssets = new HashMap<>();
-    private static final Map<String, String> staffAssets = new HashMap<>();
+
+    private static final Logger LOG = Logger.getLogger("RuneCore");
+    // Concurrent: written on the setup thread, read from interaction/tick threads. A plain
+    // HashMap published across threads without a barrier can be observed half-built.
+    private static final Map<String, String> grimoireAssets = new ConcurrentHashMap<>();
+    private static final Map<String, String> staffAssets = new ConcurrentHashMap<>();
 
     public static void init() {
         registerGrimoire("grimoire_purple", "hytale:weapon_spellbook_grimoire_purple", "Purple");
@@ -20,12 +25,12 @@ public class EquipmentRegistry {
 
     private static void registerGrimoire(String id, String assetId, String name) {
         grimoireAssets.put(id, assetId);
-        System.out.println("[RuneCore-Equipment] Registered Grimoire: " + id + " (Asset: " + assetId + ")");
+        LOG.fine("[RuneCore-Equipment] Registered Grimoire: " + id + " (Asset: " + assetId + ")");
     }
 
     private static void registerStaff(String id, String assetId) {
         staffAssets.put(id, assetId);
-        System.out.println("[RuneCore-Equipment] Registered Staff: " + id + " (Asset: " + assetId + ")");
+        LOG.fine("[RuneCore-Equipment] Registered Staff: " + id + " (Asset: " + assetId + ")");
     }
 
     public static String getGrimoireAsset(String id) {

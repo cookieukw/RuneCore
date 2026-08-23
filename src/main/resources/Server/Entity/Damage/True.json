@@ -1,0 +1,6 @@
+{
+  "DamageTextColor": "#F1C40F",
+  "DurabilityLoss": false,
+  "StaminaLoss": false,
+  "BypassResistances": true
+}

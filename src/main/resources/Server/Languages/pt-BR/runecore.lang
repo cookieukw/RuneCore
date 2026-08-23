@@ -1,0 +1,44 @@
+
+combat.error.not_player = Você precisa ser um jogador para usar este comando.
+combat.error.resolve_player = Não foi possível identificar o jogador.
+combat.error.not_available = Sistema de atributos de combate não disponível.
+combat.error.unknown_stat = Atributo desconhecido: {stat}
+combat.error.missing_stat = Nome do atributo ausente. Opções: armor, magicresist(mr), reduction(dr), physdmg(phys), magdmg(mag), truedmg(true), armorpen(apen), magicpen(mpen), shield
+combat.error.missing_value = Valor ausente. Forneça um número.
+combat.error.invalid_number = Número inválido: {value}
+combat.usage = Uso: /combatstats <view|set|add|reset> [atributo] [valor]
+combat.stat_list = Atributos: armor, magicresist(mr), reduction(dr), physdmg(phys), magdmg(mag), truedmg(true), armorpen(apen), magicpen(mpen), shield
+
+combat.view.header = === Atributos de Combate ===
+combat.view.offense_header = --- Ofensivo ---
+combat.view.phys_damage = Dano Físico: {value}
+combat.view.magic_damage = Dano Mágico: {value}
+combat.view.true_damage = Dano Verdadeiro: {value}
+combat.view.armor_pen = Penetração de Armadura: {value}
+combat.view.magic_pen = Penetração Mágica: {value}
+combat.view.defense_header = --- Defensivo ---
+combat.view.armor = Armadura: {value}
+combat.view.magic_resist = Resistência Mágica: {value}
+combat.view.damage_reduction = Redução de Dano: {value}%
+combat.view.shield = Escudo: {current} / {max}
+combat.view.effective_header = --- Efetivo ---
+combat.view.effective_phys = 100 de dano físico -> {value} recebido
+combat.view.effective_mag = 100 de dano mágico -> {value} recebido
+
+combat.set.stat = {stat} definido para {value}
+combat.set.shield = Escudo definido para {current} / {max}
+combat.add.stat = Adicionado {value} em {stat}
+combat.add.shield = Adicionado {value} de escudo. Total: {total}
+combat.reset.all = Todos os atributos de combate resetados para 0.
+combat.reset.stat = {stat} resetado para 0.
+combat.reset.modifiers = Todos os modificadores removidos.
+
+tooltip.header = \n--- Atributos de Combate ---
+tooltip.armor = \n+{value} Armadura
+tooltip.magic_resist = \n+{value} Resistência Mágica
+tooltip.damage_reduction = \n+{value}% Redução de Dano
+tooltip.phys_damage = \n+{value} Dano Físico
+tooltip.magic_damage = \n+{value} Dano Mágico
+tooltip.true_damage = \n+{value} Dano Verdadeiro
+tooltip.armor_pen = \n+{value} Penetração de Armadura
+tooltip.magic_pen = \n+{value} Penetração Mágica

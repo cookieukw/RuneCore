@@ -1,0 +1,41 @@
+{
+  "$id": "ContentPredicateAsset.json",
+  "title": "ContentPredicateAsset",
+  "anyOf": [
+    {
+      "$ref": "common.json#/definitions/AndContentPredicateAsset"
+    },
+    {
+      "$ref": "common.json#/definitions/ConstantContentPredicateAsset"
+    },
+    {
+      "$ref": "common.json#/definitions/ImportedContentPredicateAsset"
+    },
+    {
+      "$ref": "common.json#/definitions/NotContentPredicateAsset"
+    },
+    {
+      "$ref": "common.json#/definitions/OrContentPredicateAsset"
+    },
+    {
+      "$ref": "common.json#/definitions/SetContentPredicateAsset"
+    }
+  ],
+  "hytaleSchemaTypeField": {
+    "property": "Type",
+    "values": [
+      "And",
+      "Constant",
+      "Imported",
+      "Not",
+      "Or",
+      "Set"
+    ],
+    "parentPropertyKey": "Parent"
+  },
+  "hytale": {
+    "path": "HytaleGenerator/GraphContentPredicates",
+    "extension": ".json",
+    "mergesProperties": true
+  }
+}

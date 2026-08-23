@@ -4,6 +4,7 @@ import com.cookie.runecore.api.ActiveBuff;
 import com.cookie.runecore.api.CastContext;
 import com.cookie.runecore.api.MovementHelper;
 import com.cookie.runecore.api.RuneEffect;
+import com.cookie.runecore.systems.InvisibilityManager;
 import com.cookie.runecore.api.StatHelper;
 import com.cookie.runecore.api.StatusEffectHelper;
 import com.cookie.runecore.api.VisualEffectHelper;
@@ -11,13 +12,11 @@ import com.cookie.runecore.system.RuneCore;
 import com.hypixel.hytale.component.Ref;
 import com.hypixel.hytale.server.core.universe.PlayerRef;
 import com.hypixel.hytale.server.core.universe.world.storage.EntityStore;
+import java.util.UUID;
 
 public class CoreEffects {
 
     public static String getPlayerUuid(CastContext ctx) {
-        if (ctx.source != null && ctx.source.getUuid() != null) {
-            return ctx.source.getUuid().toString();
-        }
         if (ctx.target instanceof Ref<?> raw && raw.isValid()) {
             @SuppressWarnings("unchecked") Ref<EntityStore> ref = (Ref<EntityStore>) raw;
             var store = ref.getStore();
@@ -27,8 +26,12 @@ public class CoreEffects {
                     return pRef.getUuid().toString();
                 }
             }
+            return "entity_" + System.identityHashCode(raw);
         }
-        return ctx.target != null ? ctx.target.toString() : "unknown";
+        if (ctx.source != null && ctx.source.getUuid() != null) {
+            return ctx.source.getUuid().toString();
+        }
+        return ctx.target != null ? ctx.target.toString() : UUID.randomUUID().toString();
     }
 
     public static void init() {
@@ -150,6 +153,8 @@ public class CoreEffects {
             .withBuff(ctx -> {
                 String uid = getPlayerUuid(ctx);
                 return ActiveBuff.builder(uid, "levitation", 60)
+                    .interval(1)
+                    .onTick(ref -> MovementHelper.onLevitationTick(ref))
                     .onExpire(ref -> MovementHelper.revertLevitation(ref))
                     .build();
             })
@@ -263,7 +268,7 @@ public class CoreEffects {
             .withBuff(ctx -> {
                 String uid = getPlayerUuid(ctx);
                 return ActiveBuff.builder(uid, "frozen", 600)
-                    .interval(10)
+                    .interval(1)
                     .onTick(ref -> MovementHelper.onFrozenTick(ref))
                     .onExpire(ref -> MovementHelper.revertFrozen(ref))
                     .build();
@@ -301,7 +306,18 @@ public class CoreEffects {
             .withBuff(ctx -> {
                 String uid = getPlayerUuid(ctx);
                 return ActiveBuff.builder(uid, "invisibility", 1200)
-                    .onExpire(ref -> StatusEffectHelper.revertInvisibility(ref))
+                    // Keyed on the UUID captured here, not on the Ref: the entity may already
+                    // be gone by the time this runs (death, disconnect), and revert has to work
+                    // anyway or the player stays hidden in everyone else's client.
+                    .onExpire(ref -> {
+                        InvisibilityManager manager = InvisibilityManager.get();
+                        if (manager == null || uid == null) return;
+                        try {
+                            manager.show(UUID.fromString(uid));
+                        } catch (IllegalArgumentException malformed) {
+                            // uid did not come from a player; nothing to reveal.
+                        }
+                    })
                     .build();
             })
         );

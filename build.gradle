@@ -13,6 +13,15 @@ if (manifestFile.exists()) {
     version = '1.0.0-SNAPSHOT'
 }
 
+// Load local.properties for developer-specific paths
+def localProperties = new Properties()
+def localPropertiesFile = file('local.properties')
+if (localPropertiesFile.exists()) {
+    localPropertiesFile.withReader('UTF-8') { reader ->
+        localProperties.load(reader)
+    }
+}
+
 repositories {
     mavenCentral()
     maven { url 'https://maven.hytale.com/release' }
@@ -21,6 +30,12 @@ repositories {
 
 dependencies {
     compileOnly fileTree(dir: 'libs', include: ['*.jar'])
+
+    // The engine jar is compileOnly, which does not reach the test classpath. Tests that touch
+    // types like Ref or EntityStore (even just as null field values) need it here too.
+    testImplementation fileTree(dir: 'libs', include: ['*.jar'])
+    testImplementation 'org.junit.jupiter:junit-jupiter:5.10.2'
+    testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
 }
 
 java {
@@ -29,6 +44,134 @@ java {
     }
 }
 
+tasks.named('test') {
+    useJUnitPlatform()
+    testLogging {
+        events 'passed', 'skipped', 'failed'
+    }
+}
+
 tasks.jar {
-    destinationDirectory = file("/home/cookie/.var/app/com.hypixel.HytaleLauncher/data/Hytale/UserData/Mods/")
+    // Set `hytale.mods.dest` in local.properties to drop the jar straight into a Hytale install.
+    // Without it the jar stays in build/libs — the fallback used to be an absolute path under one
+    // developer's home directory, which meant every other contributor (and CI) wrote the artifact
+    // somewhere that does not exist on their machine.
+    def modsDest = localProperties.getProperty('hytale.mods.dest')
+    if (modsDest) {
+        destinationDirectory = file(modsDest)
+    }
+}
+
+// Task: Deploy build artifact to Hytale Mods directory
+tasks.register('deploy') {
+    group = 'hytale'
+    description = 'Compiles the jar and deploys it to the configured Hytale mods folder'
+    dependsOn tasks.jar
+    doLast {
+        def modsDest = localProperties.getProperty('hytale.mods.dest')
+        if (modsDest) {
+            println "Successfully deployed jar to ${modsDest}"
+        } else {
+            println "Jar compiled to ${tasks.jar.archiveFile.get().asFile.absolutePath} (Set 'hytale.mods.dest' in local.properties to deploy automatically)"
+        }
+    }
+}
+
+// Use Gradle JavaToolchainService to dynamically resolve Java 25 launcher on any OS
+def javaToolchains = project.extensions.getByType(JavaToolchainService)
+def java25Launcher = javaToolchains.launcherFor {
+    languageVersion = JavaLanguageVersion.of(25)
+}
+
+// Task: Prints the Hytale Server version information
+tasks.register('hytaleVersion', JavaExec) {
+    group = 'hytale'
+    description = 'Prints the Hytale Server version information'
+    
+    javaLauncher = java25Launcher
+    classpath = files('libs/HytaleServer.jar')
+    mainClass = 'com.hypixel.hytale.Main'
+    args = ['--version']
+}
+
+// Task: Generates Hytale JSON Schemas
+tasks.register('generateSchemas', JavaExec) {
+    group = 'hytale'
+    description = 'Generates Hytale JSON Schemas'
+    
+    javaLauncher = java25Launcher
+    classpath = files('libs/HytaleServer.jar')
+    mainClass = 'com.hypixel.hytale.Main'
+    jvmArgs = ['--enable-native-access=ALL-UNNAMED']
+    
+    def assetsZip = localProperties.getProperty('hytale.assets.path') ?: ""
+    args = [
+        '--generate-asset-schema', 'Schema/Asset',
+        '--generate-config-schema', 'Schema/Config',
+        '--assets', assetsZip
+    ]
+    
+    doFirst {
+        file('Schema/Asset').mkdirs()
+        file('Schema/Config').mkdirs()
+    }
+}
+
+// Task: Validates mod assets and configs
+tasks.register('validateAssets', JavaExec) {
+    group = 'hytale'
+    description = 'Validates mod assets and configs'
+    
+    javaLauncher = java25Launcher
+    classpath = files('libs/HytaleServer.jar')
+    mainClass = 'com.hypixel.hytale.Main'
+    jvmArgs = ['--enable-native-access=ALL-UNNAMED']
+    
+    def assetsZip = localProperties.getProperty('hytale.assets.path') ?: ""
+    args = [
+        '--bare',
+        '--validate-assets',
+        '--shutdown-after-validate',
+        '--assets', assetsZip,
+        '--mods', '.'
+    ]
+    
+    // Ignore exit value 6 because of default instances world path warnings on bare run
+    ignoreExitValue = true
+}
+
+// Task: Validates Hytale structures / prefabs
+tasks.register('validatePrefabs', JavaExec) {
+    group = 'hytale'
+    description = 'Validates Hytale prefab assets (.prefab)'
+    
+    javaLauncher = java25Launcher
+    classpath = files('libs/HytaleServer.jar')
+    mainClass = 'com.hypixel.hytale.Main'
+    jvmArgs = ['--enable-native-access=ALL-UNNAMED']
+    
+    def assetsZip = localProperties.getProperty('hytale.assets.path') ?: ""
+    args = [
+        '--bare',
+        '--validate-prefabs',
+        '--shutdown-after-validate',
+        '--assets', assetsZip
+    ]
+}
+
+// Task: Verifies integrity of worlds in universe directory
+tasks.register('verifyWorlds', JavaExec) {
+    group = 'hytale'
+    description = 'Verifies integrity of all worlds'
+    
+    javaLauncher = java25Launcher
+    classpath = files('libs/HytaleServer.jar')
+    mainClass = 'com.hypixel.hytale.Main'
+    jvmArgs = ['--enable-native-access=ALL-UNNAMED']
+    
+    def assetsZip = localProperties.getProperty('hytale.assets.path') ?: ""
+    args = [
+        '--verify-worlds',
+        '--assets', assetsZip
+    ]
 }

@@ -1,0 +1,203 @@
+{
+  "type": "object",
+  "$id": "Plugin.Hytale.HytaleGenerator.biome_editor.json",
+  "title": "Plugin.Hytale.HytaleGenerator.biome_editor",
+  "description": "Default configuration options for the BiomeEditor",
+  "markdownDescription": "Default configuration options for the BiomeEditor",
+  "hytale": {
+    "type": "object",
+    "virtualPath": "Config/Plugin/Hytale/HytaleGenerator",
+    "mergesProperties": true
+  },
+  "properties": {
+    "$Title": {
+      "description": "Comments don't have any function other than allowing users to add certain internal comments or notes to an asset",
+      "doNotSuggest": true,
+      "hytale": {
+        "uiDisplayMode": "Hidden",
+        "uiPropertyTitle": "Comment"
+      }
+    },
+    "$Comment": {
+      "description": "Comments don't have any function other than allowing users to add certain internal comments or notes to an asset",
+      "doNotSuggest": true,
+      "hytale": {
+        "uiDisplayMode": "Hidden",
+        "uiPropertyTitle": "Comment"
+      }
+    },
+    "$Author": {
+      "description": "Comments don't have any function other than allowing users to add certain internal comments or notes to an asset",
+      "doNotSuggest": true,
+      "hytale": {
+        "uiDisplayMode": "Hidden",
+        "uiPropertyTitle": "Comment"
+      }
+    },
+    "$TODO": {
+      "description": "Comments don't have any function other than allowing users to add certain internal comments or notes to an asset",
+      "doNotSuggest": true,
+      "hytale": {
+        "uiDisplayMode": "Hidden",
+        "uiPropertyTitle": "Comment"
+      }
+    },
+    "$Position": {
+      "description": "Comments don't have any function other than allowing users to add certain internal comments or notes to an asset",
+      "doNotSuggest": true,
+      "hytale": {
+        "uiDisplayMode": "Hidden",
+        "uiPropertyTitle": "Comment"
+      }
+    },
+    "$FloatingFunctionNodes": {
+      "description": "Comments don't have any function other than allowing users to add certain internal comments or notes to an asset",
+      "doNotSuggest": true,
+      "hytale": {
+        "uiDisplayMode": "Hidden",
+        "uiPropertyTitle": "Comment"
+      }
+    },
+    "$Groups": {
+      "description": "Comments don't have any function other than allowing users to add certain internal comments or notes to an asset",
+      "doNotSuggest": true,
+      "hytale": {
+        "uiDisplayMode": "Hidden",
+        "uiPropertyTitle": "Comment"
+      }
+    },
+    "$WorkspaceID": {
+      "description": "Comments don't have any function other than allowing users to add certain internal comments or notes to an asset",
+      "doNotSuggest": true,
+      "hytale": {
+        "uiDisplayMode": "Hidden",
+        "uiPropertyTitle": "Comment"
+      }
+    },
+    "$NodeId": {
+      "description": "Comments don't have any function other than allowing users to add certain internal comments or notes to an asset",
+      "doNotSuggest": true,
+      "hytale": {
+        "uiDisplayMode": "Hidden",
+        "uiPropertyTitle": "Comment"
+      }
+    },
+    "$NodeEditorMetadata": {
+      "description": "Comments don't have any function other than allowing users to add certain internal comments or notes to an asset",
+      "doNotSuggest": true,
+      "hytale": {
+        "uiDisplayMode": "Hidden",
+        "uiPropertyTitle": "Comment"
+      }
+    },
+    "Group": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "description": "The asset-pack group to create new biomes under",
+      "markdownDescription": "The asset-pack group to create new biomes under",
+      "hytale": {
+        "type": "string"
+      },
+      "default": "User"
+    },
+    "Pack": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "description": "The asset-pack name to create new biomes under",
+      "markdownDescription": "The asset-pack name to create new biomes under",
+      "hytale": {
+        "type": "string"
+      },
+      "default": "Biomes"
+    },
+    "DefaultBiome": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "description": "The Biome asset template selected as default",
+      "markdownDescription": "The Biome asset template selected as default",
+      "hytale": {
+        "type": "string"
+      },
+      "default": "Basic"
+    },
+    "DefaultWorldStructure": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "description": "The WorldStructure asset template selected as default",
+      "markdownDescription": "The WorldStructure asset template selected as default",
+      "hytale": {
+        "type": "string"
+      },
+      "default": "Basic"
+    },
+    "AssetTemplateTags": {
+      "type": [
+        "array",
+        "null"
+      ],
+      "description": "List of tags to match Biome and WorldStructure assets to use as templates",
+      "markdownDescription": "List of tags to match Biome and WorldStructure assets to use as templates",
+      "hytale": {
+        "type": "array"
+      },
+      "items": {
+        "type": "string",
+        "hytale": {
+          "type": "string"
+        }
+      }
+    },
+    "ViewportMin": {
+      "description": "The min corner of the Viewport to set up in the biome editor world",
+      "markdownDescription": "The min corner of the Viewport to set up in the biome editor world",
+      "anyOf": [
+        {
+          "default": {
+            "X": -128,
+            "Y": 0,
+            "Z": -128
+          },
+          "$ref": "common.json#/definitions/Vector3i"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "ViewportMax": {
+      "description": "The max corner of the Viewport to set up in the biome editor world",
+      "markdownDescription": "The max corner of the Viewport to set up in the biome editor world",
+      "anyOf": [
+        {
+          "default": {
+            "X": 128,
+            "Y": 0,
+            "Z": 128
+          },
+          "$ref": "common.json#/definitions/Vector3i"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "EnablePersistence": {
+      "type": "boolean",
+      "description": "Whether the BiomdEditor world should be stored on disk after exiting it",
+      "markdownDescription": "Whether the BiomdEditor world should be stored on disk after exiting it",
+      "hytale": {
+        "type": "boolean"
+      },
+      "default": false
+    }
+  },
+  "additionalProperties": false
+}

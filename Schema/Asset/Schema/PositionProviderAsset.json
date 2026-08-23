@@ -1,0 +1,113 @@
+{
+  "$id": "PositionProviderAsset.json",
+  "title": "PositionProviderAsset",
+  "anyOf": [
+    {
+      "$ref": "common.json#/definitions/AnchorPositionProviderAsset"
+    },
+    {
+      "$ref": "common.json#/definitions/BaseHeightPositionProviderAsset"
+    },
+    {
+      "$ref": "common.json#/definitions/BoundPositionProviderAsset"
+    },
+    {
+      "$ref": "common.json#/definitions/CachedPositionProviderAsset"
+    },
+    {
+      "$ref": "common.json#/definitions/ClustersPositionProviderAsset"
+    },
+    {
+      "$ref": "common.json#/definitions/DirectionalJitterPositionProviderAsset"
+    },
+    {
+      "$ref": "common.json#/definitions/FieldFunctionPositionProviderAsset"
+    },
+    {
+      "$ref": "common.json#/definitions/FrameworkPositionProviderAsset"
+    },
+    {
+      "$ref": "common.json#/definitions/GraphPositionProviderAsset"
+    },
+    {
+      "$ref": "common.json#/definitions/ImportedPositionProviderAsset"
+    },
+    {
+      "$ref": "common.json#/definitions/Jitter2dPositionProviderAsset"
+    },
+    {
+      "$ref": "common.json#/definitions/Jitter3dPositionProviderAsset"
+    },
+    {
+      "$ref": "common.json#/definitions/ListPositionProviderAsset"
+    },
+    {
+      "$ref": "common.json#/definitions/Mesh2DPositionProviderAsset"
+    },
+    {
+      "$ref": "common.json#/definitions/Mesh3DPositionProviderAsset"
+    },
+    {
+      "$ref": "common.json#/definitions/FieldFunctionOccurrencePositionProviderAsset"
+    },
+    {
+      "$ref": "common.json#/definitions/OffsetPositionProviderAsset"
+    },
+    {
+      "$ref": "common.json#/definitions/ScalerPositionProviderAsset"
+    },
+    {
+      "$ref": "common.json#/definitions/SimpleHorizontalPositionProviderAsset"
+    },
+    {
+      "$ref": "common.json#/definitions/SquareGrid2dPositionProviderAsset"
+    },
+    {
+      "$ref": "common.json#/definitions/SquareGrid3dPositionProviderAsset"
+    },
+    {
+      "$ref": "common.json#/definitions/TriangularGrid2dPositionProviderAsset"
+    },
+    {
+      "$ref": "common.json#/definitions/UnionPositionProviderAsset"
+    },
+    {
+      "$ref": "common.json#/definitions/VectorOffsetPositionProviderAsset"
+    }
+  ],
+  "hytaleSchemaTypeField": {
+    "property": "Type",
+    "values": [
+      "Anchor",
+      "BaseHeight",
+      "Bound",
+      "Cache",
+      "Clusters",
+      "DirectionalJitter",
+      "FieldFunction",
+      "Framework",
+      "Graph",
+      "Imported",
+      "Jitter2d",
+      "Jitter3d",
+      "List",
+      "Mesh2D",
+      "Mesh3D",
+      "Occurrence",
+      "Offset",
+      "Scaler",
+      "SimpleHorizontal",
+      "SquareGrid2d",
+      "SquareGrid3d",
+      "TriangularGrid2d",
+      "Union",
+      "VectorOffset"
+    ],
+    "parentPropertyKey": "Parent"
+  },
+  "hytale": {
+    "path": "HytaleGenerator/Positions",
+    "extension": ".json",
+    "mergesProperties": true
+  }
+}

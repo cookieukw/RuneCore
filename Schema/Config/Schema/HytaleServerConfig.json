@@ -1,0 +1,383 @@
+{
+  "type": "object",
+  "$id": "HytaleServerConfig.json",
+  "title": "HytaleServerConfig",
+  "hytale": {
+    "type": "object",
+    "virtualPath": "Config",
+    "mergesProperties": true
+  },
+  "properties": {
+    "Version": {
+      "type": "integer",
+      "hytale": {
+        "type": "integer"
+      }
+    },
+    "$Title": {
+      "description": "Comments don't have any function other than allowing users to add certain internal comments or notes to an asset",
+      "doNotSuggest": true,
+      "hytale": {
+        "uiDisplayMode": "Hidden",
+        "uiPropertyTitle": "Comment"
+      }
+    },
+    "$Comment": {
+      "description": "Comments don't have any function other than allowing users to add certain internal comments or notes to an asset",
+      "doNotSuggest": true,
+      "hytale": {
+        "uiDisplayMode": "Hidden",
+        "uiPropertyTitle": "Comment"
+      }
+    },
+    "$Author": {
+      "description": "Comments don't have any function other than allowing users to add certain internal comments or notes to an asset",
+      "doNotSuggest": true,
+      "hytale": {
+        "uiDisplayMode": "Hidden",
+        "uiPropertyTitle": "Comment"
+      }
+    },
+    "$TODO": {
+      "description": "Comments don't have any function other than allowing users to add certain internal comments or notes to an asset",
+      "doNotSuggest": true,
+      "hytale": {
+        "uiDisplayMode": "Hidden",
+        "uiPropertyTitle": "Comment"
+      }
+    },
+    "$Position": {
+      "description": "Comments don't have any function other than allowing users to add certain internal comments or notes to an asset",
+      "doNotSuggest": true,
+      "hytale": {
+        "uiDisplayMode": "Hidden",
+        "uiPropertyTitle": "Comment"
+      }
+    },
+    "$FloatingFunctionNodes": {
+      "description": "Comments don't have any function other than allowing users to add certain internal comments or notes to an asset",
+      "doNotSuggest": true,
+      "hytale": {
+        "uiDisplayMode": "Hidden",
+        "uiPropertyTitle": "Comment"
+      }
+    },
+    "$Groups": {
+      "description": "Comments don't have any function other than allowing users to add certain internal comments or notes to an asset",
+      "doNotSuggest": true,
+      "hytale": {
+        "uiDisplayMode": "Hidden",
+        "uiPropertyTitle": "Comment"
+      }
+    },
+    "$WorkspaceID": {
+      "description": "Comments don't have any function other than allowing users to add certain internal comments or notes to an asset",
+      "doNotSuggest": true,
+      "hytale": {
+        "uiDisplayMode": "Hidden",
+        "uiPropertyTitle": "Comment"
+      }
+    },
+    "$NodeId": {
+      "description": "Comments don't have any function other than allowing users to add certain internal comments or notes to an asset",
+      "doNotSuggest": true,
+      "hytale": {
+        "uiDisplayMode": "Hidden",
+        "uiPropertyTitle": "Comment"
+      }
+    },
+    "$NodeEditorMetadata": {
+      "description": "Comments don't have any function other than allowing users to add certain internal comments or notes to an asset",
+      "doNotSuggest": true,
+      "hytale": {
+        "uiDisplayMode": "Hidden",
+        "uiPropertyTitle": "Comment"
+      }
+    },
+    "ServerName": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "hytale": {
+        "type": "string"
+      },
+      "default": "Hytale Server"
+    },
+    "MOTD": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "hytale": {
+        "type": "string"
+      },
+      "default": ""
+    },
+    "Password": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "hytale": {
+        "type": "string"
+      },
+      "default": ""
+    },
+    "MaxPlayers": {
+      "type": "integer",
+      "hytale": {
+        "type": "integer"
+      },
+      "default": 100
+    },
+    "MaxViewRadius": {
+      "type": "integer",
+      "hytale": {
+        "type": "integer"
+      },
+      "minimum": 1,
+      "maximum": 32,
+      "default": 32
+    },
+    "Defaults": {
+      "anyOf": [
+        {
+          "default": {
+            "World": "default",
+            "GameMode": "Adventure",
+            "CrashRecovery": {}
+          },
+          "$ref": "common.json#/definitions/Defaults"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "ConnectionTimeouts": {
+      "anyOf": [
+        {
+          "default": {},
+          "$ref": "common.json#/definitions/TimeoutProfile"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "RateLimit": {
+      "anyOf": [
+        {
+          "default": {},
+          "$ref": "common.json#/definitions/RateLimitConfig"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "Modules": {
+      "type": [
+        "object",
+        "null"
+      ],
+      "title": "Map",
+      "hytale": {
+        "type": "object"
+      },
+      "additionalProperties": {
+        "$ref": "common.json#/definitions/Module"
+      }
+    },
+    "LogLevels": {
+      "type": [
+        "object",
+        "null"
+      ],
+      "title": "Map",
+      "hytale": {
+        "type": "object"
+      },
+      "additionalProperties": {
+        "type": "string",
+        "hytale": {
+          "type": "string"
+        }
+      }
+    },
+    "Plugins": {
+      "type": [
+        "object",
+        "null"
+      ],
+      "hytale": {
+        "type": "object"
+      },
+      "additionalProperties": {
+        "$ref": "common.json#/definitions/ModConfig"
+      },
+      "propertyNames": {
+        "hytale": {
+          "type": "string"
+        }
+      }
+    },
+    "Mods": {
+      "type": [
+        "object",
+        "null"
+      ],
+      "hytale": {
+        "type": "object"
+      },
+      "additionalProperties": {
+        "$ref": "common.json#/definitions/ModConfig"
+      },
+      "propertyNames": {
+        "hytale": {
+          "type": "string"
+        }
+      }
+    },
+    "ModLoadOrder": {
+      "type": [
+        "array",
+        "null"
+      ],
+      "hytale": {
+        "type": "array"
+      },
+      "items": {
+        "type": "string",
+        "hytale": {
+          "type": "string"
+        }
+      }
+    },
+    "DefaultModsEnabled": {
+      "type": "boolean",
+      "hytale": {
+        "type": "boolean"
+      }
+    },
+    "DisplayTmpTagsInStrings": {
+      "type": "boolean",
+      "hytale": {
+        "type": "boolean"
+      },
+      "default": false
+    },
+    "PlayerStorage": {
+      "anyOf": [
+        {
+          "title": "Type Selector",
+          "anyOf": [
+            {
+              "$ref": "common.json#/definitions/DiskPlayerStorageProvider"
+            },
+            {
+              "$ref": "common.json#/definitions/DefaultPlayerStorageProvider"
+            }
+          ],
+          "hytaleSchemaTypeField": {
+            "property": "Type",
+            "defaultValue": "Hytale",
+            "values": [
+              "Disk",
+              "Hytale"
+            ]
+          },
+          "hytale": {
+            "mergesProperties": true
+          }
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "UniverseResourceStorage": {
+      "anyOf": [
+        {
+          "title": "Type Selector",
+          "anyOf": [
+            {
+              "$ref": "common.json#/definitions/DiskUniverseResourceStorageProvider"
+            },
+            {
+              "$ref": "common.json#/definitions/DefaultUniverseResourceStorageProvider"
+            }
+          ],
+          "hytaleSchemaTypeField": {
+            "property": "Type",
+            "defaultValue": "Hytale",
+            "values": [
+              "Disk",
+              "Hytale"
+            ]
+          },
+          "hytale": {
+            "mergesProperties": true
+          }
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "AuthCredentialStore": {
+      "type": [
+        "object",
+        "null"
+      ],
+      "hytale": {
+        "type": "object"
+      }
+    },
+    "Update": {
+      "anyOf": [
+        {
+          "default": {},
+          "$ref": "common.json#/definitions/UpdateConfig"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "Backup": {
+      "anyOf": [
+        {
+          "default": {},
+          "$ref": "common.json#/definitions/BackupConfig"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "WorldMap": {
+      "anyOf": [
+        {
+          "default": {},
+          "$ref": "common.json#/definitions/ServerWorldMapConfig"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "FallbackServer": {
+      "anyOf": [
+        {
+          "$ref": "common.json#/definitions/HostAddress"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    }
+  },
+  "additionalProperties": false
+}

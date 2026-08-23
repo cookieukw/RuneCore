@@ -1,107 +1,282 @@
-# 🔮 RuneCore: Motor de Magia para Hytale
+# RuneCore
+
+Motor e framework extensível de sistemas de magia para mods de Hytale.
 
 [Read in English](README.md) | [Guia da API](API_USAGE-PTBR.md) | [Referência da API](docs/API_REFERENCE.md) | [Docs Técnicos](docs/ELEMENTS-PTBR.md) | [Manual](RuneCore_Manual-PTBR.md)
 
 <p align="center">
-  <img src="icons/logo/runecore-logo.png" alt="Logo do RuneCore" height="180">
-  &nbsp;&nbsp;&nbsp;&nbsp;
-  <img src="icons/logo/runecore-logo-construction.png" alt="Logo do RuneCore — Camadas e traços" height="180">
+  <img src="docs/assets/banner.png" alt="Banner do RuneCore" width="100%">
 </p>
 
-> [!IMPORTANT]
+<p align="center">
+  <img src="icons/logo/runecore-logo.png" alt="Logo do RuneCore" height="180">
+  &nbsp;&nbsp;&nbsp;&nbsp;
+  <img src="icons/logo/runecore-logo-construction.png" alt="Logo do RuneCore em camadas" height="180">
+</p>
+
 > **Status do Projeto: Em Desenvolvimento**
 >
-> - 🛠️ **Em Progresso:** Desenvolvimento de novas poções e sistemas de craft para utilizar os novos efeitos de status.
-> - ✅ **Funcional:** Comandos principais, gerenciamento de status e sistema de drop de essências.
-> - 🧪 **API:** A API ainda está em fase de testes.
-> - 🎨 **Visuais:** Logo própria e ícones de essência em alta qualidade. Modelos 3D das essências já implementados (reciclados do jogo).
-> - 🚀 **Próximos Passos:** Implementar o sistema completo de Alquimia (**RuneAlchemy**) e criação complexa de poções.
+> - **Em Progresso:** Poções e receitas para novos efeitos de status.
+> - **Funcional:** Comandos base, gerenciamento de status do jogador e drop de essências.
+> - **API:** Fase de testes.
+> - **Visuais:** Logo própria e ícones de essência. Modelos 3D reutilizam assets do jogo.
+> - **Próximos Passos:** Sistema completo de **RuneAlchemy** e pipeline de alquimia.
 
 ---
 
-## 1. Visão e Origem 🤔
+## 1. Visão Geral
 
-RuneCore nasceu da vontade de trazer um sistema de magia profundo e significativo para o Hytale. Embora o sistema nativo forneça uma base básica, o RuneCore o expande em um motor completo que modders podem usar para criar interações elementais complexas, efeitos de status persistentes e uma progressão mágica rica.
+O RuneCore expande a base nativa do Hytale em um motor modular para interações elementais, efeitos de status, atributos customizados de RPG e receitas de alquimia. O mod oferece tanto mecânicas diretas quanto uma API extensível para integração de outros mods.
 
-Nosso objetivo não é apenas fornecer um mod, mas uma **API extensível** que sirva como a espinha dorsal para a comunidade de magia de Hytale.
+## 2. Galeria Visual
 
-## 2. O que é o RuneCore? 📘
+### Essências Elementais
+| | | | | |
+| :---: | :---: | :---: | :---: | :---: |
+| <img src="icons/essences/Ingredient_Fire_Essence.png" height="48"> | <img src="icons/essences/Ingredient_Water_Essence.png" height="48"> | <img src="icons/essences/Ingredient_Earth_Essence.png" height="48"> | <img src="icons/essences/Ingredient_Wind_Essence.png" height="48"> | <img src="icons/essences/Ingredient_Ice_Essence.png" height="48"> |
+| <img src="icons/essences/Ingredient_Lightning_Essence.png" height="48"> | <img src="icons/essences/Ingredient_Life_Essence.png" height="48"> | <img src="icons/essences/Ingredient_Death_Essence.png" height="48"> | <img src="icons/essences/Ingredient_Light_Essence.png" height="48"> | <img src="icons/essences/Ingredient_Shadow_Essence.png" height="48"> |
+| <img src="icons/essences/Ingredient_Mind_Essence.png" height="48"> | <img src="icons/essences/Ingredient_Blood_Essence.png" height="48"> | <img src="icons/essences/Ingredient_Chaos_Essence.png" height="48"> | <img src="icons/essences/Ingredient_Aether_Essence.png" height="48"> | <img src="icons/essences/Ingredient_Void_Essence.png" height="48"> |
+| <img src="icons/essences/Ingredient_Time_Essence.png" height="48"> | <img src="icons/essences/Ingredient_Metal_Essence.png" height="48"> | <img src="icons/essences/Ingredient_Crystal_Essence.png" height="48"> | <img src="icons/essences/Ingredient_Poison_Essence.png" height="48"> | <img src="icons/essences/Ingredient_Acid_Essence.png" height="48"> |
 
-O RuneCore é um sistema de magia modular. Ele é dividido em módulos interdependentes:
+### Poções
+| | | | | |
+| :---: | :---: | :---: | :---: | :---: |
+| <img src="icons/potions/Potion_Drinkable_Speed.png" height="48"> | <img src="icons/potions/Potion_Drinkable_Slowness.png" height="48"> | <img src="icons/potions/Potion_Drinkable_Haste.png" height="48"> | <img src="icons/potions/Potion_Drinkable_Mining_Fatigue.png" height="48"> | <img src="icons/potions/Potion_Drinkable_Jump_Boost.png" height="48"> |
+| <img src="icons/potions/Potion_Drinkable_High_Jump.png" height="48"> | <img src="icons/potions/Potion_Drinkable_Slow_Falling.png" height="48"> | <img src="icons/potions/Potion_Drinkable_Levitation.png" height="48"> | <img src="icons/potions/Potion_Drinkable_Regeneration.png" height="48"> | <img src="icons/potions/Potion_Drinkable_Poison.png" height="48"> |
+| <img src="icons/potions/Potion_Drinkable_Decay.png" height="48"> | <img src="icons/potions/Potion_Drinkable_Burn.png" height="48"> | <img src="icons/potions/Potion_Drinkable_Nausea.png" height="48"> | <img src="icons/potions/Potion_Drinkable_Bleeding.png" height="48"> | <img src="icons/potions/Potion_Drinkable_Frozen.png" height="48"> |
+| <img src="icons/potions/Potion_Drinkable_Instant_Health.png" height="48"> | <img src="icons/potions/Potion_Drinkable_Instant_Damage.png" height="48"> | <img src="icons/potions/Potion_Drinkable_Invisibility.png" height="48"> | <img src="icons/potions/Potion_Drinkable_Glowing.png" height="48"> | <img src="icons/potions/Potion_Drinkable_Blindness.png" height="48"> |
+| <img src="icons/potions/Potion_Drinkable_Night_Vision.png" height="48"> | <img src="icons/potions/Potion_Drinkable_Water_Breathing.png" height="48"> | <img src="icons/potions/Potion_Drinkable_Fire_Resistance.png" height="48"> | <img src="icons/potions/Potion_Drinkable_Resistance.png" height="48"> | <img src="icons/potions/Potion_Drinkable_Strength.png" height="48"> |
+| <img src="icons/potions/Potion_Drinkable_Weakness.png" height="48"> | | | | |
 
-*   **🔹 RuneCore (Núcleo):** Gerencia essências, mana e progresso do jogador. Fornece a API para outros modders.
-*   **⚔️ RuneMagic:** Focado em feitiços, runas (efeitos passivos), artefatos e grimórios.
-*   **⚗️ RuneAlchemy:** Um sistema químico e alquímico para criar poções e encantar itens usando essências.
+### Efeitos de Status
+| | | | | |
+| :---: | :---: | :---: | :---: | :---: |
+| <img src="icons/128x/speed.png" height="48"> | <img src="icons/128x/slowness.png" height="48"> | <img src="icons/128x/haste.png" height="48"> | <img src="icons/128x/mining_fatigue.png" height="48"> | <img src="icons/128x/jump_boost.png" height="48"> |
+| <img src="icons/128x/high_jump.png" height="48"> | <img src="icons/128x/slow_falling.png" height="48"> | <img src="icons/128x/levitation.png" height="48"> | <img src="icons/128x/regeneration.png" height="48"> | <img src="icons/128x/poison.png" height="48"> |
+| <img src="icons/128x/decay.png" height="48"> | <img src="icons/128x/burn.png" height="48"> | <img src="icons/128x/nausea.png" height="48"> | <img src="icons/128x/bleeding.png" height="48"> | <img src="icons/128x/frozen.png" height="48"> |
+| <img src="icons/128x/invisibility.png" height="48"> | <img src="icons/128x/glowing.png" height="48"> | <img src="icons/128x/blindness.png" height="48"> | <img src="icons/128x/night_vision.png" height="48"> | <img src="icons/128x/water_breathing.png" height="48"> |
+| <img src="icons/128x/fire_resistance.png" height="48"> | <img src="icons/128x/resistance.png" height="48"> | <img src="icons/128x/strength.png" height="48"> | <img src="icons/128x/weakness.png" height="48"> | <img src="icons/128x/darkness.png" height="48"> |
+| <img src="icons/128x/electrified.png" height="48"> | | | | |
 
-## 3. Essências Elementais 🔮
+### Demonstração dos Efeitos no Jogo
 
-O RuneCore apresenta 20 elementos distintos, cada um com sua própria essência utilizada para crafting e conjuração de feitiços. Abaixo estão os ícones das essências em alta qualidade atualmente implementados:
-
-### Nível Básico
-| Ícone | Elemento | Nível | Ícone | Elemento | Nível |
-| :---: | :--- | :--- | :---: | :--- | :--- |
-| <img src="icons/essences/Ingredient_Fire_Essence.png" height="48"> | **Fogo** | Básico | <img src="icons/essences/Ingredient_Water_Essence.png" height="48"> | **Água** | Básico |
-| <img src="icons/essences/Ingredient_Earth_Essence.png" height="48"> | **Terra** | Básico | <img src="icons/essences/Ingredient_Wind_Essence.png" height="48"> | **Vento** | Básico |
-| <img src="icons/essences/Ingredient_Ice_Essence.png" height="48"> | **Gelo** | Básico | <img src="icons/essences/Ingredient_Lightning_Essence.png" height="48"> | **Trovão** | Básico |
-
-### Nível Avançado
-| Ícone | Elemento | Nível | Ícone | Elemento | Nível |
-| :---: | :--- | :--- | :---: | :--- | :--- |
-| <img src="icons/essences/Ingredient_Life_Essence.png" height="48"> | **Vida** | Avançado | <img src="icons/essences/Ingredient_Death_Essence.png" height="48"> | **Morte** | Avançado |
-| <img src="icons/essences/Ingredient_Light_Essence.png" height="48"> | **Luz** | Avançado | <img src="icons/essences/Ingredient_Shadow_Essence.png" height="48"> | **Sombras** | Avançado |
-| <img src="icons/essences/Ingredient_Mind_Essence.png" height="48"> | **Mente** | Avançado | <img src="icons/essences/Ingredient_Blood_Essence.png" height="48"> | **Sangue** | Avançado |
-
-### Níveis Instável e Químico
-| Ícone | Elemento | Nível | Ícone | Elemento | Nível |
-| :---: | :--- | :--- | :---: | :--- | :--- |
-| <img src="icons/essences/Ingredient_Chaos_Essence.png" height="48"> | **Caos** | Instável | <img src="icons/essences/Ingredient_Aether_Essence.png" height="48"> | **Éter** | Instável |
-| <img src="icons/essences/Ingredient_Void_Essence.png" height="48"> | **Vazio** | Instável | <img src="icons/essences/Ingredient_Time_Essence.png" height="48"> | **Tempo** | Instável |
-| <img src="icons/essences/Ingredient_Metal_Essence.png" height="48"> | **Metal** | Químico | <img src="icons/essences/Ingredient_Crystal_Essence.png" height="48"> | **Cristal** | Químico |
-| <img src="icons/essences/Ingredient_Poison_Essence.png" height="48"> | **Veneno** | Químico | <img src="icons/essences/Ingredient_Acid_Essence.png" height="48"> | **Ácido** | Químico |
-
----
-
-## 4. Drops de Mobs & Tabelas de Saque 🦅
-
-Cada criatura em Hytale tem uma chance de dropar essências elementais quando derrotada por um jogador. A taxa de drop base atual é de **25%**.
-
-| Essência | Dropado por (Mobs Comuns) |
-| :--- | :--- |
-| **Fogo** | Emberwulf, Dragão de Fogo, Criaturas de Magma/Chama |
-| **Terra** | Trork, Golem de Terra, Bisão, Tartaruga, Toupeira |
-| **Vento** | Pássaros (Falcão, Coruja, Corvo, etc.), Feran Windwalker |
-| **Água** | Peixes (Tubarão, Piranha, etc.), Caranguejo, Sapo, Baleia |
-| **Gelo** | Urso Polar, Dragão de Gelo, Yeti, Esqueleto de Gelo |
-| **Trovão** | Golem de Trovão, Espírito do Trovão, Faísca Viva |
-| **Luz** | Espírito de Raiz, Kweebec de Natal |
-| **Sombras** | Cavaleiro das Sombras, Wraith, Skrill |
-| **Vida** | Animais (Vaca, Porco, Ovelha, Cervo), Kweebec |
-| **Morte** | Esqueleto, Zumbi, Ghoul |
-| **Mente** | Slothian, Feiticeiro Outlander |
-| **Sangue** | Morcego, Mosquito |
-| **Caos** | Berserker Outlander, Chefe Trork |
-| **Éter** | Espírito de Brasa |
-| **Vazio** | Criaturas corrompidas pelo Vazio |
-| **Metal** | Golem de Aço, Tanque, Torreta |
-| **Cristal** | Golem de Cristal, Scarak |
-| **Veneno** | Cobra, Aranha, Escorpião |
+#### Bleeding (Sangramento)
+Causa dano contínuo ao longo do tempo e aplica um filtro de sangue na tela do jogador.
+<br>
+<img src="docs/assets/screenshots/bleeding.png" alt="Efeito Bleeding" width="100%">
 
 ---
 
-## 5. Recursos Principais ✨
-
-*   **20 Elementos:** Divididos em níveis Básico, Avançado, Instável e Químico.
-*   **API Modular:** Registre facilmente essências, feitiços e efeitos de status personalizados.
-*   **Efeitos de Status Persistentes:** Um sistema robusto para buffs/debuffs (ex: Veneno, Regeneração, Congelamento) com lógica ciente do mundo.
-*   **Gerenciamento de Recursos:** Rastreio personalizado de mana, stamina e recursos biológicos.
-
-Para um detalhamento completo de todos os 20 elementos e suas mecânicas, veja nossos [**Documentos Técnicos**](docs/ELEMENTS-PTBR.md).
+#### Burn (Queimadura)
+Incendeia o alvo, causando dano de fogo e efeito visual de chamas.
+<br>
+<img src="docs/assets/screenshots/burn.png" alt="Efeito Burn" width="100%">
 
 ---
 
-## 6. ⚗️ Receitas de Poções
+#### Decay (Decomposição)
+Corrói a vida da entidade ao longo do tempo com partículas necróticas.
+<br>
+<img src="docs/assets/screenshots/decay.png" alt="Efeito Decay" width="100%">
 
-Todas as poções são craftadas na **Mesa de Alquimia** usando uma **Garrafa de Vidro** (Potion_Empty) + uma **Essência Elemental** + um **Material Secundário**. Tempo de craft: **4 segundos**.
+---
+
+#### Fire Resistance (Resistência ao Fogo)
+Concede imunidade a dano de fogo e protege a entidade em ambientes de lava.
+<br>
+<img src="docs/assets/screenshots/fire_resistance.png" alt="Efeito Fire Resistance" width="100%">
+
+---
+
+#### Frozen (Congelamento)
+Envolve o alvo em gelo, travando o movimento físico e rotação da entidade.
+<br>
+<img src="docs/assets/screenshots/frozen.png" alt="Efeito Frozen" width="100%">
+
+---
+
+#### Glowing (Brilho)
+Emite luz dinâmica ao redor de entidades e jogadores em ambientes escuros.
+<br>
+<img src="docs/assets/screenshots/glowing_entity.png" alt="Efeito Glowing" width="100%">
+
+---
+
+#### High Jump (Pulo Alto)
+Aumenta a velocidade vertical, impulsionando o pulo de jogadores e entidades.
+<br>
+<img src="docs/assets/screenshots/high_jump.png" alt="Efeito High Jump" width="100%">
+
+---
+
+#### Vida Normal
+Status padrão da barra de vida do jogador na HUD.
+<br>
+<img src="docs/assets/screenshots/full_health.png" alt="Vida Normal" width="100%">
+
+---
+
+#### Instant Damage (Dano Instantâneo)
+Subtrai pontos de vida imediatamente ao impacto da poção ou feitiço.
+<br>
+<img src="docs/assets/screenshots/instant_damage.png" alt="Efeito Instant Damage" width="100%">
+
+---
+
+#### Instant Health (Vida Instantânea)
+Restaura pontos de vida imediatamente, recuperando a vida do jogador.
+<br>
+<img src="docs/assets/screenshots/instant_health.png" alt="Efeito Instant Health" width="100%">
+
+---
+
+#### Blindness (Cegueira)
+Escurece completamente a visão do jogador e a HUD, simulando perda de visão.
+<br>
+**Visão Normal:**
+<br>
+<img src="docs/assets/screenshots/normal_vision.png" alt="Visão Normal" width="100%">
+<br><br>
+**Visão sob Cegueira:**
+<br>
+<img src="docs/assets/screenshots/blindness.png" alt="Visão sob Cegueira" width="100%">
+
+---
+
+#### Levitation (Levitação)
+Eleva a entidade no ar com física antigravidade, seguida de queda ao expirar.
+<br>
+**Subindo/Flutuando:**
+<br>
+<img src="docs/assets/screenshots/levitation_rising.png" alt="Levitação Subindo" width="100%">
+<br><br>
+**Caindo após o efeito:**
+<br>
+<img src="docs/assets/screenshots/levitation_falling.png" alt="Levitação Caindo" width="100%">
+
+---
+
+#### Nausea (Náusea)
+Provoca oscilação contínua de câmera e desorientação de tela no jogador.
+<br>
+<img src="docs/assets/screenshots/nausea_1.png" alt="Nausea Estágio 1" width="100%">
+<br><br>
+<img src="docs/assets/screenshots/nausea_2.png" alt="Nausea Estágio 2" width="100%">
+<br><br>
+<img src="docs/assets/screenshots/nausea_3.png" alt="Nausea Estágio 3" width="100%">
+
+---
+
+#### Night Vision (Visão Noturna)
+Ilumina o ambiente noturno aplicando iluminação dinâmica ao redor do alvo.
+
+> **Nota sobre Limitação da API:**
+> Devido às limitações atuais da API do Hytale Server, os componentes de luz dinâmica alteram a iluminação global do mundo ao redor da entidade, e não um shader visual exclusivo de pós-processamento por cliente.
+
+<br>
+**Ambiente Noturno (Sem Efeito):**
+<br>
+<img src="docs/assets/screenshots/night_darkness.png" alt="Escuridão Noturna" width="100%">
+<br><br>
+**Visão Noturna Ativa:**
+<br>
+<img src="docs/assets/screenshots/night_vision.png" alt="Visão Noturna Ativa" width="100%">
+
+---
+
+#### Poison (Veneno)
+Causa dano venenoso contínuo ao longo do tempo, mantendo o indicador de vida verde até o término.
+<br>
+**Veneno Ativo:**
+<br>
+<img src="docs/assets/screenshots/poison_active.png" alt="Veneno Ativo" width="100%">
+<br><br>
+**Após o Término do Efeito:**
+<br>
+<img src="docs/assets/screenshots/poison_ended.png" alt="Término do Veneno" width="100%">
+
+---
+
+#### Regeneration (Regeneração)
+Recupera pontos de vida continuamente ao longo do tempo.
+<br>
+**Regeneração Ativa:**
+<br>
+<img src="docs/assets/screenshots/regeneration.png" alt="Regeneração Ativa" width="100%">
+<br><br>
+**Recuperação Concluída:**
+<br>
+<img src="docs/assets/screenshots/regeneration_ended.png" alt="Recuperação Concluída" width="100%">
+
+---
+
+#### Resistance (Resistência)
+Reduz o dano recebido de ataques físicos e mágicos.
+<br>
+<img src="docs/assets/screenshots/resistance.png" alt="Efeito Resistance" width="100%">
+
+---
+
+#### Speed (Velocidade)
+Aumenta a velocidade de movimento horizontal, permitindo corrida e locomoção rápida.
+<br>
+<img src="docs/assets/screenshots/speed_1.png" alt="Speed Estágio 1" width="100%">
+<br><br>
+<img src="docs/assets/screenshots/speed_2.png" alt="Speed Estágio 2" width="100%">
+
+---
+
+## 3. Arquitetura
+
+O RuneCore é dividido em três módulos principais:
+
+* **RuneCore (Núcleo):** Gerencia essências, mana, atributos de combate e progressão do jogador. Expõe a API base.
+* **RuneMagic:** Feitiços, runas (efeitos passivos), artefatos e grimórios.
+* **RuneAlchemy:** Sistema de criação de poções, reagentes e encantamento de itens.
+
+---
+
+## 4. Tabelas de Loot & Drop
+
+Criaturas possuem chance de dropar essências ao serem derrotadas por jogadores (taxa base: **25%**).
+
+| Ícone | Essência | Mobs Origem |
+| :---: | :--- | :--- |
+| <img src="icons/essences/Ingredient_Fire_Essence.png" height="32"> | **Fogo** | Emberwulf, Dragão de Fogo, Criaturas de Magma/Chama |
+| <img src="icons/essences/Ingredient_Earth_Essence.png" height="32"> | **Terra** | Trork, Golem de Terra, Bisão, Tartaruga, Toupeira |
+| <img src="icons/essences/Ingredient_Wind_Essence.png" height="32"> | **Vento** | Pássaros (Falcão, Coruja, Corvo, etc.), Feran Windwalker |
+| <img src="icons/essences/Ingredient_Water_Essence.png" height="32"> | **Água** | Peixes (Tubarão, Piranha, etc.), Caranguejo, Sapo, Baleia |
+| <img src="icons/essences/Ingredient_Ice_Essence.png" height="32"> | **Gelo** | Urso Polar, Dragão de Gelo, Yeti, Esqueleto de Gelo |
+| <img src="icons/essences/Ingredient_Lightning_Essence.png" height="32"> | **Trovão** | Golem de Trovão, Espírito do Trovão, Faísca Viva |
+| <img src="icons/essences/Ingredient_Light_Essence.png" height="32"> | **Luz** | Espírito de Raiz, Kweebec de Natal |
+| <img src="icons/essences/Ingredient_Shadow_Essence.png" height="32"> | **Sombras** | Cavaleiro das Sombras, Wraith, Skrill |
+| <img src="icons/essences/Ingredient_Life_Essence.png" height="32"> | **Vida** | Animais (Vaca, Porco, Ovelha, Cervo), Kweebec |
+| <img src="icons/essences/Ingredient_Death_Essence.png" height="32"> | **Morte** | Esqueleto, Zumbi, Ghoul |
+| <img src="icons/essences/Ingredient_Mind_Essence.png" height="32"> | **Mente** | Slothian, Feiticeiro Outlander |
+| <img src="icons/essences/Ingredient_Blood_Essence.png" height="32"> | **Sangue** | Morcego, Mosquito |
+| <img src="icons/essences/Ingredient_Chaos_Essence.png" height="32"> | **Caos** | Berserker Outlander, Chefe Trork |
+| <img src="icons/essences/Ingredient_Aether_Essence.png" height="32"> | **Éter** | Espírito de Brasa |
+| <img src="icons/essences/Ingredient_Void_Essence.png" height="32"> | **Vazio** | Criaturas corrompidas pelo Vazio |
+| <img src="icons/essences/Ingredient_Metal_Essence.png" height="32"> | **Metal** | Golem de Aço, Tanque, Torreta |
+| <img src="icons/essences/Ingredient_Crystal_Essence.png" height="32"> | **Cristal** | Golem de Cristal, Scarak |
+| <img src="icons/essences/Ingredient_Poison_Essence.png" height="32"> | **Veneno** | Cobra, Aranha, Escorpião |
+
+---
+
+## 5. Recursos Principais
+
+- **20 Elementos:** Divididos em níveis Básico, Avançado, Instável e Químico.
+- **API Modular:** Registro direto de essências, feitiços e efeitos de status.
+- **Efeitos de Status Persistentes:** Sistema de ticks de buff/debuff com lógica integrada ao mundo.
+- **Gerenciamento de Recursos:** Rastreamento de mana, stamina e atributos customizados.
+
+Para detalhes mecânicos de cada elemento, veja [**ELEMENTS-PTBR.md**](docs/ELEMENTS-PTBR.md).
+
+---
+
+## 6. Receitas de Poções
+
+Poções são criadas na **Mesa de Alquimia** usando **Garrafa de Vidro** (`Potion_Empty`) + **Essência Elemental** + **Material Secundário** (tempo base: 4 segundos).
 
 | Poção | Essência | Qtd | Material Secundário | Qtd |
 | :--- | :--- | :---: | :--- | :---: |
@@ -132,97 +307,201 @@ Todas as poções são craftadas na **Mesa de Alquimia** usando uma **Garrafa de
 | **Força** | Essência de Sangue | 2 | Cristal (Vermelho) | 2 |
 | **Fraqueza** | Essência de Morte | 1 | Flor Cinza | 2 |
 
-> **Nota:** Efeitos mais poderosos (Levitação, Invisibilidade, Resistência, Força, Resistência ao Fogo, Regeneração) requerem **2 essências** em vez de 1.
+*Nota: Efeitos avançados exigem 2 essências.*
 
 ---
 
-## 7. 🎮 Como Testar In-Game & Efeitos de Status Atuais
+## 7. Atributos de Combate
 
-Você pode testar os efeitos de status registrados e o sistema de feitiços usando o comando administrativo integrado:
+O RuneCore implementa um pipeline de dano no estilo RPG sobre o cálculo nativo de combate.
+
+Atributos podem ser registrados. Jogadores mantêm blocos persistentes de atributos, enquanto criaturas utilizam mapeamento estático por registry.
+
+### Tipos de Atributos
+
+| Categoria | Atributo | Descrição |
+|-----------|----------|-----------|
+| **Ofensivo** | Dano Físico | Reduzido pela Armadura do alvo |
+| **Ofensivo** | Dano Mágico | Reduzido pela Resistência Mágica do alvo |
+| **Ofensivo** | Dano Verdadeiro | Ignora reduções (bloqueado por escudos) |
+| **Ofensivo** | Penetração de Armadura | Ignora parte da Armadura do alvo |
+| **Ofensivo** | Penetração Mágica | Ignora parte da Resistência Mágica do alvo |
+| **Defensivo** | Armadura | Reduz Dano Físico recebido |
+| **Defensivo** | Resistência Mágica | Reduz Dano Mágico recebido |
+| **Defensivo** | Redução de Dano | Redução % fixa sobre o dano recebido (cap em 90%) |
+| **Defensivo** | HP de Escudo | Vida temporária consumida antes da vida base |
+
+### Fórmula de Dano
+
+```text
+defesaEfetiva = max(0, defesa - penetração)
+danoReduzido = danoBase × 100 / (100 + defesaEfetiva)
+danoFinal = (fisicoReduzido + magicoReduzido) × (1 - reducaoDano%) + danoVerdadeiro
+```
+
+Hits trafegam pelo `DamagePipeline`, permitindo que outros mods insiram etapas no cálculo (ex: dano crítico, roubo de vida).
+
+### Dano de Criaturas (PvE)
+
+Criaturas utilizam perfis do `CreatureCombatRegistry`. Criaturas não registradas utilizam fallback por `DamageCause`.
+
+| Perfil de Dano | Fórmula | Exemplos |
+|----------------|---------|----------|
+| **Physical** | Reduzido por Armadura; pode usar Armor Pen | Trork, Skeleton Fighter, Wolf, Bear |
+| **Magic** | Reduzido por Res. Mágica; pode usar Magic Pen | Skeleton Mage, Wraith, Necromancer |
+| **Hybrid** | Proporção físico/mágico calculada separadamente | Dragão de Fogo, Golem Crystal Flame |
+| **True** | Ignora armadura e resistências (absorvido por escudo) | — |
+
+#### Defesa das Criaturas por Família
+
+| Família | Armadura | Res. Mágica | RD | Notas |
+| :--- | ---: | ---: | ---: | :--- |
+| Wildlife | 2 | 0 | — | Feras e animais base sem proteção |
+| Zombies | 4 | 2 | — | Baixa resistência física/mágica |
+| Spirits | 4 | 32 | — | Incorpóreos (alta resistência mágica) |
+| Goblins | 5 | 3 | — | Armadura leve de couro |
+| Trorks | 6 | 0 | — | Foco em combate físico |
+| Ferans | 8 | 8 | — | Atributos equilibrados |
+| Skeletons | 10 | 4 | — | Proteção física moderada |
+| Outlanders | 12 | 6 | — | Saqueadores equipados |
+| Void | 12 | 28 | — | Alta resistência mágica |
+| Scaraks | 18 | 4 | — | Carapaça dura (alta armadura, baixa res. mágica) |
+| Dragons | 32 | 28 | — | Altas resistências base |
+| Golems | 34 | 12 | — | Alta armadura base |
+| Bosses | 40 | 34 | 15% | Defesas altas + redução % plana |
+
+### Integração com Equipamentos
+
+Armaduras aplicam atributos enquanto equipadas (escalonado por slot: Peitoral 100%, Calças 85%, Capacete 70%, Luvas 50%). Armas aplicam atributos ofensivos no momento do hit.
+
+#### Escalonamento de Armaduras por Tier
+
+| Tier | Materiais | Armadura (Peitoral) | Res. Mágica (Peitoral) |
+|------|-----------|:-------------------:|:----------------------:|
+| 1 | Tecido, Madeira | 4–8 | 10–20 |
+| 2 | Couro Leve, Cobre | 10–14 | 8–10 |
+| 3 | Couro Pesado, Bronze, Ferro | 18–25 | 5–8 |
+| 4 | Aço, Cobalto | 30–35 | 5–7 |
+| 5 | Mithril, Thorium | 42–45 | 12–14 |
+| 6 | Adamantita, Onyxium, Prisma | 50–58 | 18–22 |
+
+#### Dano de Armas por Tier (Exemplo Físico)
+
+| Material | Espada | Espada Longa | Machado | Machado de Guerra | Adaga |
+|----------|:------:|:------------:|:-------:|:-----------------:|:-----:|
+| Madeira | 6–8 | 12 | 10 | 14 | 6 |
+| Cobre | 14 | 20 | 16 | 22 | 10 |
+| Ferro | 22 | 30 | 24 | 32 | 18 |
+| Aço | 28 | — | — | 34 | — |
+| Mithril | 38 | 50 | 40 | 52 | 30 |
+| Adamantita | 50 | 65 | 52 | 68 | 40 |
+
+### Comandos de Administração
+
+```text
+/combatstats view
+/combatstats set <atributo> <valor>
+/combatstats add <atributo> <valor>
+/combatstats reset [all|modifiers|<atributo>]
+```
+
+Identificadores suportados: `armor`, `magicresist` (`mr`), `reduction` (`dr`), `physdmg` (`phys`), `magdmg` (`mag`), `truedmg` (`true`), `armorpen` (`apen`), `magicpen` (`mpen`), `shield`.
+
+---
+
+## 8. Efeitos de Status & Testes
+
+Comando de teste in-game:
 
 ```text
 /rune effect <id>
 ```
 
-Abaixo está a tabela completa dos efeitos atualmente registrados no motor `RuneCore`, seus estados de desenvolvimento e o comportamento esperado de cada um:
-
-| Ícone | Status | ID do Efeito | Tem Visual Nativo/JSON? | O que deve fazer |
+| Ícone | Status | ID do Efeito | Visual Nativo | Descrição |
 | :---: | :---: | :--- | :--- | :--- |
-| <img src="icons/128x/speed.png" height="32"> | [x] | `speed` | Speed | Dá o buff de velocidade. |
-| <img src="icons/128x/slowness.png" height="32"> | [x] | `slowness` | Slowness | Lentidão na entidade. |
-| <img src="icons/128x/haste.png" height="32"> | [ ] | `haste` | Haste | Modifica Attack Speed e Mining Speed (+50%) e mostra UI. (Attack/Mining Speed pendentes) |
-| <img src="icons/128x/mining_fatigue.png" height="32"> | [ ] | `mining_fatigue`| Mining_Fatigue | Modifica Attack Speed e Mining Speed (-70%) e mostra UI. (Attack/Mining Speed pendentes) |
-| <img src="icons/128x/jump_boost.png" height="32"> | [x] | `jump_boost` | Jump_Boost | Pulo mais alto. |
-| <img src="icons/128x/high_jump.png" height="32"> | [x] | `high_jump` | High_Jump | Pulo muito mais alto. |
-| <img src="icons/128x/slow_falling.png" height="32"> | [x] | `slow_falling` | Slow_Falling | Queda lenta. |
+| <img src="icons/128x/speed.png" height="32"> | [x] | `speed` | Speed | Aumenta velocidade de movimento. |
+| <img src="icons/128x/slowness.png" height="32"> | [x] | `slowness` | Slowness | Reduz velocidade de movimento. |
+| <img src="icons/128x/haste.png" height="32"> | [ ] | `haste` | Haste | Modificador de velocidade de ataque/mineração (+50%). |
+| <img src="icons/128x/mining_fatigue.png" height="32"> | [ ] | `mining_fatigue`| Mining_Fatigue | Redução de velocidade de ataque/mineração (-70%). |
+| <img src="icons/128x/jump_boost.png" height="32"> | [x] | `jump_boost` | Jump_Boost | Aumenta a altura do pulo. |
+| <img src="icons/128x/high_jump.png" height="32"> | [x] | `high_jump` | High_Jump | Aumenta significativamente a altura do pulo. |
+| <img src="icons/128x/slow_falling.png" height="32"> | [x] | `slow_falling` | Slow_Falling | Reduz a velocidade de queda. |
 | <img src="icons/128x/levitation.png" height="32"> | [x] | `levitation` | Levitation | Faz a entidade flutuar para cima. |
-| <img src="icons/128x/regeneration.png" height="32"> | [x] | `regeneration` | Regeneration | Cura +1 de vida a cada 50 ticks. |
-| <img src="icons/128x/poison.png" height="32"> | [x] | `poison` | Poison | Dano de 1 de vida a cada 25 ticks. |
-| <img src="icons/128x/decay.png" height="32"> | [x] | `decay` | Decay | Dano de 1 de vida a cada 40 ticks. |
-| <img src="icons/128x/darkness.png" height="32"> | [x] | `darkness` | Darkness | Reduz significativamente o brilho da visão. |
-| <img src="icons/128x/electrified.png" height="32"> | [x] | `electrified` | Electrified | Dano elétrico e faíscas visuais. |
-| <img src="icons/128x/burn.png" height="32"> | [x] | `burn` | Burn | Dano de 1 de vida a cada 20 ticks + UI. |
-| <img src="icons/128x/nausea.png" height="32"> | [x] | `nausea` | Nausea | Roda a câmera (NauseaTick) + UI. |
-| <img src="icons/128x/bleeding.png" height="32"> | [x] | `bleeding` | Bleeding | Dano de 1 vida a cada 20 ticks + UI + Partículas custom de sangue. |
-| <img src="icons/128x/frozen.png" height="32"> | [x] | `frozen` | Frozen | Impede movimento temporariamente. |
-| | [x] | `instant_health`| (nenhum) | Cura instantânea (4.0 * power). |
-| | [x] | `instant_damage`| InstantDamage | Dano instantâneo (6.0 * power). |
-| | [ ] | `damage_fire_instant`| DamageFireInstant | Dano de fogo instantâneo (10.0 * power). |
-| <img src="icons/128x/invisibility.png" height="32"> | [x] | `invisibility` | Invisibility | Esconde o jogador dos outros. (Ajuste fino de visibilidade próprio pendente) |
-| <img src="icons/128x/glowing.png" height="32"> | [ ] | `glowing` | Glowing | Adiciona luz dinâmica (DynamicLight) + UI. (Não persiste no logout/relog) |
-| <img src="icons/128x/blindness.png" height="32"> | [x] | `blindness` | Blindness | Modifica a visão (VisualEffectHelper) + UI. |
-| <img src="icons/128x/night_vision.png" height="32"> | [x] | `night_vision` | NightVision | Luz dinâmica branca ao redor do jogador + UI. |
-| <img src="icons/128x/water_breathing.png" height="32"> | [ ] | `water_breathing`| WaterBreathing | Permite respirar embaixo d'água nativamente. (Simplesmente não funciona) |
-| <img src="icons/128x/fire_resistance.png" height="32"> | [x] | `fire_resistance`| FireResistance | Resistência a fogo nativa. |
-| <img src="icons/128x/resistance.png" height="32"> | [ ] | `resistance` | Resistance | Resistência nativa. (Não funciona, precisa de melhorias) |
-| <img src="icons/128x/strength.png" height="32"> | [ ] | `strength` | Strength | Força nativa. (Não funciona, precisa de melhorias) |
-| <img src="icons/128x/weakness.png" height="32"> | [ ] | `weakness` | Weakness | Fraqueza nativa. (Não funciona, precisa de melhorias) |
+| <img src="icons/128x/regeneration.png" height="32"> | [x] | `regeneration` | Regeneration | Recupera 1 HP a cada 50 ticks. |
+| <img src="icons/128x/poison.png" height="32"> | [x] | `poison` | Poison | Causa 1 HP de dano a cada 25 ticks. |
+| <img src="icons/128x/decay.png" height="32"> | [x] | `decay` | Decay | Causa 1 HP de dano a cada 40 ticks. |
+| <img src="icons/128x/darkness.png" height="32"> | [x] | `darkness` | Darkness | Reduz o alcance/brilho da visão. |
+| <img src="icons/128x/electrified.png" height="32"> | [x] | `electrified` | Electrified | Dano elétrico periódico e partículas visuais. |
+| <img src="icons/128x/burn.png" height="32"> | [x] | `burn` | Burn | Causa 1 HP de dano a cada 20 ticks. |
+| <img src="icons/128x/nausea.png" height="32"> | [x] | `nausea` | Nausea | Aplica efeito de rotação na câmera. |
+| <img src="icons/128x/bleeding.png" height="32"> | [x] | `bleeding` | Bleeding | Causa 1 HP de dano a cada 20 ticks + partículas de sangue. |
+| <img src="icons/128x/frozen.png" height="32"> | [x] | `frozen` | Frozen | Impede movimento durante a duração. |
+| | [x] | `instant_health`| (nenhum) | Cura instantânea (`4.0 * power`). |
+| | [x] | `instant_damage`| InstantDamage | Dano instantâneo (`6.0 * power`). |
+| <img src="icons/128x/invisibility.png" height="32"> | [x] | `invisibility` | Invisibility | Oculta o modelo visual da entidade. |
+| <img src="icons/128x/blindness.png" height="32"> | [x] | `blindness` | Blindness | Restringe a visão na câmera. |
+| <img src="icons/128x/night_vision.png" height="32"> | [x] | `night_vision` | NightVision | Aplica luz visual de visão noturna. |
+| <img src="icons/128x/fire_resistance.png" height="32"> | [x] | `fire_resistance`| FireResistance | Previne dano por fogo. |
 
-### Nota de Implementação
-Para habilitar todos os sistemas durante o desenvolvimento, certifique-se de que eles estão registrados no seu ponto de entrada:
-```java
-// Na sua classe de plugin
-eventRegistry.registerGlobal(EffectTimerListener.class);
-eventRegistry.registerGlobal(CastListener.class);
-```
-
-### 🧠 Como e Onde Utilizar os Efeitos (Exemplos)
-
-Modders podem aplicar esses efeitos dinamicamente no mundo utilizando a API do `RuneCore`. Aqui estão alguns exemplos de implementação programática:
+### Exemplo de Uso na API
 
 ```java
-// Aplicar um efeito diretamente em uma entidade (ex: jogador ou mob)
 RuneCore core = RuneCore.getInstance();
 RuneEffect poison = core.getEffect("poison");
 
 if (poison != null) {
-    // Cria o contexto com a fonte e o alvo
     CastContext ctx = new CastContext(sourceEntity, targetEntity);
     poison.execute(ctx);
 }
 ```
 
-#### 🛡️ Casos de Uso Recomendados:
+---
 
-*   **🧪 Alquimia e Poções:** Consumir itens que dão buffs como `speed`, `jump_boost`, ou curas como `regeneration` e `instant_health`.
-*   **⚔️ Encantamentos de Armas e Flechas:** Adicione veneno (`poison`), sangramento (`bleeding`) ou lentidão (`slowness`) ao atingir alvos com armas específicas.
-*   **👹 Mecânicas de Bosses / Mobs:**
-    *   Um boss de gelo que congela (`frozen`) o jogador em um ataque carregado.
-    *   Um ataque sombrio que inflige cegueira (`blindness`) na área ao redor do boss.
-    *   Um monstro de fogo que queima (`burn`) ao toque.
-*   **🌍 Armadilhas Ambientais:**
-    *   Espinhos no chão que causam `bleeding`.
-    *   Cair em pântanos tóxicos que aplicam `decay`.
+## 9. Configuração de Build & Ferramentas
+
+Configure os caminhos locais antes de compilar:
+
+### `local.properties`
+```properties
+hytale.assets.path=/caminho/para/Hytale/Assets.zip
+hytale.mods.dest=/caminho/para/Hytale/Mods/
+```
+
+### `gradle.properties`
+```properties
+org.gradle.java.home=/caminho/para/Hytale/jdk-25
+```
+
+### Comandos de Build
+- **Compilar Jar:** `./gradlew jar`
+- **Versão da Engine:** `./gradlew hytaleVersion`
+- **Extrair Schemas:** `./gradlew generateSchemas`
+- **Validar Assets:** `./gradlew validateAssets`
+- **Validar Prefabs:** `./gradlew validatePrefabs`
 
 ---
 
-## 8. 🛠️ Guia para Modders
+## 10. Guia do Desenvolvedor & Pontos de Entrada
 
-Interessado em construir em cima do RuneCore? Confira nosso [**Guia de Uso da API**](API_USAGE.md) para exemplos de código e passos de integração.
+Principais classes para integração com a API:
 
-## 9. ⚖️ Licença
+| Ponto de Entrada | Uso |
+| :--- | :--- |
+| `RuneAttributes` | Leitura/escrita de atributos, registro de itens e criaturas |
+| `AttributeRegistry` + `RuneAttribute` | Declaração de atributos customizados |
+| `DamagePipeline` + `DamageStage` | Etapas customizadas no cálculo de dano |
+| `RuneCore` | Acesso a elementos, feitiços e efeitos de status |
+| `RuneCoreItemManager` | Registro de itens clicáveis/interativos |
 
-Este projeto, incluindo seu código-fonte, documentação e **ícones em pixel art** (localizados no diretório `/icons`), está licenciado sob a **Creative Commons Attribution-NonCommercial 4.0 International (CC BY-NC 4.0)**.
+Consulte o [**API_USAGE-PTBR.md**](API_USAGE-PTBR.md) para exemplos de integração.
+
+---
+
+## 11. Licença
+
+Licenciado sob a [Creative Commons Attribution-NonCommercial 4.0 International (CC BY-NC 4.0)](https://creativecommons.org/licenses/by-nc/4.0/deed.pt_BR).
+Ícones localizados no diretório `/icons` seguem os mesmos termos de licença.
+nes em pixel art** (localizados no diretório `/icons`), está licenciado sob a **Creative Commons Attribution-NonCommercial 4.0 International (CC BY-NC 4.0)**.
 
 - **Atribuição (BY):** Você deve dar o crédito apropriado ao autor original.
 - **Não Comercial (NC):** Você não pode usar o material para fins comerciais.

@@ -99,6 +99,144 @@ RuneCore.get().castSpell("fire_blast", ctx);
 
 ---
 
+## 6. Atributos de Combate
+
+Atributos de combate (armadura, penetração, dano, ...) são **dados registráveis**, não uma lista
+fixa. O RuneCore traz oito deles; seu mod pode adicionar o próprio e fazê-lo participar do combate.
+
+### Lendo e escrevendo
+
+`RuneAttributes` é o ponto de entrada. Todo método é null-safe e devolve `Optional` em vez de
+lançar exceção durante um evento de dano.
+
+```java
+// built-ins
+RuneAttributes.of(playerUuid).ifPresent(attrs -> {
+    float armadura = attrs.get(CoreAttributes.ARMOR);
+    attrs.setBase(CoreAttributes.MAGIC_RESIST, 25f);
+});
+
+// a partir de um ref de entidade ou de um PlayerRef
+RuneAttributes.of(entityRef).ifPresent(attrs -> ...);
+```
+
+### Valor base vs modificadores
+
+Um atributo resolvido é `base + soma(modificadores)`, limitado aos bounds declarados. Os
+modificadores têm nome, então podem ser removidos com precisão — é assim que equipamento aplica
+e desfaz os bônus dele.
+
+```java
+attrs.setBase(CoreAttributes.ARMOR, 10f);
+attrs.addModifier("meumod:bencao", CoreAttributes.ARMOR, 5f);   // resolve em 15
+attrs.removeModifier("meumod:bencao");                          // volta pra 10
+```
+
+Registrar o mesmo id de modificador de novo **substitui** em vez de empilhar, então reaplicar a
+cada troca de equipamento é seguro.
+
+### Declarando o seu atributo
+
+```java
+public static final RuneAttribute ROUBO_DE_VIDA =
+        AttributeRegistry.register(RuneAttribute.fraction("meumod:lifesteal", 1f));
+
+// positive() → 0..∞, fraction(max) → 0..max
+```
+
+Ids têm namespace e são normalizados para minúsculo. Registrar um id que outro mod já pegou
+lança `IllegalStateException` — substituir em silêncio corromperia a matemática de dano dele.
+
+---
+
+## 7. Pipeline de Dano
+
+O RuneCore não tem como saber o que o seu atributo *significa*, então o comportamento é
+contribuído, não inferido: registre o atributo e depois registre uma etapa que o leia.
+
+```java
+DamagePipeline.register("meumod:critico", DamagePipeline.AFTER_MITIGATION, (ctx, dano) ->
+        ThreadLocalRandom.current().nextFloat() < ctx.attacker().get(CHANCE_CRITICO)
+                ? dano * 2f
+                : dano);
+```
+
+### Prioridades
+
+| Âncora | Quando roda |
+| :--- | :--- |
+| `BEFORE_MITIGATION` | antes de armadura/resistência — mudanças planas no valor de entrada |
+| `MITIGATION` | onde acontece a matemática de armadura/resistência/escudo do RuneCore |
+| `AFTER_MITIGATION` | efeitos multiplicativos, como crítico |
+| `FINAL` | última palavra sobre o número |
+
+Menor roda antes; qualquer `int` serve se você precisar ficar entre duas âncoras.
+
+### O que vale saber
+
+- **Em PvP, etapas de `BEFORE_MITIGATION` são ignoradas.** Esse caminho deriva o dano dos
+  atributos e da arma do atacante em vez de escalar o número do engine, então não há o que uma
+  etapa anterior modifique. Etapas em `AFTER_MITIGATION` ou depois sempre valem.
+- **Etapa que lança exceção é logada e pulada**, nunca aborta o hit — uma etapa quebrada não
+  pode deixar jogador invulnerável.
+- As etapas rodam na thread que levantou o evento de dano. Mantenha-as baratas e sem bloqueio.
+- Registrar o mesmo id duas vezes substitui a etapa, então recarregar seu conteúdo não empilha.
+
+---
+
+## 8. Registrando Itens e Criaturas
+
+```java
+// arma: contribui enquanto empunhada, no momento do hit
+RuneAttributes.registerItem("MeuMod_Lamina",
+        ItemCombatData.builder().physicalDamage(30f).armorPenetration(5f).build());
+
+// armadura: contribui enquanto equipada
+RuneAttributes.registerItem("MeuMod_Peitoral",
+        ItemCombatData.builder().armor(20f).magicResist(8f).build());
+
+// criatura: como ela causa dano, e como ela recebe
+RuneAttributes.registerCreature("MeuBoss",
+        CreatureCombatData.magic(20f).withDefense(35f, 40f, 0.1f));
+```
+
+A chave da criatura é o nome do arquivo do modelo, sem caminho e sem namespace — exatamente o
+que o interceptor de dano parseia em runtime. Criatura não registrada é deixada totalmente em paz.
+
+Os dois métodos devolvem `false` quando o registry ainda não subiu, então dá para logar ou tentar
+de novo em vez de adivinhar.
+
+---
+
+## 9. Gerenciador de Itens Interativos (ItemManager)
+
+O RuneCore fornece uma API genérica e unificada para você adicionar itens clicáveis (interativos) no seu mod, sem precisar escrever codecs repetitivos ou criar centenas de arquivos `RootInteractions` em JSON.
+
+### Como usar no Hytale:
+Basta criar o JSON do seu item (`Items/MeuItem.json`) e referenciar a interação genérica do RuneCore:
+```json
+{
+  "DisplayName": "Livro Mágico",
+  "Model": "Items/Consumables/Potions/ItemMagicBook.blockymodel",
+  "MaxStackSize": 1,
+  "Interactions": {
+    "Secondary": "RuneCore_GenericItemUse"
+  }
+}
+```
+
+### Como registrar no código:
+No `onEnable()` ou `init()` do seu plugin/mod, chame o `RuneCoreItemManager`:
+```java
+RuneCoreItemManager.register("MeuItem", (player, playerRef) -> {
+    playerRef.sendMessage(Message.raw("Você clicou no meu item customizado!"));
+    // Aqui você pode abrir UIs, gastar o item do inventário, etc.
+});
+```
+O gerenciador detecta qual item está na mão do jogador (lendo o sulfixo da ID) e executa o bloco de código correspondente automaticamente!
+
+---
+
 ## 🔮 Dicas de Especialista
 
 1.  **IDs Únicos:** Sempre use `playerRef.getUuid().toString()` como UID para buffs para garantir que eles sejam removidos corretamente quando o jogador desconectar.

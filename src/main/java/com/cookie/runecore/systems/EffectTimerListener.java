@@ -10,15 +10,18 @@ import com.hypixel.hytale.server.core.universe.world.storage.EntityStore;
 
 import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.logging.Logger;
 
 public class EffectTimerListener {
+
+    private static final Logger LOG = Logger.getLogger("RuneCore");
 
     private final ConcurrentHashMap<UUID, World> playerWorlds = new ConcurrentHashMap<>();
 
     public EffectTimerListener(EventRegistry eventRegistry) {
         eventRegistry.registerGlobal(AddPlayerToWorldEvent.class, this::onPlayerJoin);
         eventRegistry.registerGlobal(PlayerDisconnectEvent.class, this::onPlayerDisconnect);
-        System.out.println("[RuneCore-Effects] EffectTimerListener registered player tracking");
+        LOG.fine("[RuneCore-Effects] EffectTimerListener registered player tracking");
     }
 
     private void onPlayerJoin(AddPlayerToWorldEvent event) {
@@ -33,7 +36,7 @@ public class EffectTimerListener {
         if (uid == null) return;
 
         playerWorlds.put(uid, world);
-        System.out.println("[RuneCore-Effects] Player " + uid + " registered for tracking");
+        LOG.fine("[RuneCore-Effects] Player " + uid + " registered for tracking");
     }
 
     private void onPlayerDisconnect(PlayerDisconnectEvent event) {

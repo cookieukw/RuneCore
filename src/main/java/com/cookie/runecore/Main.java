@@ -3,9 +3,20 @@ package com.cookie.runecore;
 import com.hypixel.hytale.server.core.modules.interaction.interaction.config.Interaction;
 import com.hypixel.hytale.server.core.plugin.JavaPlugin;
 import com.hypixel.hytale.server.core.plugin.JavaPluginInit;
+import com.cookie.runecore.commands.CombatStatsCommand;
 import com.cookie.runecore.commands.RuneStatsCommand;
 import com.cookie.runecore.commands.TestUICommand;
+import com.cookie.runecore.api.RuneCoreGenericItemInteraction;
 import com.cookie.runecore.systems.CastListener;
+import com.cookie.runecore.systems.CombatDamageInterceptor;
+import com.cookie.runecore.systems.CombatStatsManager;
+import com.cookie.runecore.systems.CombatStatsDefaults;
+import com.cookie.runecore.systems.CombatStatsRegistry;
+import com.cookie.runecore.systems.CreatureCombatDefaults;
+import com.cookie.runecore.systems.CreatureCombatRegistry;
+import com.cookie.runecore.systems.EquipmentStatsListener;
+import com.cookie.runecore.systems.InvisibilityManager;
+import com.cookie.runecore.systems.ItemTooltipInjector;
 import com.cookie.runecore.systems.EffectTimerListener;
 import com.cookie.runecore.systems.FrozenInteractionListener;
 import com.cookie.runecore.systems.MobDropSystem;
@@ -20,6 +31,7 @@ import com.cookie.runecore.commands.CustomTimeCommand;
 import com.cookie.runecore.commands.RuneCommand;
 import com.cookie.runecore.api.PlayerDataComponent;
 import com.cookie.runecore.system.RuneCore;
+import com.cookie.runecore.systems.EffectTickSystemBridge;
 
 import javax.annotation.Nonnull;
 
@@ -32,14 +44,20 @@ public class Main extends JavaPlugin {
     @Override
     protected void setup() {
         // Register custom interaction codecs
-        com.hypixel.hytale.server.core.modules.interaction.interaction.config.Interaction.CODEC.register(
-                "runecore:potion_drink",
+        Interaction.CODEC.register(
+                "RuneCore_GenericItemUse",
+                RuneCoreGenericItemInteraction.class,
+                RuneCoreGenericItemInteraction.CODEC
+        );
+
+        Interaction.CODEC.register(
+                "PotionDrink",
                 PotionDrinkInteraction.class,
                 PotionDrinkInteraction.CODEC
         );
 
         Interaction.CODEC.register(
-                "runecore:potion_splash_generic",
+                "PotionSplashGeneric",
                 GenericPotionSplashInteraction.class,
                 GenericPotionSplashInteraction.CODEC
         );
@@ -52,8 +70,16 @@ public class Main extends JavaPlugin {
             "strength", "weakness", "instant_health", "instant_damage"
         };
         for (String eff : splashEffects) {
+            // Capitalize each part separated by underscores for PascalCase matching (e.g. fire_resistance -> Fire_Resistance)
+            String[] parts = eff.split("_");
+            StringBuilder sb = new StringBuilder();
+            for (String part : parts) {
+                if (!part.isEmpty()) {
+                    sb.append(Character.toUpperCase(part.charAt(0))).append(part.substring(1));
+                }
+            }
             Interaction.CODEC.register(
-                    "runecore:potion_splash_" + eff,
+                    "PotionSplash_" + sb.toString(),
                     GenericPotionSplashInteraction.class,
                     GenericPotionSplashInteraction.CODEC
             );
@@ -63,6 +89,7 @@ public class Main extends JavaPlugin {
         RuneCore.get().initDefaults();
 
         this.getCommandRegistry().registerCommand(new RuneStatsCommand());
+        this.getCommandRegistry().registerCommand(new CombatStatsCommand());
         this.getCommandRegistry().registerCommand(new CustomTimeCommand());
         this.getCommandRegistry().registerCommand(new TestUICommand());
         this.getCommandRegistry().registerCommand(new SwitchSpellCommand());
@@ -77,12 +104,23 @@ public class Main extends JavaPlugin {
         this.getEntityStoreRegistry().registerSystem(new MobDropSystem());
         PotionHitSystem potionHitSystem = new PotionHitSystem();
         this.getEntityStoreRegistry().registerSystem(potionHitSystem);
-        this.getEntityStoreRegistry().registerSystem(new com.cookie.runecore.systems.EffectTickSystemBridge());
+        this.getEntityStoreRegistry().registerSystem(new EffectTickSystemBridge());
         new PotionListener(this.getEventRegistry(), potionHitSystem.getPlayerPotions());
         new RuneCoreHudManager(this.getEventRegistry());
         new CastListener(this.getEventRegistry());
         new EffectTimerListener(this.getEventRegistry());
         new MagicListener(this.getEventRegistry());
         new FrozenInteractionListener(this.getEventRegistry());
+        new CombatStatsManager(this.getEventRegistry());
+        // Owns invisibility state: catches up players who join mid-effect and guarantees the
+        // hidden flag is cleared on disconnect.
+        new InvisibilityManager(this.getEventRegistry());
+        CombatStatsRegistry combatRegistry = new CombatStatsRegistry();
+        CombatStatsDefaults.registerAll(combatRegistry);
+        CreatureCombatRegistry creatureRegistry = new CreatureCombatRegistry();
+        CreatureCombatDefaults.registerAll(creatureRegistry);
+        this.getEntityStoreRegistry().registerSystem(new CombatDamageInterceptor());
+        this.getEntityStoreRegistry().registerSystem(new EquipmentStatsListener());
+        this.getEntityStoreRegistry().registerSystem(new ItemTooltipInjector());
     }
 }

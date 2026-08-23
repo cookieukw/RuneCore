@@ -1,0 +1,8 @@
+{
+  "RequireNewClick": true,
+  "Interactions": [
+    {
+      "Type": "RuneCore_GenericItemUse"
+    }
+  ]
+}

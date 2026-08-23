@@ -10,6 +10,7 @@ import com.hypixel.hytale.server.core.modules.entity.component.DynamicLight;
 import com.hypixel.hytale.server.core.universe.world.storage.EntityStore;
 
 import java.util.function.Consumer;
+import java.util.logging.Logger;
 
 /**
  * Helpers for visual status effects that affect entity appearance and native effect icons.
@@ -20,6 +21,8 @@ import java.util.function.Consumer;
  * what's different about it.
  */
 public final class VisualEffectHelper {
+
+    private static final Logger LOG = Logger.getLogger("RuneCore");
 
     private VisualEffectHelper() {}
 
@@ -63,14 +66,18 @@ public final class VisualEffectHelper {
 
     public static void applyBlindness(Ref<EntityStore> ref) {
         EffectHelper.worldExecute(ref, () -> {
-            System.out.println("[RuneCore] Applying blindness visual to " + ref);
+            LOG.fine("[RuneCore] Applying blindness visual to " + ref);
             setHudAndData(ref, true, hud -> hud.setBlinded(true), data -> data.setBlinded(true));
+            // Slow down non-player entities when blinded to simulate confusion/loss of sight
+            StatHelper.applyStatModifier(ref, "WalkSpeed", "Blindness", 0.4f,
+                    com.hypixel.hytale.server.core.modules.entitystats.modifier.StaticModifier.CalculationType.MULTIPLICATIVE);
         });
     }
 
     public static void revertBlindness(Ref<EntityStore> ref) {
         EffectHelper.worldExecute(ref, () -> {
             setHudAndData(ref, true, hud -> hud.setBlinded(false), data -> data.setBlinded(false));
+            StatHelper.removeStatModifier(ref, "WalkSpeed", "Blindness");
             removeNativeEffect(ref.getStore(), ref, "Blindness");
         });
     }

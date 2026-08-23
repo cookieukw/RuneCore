@@ -1,0 +1,750 @@
+{
+  "type": "object",
+  "$id": "TriggerEffectAsset.json",
+  "title": "TriggerEffectAsset",
+  "hytale": {
+    "type": "object",
+    "path": "TriggerVolumes/Effects",
+    "extension": ".json",
+    "mergesProperties": true
+  },
+  "properties": {
+    "Parent": {
+      "type": "string",
+      "description": "When set this asset will inherit properties from the named asset.\n\nWhen inheriting from another TriggerEffectAsset most properties will simply be copied from the parent asset to this asset. In the case where both child and parent provide a field the child field will simply replace the value provided by the parent, in the case of nested structures this will apply to the fields within the structure. In some cases the field may decide to act differently, for example: by merging the parent and child fields together.",
+      "markdownDescription": "When set this asset will inherit properties from the named asset.\n\nWhen inheriting from another **TriggerEffectAsset** most properties will simply be copied from the parent asset to this asset. In the case where both child and parent provide a field the child field will simply replace the value provided by the parent, in the case of nested structures this will apply to the fields within the structure. In some cases the field may decide to act differently, for example: by merging the parent and child fields together.",
+      "hytaleParent": {
+        "type": "TriggerEffectAsset"
+      },
+      "hytale": {
+        "type": "string"
+      }
+    },
+    "$Title": {
+      "description": "Comments don't have any function other than allowing users to add certain internal comments or notes to an asset",
+      "doNotSuggest": true,
+      "hytale": {
+        "uiDisplayMode": "Hidden",
+        "uiPropertyTitle": "Comment"
+      }
+    },
+    "$Comment": {
+      "description": "Comments don't have any function other than allowing users to add certain internal comments or notes to an asset",
+      "doNotSuggest": true,
+      "hytale": {
+        "uiDisplayMode": "Hidden",
+        "uiPropertyTitle": "Comment"
+      }
+    },
+    "$Author": {
+      "description": "Comments don't have any function other than allowing users to add certain internal comments or notes to an asset",
+      "doNotSuggest": true,
+      "hytale": {
+        "uiDisplayMode": "Hidden",
+        "uiPropertyTitle": "Comment"
+      }
+    },
+    "$TODO": {
+      "description": "Comments don't have any function other than allowing users to add certain internal comments or notes to an asset",
+      "doNotSuggest": true,
+      "hytale": {
+        "uiDisplayMode": "Hidden",
+        "uiPropertyTitle": "Comment"
+      }
+    },
+    "$Position": {
+      "description": "Comments don't have any function other than allowing users to add certain internal comments or notes to an asset",
+      "doNotSuggest": true,
+      "hytale": {
+        "uiDisplayMode": "Hidden",
+        "uiPropertyTitle": "Comment"
+      }
+    },
+    "$FloatingFunctionNodes": {
+      "description": "Comments don't have any function other than allowing users to add certain internal comments or notes to an asset",
+      "doNotSuggest": true,
+      "hytale": {
+        "uiDisplayMode": "Hidden",
+        "uiPropertyTitle": "Comment"
+      }
+    },
+    "$Groups": {
+      "description": "Comments don't have any function other than allowing users to add certain internal comments or notes to an asset",
+      "doNotSuggest": true,
+      "hytale": {
+        "uiDisplayMode": "Hidden",
+        "uiPropertyTitle": "Comment"
+      }
+    },
+    "$WorkspaceID": {
+      "description": "Comments don't have any function other than allowing users to add certain internal comments or notes to an asset",
+      "doNotSuggest": true,
+      "hytale": {
+        "uiDisplayMode": "Hidden",
+        "uiPropertyTitle": "Comment"
+      }
+    },
+    "$NodeId": {
+      "description": "Comments don't have any function other than allowing users to add certain internal comments or notes to an asset",
+      "doNotSuggest": true,
+      "hytale": {
+        "uiDisplayMode": "Hidden",
+        "uiPropertyTitle": "Comment"
+      }
+    },
+    "$NodeEditorMetadata": {
+      "description": "Comments don't have any function other than allowing users to add certain internal comments or notes to an asset",
+      "doNotSuggest": true,
+      "hytale": {
+        "uiDisplayMode": "Hidden",
+        "uiPropertyTitle": "Comment"
+      }
+    },
+    "Tags": {
+      "type": [
+        "object",
+        "null"
+      ],
+      "title": "Map",
+      "description": "Tags are a general way to describe an asset that can be interpreted by other systems in a way they see fit.\n\nFor example you could tag something with a Material tag with the values Solid and Stone, And another single tag Ore.\n\nTags will be expanded into a single list of tags automatically. Using the above example with Material and Ore the end result would be the following list of tags: Ore, Material, Solid, Stone, Material=Solid and Material=Stone.",
+      "markdownDescription": "Tags are a general way to describe an asset that can be interpreted by other systems in a way they see fit.\n\nFor example you could tag something with a **Material** tag with the values **Solid** and **Stone**, And another single tag **Ore**.\n\nTags will be expanded into a single list of tags automatically. Using the above example with **Material** and **Ore** the end result would be the following list of tags: **Ore**, **Material**, **Solid**, **Stone**, **Material=Solid** and **Material=Stone**.",
+      "hytale": {
+        "type": "object",
+        "inheritsProperty": true
+      },
+      "additionalProperties": {
+        "type": "array",
+        "hytale": {
+          "type": "array"
+        },
+        "items": {
+          "type": "string",
+          "hytale": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "Conditions": {
+      "type": [
+        "array",
+        "null"
+      ],
+      "hytale": {
+        "type": "array"
+      },
+      "items": {
+        "title": "Type Selector",
+        "anyOf": [
+          {
+            "$ref": "common.json#/definitions/BlockTypeCondition"
+          },
+          {
+            "$ref": "common.json#/definitions/CooldownCondition"
+          },
+          {
+            "$ref": "common.json#/definitions/EntityCountCondition"
+          },
+          {
+            "$ref": "common.json#/definitions/GameModeCondition"
+          },
+          {
+            "$ref": "common.json#/definitions/ItemCondition"
+          },
+          {
+            "$ref": "common.json#/definitions/PermissionCondition"
+          },
+          {
+            "$ref": "common.json#/definitions/PlayerCountCondition"
+          },
+          {
+            "$ref": "common.json#/definitions/RandomChanceCondition"
+          },
+          {
+            "$ref": "common.json#/definitions/TagCondition"
+          },
+          {
+            "$ref": "common.json#/definitions/TimeOfDayCondition@1"
+          }
+        ],
+        "hytaleSchemaTypeField": {
+          "property": "Type",
+          "values": [
+            "BlockTypeCondition",
+            "CooldownCondition",
+            "EntityCountCondition",
+            "GameModeCondition",
+            "ItemCondition",
+            "PermissionCondition",
+            "PlayerCountCondition",
+            "RandomChanceCondition",
+            "TagCondition",
+            "TimeOfDay"
+          ]
+        },
+        "hytale": {
+          "mergesProperties": true
+        }
+      }
+    },
+    "Effects": {
+      "type": [
+        "array",
+        "null"
+      ],
+      "hytale": {
+        "type": "array"
+      },
+      "items": {
+        "title": "Type Selector",
+        "anyOf": [
+          {
+            "$ref": "common.json#/definitions/CancelParticlesEffect"
+          },
+          {
+            "$ref": "common.json#/definitions/ControlDoorsEffect"
+          },
+          {
+            "$ref": "common.json#/definitions/DamageEntityEffect"
+          },
+          {
+            "$ref": "common.json#/definitions/DeleteVolumeEffect"
+          },
+          {
+            "$ref": "common.json#/definitions/DisableVolumeEffect"
+          },
+          {
+            "$ref": "common.json#/definitions/EnableVolumeEffect"
+          },
+          {
+            "$ref": "common.json#/definitions/EntityEffectEffect"
+          },
+          {
+            "$ref": "common.json#/definitions/GiveItemEffect"
+          },
+          {
+            "$ref": "common.json#/definitions/ModifyRulesEffect"
+          },
+          {
+            "$ref": "common.json#/definitions/ModifyTagsEffect"
+          },
+          {
+            "$ref": "common.json#/definitions/PastePrefabEffect"
+          },
+          {
+            "$ref": "common.json#/definitions/PlaceBlockEffect"
+          },
+          {
+            "$ref": "common.json#/definitions/PlayAnimationEffect"
+          },
+          {
+            "$ref": "common.json#/definitions/PlaySoundEffect"
+          },
+          {
+            "$ref": "common.json#/definitions/PlayVfxEffect"
+          },
+          {
+            "$ref": "common.json#/definitions/RemoveEntitiesEffect"
+          },
+          {
+            "$ref": "common.json#/definitions/ReplaceBlockTypeEffect"
+          },
+          {
+            "$ref": "common.json#/definitions/RunRootInteractionEffect"
+          },
+          {
+            "$ref": "common.json#/definitions/SendMessageEffect"
+          },
+          {
+            "$ref": "common.json#/definitions/SendSignalEffect"
+          },
+          {
+            "$ref": "common.json#/definitions/SetGameModeEffect"
+          },
+          {
+            "$ref": "common.json#/definitions/SetMusicEffect"
+          },
+          {
+            "$ref": "common.json#/definitions/SetVelocityEffect"
+          },
+          {
+            "$ref": "common.json#/definitions/SetWeatherEffect"
+          },
+          {
+            "$ref": "common.json#/definitions/ShowEventTitleEffect"
+          },
+          {
+            "$ref": "common.json#/definitions/SpawnNpcEffect"
+          },
+          {
+            "$ref": "common.json#/definitions/TeleportEffect"
+          },
+          {
+            "$ref": "common.json#/definitions/TimeEffect"
+          },
+          {
+            "$ref": "common.json#/definitions/TriggerNpcMarkersEffect"
+          }
+        ],
+        "hytaleSchemaTypeField": {
+          "property": "Type",
+          "values": [
+            "CancelParticles",
+            "ControlDoors",
+            "DamageEntity",
+            "DeleteVolume",
+            "DisableVolume",
+            "EnableVolume",
+            "EntityEffect",
+            "GiveItem",
+            "ModifyRules",
+            "ModifyTags",
+            "PastePrefab",
+            "PlaceBlock",
+            "PlayAnimation",
+            "PlaySound",
+            "PlayVfx",
+            "RemoveEntities",
+            "ReplaceBlockType",
+            "RunRootInteraction",
+            "SendMessage",
+            "SendSignal",
+            "SetGameMode",
+            "SetMusic",
+            "SetVelocity",
+            "SetWeather",
+            "ShowEventTitle",
+            "SpawnNpc",
+            "Teleport",
+            "Time",
+            "TriggerNpcMarkers"
+          ]
+        },
+        "hytale": {
+          "mergesProperties": true
+        }
+      }
+    },
+    "RejectionEffects": {
+      "type": [
+        "array",
+        "null"
+      ],
+      "hytale": {
+        "type": "array"
+      },
+      "items": {
+        "title": "Type Selector",
+        "anyOf": [
+          {
+            "$ref": "common.json#/definitions/CancelParticlesEffect"
+          },
+          {
+            "$ref": "common.json#/definitions/ControlDoorsEffect"
+          },
+          {
+            "$ref": "common.json#/definitions/DamageEntityEffect"
+          },
+          {
+            "$ref": "common.json#/definitions/DeleteVolumeEffect"
+          },
+          {
+            "$ref": "common.json#/definitions/DisableVolumeEffect"
+          },
+          {
+            "$ref": "common.json#/definitions/EnableVolumeEffect"
+          },
+          {
+            "$ref": "common.json#/definitions/EntityEffectEffect"
+          },
+          {
+            "$ref": "common.json#/definitions/GiveItemEffect"
+          },
+          {
+            "$ref": "common.json#/definitions/ModifyRulesEffect"
+          },
+          {
+            "$ref": "common.json#/definitions/ModifyTagsEffect"
+          },
+          {
+            "$ref": "common.json#/definitions/PastePrefabEffect"
+          },
+          {
+            "$ref": "common.json#/definitions/PlaceBlockEffect"
+          },
+          {
+            "$ref": "common.json#/definitions/PlayAnimationEffect"
+          },
+          {
+            "$ref": "common.json#/definitions/PlaySoundEffect"
+          },
+          {
+            "$ref": "common.json#/definitions/PlayVfxEffect"
+          },
+          {
+            "$ref": "common.json#/definitions/RemoveEntitiesEffect"
+          },
+          {
+            "$ref": "common.json#/definitions/ReplaceBlockTypeEffect"
+          },
+          {
+            "$ref": "common.json#/definitions/RunRootInteractionEffect"
+          },
+          {
+            "$ref": "common.json#/definitions/SendMessageEffect"
+          },
+          {
+            "$ref": "common.json#/definitions/SendSignalEffect"
+          },
+          {
+            "$ref": "common.json#/definitions/SetGameModeEffect"
+          },
+          {
+            "$ref": "common.json#/definitions/SetMusicEffect"
+          },
+          {
+            "$ref": "common.json#/definitions/SetVelocityEffect"
+          },
+          {
+            "$ref": "common.json#/definitions/SetWeatherEffect"
+          },
+          {
+            "$ref": "common.json#/definitions/ShowEventTitleEffect"
+          },
+          {
+            "$ref": "common.json#/definitions/SpawnNpcEffect"
+          },
+          {
+            "$ref": "common.json#/definitions/TeleportEffect"
+          },
+          {
+            "$ref": "common.json#/definitions/TimeEffect"
+          },
+          {
+            "$ref": "common.json#/definitions/TriggerNpcMarkersEffect"
+          }
+        ],
+        "hytaleSchemaTypeField": {
+          "property": "Type",
+          "values": [
+            "CancelParticles",
+            "ControlDoors",
+            "DamageEntity",
+            "DeleteVolume",
+            "DisableVolume",
+            "EnableVolume",
+            "EntityEffect",
+            "GiveItem",
+            "ModifyRules",
+            "ModifyTags",
+            "PastePrefab",
+            "PlaceBlock",
+            "PlayAnimation",
+            "PlaySound",
+            "PlayVfx",
+            "RemoveEntities",
+            "ReplaceBlockType",
+            "RunRootInteraction",
+            "SendMessage",
+            "SendSignal",
+            "SetGameMode",
+            "SetMusic",
+            "SetVelocity",
+            "SetWeather",
+            "ShowEventTitle",
+            "SpawnNpc",
+            "Teleport",
+            "Time",
+            "TriggerNpcMarkers"
+          ]
+        },
+        "hytale": {
+          "mergesProperties": true
+        }
+      }
+    },
+    "Rules": {
+      "type": [
+        "array",
+        "null"
+      ],
+      "hytale": {
+        "type": "array"
+      },
+      "items": {
+        "title": "Type Selector",
+        "anyOf": [
+          {
+            "$ref": "common.json#/definitions/CreativePlacementRule"
+          },
+          {
+            "$ref": "common.json#/definitions/DamageMultiplierRule"
+          },
+          {
+            "$ref": "common.json#/definitions/FlyRule"
+          },
+          {
+            "$ref": "common.json#/definitions/NoBuildRule"
+          },
+          {
+            "$ref": "common.json#/definitions/NoDamageRule"
+          },
+          {
+            "$ref": "common.json#/definitions/NoDestroyRule"
+          },
+          {
+            "$ref": "common.json#/definitions/NoDoorOpenRule"
+          },
+          {
+            "$ref": "common.json#/definitions/NoHarvestRule"
+          },
+          {
+            "$ref": "common.json#/definitions/NoHealRule"
+          },
+          {
+            "$ref": "common.json#/definitions/NoTickRule"
+          },
+          {
+            "$ref": "common.json#/definitions/NoUseRule"
+          }
+        ],
+        "hytaleSchemaTypeField": {
+          "property": "Type",
+          "values": [
+            "CreativePlacement",
+            "DamageMultiplier",
+            "Fly",
+            "NoBuild",
+            "NoDamage",
+            "NoDestroy",
+            "NoDoorOpen",
+            "NoHarvest",
+            "NoHeal",
+            "NoTick",
+            "NoUse"
+          ]
+        },
+        "hytale": {
+          "mergesProperties": true
+        }
+      }
+    },
+    "ConditionTiming": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "title": "ConditionTiming",
+      "enumDescriptions": [
+        "",
+        ""
+      ],
+      "markdownEnumDescriptions": [
+        "",
+        ""
+      ],
+      "hytale": {
+        "type": "Enum"
+      },
+      "enum": [
+        "BeforeVolumeDelay",
+        "AfterVolumeDelay"
+      ]
+    },
+    "TargetTypes": {
+      "type": [
+        "array",
+        "null"
+      ],
+      "hytale": {
+        "type": "array"
+      },
+      "items": {
+        "type": "string",
+        "title": "EntityTargetType",
+        "enumDescriptions": [
+          "",
+          "",
+          "",
+          ""
+        ],
+        "markdownEnumDescriptions": [
+          "",
+          "",
+          "",
+          ""
+        ],
+        "hytale": {
+          "type": "Enum"
+        },
+        "enum": [
+          "Player",
+          "Npc",
+          "ItemDrop",
+          "Projectile"
+        ]
+      }
+    },
+    "IncludeVolumeSettings": {
+      "type": "boolean",
+      "hytale": {
+        "type": "boolean"
+      }
+    },
+    "VolumeTags": {
+      "type": [
+        "object",
+        "null"
+      ],
+      "title": "Map",
+      "hytale": {
+        "type": "object"
+      },
+      "additionalProperties": {
+        "type": "string",
+        "hytale": {
+          "type": "string"
+        }
+      }
+    },
+    "RejectionDelayMode": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "title": "RejectionDelayMode",
+      "enumDescriptions": [
+        "",
+        ""
+      ],
+      "markdownEnumDescriptions": [
+        "",
+        ""
+      ],
+      "hytale": {
+        "type": "Enum"
+      },
+      "enum": [
+        "Immediate",
+        "UseVolumeDelay"
+      ]
+    },
+    "Cooldown": {
+      "anyOf": [
+        {
+          "anyOf": [
+            {
+              "type": "number",
+              "hytale": {
+                "type": "number"
+              }
+            },
+            {
+              "type": "string",
+              "hytale": {
+                "type": "string"
+              },
+              "pattern": "^(-?Infinity|NaN)$"
+            }
+          ],
+          "hytale": {
+            "type": "Number"
+          }
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "CooldownMode": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "title": "CooldownMode",
+      "enumDescriptions": [
+        "",
+        ""
+      ],
+      "markdownEnumDescriptions": [
+        "",
+        ""
+      ],
+      "hytale": {
+        "type": "Enum"
+      },
+      "enum": [
+        "PerEntity",
+        "Total"
+      ]
+    },
+    "ActivationDelay": {
+      "anyOf": [
+        {
+          "anyOf": [
+            {
+              "type": "number",
+              "hytale": {
+                "type": "number"
+              }
+            },
+            {
+              "type": "string",
+              "hytale": {
+                "type": "string"
+              },
+              "pattern": "^(-?Infinity|NaN)$"
+            }
+          ],
+          "hytale": {
+            "type": "Number"
+          }
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "ProjectileSource": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "title": "ProjectileSource",
+      "enumDescriptions": [
+        "",
+        ""
+      ],
+      "markdownEnumDescriptions": [
+        "",
+        ""
+      ],
+      "hytale": {
+        "type": "Enum"
+      },
+      "enum": [
+        "Shooter",
+        "Projectile"
+      ]
+    },
+    "KeepLoaded": {
+      "type": "boolean",
+      "hytale": {
+        "type": "boolean"
+      }
+    },
+    "RotateEffectsOnPaste": {
+      "type": "boolean",
+      "hytale": {
+        "type": "boolean"
+      }
+    },
+    "CancelDelayedOnExit": {
+      "type": "boolean",
+      "hytale": {
+        "type": "boolean"
+      }
+    }
+  },
+  "additionalProperties": false
+}

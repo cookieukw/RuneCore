@@ -19,8 +19,11 @@ import com.hypixel.hytale.server.core.asset.type.entityeffect.config.EntityEffec
 import java.util.Map;
 
 import javax.annotation.Nonnull;
+import java.util.logging.Logger;
 
 public class RuneCommand extends AbstractPlayerCommand {
+
+    private static final Logger LOG = Logger.getLogger("RuneCore");
     private final RequiredArg<String> subCommandArg;
     private final RequiredArg<String> effectIdArg;
     private final OptionalArg<Integer> durationArg;
@@ -46,10 +49,10 @@ public class RuneCommand extends AbstractPlayerCommand {
             handleEffect(ctx, ref, playerRef, world);
         } else if ("dump".equalsIgnoreCase(subCommand)) {
             ctx.sendMessage(Message.raw("Dumped keys to console!"));
-            System.out.println("=== ENTITY EFFECT ASSETS ===");
+            LOG.fine("=== ENTITY EFFECT ASSETS ===");
             Map<String, EntityEffect> map = EntityEffect.getAssetMap().getAssetMap();
             for (Object key : map.keySet()) {
-                System.out.println(key.toString());
+                LOG.fine(key.toString());
             }
         } else {
             ctx.sendMessage(Message.raw("Unknown subcommand: " + subCommand + ". Use 'effect' or 'dump'."));
