@@ -43,11 +43,13 @@ final class EntityStatAccess {
     }
 
     /**
-     * @return a future completing with the stat, or {@code -1f} when it cannot be read.
+     * @return a future completing with the stat, or {@code -1f} when it cannot be read or times out (3s).
      *         The sentinel is preserved for compatibility with the existing public API.
      */
     static CompletableFuture<Float> read(Ref<EntityStore> ref, int statId) {
         CompletableFuture<Float> future = new CompletableFuture<>();
+        future.orTimeout(3, java.util.concurrent.TimeUnit.SECONDS)
+              .exceptionally(ex -> -1f);
 
         boolean scheduled = WorldTasks.onWorldThread(ref, () -> {
             try {

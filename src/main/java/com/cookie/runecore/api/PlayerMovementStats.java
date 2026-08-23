@@ -31,10 +31,12 @@ final class PlayerMovementStats {
     }
 
     /**
-     * @return a future completing with the current base speed, or {@code -1f} when unavailable.
+     * @return a future completing with the current base speed, or {@code -1f} when unavailable or times out (3s).
      */
     static CompletableFuture<Float> readSpeed(Ref<EntityStore> ref) {
         CompletableFuture<Float> future = new CompletableFuture<>();
+        future.orTimeout(3, java.util.concurrent.TimeUnit.SECONDS)
+              .exceptionally(ex -> -1f);
 
         boolean scheduled = WorldTasks.onWorldThread(ref, () -> {
             try {
