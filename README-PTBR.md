@@ -102,6 +102,34 @@ Emite luz dinâmica ao redor de entidades e jogadores em ambientes escuros.
 
 ---
 
+#### High Jump (Pulo Alto)
+Aumenta a velocidade vertical, impulsionando o pulo de jogadores e entidades.
+<br>
+<img src="docs/assets/screenshots/high_jump.png" alt="Efeito High Jump" width="100%">
+
+---
+
+#### Vida Normal
+Status padrão da barra de vida do jogador na HUD.
+<br>
+<img src="docs/assets/screenshots/full_health.png" alt="Vida Normal" width="100%">
+
+---
+
+#### Instant Damage (Dano Instantâneo)
+Subtrai pontos de vida imediatamente ao impacto da poção ou feitiço.
+<br>
+<img src="docs/assets/screenshots/instant_damage.png" alt="Efeito Instant Damage" width="100%">
+
+---
+
+#### Instant Health (Vida Instantânea)
+Restaura pontos de vida imediatamente, recuperando a vida do jogador.
+<br>
+<img src="docs/assets/screenshots/instant_health.png" alt="Efeito Instant Health" width="100%">
+
+---
+
 ## 3. Arquitetura
 
 O RuneCore é dividido em três módulos principais:

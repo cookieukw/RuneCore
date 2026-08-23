@@ -102,6 +102,34 @@ Emits dynamic light around entities and players in low-light environments.
 
 ---
 
+#### High Jump
+Boosts vertical velocity, launching players and entities into high jumps.
+<br>
+<img src="docs/assets/screenshots/high_jump.png" alt="High Jump Effect" width="100%">
+
+---
+
+#### Normal Health
+Default player health status on HUD.
+<br>
+<img src="docs/assets/screenshots/full_health.png" alt="Normal Health" width="100%">
+
+---
+
+#### Instant Damage
+Instantly subtracts health points upon hit or potion splash.
+<br>
+<img src="docs/assets/screenshots/instant_damage.png" alt="Instant Damage Effect" width="100%">
+
+---
+
+#### Instant Health
+Instantly restores health points and updates player health.
+<br>
+<img src="docs/assets/screenshots/instant_health.png" alt="Instant Health Effect" width="100%">
+
+---
+
 ## 3. Architecture
 
 RuneCore is split into three main modules:
