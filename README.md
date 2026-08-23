@@ -130,6 +130,43 @@ Instantly restores health points and updates player health.
 
 ---
 
+#### Blindness
+Darkens the player's view and HUD completely, simulating loss of vision.
+<br>
+**Normal Vision:**
+<br>
+<img src="docs/assets/screenshots/normal_vision.png" alt="Normal Vision" width="100%">
+<br><br>
+**Blinded View:**
+<br>
+<img src="docs/assets/screenshots/blindness.png" alt="Blindness Effect" width="100%">
+
+---
+
+#### Levitation
+Lifts entities into the air with anti-gravity physics, followed by a fall upon expiry.
+<br>
+**Floating Upward:**
+<br>
+<img src="docs/assets/screenshots/levitation_rising.png" alt="Levitation Rising" width="100%">
+<br><br>
+**Descending / Falling:**
+<br>
+<img src="docs/assets/screenshots/levitation_falling.png" alt="Levitation Falling" width="100%">
+
+---
+
+#### Nausea
+Causes severe camera sway and screen disorientation, cycling view angles.
+<br>
+<img src="docs/assets/screenshots/nausea_1.png" alt="Nausea Stage 1" width="100%">
+<br><br>
+<img src="docs/assets/screenshots/nausea_2.png" alt="Nausea Stage 2" width="100%">
+<br><br>
+<img src="docs/assets/screenshots/nausea_3.png" alt="Nausea Stage 3" width="100%">
+
+---
+
 ## 3. Architecture
 
 RuneCore is split into three main modules:

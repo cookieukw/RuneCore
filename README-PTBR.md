@@ -130,6 +130,43 @@ Restaura pontos de vida imediatamente, recuperando a vida do jogador.
 
 ---
 
+#### Blindness (Cegueira)
+Escurece completamente a visão do jogador e a HUD, simulando perda de visão.
+<br>
+**Visão Normal:**
+<br>
+<img src="docs/assets/screenshots/normal_vision.png" alt="Visão Normal" width="100%">
+<br><br>
+**Visão sob Cegueira:**
+<br>
+<img src="docs/assets/screenshots/blindness.png" alt="Visão sob Cegueira" width="100%">
+
+---
+
+#### Levitation (Levitação)
+Eleva a entidade no ar com física antigravidade, seguida de queda ao expirar.
+<br>
+**Subindo/Flutuando:**
+<br>
+<img src="docs/assets/screenshots/levitation_rising.png" alt="Levitação Subindo" width="100%">
+<br><br>
+**Caindo após o efeito:**
+<br>
+<img src="docs/assets/screenshots/levitation_falling.png" alt="Levitação Caindo" width="100%">
+
+---
+
+#### Nausea (Náusea)
+Provoca oscilação contínua de câmera e desorientação de tela no jogador.
+<br>
+<img src="docs/assets/screenshots/nausea_1.png" alt="Nausea Estágio 1" width="100%">
+<br><br>
+<img src="docs/assets/screenshots/nausea_2.png" alt="Nausea Estágio 2" width="100%">
+<br><br>
+<img src="docs/assets/screenshots/nausea_3.png" alt="Nausea Estágio 3" width="100%">
+
+---
+
 ## 3. Arquitetura
 
 O RuneCore é dividido em três módulos principais:
