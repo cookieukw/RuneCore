@@ -58,6 +58,48 @@ O RuneCore expande a base nativa do Hytale em um motor modular para interações
 | <img src="icons/128x/fire_resistance.png" height="48"> | <img src="icons/128x/resistance.png" height="48"> | <img src="icons/128x/strength.png" height="48"> | <img src="icons/128x/weakness.png" height="48"> | <img src="icons/128x/darkness.png" height="48"> |
 | <img src="icons/128x/electrified.png" height="48"> | | | | |
 
+### Demonstração dos Efeitos no Jogo
+
+#### Bleeding (Sangramento)
+Causa dano contínuo ao longo do tempo e aplica um filtro de sangue na tela do jogador.
+<br>
+<img src="docs/assets/screenshots/bleeding.png" alt="Efeito Bleeding" width="100%">
+
+---
+
+#### Burn (Queimadura)
+Incendeia o alvo, causando dano de fogo e efeito visual de chamas.
+<br>
+<img src="docs/assets/screenshots/burn.png" alt="Efeito Burn" width="100%">
+
+---
+
+#### Decay (Decomposição)
+Corrói a vida da entidade ao longo do tempo com partículas necróticas.
+<br>
+<img src="docs/assets/screenshots/decay.png" alt="Efeito Decay" width="100%">
+
+---
+
+#### Fire Resistance (Resistência ao Fogo)
+Concede imunidade a dano de fogo e protege a entidade em ambientes de lava.
+<br>
+<img src="docs/assets/screenshots/fire_resistance.png" alt="Efeito Fire Resistance" width="100%">
+
+---
+
+#### Frozen (Congelamento)
+Envolve o alvo em gelo, travando o movimento físico e rotação da entidade.
+<br>
+<img src="docs/assets/screenshots/frozen.png" alt="Efeito Frozen" width="100%">
+
+---
+
+#### Glowing (Brilho)
+Emite luz dinâmica ao redor de entidades e jogadores em ambientes escuros.
+<br>
+<img src="docs/assets/screenshots/glowing_entity.png" alt="Efeito Glowing" width="100%">
+
 ---
 
 ## 3. Arquitetura

@@ -58,6 +58,48 @@ RuneCore expands Hytale's native foundation into a modular engine for elemental 
 | <img src="icons/128x/fire_resistance.png" height="48"> | <img src="icons/128x/resistance.png" height="48"> | <img src="icons/128x/strength.png" height="48"> | <img src="icons/128x/weakness.png" height="48"> | <img src="icons/128x/darkness.png" height="48"> |
 | <img src="icons/128x/electrified.png" height="48"> | | | | |
 
+### In-Game Effect Showcase
+
+#### Bleeding
+Deals damage over time and applies a bloody visual filter to the player.
+<br>
+<img src="docs/assets/screenshots/bleeding.png" alt="Bleeding Effect" width="100%">
+
+---
+
+#### Burn
+Ignites the target, causing fire damage and burning screen overlays.
+<br>
+<img src="docs/assets/screenshots/burn.png" alt="Burn Effect" width="100%">
+
+---
+
+#### Decay
+Corrodes the entity's health over time with necrotic visual effects.
+<br>
+<img src="docs/assets/screenshots/decay.png" alt="Decay Effect" width="100%">
+
+---
+
+#### Fire Resistance
+Grants immunity to fire damage and protects the entity in lava environments.
+<br>
+<img src="docs/assets/screenshots/fire_resistance.png" alt="Fire Resistance Effect" width="100%">
+
+---
+
+#### Frozen
+Encases the target in ice, locking physical movement and rotation.
+<br>
+<img src="docs/assets/screenshots/frozen.png" alt="Frozen Effect" width="100%">
+
+---
+
+#### Glowing
+Emits dynamic light around entities and players in low-light environments.
+<br>
+<img src="docs/assets/screenshots/glowing_entity.png" alt="Glowing Entity Effect" width="100%">
+
 ---
 
 ## 3. Architecture
