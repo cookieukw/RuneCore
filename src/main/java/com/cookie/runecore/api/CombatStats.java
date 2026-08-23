@@ -106,15 +106,11 @@ public class CombatStats {
     }
 
     /**
-     * Resolves incoming damage against this entity's defences.
+     * Previews incoming damage against this entity's defenses without mutating state.
      * <p>
-     * {@code bonus} carries offence that is not part of the attacker's persistent stats — in
-     * practice the weapon currently held.
-     * <p>
-     * <b>Note:</b> this has a side effect — it drains {@link #getShieldHP()} through
-     * {@link #absorbDamage}. Call it once per hit.
+     * Pure function: does not drain {@link #getShieldHP()}.
      */
-    public float calculateFinalDamage(CombatStats attacker, Offense bonus) {
+    public float previewFinalDamage(CombatStats attacker, Offense bonus) {
         float physRaw = attacker.getPhysicalDamage() + bonus.physical();
         float magRaw = attacker.getMagicDamage() + bonus.magic();
         float trueRaw = attacker.getTrueDamage() + bonus.trueDamage();
@@ -127,8 +123,31 @@ public class CombatStats {
         float subtotal = physFinal + magFinal;
         subtotal *= (1f - getDamageReduction());
 
-        float afterShield = absorbDamage(subtotal + trueRaw);
-        return Math.max(0, afterShield);
+        float totalDamage = subtotal + trueRaw;
+        if (shieldHP <= 0) return Math.max(0, totalDamage);
+        if (totalDamage <= shieldHP) return 0f;
+        return Math.max(0, totalDamage - shieldHP);
+    }
+
+    /**
+     * Resolves incoming damage against this entity's defences and drains shield HP.
+     */
+    public float calculateFinalDamage(CombatStats attacker, Offense bonus) {
+        float finalDmg = previewFinalDamage(attacker, bonus);
+        float physRaw = attacker.getPhysicalDamage() + bonus.physical();
+        float magRaw = attacker.getMagicDamage() + bonus.magic();
+        float trueRaw = attacker.getTrueDamage() + bonus.trueDamage();
+
+        float physFinal = calcReducedDamage(physRaw, getArmor(),
+                attacker.getArmorPenetration() + bonus.armorPenetration());
+        float magFinal = calcReducedDamage(magRaw, getMagicResist(),
+                attacker.getMagicPenetration() + bonus.magicPenetration());
+
+        float subtotal = physFinal + magFinal;
+        subtotal *= (1f - getDamageReduction());
+
+        absorbDamage(subtotal + trueRaw);
+        return finalDmg;
     }
 
     // ── Reset ────────────────────────────────────────────────────────────────
