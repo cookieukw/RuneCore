@@ -167,6 +167,43 @@ Provoca oscilação contínua de câmera e desorientação de tela no jogador.
 
 ---
 
+#### Night Vision (Visão Noturna)
+Ilumina o ambiente noturno aplicando iluminação dinâmica ao redor do alvo.
+
+> **Nota sobre Limitação da API:**
+> Devido às limitações atuais da API do Hytale Server, os componentes de luz dinâmica alteram a iluminação global do mundo ao redor da entidade, e não um shader visual exclusivo de pós-processamento por cliente.
+
+<br>
+**Ambiente Noturno (Sem Efeito):**
+<br>
+<img src="docs/assets/screenshots/night_darkness.png" alt="Escuridão Noturna" width="100%">
+<br><br>
+**Visão Noturna Ativa:**
+<br>
+<img src="docs/assets/screenshots/night_vision.png" alt="Visão Noturna Ativa" width="100%">
+
+---
+
+#### Poison (Veneno)
+Causa dano venenoso contínuo ao longo do tempo, mantendo o indicador de vida verde até o término.
+<br>
+**Veneno Ativo:**
+<br>
+<img src="docs/assets/screenshots/poison_active.png" alt="Veneno Ativo" width="100%">
+<br><br>
+**Após o Término do Efeito:**
+<br>
+<img src="docs/assets/screenshots/poison_ended.png" alt="Término do Veneno" width="100%">
+
+---
+
+#### Regeneration (Regeneração)
+Recupera pontos de vida continuamente ao longo do tempo.
+<br>
+<img src="docs/assets/screenshots/regeneration.png" alt="Efeito Regeneração" width="100%">
+
+---
+
 ## 3. Arquitetura
 
 O RuneCore é dividido em três módulos principais:

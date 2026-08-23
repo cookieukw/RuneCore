@@ -167,6 +167,43 @@ Causes severe camera sway and screen disorientation, cycling view angles.
 
 ---
 
+#### Night Vision
+Illuminates dark environments by dynamically adjusting ambient light levels.
+
+> **Note on Engine Limitations:**
+> Due to current Hytale Server API limitations, dynamic light components affect global scene lighting around the target entity rather than applying a per-client post-processing shader.
+
+<br>
+**Night Environment (Without Effect):**
+<br>
+<img src="docs/assets/screenshots/night_darkness.png" alt="Dark Night" width="100%">
+<br><br>
+**Night Vision Active:**
+<br>
+<img src="docs/assets/screenshots/night_vision.png" alt="Night Vision Active" width="100%">
+
+---
+
+#### Poison
+Deals continuous poison damage over time, turning health indicators green until expired.
+<br>
+**Poison Active:**
+<br>
+<img src="docs/assets/screenshots/poison_active.png" alt="Poison Active" width="100%">
+<br><br>
+**After Effect Expires:**
+<br>
+<img src="docs/assets/screenshots/poison_ended.png" alt="Poison Ended" width="100%">
+
+---
+
+#### Regeneration
+Heals health points over time, restoring player health periodically.
+<br>
+<img src="docs/assets/screenshots/regeneration.png" alt="Regeneration Effect" width="100%">
+
+---
+
 ## 3. Architecture
 
 RuneCore is split into three main modules:
