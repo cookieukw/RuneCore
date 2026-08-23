@@ -37,9 +37,9 @@ public class InvisibilityManager {
     private final Set<UUID> invisible = ConcurrentHashMap.newKeySet();
 
     public InvisibilityManager(EventRegistry eventRegistry) {
-        instance = this;
         eventRegistry.registerGlobal(PlayerReadyEvent.class, this::onPlayerReady);
         eventRegistry.registerGlobal(PlayerDisconnectEvent.class, this::onPlayerDisconnect);
+        instance = this;
     }
 
     public static InvisibilityManager get() {
