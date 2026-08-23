@@ -34,7 +34,7 @@ public class RuneCoreGenericItemInteraction extends SimpleInstantInteraction {
 
     @Override
     protected void firstRun(@Nonnull InteractionType type, @Nonnull InteractionContext context, @Nonnull CooldownHandler cooldownHandler) {
-        LOGGER.atInfo().log("RuneCore Debug: RuneCoreGenericItemInteraction firstRun executed!");
+        LOGGER.atFine().log("RuneCore Debug: RuneCoreGenericItemInteraction firstRun executed!");
         Ref<EntityStore> playerRef = context.getEntity();
         CommandBuffer<EntityStore> commandBuffer = context.getCommandBuffer();
         
@@ -52,12 +52,12 @@ public class RuneCoreGenericItemInteraction extends SimpleInstantInteraction {
 
         ItemStack heldItem = InventoryComponent.getItemInHand(playerRef.getStore(), playerRef);
         if (heldItem == null || heldItem.getItemId() == null) {
-            LOGGER.atInfo().log("RuneCore Debug: Held item is null");
+            LOGGER.atFine().log("RuneCore Debug: Held item is null");
             context.getState().state = InteractionState.Failed;
             return;
         }
 
-        LOGGER.atInfo().log("RuneCore Debug: Processing custom interaction for item: " + heldItem.getItemId());
+        LOGGER.atFine().log("RuneCore Debug: Processing custom interaction for item: " + heldItem.getItemId());
         
         // Pass to the manager!
         boolean handled = RuneCoreItemManager.handleItemUse(heldItem.getItemId(), player, playerRefComponent);
@@ -71,7 +71,7 @@ public class RuneCoreGenericItemInteraction extends SimpleInstantInteraction {
             // An item RuneCore doesn't recognize just means RuneCore has nothing to do with it,
             // not that the interaction itself failed — leave the state alone so whatever else is
             // registered downstream still gets to process it.
-            LOGGER.atInfo().log("RuneCore Debug: No handler registered for item: " + heldItem.getItemId());
+            LOGGER.atFine().log("RuneCore Debug: No handler registered for item: " + heldItem.getItemId());
         }
     }
 }
