@@ -121,6 +121,26 @@ public final class StatusEffectHelper {
             if (manager == null) return;
             world.execute(() -> manager.hide(uuid));
         });
+        // Clear mob aggro target if present
+        if (ref != null && ref.isValid()) {
+            var store = ref.getStore();
+            if (store != null) {
+                EffectHelper.worldExecute(ref, () -> {
+                    com.hypixel.hytale.server.core.entity.effect.EffectControllerComponent controller =
+                            store.getComponent(ref, com.hypixel.hytale.server.core.entity.effect.EffectControllerComponent.getComponentType());
+                    if (controller == null) {
+                        controller = new com.hypixel.hytale.server.core.entity.effect.EffectControllerComponent();
+                        store.putComponent(ref, com.hypixel.hytale.server.core.entity.effect.EffectControllerComponent.getComponentType(), controller);
+                    }
+                    com.hypixel.hytale.server.core.asset.type.entityeffect.config.EntityEffect nativeEffect =
+                            com.hypixel.hytale.server.core.asset.type.entityeffect.config.EntityEffect.getAssetMap().getAsset("Invisibility");
+                    int index = com.hypixel.hytale.server.core.asset.type.entityeffect.config.EntityEffect.getAssetMap().getIndex("Invisibility");
+                    if (nativeEffect != null && index >= 0) {
+                        controller.addEffect(ref, index, nativeEffect, 60.0f, com.hypixel.hytale.server.core.asset.type.entityeffect.config.OverlapBehavior.OVERWRITE, store);
+                    }
+                });
+            }
+        }
     }
 
     public static void revertInvisibility(Ref<EntityStore> ref) {
@@ -129,5 +149,20 @@ public final class StatusEffectHelper {
             if (manager == null) return;
             world.execute(() -> manager.show(uuid));
         });
+        if (ref != null && ref.isValid()) {
+            var store = ref.getStore();
+            if (store != null) {
+                EffectHelper.worldExecute(ref, () -> {
+                    com.hypixel.hytale.server.core.entity.effect.EffectControllerComponent controller =
+                            store.getComponent(ref, com.hypixel.hytale.server.core.entity.effect.EffectControllerComponent.getComponentType());
+                    if (controller != null) {
+                        int index = com.hypixel.hytale.server.core.asset.type.entityeffect.config.EntityEffect.getAssetMap().getIndex("Invisibility");
+                        if (index >= 0) {
+                            controller.removeEffect(ref, index, store);
+                        }
+                    }
+                });
+            }
+        }
     }
 }

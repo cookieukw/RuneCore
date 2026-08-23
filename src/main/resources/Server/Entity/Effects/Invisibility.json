@@ -1,10 +1,9 @@
 {
+  "StatusEffectIcon": "UI/StatusEffects/Invisibility.png",
   "ApplicationEffects": {
-    "ModelVFXId": "Erosion_Test",
-    "AbilityEffects": {
-      "Disabled": [
-        "EntityStatEffect"
-      ]
-    }
-  }
+    "ModelVFXId": "Erosion_Test"
+  },
+  "Duration": 60.0,
+  "OverlapBehavior": "Overwrite",
+  "Debuff": false
 }
