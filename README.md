@@ -200,7 +200,29 @@ Deals continuous poison damage over time, turning health indicators green until 
 #### Regeneration
 Heals health points over time, restoring player health periodically.
 <br>
-<img src="docs/assets/screenshots/regeneration.png" alt="Regeneration Effect" width="100%">
+**Regeneration Active:**
+<br>
+<img src="docs/assets/screenshots/regeneration.png" alt="Regeneration Active" width="100%">
+<br><br>
+**Full Recovery:**
+<br>
+<img src="docs/assets/screenshots/regeneration_ended.png" alt="Regeneration Full Recovery" width="100%">
+
+---
+
+#### Resistance
+Reduces incoming damage from physical and magical attacks.
+<br>
+<img src="docs/assets/screenshots/resistance.png" alt="Resistance Effect" width="100%">
+
+---
+
+#### Speed
+Increases horizontal movement speed, enabling faster sprinting and movement.
+<br>
+<img src="docs/assets/screenshots/speed_1.png" alt="Speed Stage 1" width="100%">
+<br><br>
+<img src="docs/assets/screenshots/speed_2.png" alt="Speed Stage 2" width="100%">
 
 ---
 
