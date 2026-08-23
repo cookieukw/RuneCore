@@ -22,9 +22,9 @@ public class CombatStatsManager {
     private final Map<UUID, CombatStats> playerStats = new ConcurrentHashMap<>();
 
     public CombatStatsManager(EventRegistry eventRegistry) {
-        instance = this;
         eventRegistry.registerGlobal(PlayerReadyEvent.class, this::onPlayerReady);
         eventRegistry.registerGlobal(PlayerDisconnectEvent.class, this::onPlayerDisconnect);
+        instance = this;
     }
 
     public static CombatStatsManager get() {
