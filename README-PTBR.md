@@ -200,7 +200,29 @@ Causa dano venenoso contínuo ao longo do tempo, mantendo o indicador de vida ve
 #### Regeneration (Regeneração)
 Recupera pontos de vida continuamente ao longo do tempo.
 <br>
-<img src="docs/assets/screenshots/regeneration.png" alt="Efeito Regeneração" width="100%">
+**Regeneração Ativa:**
+<br>
+<img src="docs/assets/screenshots/regeneration.png" alt="Regeneração Ativa" width="100%">
+<br><br>
+**Recuperação Concluída:**
+<br>
+<img src="docs/assets/screenshots/regeneration_ended.png" alt="Recuperação Concluída" width="100%">
+
+---
+
+#### Resistance (Resistência)
+Reduz o dano recebido de ataques físicos e mágicos.
+<br>
+<img src="docs/assets/screenshots/resistance.png" alt="Efeito Resistance" width="100%">
+
+---
+
+#### Speed (Velocidade)
+Aumenta a velocidade de movimento horizontal, permitindo corrida e locomoção rápida.
+<br>
+<img src="docs/assets/screenshots/speed_1.png" alt="Speed Estágio 1" width="100%">
+<br><br>
+<img src="docs/assets/screenshots/speed_2.png" alt="Speed Estágio 2" width="100%">
 
 ---
 
