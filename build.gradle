@@ -21,11 +21,17 @@ ext {
         localProps.load(localPropsFile.newDataInputStream())
     }
     
-    hytaleHome = localProps.getProperty('hytale.dir') ?: 
-                 localProps.getProperty('hytale.mods.dest') ? file(localProps.getProperty('hytale.mods.dest')).parent :
-                 (System.getProperty("os.name").toLowerCase().contains("win") 
-                    ? "${System.getProperty("user.home")}/AppData/Roaming/Hytale"
-                    : "${System.getProperty("user.home")}/.var/app/com.hypixel.HytaleLauncher/data/Hytale/data/pre-release")
+    def rawDir = localProps.getProperty('hytale.dir')
+    if (rawDir) {
+        hytaleHome = rawDir.endsWith('/Mods') || rawDir.endsWith('/Mods/') ? rawDir.substring(0, rawDir.lastIndexOf('/Mods')) : rawDir
+    } else if (localProps.getProperty('hytale.mods.dest')) {
+        def dest = file(localProps.getProperty('hytale.mods.dest'))
+        hytaleHome = dest.isDirectory() ? dest.parent : dest.parentFile?.parent
+    } else {
+        hytaleHome = System.getProperty("os.name").toLowerCase().contains("win") 
+            ? "${System.getProperty("user.home")}/AppData/Roaming/Hytale"
+            : "${System.getProperty("user.home")}/.var/app/com.hypixel.HytaleLauncher/data/Hytale/UserData"
+    }
 }
 
 repositories {
