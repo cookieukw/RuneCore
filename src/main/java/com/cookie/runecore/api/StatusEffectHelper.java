@@ -2,6 +2,9 @@ package com.cookie.runecore.api;
 
 import com.cookie.runecore.systems.InvisibilityManager;
 import com.hypixel.hytale.component.Ref;
+import com.hypixel.hytale.server.core.asset.type.entityeffect.config.EntityEffect;
+import com.hypixel.hytale.server.core.asset.type.entityeffect.config.OverlapBehavior;
+import com.hypixel.hytale.server.core.entity.effect.EffectControllerComponent;
 import com.hypixel.hytale.server.core.universe.world.storage.EntityStore;
 
 /**
@@ -126,17 +129,16 @@ public final class StatusEffectHelper {
             var store = ref.getStore();
             if (store != null) {
                 EffectHelper.worldExecute(ref, () -> {
-                    com.hypixel.hytale.server.core.entity.effect.EffectControllerComponent controller =
-                            store.getComponent(ref, com.hypixel.hytale.server.core.entity.effect.EffectControllerComponent.getComponentType());
+                    EffectControllerComponent controller =
+                            store.getComponent(ref, EffectControllerComponent.getComponentType());
                     if (controller == null) {
-                        controller = new com.hypixel.hytale.server.core.entity.effect.EffectControllerComponent();
-                        store.putComponent(ref, com.hypixel.hytale.server.core.entity.effect.EffectControllerComponent.getComponentType(), controller);
+                        controller = new EffectControllerComponent();
+                        store.putComponent(ref, EffectControllerComponent.getComponentType(), controller);
                     }
-                    com.hypixel.hytale.server.core.asset.type.entityeffect.config.EntityEffect nativeEffect =
-                            com.hypixel.hytale.server.core.asset.type.entityeffect.config.EntityEffect.getAssetMap().getAsset("Invisibility");
-                    int index = com.hypixel.hytale.server.core.asset.type.entityeffect.config.EntityEffect.getAssetMap().getIndex("Invisibility");
+                    EntityEffect nativeEffect = EntityEffect.getAssetMap().getAsset("Invisibility");
+                    int index = EntityEffect.getAssetMap().getIndex("Invisibility");
                     if (nativeEffect != null && index >= 0) {
-                        controller.addEffect(ref, index, nativeEffect, 60.0f, com.hypixel.hytale.server.core.asset.type.entityeffect.config.OverlapBehavior.OVERWRITE, store);
+                        controller.addEffect(ref, index, nativeEffect, 60.0f, OverlapBehavior.OVERWRITE, store);
                     }
                 });
             }
@@ -153,10 +155,10 @@ public final class StatusEffectHelper {
             var store = ref.getStore();
             if (store != null) {
                 EffectHelper.worldExecute(ref, () -> {
-                    com.hypixel.hytale.server.core.entity.effect.EffectControllerComponent controller =
-                            store.getComponent(ref, com.hypixel.hytale.server.core.entity.effect.EffectControllerComponent.getComponentType());
+                    EffectControllerComponent controller =
+                            store.getComponent(ref, EffectControllerComponent.getComponentType());
                     if (controller != null) {
-                        int index = com.hypixel.hytale.server.core.asset.type.entityeffect.config.EntityEffect.getAssetMap().getIndex("Invisibility");
+                        int index = EntityEffect.getAssetMap().getIndex("Invisibility");
                         if (index >= 0) {
                             controller.removeEffect(ref, index, store);
                         }
