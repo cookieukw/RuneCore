@@ -4,6 +4,9 @@ plugins {
 }
 
 import groovy.json.JsonSlurper
+import java.nio.file.Files
+import static java.nio.file.StandardCopyOption.ATOMIC_MOVE
+import static java.nio.file.StandardCopyOption.REPLACE_EXISTING
 
 group = 'com.cookie.runecore'
 def manifestFile = file("src/main/resources/manifest.json")
@@ -124,11 +127,8 @@ tasks.register('deploy') {
         def temp = new File(targetDir, "." + source.name.replace(".jar", "") + ".deploy.tmp")
 
         try {
-            java.nio.file.Files.copy(source.toPath(), temp.toPath(),
-                    java.nio.file.StandardCopyOption.REPLACE_EXISTING)
-            java.nio.file.Files.move(temp.toPath(), target.toPath(),
-                    java.nio.file.StandardCopyOption.REPLACE_EXISTING,
-                    java.nio.file.StandardCopyOption.ATOMIC_MOVE)
+            Files.copy(source.toPath(), temp.toPath(), REPLACE_EXISTING)
+            Files.move(temp.toPath(), target.toPath(), REPLACE_EXISTING, ATOMIC_MOVE)
             println "Deploy realizado com sucesso em: ${target}"
         } catch (Exception e) {
             temp.delete()
