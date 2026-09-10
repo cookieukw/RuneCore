@@ -153,6 +153,11 @@ memória — e `CombatStatsManager` é justamente o que `CombatDamageInterceptor
 antes de qualquer thread de tick nascer, na prática), mas o item continua tecnicamente aberto
 exatamente como descrito acima — só ficou inconsistente entre os cinco singletons.
 
+**Atualização 2 — fechado.** Os quatro singletons que faltavam (`CombatStatsRegistry`,
+`CreatureCombatRegistry`, `CombatStatsManager`, `RuneCoreHudManager`) ganharam `volatile` no
+campo `instance`, igualando-os ao `InvisibilityManager`. Os cinco agora têm barreira de memória
+formal na publicação do singleton; item 2.4 considerado resolvido.
+
 ### 2.5 `sumModifiers` é O(n) por getter
 `CombatStats.calculateFinalDamage` chama ~6 getters, e cada um varre **todos** os
 modificadores procurando os da sua stat. Seis varreduras completas por evento de dano. Um
@@ -267,6 +272,18 @@ chamado com um `playerRef` de verdade (jogadora grávida). Toda NPC grávida do 
 ritmo normal o tempo todo, em qualquer trimestre — o código não quebra, só não faz o que o
 comentário do próprio arquivo descreve.
 
+**Atualização — workaround aplicado no SimTale, não é uma correção de verdade.** Como não há
+nenhuma API pública nativa pra velocidade de NPC (nem em `MovementManager`, exclusivo de
+jogador, nem em `NPCEntity`, que só expõe getter/invalidador de cache, nem um stat genérico de
+velocidade em `DefaultEntityStatTypes`), a solução ficou inteiramente do lado do SimTale:
+`PregnancyManager.isPausedTick` (novo) decide, por trimestre, se o tick atual deve "congelar" a
+NPC, e `NPCMovementHelper.moveTo`, quando congelado, prende o leash na própria posição atual da
+NPC em vez do destino real — 2º trimestre pausa 4 de cada 20 ticks, 3º pausa 10 de cada 20. O
+resultado é uma cadência de "anda um pouco, para um pouco" (tipo um rengueio), não uma
+velocidade real reduzida — é aproximação visual, não mexe em física nem em pathfinding. Compila
+limpo, mas **não foi testado em jogo ainda**; os números de pausa (4/20 e 10/20) são um chute
+inicial e provavelmente vão precisar de ajuste depois de ver rodando de verdade.
+
 ### 4.2 Aviso visual de sangramento da NPC morrendo nunca aparece
 
 `RoutineAISystem` chama `StatusEffectHelper.applyBleeding(ref)` / `revertBleeding(ref)` num `Ref`
@@ -310,6 +327,16 @@ nenhum — só o ícone de HUD, que também não serve pra NPC.
 no checklist), o caminho é `RuneCore.get().getEffect("bleeding")` e aplicar esse `RuneEffect` de
 verdade no alvo — não chamar `StatusEffectHelper.applyBleeding` direto. Não mexi em nada disso
 agora, só documentei; avise se quiser que eu implemente a correção de um lado ou do outro.
+
+**Atualização — corrigido.** Em vez de rotear pelo `RuneEffect`/`ActiveBuff` completo (que
+traria dano junto, indesejado aqui — é só um aviso visual, não um efeito de sangramento de
+verdade), o RuneCore ganhou uma API nova e genuinamente genérica em `EffectHelper`:
+`applyVisualEffect(ref, effectId, durationSeconds)` / `removeVisualEffect(ref, effectId)`,
+construída direto em cima de `EntityEffect` + `EffectControllerComponent` (sem checagem de
+`PlayerRef` em lugar nenhum — funciona em qualquer entidade). O `RoutineAISystem` do SimTale
+trocou a chamada quebrada por `EffectHelper.applyVisualEffect(ref, "Bleeding", 10.0f)` /
+`removeVisualEffect(ref, "Bleeding")`. Validado por compilação cruzada (RuneCore isolado +
+SimTale inteiro contra um jar novo do RuneCore, ambos limpos); ainda não visto rodando ao vivo.
 
 ### 4.3 O que não é um problema
 
