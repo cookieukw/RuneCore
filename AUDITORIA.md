@@ -143,6 +143,16 @@ construir uma segunda instância sequestra o singleton em silêncio; `get()` dev
 se chamado antes do `setup()`; e a publicação entre a thread de setup e as threads de tick
 não tem barreira de memória formal.
 
+**Atualização — parcialmente mexido, não fechado.** As duas refatorações recentes
+(`18df27b` em `CombatStatsManager`, `d334c7e` em `InvisibilityManager`) adiaram o `instance =
+this` para o fim do construtor, o que resolve o "`get()` devolve algo pela metade" — mas só
+`InvisibilityManager` ganhou `volatile` no campo. `CombatStatsRegistry`, `CreatureCombatRegistry`,
+`CombatStatsManager` e `RuneCoreHudManager` continuam com `static` puro, sem barreira de
+memória — e `CombatStatsManager` é justamente o que `CombatDamageInterceptor.handle()` chama em
+**todo** evento de dano via `CombatStatsManager.get()`. Risco prático baixo (o `setup()` roda
+antes de qualquer thread de tick nascer, na prática), mas o item continua tecnicamente aberto
+exatamente como descrito acima — só ficou inconsistente entre os cinco singletons.
+
 ### 2.5 `sumModifiers` é O(n) por getter
 `CombatStats.calculateFinalDamage` chama ~6 getters, e cada um varre **todos** os
 modificadores procurando os da sua stat. Seis varreduras completas por evento de dano. Um
@@ -208,3 +218,108 @@ iluminação de bloco/fluido. Não há canal por observador para alterar renderi
 
 Alternativa viável: um `EntityEffect` visual preso na própria entidade seria naturalmente
 só-seu, já que todos os outros têm o jogador oculto. Falta decidir o asset.
+
+
+---
+
+## 4. Integração com o SimTale
+
+O SimTale consome uma fatia pequena e específica da API pública: `StatHelper.addHealth` /
+`subtractHealth` (cura por comida, custo de vida do parto), `EffectHelper.modifyMovement` +
+`EffectHelper.DEFAULT_SPEED` (debuff de velocidade da gravidez), `StatusEffectHelper.applyBleeding`
+/ `revertBleeding` (aviso visual de "NPC morrendo", ver `testing_checklist.md` seção 11) e
+`RuneCoreItemManager.register` (despacho dos itens customizados via `RuneCore_GenericItemUse`).
+
+`StatHelper` e `RuneCoreItemManager`/`RuneCoreGenericItemInteraction` estão corretos e bem
+desenhados para esse uso — `StatHelper` funciona em cima de `EntityStatMap`, um componente
+genérico que qualquer entidade com stats tem (jogador ou NPC), e o item 1.4 já corrigido (clamp
+pelos limites reais do stat) vale para os dois lados igualmente. O despacho por sufixo do
+`RuneCoreItemManager`, com o cuidado de não derrubar a interação num item não reconhecido (ver
+`RuneCoreGenericItemInteraction`), é exatamente o que os ~10 itens do SimTale precisam.
+
+Os outros dois pontos, porém, são chamados **em cima de uma NPC do SimTale** (`Ref<EntityStore>`
+sem `PlayerRef`) — e tanto `EffectHelper.modifyMovement` quanto o `applyBleeding`/`revertBleeding`
+foram desenhados em volta de um jogador real conectado. O resultado é o mesmo dos dois lados: a
+chamada roda, não lança exceção nenhuma, e não faz **absolutamente nada**.
+
+### 4.1 Debuff de velocidade da gravidez não afeta NPC nenhuma
+
+`PregnancyManager.applyPregnancySpeedDebuff` e o reset em `birthBaby()` chamam
+`EffectHelper.modifyMovement(mother.entityRef, s -> s.baseSpeed = ...)` com o `Ref` da própria
+NPC grávida. `modifyMovement` resolve o efeito lendo o componente
+`com.hypixel.hytale.server.core.entity.entities.player.movement.MovementManager` do alvo — e
+esse componente **só é atribuído a jogador**. Confirmado no bytecode do `HytaleServer.jar`: quem
+atribui esse `ComponentType` é literalmente uma classe chamada
+`PlayerMovementManagerSystems$AssignmentSystem`, e o próprio `MovementManager.resetDefaultsAndUpdate`
+consulta `PlayerRef` por dentro. NPC não tem esse componente — `store.getComponent(ref,
+MovementManager.getComponentType())` devolve `null`, `modifyMovement` cai no `if (mm == null)
+return;` e não faz nada, silenciosamente, sempre.
+
+Bate exatamente com o que o próprio `NPCMovementHelper` do SimTale já deixa implícito: ele não
+toca em `MovementManager`/`MovementSettings`/`baseSpeed` em lugar nenhum — a NPC anda via
+`NPCEntity.setLeashPoint` + `StateSupport.setState`, o sistema nativo de role/estado, que nem
+sabe que `MovementSettings` existe. Ou seja: mesmo que o componente existisse na NPC, mudar
+`baseSpeed` não mudaria a velocidade de patrulha/trabalho dela de qualquer forma — são dois
+sistemas de movimento completamente diferentes.
+
+**Único caminho que funciona hoje**: `applyPlayerPregnancyBehavior`/`applyPregnancySpeedDebuff`
+chamado com um `playerRef` de verdade (jogadora grávida). Toda NPC grávida do SimTale anda no
+ritmo normal o tempo todo, em qualquer trimestre — o código não quebra, só não faz o que o
+comentário do próprio arquivo descreve.
+
+### 4.2 Aviso visual de sangramento da NPC morrendo nunca aparece
+
+`RoutineAISystem` chama `StatusEffectHelper.applyBleeding(ref)` / `revertBleeding(ref)` num `Ref`
+de NPC como aviso visual nos ~10s antes do Ceifador chegar (`testing_checklist.md` seção 11). Só
+que `applyBleeding` **não é** "aplique o efeito de sangramento no mundo" — é só a metade
+"atualize o ícone no HUD de quem já está sangrando":
+
+```java
+// DamageOverTimeEffects.java
+// Bleeding and burn: HUD state only. The visuals come from the native entity effect assets.
+static void applyBleeding(Ref<EntityStore> ref) {
+    EffectHelper.updateHud(ref, hud -> hud.setBleeding(true));
+}
+```
+
+E `EffectHelper.updateHud` só roda a ação se o **próprio alvo** tiver um `PlayerRef` — é o HUD da
+tela de quem está sangrando, não um efeito visível para quem olha de fora:
+
+```java
+static void updateHud(Ref<EntityStore> ref, Consumer<RuneCoreHud> action) {
+    ...
+    PlayerRef pr = (PlayerRef) store.getComponent(ref, PlayerRef.getComponentType());
+    if (pr != null) { ... }
+}
+```
+
+NPC não tem `PlayerRef`. `pr` é sempre `null`, a lambda nunca roda, e nada acontece — nem pra
+quem está perto olhando a NPC, nem pra ninguém.
+
+O efeito "bleeding" de verdade (`CoreEffects.java`, `core.registerEffect(new
+RuneEffect("bleeding", 300).withAsset("Bleeding")...)`) é mais do que só isso: tem o
+`.withAsset("Bleeding")` (o efeito visual nativo de verdade, esse sim visível no mundo) e um
+`ActiveBuff` que dá `StatHelper.subtractHealth(ref, 1.0f)` a cada segundo. `applyBleeding` e
+`revertBleeding` são só os dois ganchos de HUD que esse `RuneEffect` chama por dentro do próprio
+`.withAction`/`.withBuff` — nunca foram pensados pra ser chamados soltos, de fora, num `Ref`
+qualquer. O SimTale pegou a peça errada do conjunto: parece a API pública certa (é `public
+static`, compila, não lança exceção), mas sozinha ela não aplica o efeito nativo nem causa dano
+nenhum — só o ícone de HUD, que também não serve pra NPC.
+
+**Se quiser o efeito de verdade** (visível para quem está por perto, o que é o objetivo descrito
+no checklist), o caminho é `RuneCore.get().getEffect("bleeding")` e aplicar esse `RuneEffect` de
+verdade no alvo — não chamar `StatusEffectHelper.applyBleeding` direto. Não mexi em nada disso
+agora, só documentei; avise se quiser que eu implemente a correção de um lado ou do outro.
+
+### 4.3 O que não é um problema
+
+O pipeline de combate novo (`CombatDamageInterceptor`, `DamagePipeline`, `CreatureCombatRegistry`)
+não tem nenhum ponto de contato com o SimTale hoje — o Guarda do SimTale mata o hostil removendo a
+entidade direto (`commandBuffer.removeEntity`), sem gerar nenhum `Damage` de verdade, então esse
+sistema nunca chega a rodar para esse caso. `CombatDamageInterceptor.getQuery()` bate em qualquer
+entidade com `ModelComponent` — incluindo as NPCs humanoides do próprio SimTale — mas
+`CombatParticipants.creatureFor` não reconhece os ids de modelo do SimTale (não estão em
+`CreatureCombatRegistry`), então o handler devolve `null` e sai sem tocar em nada. Não é bug, é o
+comportamento de "não tenho opinião sobre essa criatura" funcionando como descrito — só vale
+registrar que é exatamente o gancho que a Fase 2 do combate do Guarda (dano de verdade, projétil)
+vai precisar usar se decidir se apoiar no sistema de dano do RuneCore em vez de reinventar um.
