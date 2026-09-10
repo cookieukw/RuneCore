@@ -18,7 +18,7 @@ public class CombatStatsManager {
 
     private static final Logger LOG = Logger.getLogger("RuneCore");
 
-    private static CombatStatsManager instance;
+    private static volatile CombatStatsManager instance;
     private final Map<UUID, CombatStats> playerStats = new ConcurrentHashMap<>();
 
     public CombatStatsManager(EventRegistry eventRegistry) {
