@@ -12,6 +12,8 @@ import org.joml.Vector2f;
 import com.hypixel.hytale.protocol.packets.camera.SetServerCamera;
 import com.hypixel.hytale.protocol.packets.player.UpdateMovementSettings;
 import com.hypixel.hytale.server.core.asset.type.entityeffect.config.EntityEffect;
+import com.hypixel.hytale.server.core.asset.type.entityeffect.config.OverlapBehavior;
+import com.hypixel.hytale.server.core.entity.effect.EffectControllerComponent;
 import com.hypixel.hytale.server.core.entity.entities.player.movement.MovementManager;
 import com.hypixel.hytale.server.core.modules.entity.component.TransformComponent;
 import com.hypixel.hytale.server.core.universe.PlayerRef;
@@ -59,6 +61,70 @@ public final class EffectHelper {
             if (settings == null) return;
             modifier.apply(settings);
             syncSettings(store, ref, settings);
+        });
+    }
+
+    /**
+     * Applies a native world-visible entity effect (particles, model swap — whatever the asset
+     * itself defines) to any entity, player or not.
+     * <p>
+     * {@link com.cookie.runecore.api.StatusEffectHelper}'s per-status helpers (bleeding, burn,
+     * etc.) only toggle a HUD icon on the target's own screen via {@link #updateHud}, which
+     * requires the target to be a connected player with a {@link PlayerRef} — silently a no-op
+     * on anything else. This is the other half those helpers lean on internally when cast through
+     * {@link com.cookie.runecore.api.RuneEffect#execute}: the actual native effect application,
+     * with no player requirement, for callers that just want a cosmetic marker on an arbitrary ref
+     * (an NPC, say) without going through the full RuneEffect (and its buff/damage) machinery.
+     *
+     * @param effectId        entity effect asset id; tried as-is, then with a {@code runecore:} prefix
+     * @param durationSeconds how long the effect lasts before the engine clears it on its own —
+     *                        call {@link #removeVisualEffect} to clear it sooner
+     */
+    public static void applyVisualEffect(Ref<EntityStore> ref, String effectId, float durationSeconds) {
+        if (ref == null || effectId == null) return;
+        Store<EntityStore> store = ref.getStore();
+        if (store == null) return;
+        World world = store.getExternalData().getWorld();
+        if (world == null) return;
+
+        world.execute(() -> {
+            if (!ref.isValid()) return;
+
+            EntityEffect nativeEffect = EntityEffect.getAssetMap().getAsset(effectId);
+            int index = EntityEffect.getAssetMap().getIndex(effectId);
+            if (nativeEffect == null || index < 0) {
+                String namespaced = "runecore:" + effectId;
+                nativeEffect = EntityEffect.getAssetMap().getAsset(namespaced);
+                index = EntityEffect.getAssetMap().getIndex(namespaced);
+            }
+            if (nativeEffect == null || index < 0) return;
+
+            EffectControllerComponent controller = store.getComponent(ref, EffectControllerComponent.getComponentType());
+            if (controller == null) {
+                controller = new EffectControllerComponent();
+                store.putComponent(ref, EffectControllerComponent.getComponentType(), controller);
+            }
+            controller.addEffect(ref, index, nativeEffect, durationSeconds, OverlapBehavior.OVERWRITE, store);
+        });
+    }
+
+    /** Removes an effect applied with {@link #applyVisualEffect}, before its duration runs out. */
+    public static void removeVisualEffect(Ref<EntityStore> ref, String effectId) {
+        if (ref == null || effectId == null) return;
+        Store<EntityStore> store = ref.getStore();
+        if (store == null) return;
+        World world = store.getExternalData().getWorld();
+        if (world == null) return;
+
+        world.execute(() -> {
+            if (!ref.isValid()) return;
+            EffectControllerComponent controller = store.getComponent(ref, EffectControllerComponent.getComponentType());
+            if (controller == null) return;
+
+            int index = EntityEffect.getAssetMap().getIndex(effectId);
+            if (index < 0) index = EntityEffect.getAssetMap().getIndex("runecore:" + effectId);
+            if (index < 0) return;
+            controller.removeEffect(ref, index, store);
         });
     }
 
