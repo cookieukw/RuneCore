@@ -5,7 +5,7 @@ import java.util.concurrent.ConcurrentHashMap;
 
 public class CombatStatsRegistry {
 
-    private static CombatStatsRegistry instance;
+    private static volatile CombatStatsRegistry instance;
     private final Map<String, ItemCombatData> itemStats = new ConcurrentHashMap<>();
 
     public CombatStatsRegistry() {
