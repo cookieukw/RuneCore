@@ -32,7 +32,7 @@ public class RuneCoreHudManager {
 
     private static final Logger LOG = Logger.getLogger("RuneCore");
 
-    private static RuneCoreHudManager instance;
+    private static volatile RuneCoreHudManager instance;
     private final Map<UUID, RuneCoreHud> activeHuds = new ConcurrentHashMap<>();
     private final Timer updateTimer = new Timer("RuneCore-HudManager", true);
 
