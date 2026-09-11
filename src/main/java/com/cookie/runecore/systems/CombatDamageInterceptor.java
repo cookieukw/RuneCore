@@ -80,7 +80,9 @@ public class CombatDamageInterceptor extends DamageEventSystem {
         if (targetUuid == null || !manager.hasStats(targetUuid)) return;
 
         CombatStats defenderStats = manager.getStats(targetUuid);
-        DamageCause cause = damage.getCause();
+        // getCause() is deprecated: it now goes through the same index the asset map already
+        // uses everywhere else in this codebase (EntityEffect, EntityStatType, ...).
+        DamageCause cause = DamageCause.getAssetMap().getAsset(damage.getDamageCauseIndex());
         String causeId = (cause != null && cause.getId() != null) ? cause.getId() : "";
         Damage.Source source = damage.getSource();
         CreatureCombatData creatureData = CombatParticipants.creatureBehind(source);
@@ -165,7 +167,9 @@ public class CombatDamageInterceptor extends DamageEventSystem {
         CreatureCombatData defender = CombatParticipants.creatureFor(model);
         if (defender == null) return;
 
-        DamageCause cause = damage.getCause();
+        // getCause() is deprecated: it now goes through the same index the asset map already
+        // uses everywhere else in this codebase (EntityEffect, EntityStatType, ...).
+        DamageCause cause = DamageCause.getAssetMap().getAsset(damage.getDamageCauseIndex());
         String causeId = (cause != null && cause.getId() != null) ? cause.getId() : "";
         Damage.Source source = damage.getSource();
 
