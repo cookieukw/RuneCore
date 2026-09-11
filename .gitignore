@@ -55,3 +55,4 @@ config.json
 telemetry
 .gitignore
 local.properties
+_stage_deprecation
