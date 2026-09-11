@@ -1,6 +1,8 @@
 package com.cookie.runecore.systems;
 
 import com.hypixel.hytale.event.EventRegistry;
+import com.hypixel.hytale.component.Ref;
+import com.hypixel.hytale.server.core.universe.world.storage.EntityStore;
 import com.hypixel.hytale.server.core.event.events.player.PlayerDisconnectEvent;
 import com.hypixel.hytale.server.core.event.events.player.PlayerReadyEvent;
 import com.hypixel.hytale.server.core.universe.PlayerRef;
@@ -86,7 +88,10 @@ public class InvisibilityManager {
     }
 
     private void onPlayerReady(PlayerReadyEvent event) {
-        PlayerRef joiner = event.getPlayer() != null ? event.getPlayer().getPlayerRef() : null;
+        // Player.getPlayerRef() is deprecated and marked for removal; look the PlayerRef
+        // component up from the entity ref the event already carries instead.
+        Ref<EntityStore> ref = event.getPlayerRef();
+        PlayerRef joiner = ref != null ? ref.getStore().getComponent(ref, Universe.get().getPlayerRefComponentType()) : null;
         if (joiner == null || joiner.getUuid() == null) return;
         UUID joinerId = joiner.getUuid();
 
