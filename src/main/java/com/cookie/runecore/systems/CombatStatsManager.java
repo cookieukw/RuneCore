@@ -2,6 +2,10 @@ package com.cookie.runecore.systems;
 
 import com.cookie.runecore.api.CombatStats;
 import com.hypixel.hytale.event.EventRegistry;
+import com.hypixel.hytale.component.Ref;
+import com.hypixel.hytale.server.core.universe.PlayerRef;
+import com.hypixel.hytale.server.core.universe.Universe;
+import com.hypixel.hytale.server.core.universe.world.storage.EntityStore;
 import com.hypixel.hytale.server.core.event.events.player.PlayerDisconnectEvent;
 import com.hypixel.hytale.server.core.event.events.player.PlayerReadyEvent;
 
@@ -44,7 +48,12 @@ public class CombatStatsManager {
     }
 
     private void onPlayerReady(PlayerReadyEvent event) {
-        UUID uuid = event.getPlayer().getPlayerRef().getUuid();
+        // Player.getPlayerRef() is deprecated and marked for removal; the PlayerRef
+        // component is looked up from the entity ref the event already carries instead —
+        // same pattern used everywhere else in this codebase.
+        Ref<EntityStore> ref = event.getPlayerRef();
+        PlayerRef playerRefComp = ref.getStore().getComponent(ref, Universe.get().getPlayerRefComponentType());
+        UUID uuid = playerRefComp != null ? playerRefComp.getUuid() : null;
         if (uuid != null) {
             playerStats.computeIfAbsent(uuid, k -> new CombatStats());
             LOG.fine("[RuneCore-Combat] Initialized combat stats for " + uuid);
