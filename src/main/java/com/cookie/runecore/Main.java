@@ -32,6 +32,7 @@ import com.cookie.runecore.commands.RuneCommand;
 import com.cookie.runecore.api.PlayerDataComponent;
 import com.cookie.runecore.system.RuneCore;
 import com.cookie.runecore.systems.EffectTickSystemBridge;
+import com.cookie.runecore.systems.MovementKeyDetectionSystem;
 
 import javax.annotation.Nonnull;
 
@@ -122,5 +123,7 @@ public class Main extends JavaPlugin {
         this.getEntityStoreRegistry().registerSystem(new CombatDamageInterceptor());
         this.getEntityStoreRegistry().registerSystem(new EquipmentStatsListener());
         this.getEntityStoreRegistry().registerSystem(new ItemTooltipInjector());
+        // Deteccao de WASD por inferencia de movimento (sem evento de tecla real na API do servidor).
+        this.getEntityStoreRegistry().registerSystem(new MovementKeyDetectionSystem());
     }
 }
