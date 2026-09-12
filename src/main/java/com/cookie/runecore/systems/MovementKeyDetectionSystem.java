@@ -19,6 +19,7 @@ import org.checkerframework.checker.nullness.compatqual.NullableDecl;
 import org.joml.Vector3d;
 
 import javax.annotation.Nonnull;
+import java.util.Locale;
 import java.util.Map;
 import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
@@ -44,20 +45,15 @@ import java.util.logging.Logger;
  * <p>Space and Shift/Ctrl don't need any of that math: {@code MovementStates.jumping} and
  * {@code MovementStates.crouching} already come ready-made from the same packet — the same
  * source {@code ChildCarryHelper.isCrouching()} reads from in SimTale without a single reported
- * failure, and confirmed working on the first in-game test of this class too.
+ * failure, and confirmed working on every in-game test of this class so far.
  *
- * <p><b>12/09, two rounds of calibration:</b> the first in-game test showed every key also
- * firing the next one in an A-&gt;W-&gt;D-&gt;S-&gt;A cycle — the signature of a +45° bias. A
- * blanket "subtract 45° from yaw" fix made that specific test pass, but a follow-up test still
- * leaked (D also fired W) with a different pattern than before, which meant the bias wasn't a
- * fixed constant — the earlier fix only happened to cancel it at the one facing angle it was
- * measured at. Root cause: the yaw was being read from {@code TransformComponent}, which is the
- * character's <em>body</em> rotation — it only loosely follows where the camera actually looks
- * (especially while strafing), so its offset from the real look direction isn't constant.
- * {@link HeadRotation} is the component the {@code SetHead} input actually writes to every time
- * the mouse moves, so it tracks the camera precisely; switching to it removes the need for any
- * calibration constant at all. (The forward/right projection formulas were never wrong — checked
- * them against the engine's own {@code Vector3dUtil.setYawPitch}, same convention.)
+ * <p><b>12/09, still under calibration:</b> two rounds of guessing a fixed angular bias (first on
+ * {@code TransformComponent}'s body yaw, then switching to {@link HeadRotation}'s camera yaw)
+ * both still leaked one direction into a neighboring one, and a further test showed the leak
+ * pattern itself flips when the player turns around — which rules out a fixed constant entirely.
+ * Rather than guess a fourth constant, every message now carries the raw numbers behind the
+ * decision ({@code debug} below: yaw, world-space velocity, and the two projected components) so
+ * the actual fault can be read directly from a single test instead of inferred from symptoms.
  */
 public class MovementKeyDetectionSystem extends EntityTickingSystem<EntityStore> {
 
@@ -128,12 +124,19 @@ public class MovementKeyDetectionSystem extends EntityTickingSystem<EntityStore>
         boolean space = states.jumping;
         boolean shift = states.crouching || states.forcedCrouching;
 
-        report(playerRefComp, "W", "frente", prev.w, w);
-        report(playerRefComp, "S", "trás", prev.s, s);
-        report(playerRefComp, "A", "esquerda", prev.a, a);
-        report(playerRefComp, "D", "direita", prev.d, d);
-        report(playerRefComp, "SPACE", "pulo", prev.space, space);
-        report(playerRefComp, "SHIFT", "agachar", prev.shift, shift);
+        // TEMPORARY debug tag appended to every message and log line below, so a single in-game
+        // test — including the "I turned around" case — tells us the exact raw numbers instead of
+        // us having to guess a fix blind again. Remove once the projection is confirmed correct.
+        String debug = String.format(Locale.US,
+                " | looking=%.1f° velX=%.3f velZ=%.3f fwd=%.3f right=%.3f",
+                yawDeg, velX, velZ, forward, right);
+
+        report(playerRefComp, "W", "front", prev.w, w, debug);
+        report(playerRefComp, "S", "back", prev.s, s, debug);
+        report(playerRefComp, "A", "left", prev.a, a, debug);
+        report(playerRefComp, "D", "right", prev.d, d, debug);
+        report(playerRefComp, "SPACE", "jump", prev.space, space, debug);
+        report(playerRefComp, "SHIFT", "crouch", prev.shift, shift, debug);
 
         prev.w = w;
         prev.s = s;
@@ -146,17 +149,20 @@ public class MovementKeyDetectionSystem extends EntityTickingSystem<EntityStore>
     /**
      * Sends the "pressed" message on the rising edge (false -&gt; true) and the "released" one on
      * the falling edge (true -&gt; false) — the two actions requested: one announcing the key was
-     * pressed, the other calculating when the player stopped pressing it.
+     * pressed, the other calculating when the player stopped pressing it. Both the chat message
+     * and the server log line carry the same {@code debug} tag (looking direction plus the raw
+     * velocity/projection numbers), so either source is enough to read back exact values.
      */
-    private void report(PlayerRef playerRefComp, String key, String label, boolean was, boolean is) {
+    private void report(PlayerRef playerRefComp, String key, String label, boolean was, boolean is,
+            String debug) {
         if (was == is) return;
 
         if (is) {
-            playerRefComp.sendMessage(Message.raw("[RuneCore] Tecla pressionada: " + key + " (" + label + ")"));
-            LOG.fine("[RuneCore] " + playerRefComp.getUuid() + " apertou " + key);
+            playerRefComp.sendMessage(Message.raw("[RuneCore] Tecla pressionada: " + key + " (" + label + ")" + debug));
+            LOG.info("[RuneCore] " + playerRefComp.getUuid() + " apertou " + key + debug);
         } else {
-            playerRefComp.sendMessage(Message.raw("[RuneCore] Tecla solta: " + key + " (" + label + ")"));
-            LOG.fine("[RuneCore] " + playerRefComp.getUuid() + " soltou " + key);
+            playerRefComp.sendMessage(Message.raw("[RuneCore] Tecla solta: " + key + " (" + label + ")" + debug));
+            LOG.info("[RuneCore] " + playerRefComp.getUuid() + " soltou " + key + debug);
         }
     }
 }
