@@ -25,46 +25,56 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.logging.Logger;
 
 /**
- * Detecta, por inferência, quando um jogador está "segurando" cada direção do WASD (mais
- * espaço/agachar) e avisa no chat quando a direção começa e quando termina.
+ * Infers, per player, when each WASD direction is being "held" (plus space/crouch), and posts a
+ * chat message when a direction starts and when it stops.
  *
- * <p>Não existe, na API do servidor, um evento de tecla crua — o servidor nunca recebe "W foi
- * pressionado", só o resultado do movimento já processado pelo cliente a cada tick (pacote
- * {@code ClientMovement}). Este sistema reconstrói a intenção do jogador a partir de dois dados
- * que já chegam prontos e confiáveis todo tick, sem depender de clique nenhum:
+ * <p>The server API has no raw key event — the server never receives "W was pressed", only the
+ * movement result the client already computed each tick (the {@code ClientMovement} packet).
+ * This system reconstructs player intent from two values that already arrive complete and
+ * reliable every tick, with no dependency on any click:
  *
  * <ul>
- *   <li>{@link Velocity#getClientVelocity()} — velocidade horizontal em espaço de mundo (eixos
- *       X/Z), fornecida pelo próprio cliente a cada {@code ClientMovement};</li>
- *   <li>{@link TransformComponent#getRotation()} — para onde o jogador está olhando (yaw), usado
- *       para girar a velocidade de "espaço de mundo" para "espaço local" (frente/trás/direita/
- *       esquerda relativos à câmera, que é como W/A/S/D realmente funcionam).</li>
+ *   <li>{@link Velocity#getClientVelocity()} — horizontal velocity in world space (X/Z axes),
+ *       supplied by the client itself with every {@code ClientMovement};</li>
+ *   <li>{@link TransformComponent#getRotation()} — which way the player is looking (yaw), used
+ *       to rotate the world-space velocity into local space (forward/back/right/left relative to
+ *       the camera, which is how W/A/S/D actually work).</li>
  * </ul>
  *
- * <p>Space e Shift/Ctrl não precisam dessa conta: {@code MovementStates.jumping} e
- * {@code MovementStates.crouching} já vêm prontos do mesmo pacote — a mesma fonte que
- * {@code ChildCarryHelper.isCrouching()} usa no SimTale sem nenhuma falha reportada.
+ * <p>Space and Shift/Ctrl don't need any of that math: {@code MovementStates.jumping} and
+ * {@code MovementStates.crouching} already come ready-made from the same packet — the same
+ * source {@code ChildCarryHelper.isCrouching()} reads from in SimTale without a single reported
+ * failure.
  *
- * <p><b>Sobre a rotação frente/direita:</b> a convenção exata de qual ângulo de yaw corresponde a
- * "olhando para +Z" não foi confirmada por teste em jogo (não achei documentação nem exemplo no
- * código já existente que leia yaw para esse fim). A fórmula abaixo usa a convenção mais comum
- * (yaw 0° = olhando para -Z, giro horário aumenta o yaw). Se no teste W acender como S, ou A como
- * D, é só trocar o sinal nas duas linhas marcadas abaixo — o resto do sistema não muda.
+ * <p><b>12/09 calibration:</b> the first in-game test showed a clean pattern — A also fired W, W
+ * also fired D, D also fired S, and S also fired A (never the swapped key, always itself plus the
+ * next one in that order). That's the signature of a +45° rotation between the axis the original
+ * formula computed and the game's real axis — not a flipped axis, but a fixed half-quadrant bias,
+ * likely from how {@code Rotation3f} measures yaw in this engine. The fix is to subtract 45° from
+ * the yaw before projecting the velocity ({@link #CALIBRATION_OFFSET_DEG}); the forward/right
+ * formulas themselves didn't need to change, only the angle fed into them.
  */
 public class MovementKeyDetectionSystem extends EntityTickingSystem<EntityStore> {
 
     private static final Logger LOG = Logger.getLogger("RuneCore");
 
     /**
-     * Velocidade horizontal mínima (unidades/s, no mesmo espaço de {@code getClientVelocity()})
-     * para considerar que o jogador está "empurrando" alguma direção. Abaixo disso é ruído de
-     * física (deslizamento, atrito) e não uma tecla realmente segurada.
+     * Minimum horizontal speed (same units as {@code getClientVelocity()}) to count as the player
+     * "pushing" some direction. Below this is physics noise (sliding, friction), not an actually
+     * held key.
      */
     private static final double DEADZONE = 0.05;
 
+    /**
+     * Fixed bias found during the 12/09 calibration (see class javadoc): without this, every key
+     * also fired the next one in the A-&gt;W-&gt;D-&gt;S-&gt;A cycle. Subtracting 45° from the yaw
+     * before projecting the velocity removes the leak without touching the forward/right formulas.
+     */
+    private static final double CALIBRATION_OFFSET_DEG = 45.0;
+
     private static final Map<UUID, DirState> STATE = new ConcurrentHashMap<>();
 
-    /** Um booleano por direção, guardando se ela estava "pressionada" no tick anterior. */
+    /** One boolean per direction, tracking whether it was "pressed" on the previous tick. */
     private static final class DirState {
         boolean w, a, s, d, space, shift;
     }
@@ -100,14 +110,14 @@ public class MovementKeyDetectionSystem extends EntityTickingSystem<EntityStore>
         if (states == null) return;
 
         double yawDeg = transform.getRotation().yaw();
-        double yawRad = Math.toRadians(yawDeg);
+        double yawRad = Math.toRadians(yawDeg - CALIBRATION_OFFSET_DEG);
 
         Vector3d vel = velocity.getClientVelocity();
         double velX = vel.x();
         double velZ = vel.z();
 
-        // Gira a velocidade (espaço de mundo) para espaço local do jogador.
-        // Se W/S ou A/D saírem trocados no teste, inverta o sinal destas duas linhas.
+        // Rotate the velocity (world space) into the player's local space, already corrected by
+        // the calibration bias above.
         double forward = -velX * Math.sin(yawRad) - velZ * Math.cos(yawRad);
         double right = velX * Math.cos(yawRad) - velZ * Math.sin(yawRad);
 
@@ -136,9 +146,9 @@ public class MovementKeyDetectionSystem extends EntityTickingSystem<EntityStore>
     }
 
     /**
-     * Manda a mensagem de "apertou" na borda de subida (false -&gt; true) e a de "soltou" na
-     * borda de descida (true -&gt; false) — as duas ações pedidas: uma que avisa que a tecla foi
-     * apertada, outra que calcula quando o jogador parou de apertar.
+     * Sends the "pressed" message on the rising edge (false -&gt; true) and the "released" one on
+     * the falling edge (true -&gt; false) — the two actions requested: one announcing the key was
+     * pressed, the other calculating when the player stopped pressing it.
      */
     private void report(PlayerRef playerRefComp, String key, String label, boolean was, boolean is) {
         if (was == is) return;
