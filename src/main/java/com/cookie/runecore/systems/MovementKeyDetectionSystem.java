@@ -10,7 +10,7 @@ import com.hypixel.hytale.protocol.MovementStates;
 import com.hypixel.hytale.server.core.Message;
 import com.hypixel.hytale.server.core.entity.entities.Player;
 import com.hypixel.hytale.server.core.entity.movement.MovementStatesComponent;
-import com.hypixel.hytale.server.core.modules.entity.component.TransformComponent;
+import com.hypixel.hytale.server.core.modules.entity.component.HeadRotation;
 import com.hypixel.hytale.server.core.modules.physics.component.Velocity;
 import com.hypixel.hytale.server.core.universe.PlayerRef;
 import com.hypixel.hytale.server.core.universe.Universe;
@@ -36,23 +36,28 @@ import java.util.logging.Logger;
  * <ul>
  *   <li>{@link Velocity#getClientVelocity()} — horizontal velocity in world space (X/Z axes),
  *       supplied by the client itself with every {@code ClientMovement};</li>
- *   <li>{@link TransformComponent#getRotation()} — which way the player is looking (yaw), used
- *       to rotate the world-space velocity into local space (forward/back/right/left relative to
- *       the camera, which is how W/A/S/D actually work).</li>
+ *   <li>{@link HeadRotation#getRotation()} — which way the player's camera is looking (yaw),
+ *       used to rotate the world-space velocity into local space (forward/back/right/left
+ *       relative to the camera, which is how W/A/S/D actually work).</li>
  * </ul>
  *
  * <p>Space and Shift/Ctrl don't need any of that math: {@code MovementStates.jumping} and
  * {@code MovementStates.crouching} already come ready-made from the same packet — the same
  * source {@code ChildCarryHelper.isCrouching()} reads from in SimTale without a single reported
- * failure.
+ * failure, and confirmed working on the first in-game test of this class too.
  *
- * <p><b>12/09 calibration:</b> the first in-game test showed a clean pattern — A also fired W, W
- * also fired D, D also fired S, and S also fired A (never the swapped key, always itself plus the
- * next one in that order). That's the signature of a +45° rotation between the axis the original
- * formula computed and the game's real axis — not a flipped axis, but a fixed half-quadrant bias,
- * likely from how {@code Rotation3f} measures yaw in this engine. The fix is to subtract 45° from
- * the yaw before projecting the velocity ({@link #CALIBRATION_OFFSET_DEG}); the forward/right
- * formulas themselves didn't need to change, only the angle fed into them.
+ * <p><b>12/09, two rounds of calibration:</b> the first in-game test showed every key also
+ * firing the next one in an A-&gt;W-&gt;D-&gt;S-&gt;A cycle — the signature of a +45° bias. A
+ * blanket "subtract 45° from yaw" fix made that specific test pass, but a follow-up test still
+ * leaked (D also fired W) with a different pattern than before, which meant the bias wasn't a
+ * fixed constant — the earlier fix only happened to cancel it at the one facing angle it was
+ * measured at. Root cause: the yaw was being read from {@code TransformComponent}, which is the
+ * character's <em>body</em> rotation — it only loosely follows where the camera actually looks
+ * (especially while strafing), so its offset from the real look direction isn't constant.
+ * {@link HeadRotation} is the component the {@code SetHead} input actually writes to every time
+ * the mouse moves, so it tracks the camera precisely; switching to it removes the need for any
+ * calibration constant at all. (The forward/right projection formulas were never wrong — checked
+ * them against the engine's own {@code Vector3dUtil.setYawPitch}, same convention.)
  */
 public class MovementKeyDetectionSystem extends EntityTickingSystem<EntityStore> {
 
@@ -64,13 +69,6 @@ public class MovementKeyDetectionSystem extends EntityTickingSystem<EntityStore>
      * held key.
      */
     private static final double DEADZONE = 0.05;
-
-    /**
-     * Fixed bias found during the 12/09 calibration (see class javadoc): without this, every key
-     * also fired the next one in the A-&gt;W-&gt;D-&gt;S-&gt;A cycle. Subtracting 45° from the yaw
-     * before projecting the velocity removes the leak without touching the forward/right formulas.
-     */
-    private static final double CALIBRATION_OFFSET_DEG = 45.0;
 
     private static final Map<UUID, DirState> STATE = new ConcurrentHashMap<>();
 
@@ -99,25 +97,25 @@ public class MovementKeyDetectionSystem extends EntityTickingSystem<EntityStore>
                 store.getComponent(playerRef, Universe.get().getPlayerRefComponentType());
         if (playerRefComp == null) return;
 
-        TransformComponent transform =
-                store.getComponent(playerRef, TransformComponent.getComponentType());
+        HeadRotation headRotation =
+                store.getComponent(playerRef, HeadRotation.getComponentType());
         Velocity velocity = store.getComponent(playerRef, Velocity.getComponentType());
         MovementStatesComponent msc =
                 store.getComponent(playerRef, MovementStatesComponent.getComponentType());
-        if (transform == null || velocity == null || msc == null) return;
+        if (headRotation == null || velocity == null || msc == null) return;
 
         MovementStates states = msc.getMovementStates();
         if (states == null) return;
 
-        double yawDeg = transform.getRotation().yaw();
-        double yawRad = Math.toRadians(yawDeg - CALIBRATION_OFFSET_DEG);
+        double yawDeg = headRotation.getRotation().yaw();
+        double yawRad = Math.toRadians(yawDeg);
 
         Vector3d vel = velocity.getClientVelocity();
         double velX = vel.x();
         double velZ = vel.z();
 
-        // Rotate the velocity (world space) into the player's local space, already corrected by
-        // the calibration bias above.
+        // Rotate the velocity (world space) into the player's local space, using the camera's
+        // actual look yaw (HeadRotation) rather than the body's.
         double forward = -velX * Math.sin(yawRad) - velZ * Math.cos(yawRad);
         double right = velX * Math.cos(yawRad) - velZ * Math.sin(yawRad);
 
