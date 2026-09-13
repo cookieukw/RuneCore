@@ -3,7 +3,7 @@
   "TranslationProperties": {
     "Name": "Splash Potion of Mining Fatigue"
   },
-  "Icon": "Icons/ItemsGenerated/Weapon_Bomb_Potion_Nausea.png",
+  "Icon": "Icons/ItemsGenerated/Weapon_Bomb_Potion_Mining_Fatigue.png",
   "IconProperties": {
     "Rotation": [
       22.5,
