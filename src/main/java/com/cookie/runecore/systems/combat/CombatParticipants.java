@@ -6,8 +6,10 @@ import com.cookie.runecore.systems.CombatStatsRegistry;
 import com.cookie.runecore.systems.CombatStatsRegistry.ItemCombatData;
 import com.cookie.runecore.systems.CreatureCombatRegistry;
 import com.cookie.runecore.systems.CreatureCombatRegistry.CreatureCombatData;
+import com.hypixel.hytale.component.ArchetypeChunk;
 import com.hypixel.hytale.component.Ref;
 import com.hypixel.hytale.component.Store;
+import com.hypixel.hytale.server.core.entity.UUIDComponent;
 import com.hypixel.hytale.server.core.inventory.InventoryComponent;
 import com.hypixel.hytale.server.core.inventory.ItemStack;
 import com.hypixel.hytale.server.core.modules.entity.component.ModelComponent;
@@ -78,6 +80,24 @@ public final class CombatParticipants {
         Store<EntityStore> store = ref.getStore();
         if (store == null) return null;
         return creatureFor(store.getComponent(ref, ModelComponent.getComponentType()));
+    }
+
+    /**
+     * The stable UUID of a non-player entity, but only when some mod has already opted it into
+     * dynamic combat stats via {@code CombatStatsManager.getOrCreate(uuid)}.
+     * <p>
+     * Every entity carries {@link UUIDComponent} -- players and NPCs alike -- so this
+     * deliberately does not do the tracking itself, only the lookup: an NPC nobody has called
+     * {@code getOrCreate} for returns null here and falls through to the static
+     * {@link CreatureCombatRegistry} path exactly as before. Only entities a mod explicitly
+     * registered (e.g. a SimTale guard given armour) resolve to a real uuid.
+     */
+    public static UUID trackedUuid(ArchetypeChunk<EntityStore> chunk, int index, CombatStatsManager manager) {
+        if (chunk == null || manager == null) return null;
+        UUIDComponent uuidComponent = chunk.getComponent(index, UUIDComponent.getComponentType());
+        if (uuidComponent == null) return null;
+        UUID uuid = uuidComponent.getUuid();
+        return (uuid != null && manager.hasStats(uuid)) ? uuid : null;
     }
 
     /**
