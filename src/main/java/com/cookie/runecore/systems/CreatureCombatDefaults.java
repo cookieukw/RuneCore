@@ -19,6 +19,7 @@ public class CreatureCombatDefaults {
         registerWildlife(r);
         registerSpirits(r);
         registerMisc(r);
+        registerHumanoidNpcs(r);
         // Do not let the last group's tier leak into registrations made by other mods.
         r.clearGroupDefense();
     }
@@ -326,5 +327,22 @@ public class CreatureCombatDefaults {
         r.register("Slothian_Scout",   physical(3));
         r.register("Kweebec_Sapling_Razorleaf", physical(4));
         r.register("Crossbow_Turret",  physical(8));
+    }
+
+    // ── Humanoid NPCs (non-player entities using the base "Player" model) ────
+    //
+    // Any NPC built on the vanilla "Player" model/appearance asset (SimTale's villagers and
+    // guards among them) resolves to this exact key here, since CombatParticipants.creatureFor
+    // reads the entity's ModelComponent asset id, and inheritance chains (e.g.
+    // SimTale_Human_Male -> Parent: "Player") collapse to it. Real connected players are never
+    // affected: they are always matched via their PlayerRef component earlier in
+    // CombatDamageInterceptor, before this registry is ever consulted.
+    //
+    // Baseline is deliberately light -- "unarmoured civilian", the same tier as unarmed
+    // wildlife -- so these NPCs stop taking fully raw, unmitigated hits now that hostile mobs
+    // can target them, without pretending they have real armour yet. A future dynamic system
+    // (gear-driven, per-NPC) should override this via explicit defence rather than replace it.
+    private static void registerHumanoidNpcs(CreatureCombatRegistry r) {
+        r.register("Player", physical().withDefense(2f, 0f, 0f));
     }
 }
