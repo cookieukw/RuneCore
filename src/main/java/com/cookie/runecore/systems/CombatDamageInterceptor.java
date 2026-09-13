@@ -71,13 +71,17 @@ public class CombatDamageInterceptor extends DamageEventSystem {
         CombatStatsManager manager = CombatStatsManager.get();
         if (manager == null) return;
 
+        // A tracked non-player entity (e.g. a SimTale NPC given armour via RuneAttributes)
+        // resolves to a real uuid here and takes the same dynamic path a player would; anything
+        // untracked -- including every NPC nobody has opted in -- falls through to the static
+        // per-species CreatureCombatRegistry lookup exactly as before this existed.
         PlayerRef targetPr = chunk.getComponent(index, PlayerRef.getComponentType());
-        if (targetPr == null) {
+        UUID targetUuid = targetPr != null ? targetPr.getUuid()
+                : CombatParticipants.trackedUuid(chunk, index, manager);
+        if (targetUuid == null) {
             handleCreatureDefender(index, chunk, damage);
             return;
         }
-        UUID targetUuid = targetPr.getUuid();
-        if (targetUuid == null || !manager.hasStats(targetUuid)) return;
 
         CombatStats defenderStats = manager.getStats(targetUuid);
         // getCause() is deprecated: it now goes through the same index the asset map already
