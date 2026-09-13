@@ -99,6 +99,13 @@ Encases the target in ice, locking physical movement and rotation.
 Emits dynamic light around entities and players in low-light environments.
 <br>
 <img src="docs/assets/screenshots/glowing_entity.png" alt="Glowing Entity Effect" width="100%">
+<img src="docs/assets/screenshots/glowing_player.png" alt="Glowing Player Effect" width="100%">
+
+---
+
+#### Mining Fatigue
+Slows mining and block-breaking speed while active.
+<br>
 
 ---
 
