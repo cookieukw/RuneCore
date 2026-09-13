@@ -12,6 +12,7 @@ import com.hypixel.hytale.server.core.event.events.ecs.InventoryChangeEvent;
 import com.hypixel.hytale.server.core.inventory.InventoryComponent;
 import com.hypixel.hytale.server.core.inventory.ItemStack;
 import com.hypixel.hytale.server.core.inventory.container.ItemContainer;
+import com.hypixel.hytale.server.core.entity.UUIDComponent;
 import com.hypixel.hytale.server.core.universe.PlayerRef;
 import com.hypixel.hytale.server.core.universe.world.storage.EntityStore;
 
@@ -28,7 +29,11 @@ public class EquipmentStatsListener extends EntityEventSystem<EntityStore, Inven
     @Nullable
     @Override
     public Query<EntityStore> getQuery() {
-        return Player.getComponentType();
+        // Player covers real connected players; UUIDComponent additionally covers any tracked
+        // non-player entity (a SimTale NPC given armour, for instance) -- UUIDComponent is
+        // present on essentially every entity, but the handler below still bails immediately
+        // for anything nobody explicitly opted into dynamic combat stats.
+        return Query.or(Player.getComponentType(), UUIDComponent.getComponentType());
     }
 
     @Override
@@ -43,8 +48,17 @@ public class EquipmentStatsListener extends EntityEventSystem<EntityStore, Inven
         if (manager == null || registry == null) return;
 
         PlayerRef pr = chunk.getComponent(index, PlayerRef.getComponentType());
-        if (pr == null) return;
-        UUID uuid = pr.getUuid();
+        UUID uuid;
+        if (pr != null) {
+            uuid = pr.getUuid();
+        } else {
+            // Non-player entity: only follow through if some mod already opted it into dynamic
+            // combat stats (CombatStatsManager.getOrCreate). An untracked NPC's armour changes
+            // are none of RuneCore's business, so this must not silently start tracking it.
+            UUIDComponent uuidComponent = chunk.getComponent(index, UUIDComponent.getComponentType());
+            uuid = uuidComponent != null ? uuidComponent.getUuid() : null;
+            if (uuid == null || !manager.hasStats(uuid)) return;
+        }
         if (uuid == null) return;
 
         CombatStats stats = manager.getOrCreate(uuid);
