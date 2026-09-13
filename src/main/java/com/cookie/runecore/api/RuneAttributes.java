@@ -56,6 +56,24 @@ public final class RuneAttributes {
         return playerRef != null ? of(playerRef.getUuid()) : Optional.empty();
     }
 
+    /**
+     * Opts a non-player entity into the same dynamic combat stats a player gets: damage against
+     * it stops going through the static per-species {@code CreatureCombatRegistry} baseline and
+     * starts using this entity's own {@link AttributeContainer} instead, and its worn armour
+     * (once something equips items into its {@code InventoryComponent.Armor} container) is read
+     * the same way a player's is.
+     * <p>
+     * {@code entityId} does not need to be anything RuneCore minted -- any stable uuid works, and
+     * in practice that is simply the uuid every entity already carries on its engine-native
+     * {@code UUIDComponent}. Idempotent: calling this more than once for the same id is a no-op
+     * beyond the first time.
+     */
+    public static void track(UUID entityId) {
+        CombatStatsManager manager = CombatStatsManager.get();
+        if (manager == null || entityId == null) return;
+        manager.getOrCreate(entityId);
+    }
+
     // ── Content registration ─────────────────────────────────────────────────
 
     /**
